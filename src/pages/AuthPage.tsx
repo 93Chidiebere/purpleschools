@@ -34,7 +34,14 @@ export default function AuthPage() {
         body: JSON.stringify(formData),
       });
 
-      const data = await res.json();
+      const contentType = res.headers.get("content-type");
+      let data: any = {};
+      if (contentType && contentType.includes("application/json")) {
+        data = await res.json();
+      } else {
+        const text = await res.text();
+        throw new Error(text || `Request failed with status ${res.status}`);
+      }
 
       if (!res.ok) {
         toast({
