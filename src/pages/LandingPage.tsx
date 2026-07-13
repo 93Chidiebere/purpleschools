@@ -71,7 +71,7 @@ export default function LandingPage() {
             {...fadeInUp}
             className="text-base md:text-lg text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            Ditch rote memorization. Prove you understand your syllabus by explaining concepts to Chidi, a virtual student preparing for WAEC exams.
+            Ditch rote memorization. Prove you understand your syllabus by explaining concepts to Chidi, a virtual student preparing for global exams.
           </motion.p>
 
           <motion.div {...fadeInUp} className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -153,7 +153,7 @@ export default function LandingPage() {
               {
                 step: "01",
                 title: "Select a Topic",
-                desc: "Choose from core WAEC subjects (Mathematics, Science, or English) to initialize the study block."
+                desc: "Choose from core secondary school subjects (Mathematics, Science, or English) from global curriculum standards."
               },
               {
                 step: "02",
@@ -163,7 +163,7 @@ export default function LandingPage() {
               {
                 step: "03",
                 title: "Review Report Card",
-                desc: "Submit the session to receive a Teacher's Report Card grading you directly against official WAEC marking schemes."
+                desc: "Submit the session to receive a Teacher's Report Card grading you directly against international curriculum benchmarks."
               }
             ].map((item, i) => (
               <motion.div
@@ -296,9 +296,9 @@ export default function LandingPage() {
             className="flex flex-wrap justify-center items-center gap-6 md:gap-16"
           >
             {[
-              { icon: BadgeCheck, text: "WAEC Syllabus Aligned" },
+              { icon: BadgeCheck, text: "Global Syllabus Aligned" },
               { icon: Shield, text: "100% Offline Caching" },
-              { icon: Users, text: "Built for West African Candidates" }
+              { icon: Users, text: "Built for Secondary Students" }
             ].map((badge, i) => (
               <div key={i} className="flex items-center gap-2.5 text-zinc-400">
                 <badge.icon className="w-5 h-5 text-primary" />
@@ -324,7 +324,7 @@ export default function LandingPage() {
               {[
                 {
                   question: "What is PurpleSchool AI?",
-                  answer: "PurpleSchool is an offline-first learning platform built around the Feynman Technique. Instead of asking questions, you practice teaching Chidi, your virtual AI student, and receive report cards based on WAEC marking guidelines."
+                  answer: "PurpleSchool is an offline-first learning platform built around the Feynman Technique. Instead of answering questions, you practice teaching Chidi, your virtual AI student, and receive report cards based on international curriculum standards."
                 },
                 {
                   question: "How does it work offline?",
@@ -335,8 +335,8 @@ export default function LandingPage() {
                   answer: "Yes, PurpleSchool offers free access to all core curriculum subjects. We are committed to democratizing tutoring access for all students."
                 },
                 {
-                  question: "Does it align with the WAEC syllabus?",
-                  answer: "Yes. The questions Chidi asks are systematically anchored to West African Examination Council (WAEC), NECO, and JAMB syllabus frameworks."
+                  question: "Does it align with my specific syllabus?",
+                  answer: "Yes. Chidi is structured to support global secondary school syllabi including WAEC, British IGCSE/GCSE, American AP, and other national curriculum frameworks."
                 }
               ].map((faq, i) => (
                 <AccordionItem

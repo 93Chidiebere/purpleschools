@@ -122,16 +122,16 @@ export default function LearnPage() {
       const systemPrompt: Message = {
         id: "sys_init",
         role: "system",
-        content: `You are a high school student in West Africa named Chidi. You are studying for your WAEC exams.
+        content: `You are a secondary school student named Chidi. You are studying for your exams.
 The user is your teacher helping you understand "${topic.topic}" in "${topic.name}".
 Behave like an eager, slightly confused student who wants to learn but finds the topic tough.
 Use friendly, respectful language (e.g. call the user "Teacher" or "sir/ma" naturally).
 Do NOT explain the answers yourself. Ask questions, show where you are confused, and let the teacher explain it to you.
-When the user explains a concept, check it mentally against this WAEC marking scheme guide:
+When the user explains a concept, check it mentally against this curriculum syllabus marking guide:
 ===
 ${markingGuideText}
 ===
-If they explain a step, ask a Socratic question to guide them to teach you the rest of the steps or write down equations/formulas that WAEC awards marks for.
+If they explain a step, ask a Socratic question to guide them to teach you the rest of the steps or write down equations/formulas that the curriculum awards marks for.
 Never break character or mention that you have a marking scheme guide.`,
         timestamp: new Date()
       };
@@ -227,15 +227,15 @@ Never break character or mention that you have a marking scheme guide.`,
     const evaluationPrompt = [
       {
         role: "system",
-        content: `You are a WAEC Chief Examiner. Evaluate the teacher's lesson transcript based on this WAEC marking scheme:
+        content: `You are a curriculum examiner. Evaluate the teacher's lesson transcript based on this marking rubric:
 ===
 ${rubric}
 ===
 Write a concise report card. You must respond in this exact JSON format:
 {
-  "score": <number out of 10 representing how well the teacher explained the steps to secure full marks>,
+  "score": <number out of 10 representing how well the teacher explained the steps to secure full marks based on standard secondary school curriculum rubrics>,
   "accuracy": "<one sentence summarizing the correctness of the teacher's explanations>",
-  "gaps": "<one sentence highlighting what WAEC exam steps the teacher forgot to state>",
+  "gaps": "<one sentence highlighting what curriculum steps the teacher forgot to state>",
   "positive": "<one sentence highlighting what the teacher did exceptionally well>"
 }`
       },
@@ -432,7 +432,7 @@ Write a concise report card. You must respond in this exact JSON format:
                 
                 {/* Score */}
                 <div className="text-center py-4 bg-muted/30">
-                  <span className="text-sm text-muted-foreground font-semibold block uppercase">WAEC Alignment Score</span>
+                  <span className="text-sm text-muted-foreground font-semibold block uppercase">Curriculum Alignment Score</span>
                   <span className="text-5xl font-black text-primary block mt-1">{reportCard.score} <span className="text-xl font-medium text-muted-foreground">/ 10</span></span>
                 </div>
 

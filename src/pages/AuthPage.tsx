@@ -85,7 +85,7 @@ export default function AuthPage() {
         </div>
         <h1 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">PurpleSchool</h1>
         <p className="text-sm text-muted-foreground mt-2 max-w-xs mx-auto">
-          The Socratic offline learning network for West African candidates
+          The Socratic offline learning network for global secondary school candidates
         </p>
       </motion.div>
 
@@ -150,7 +150,7 @@ export default function AuthPage() {
               />
 
               <Button type="submit" className="w-full rounded-xl bg-primary hover:bg-primary/95 text-white font-semibold py-6 mt-2" disabled={loading}>
-                {loading ? "Connecting..." : isLogin ? "Start Learning" : "Create Account"}
+                {loading ? "Connecting..." : isLogin ? "Start Teaching" : "Create Account"}
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </form>
