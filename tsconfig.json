@@ -1,0 +1,28 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+     "types": ["vite-plugin-pwa/react"],
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "skipLibCheck": true,
+    "allowJs": true,
+    "noImplicitAny": false,
+    "noUnusedLocals": false,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "noUnusedParameters": false,
+    "strictNullChecks": false
+  }
+}
