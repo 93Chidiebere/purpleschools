@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import type { Level } from "@/hooks/useAchievements";
-import { Sparkles } from "lucide-react";
+import { Sparkles, X } from "lucide-react";
 
 interface LevelUpModalProps {
   isOpen: boolean;
@@ -28,141 +28,71 @@ export function LevelUpModal({ isOpen, onClose, level }: LevelUpModalProps) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm"
-          onClick={onClose}
-        >
+        <>
           <motion.div
-            initial={{ scale: 0.8, opacity: 0, y: 20 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/35 backdrop-blur-[2px] z-50"
+            onClick={onClose}
+          />
+          <motion.div
+            initial={{ scale: 0.95, opacity: 0, y: 15 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.8, opacity: 0, y: 20 }}
-            transition={{ type: "spring", damping: 20, stiffness: 300 }}
-            onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-sm bg-card p-8 shadow-2xl overflow-hidden"
+            exit={{ scale: 0.95, opacity: 0, y: 15 }}
+            transition={{ type: "spring", damping: 20, stiffness: 350 }}
+            className="fixed inset-x-4 top-1/2 -translate-y-1/2 mx-auto max-w-[280px] z-50 md:inset-x-auto md:left-1/2 md:-translate-x-1/2"
           >
-            {/* Background decoration */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1.5 }}
-                transition={{ duration: 0.8 }}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-primary/20 to-accent/20 rounded-full blur-3xl"
-              />
-            </div>
+            <div className="bg-[#120a21]/95 text-white p-5 border border-primary/20 rounded-2xl shadow-2xl text-center relative overflow-hidden backdrop-blur-md">
+              <button
+                onClick={onClose}
+                className="absolute top-3 right-3 p-1 rounded-lg hover:bg-white/10 transition-colors"
+              >
+                <X className="w-4 h-4 text-zinc-400" />
+              </button>
 
-            {/* Content */}
-            <div className="relative z-10 text-center">
               {/* Sparkles icon */}
               <motion.div
                 initial={{ scale: 0, rotate: -180 }}
                 animate={{ scale: 1, rotate: 0 }}
-                transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                className="w-16 h-16 mx-auto mb-4 bg-primary/10 flex items-center justify-center"
+                transition={{ delay: 0.1, type: "spring", stiffness: 200 }}
+                className="w-12 h-12 mx-auto mb-2 bg-primary/10 rounded-full flex items-center justify-center"
               >
-                <Sparkles className="w-8 h-8 text-primary" />
+                <Sparkles className="w-6 h-6 text-primary" />
               </motion.div>
 
               {/* Level Up text */}
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="text-sm font-medium text-primary uppercase tracking-wider mb-2"
-              >
+              <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-1">
                 Level Up!
-              </motion.p>
+              </p>
 
               {/* Level icon */}
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.4, type: "spring", stiffness: 200 }}
-                className="text-6xl mb-4"
-              >
+              <div className="text-4xl mb-2">
                 {level.icon}
-              </motion.div>
+              </div>
 
               {/* Level name */}
-              <motion.h2
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="text-2xl font-bold text-foreground mb-2"
-              >
+              <h2 className="text-base font-bold text-white mb-0.5">
                 {level.name}
-              </motion.h2>
+              </h2>
 
               {/* Level number */}
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.6 }}
-                className="text-sm text-muted-foreground mb-4"
-              >
+              <p className="text-[10px] text-zinc-400 mb-2">
                 Level {level.id} • {level.phaseName} Phase
-              </motion.p>
+              </p>
 
               {/* Phase message */}
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7 }}
-                className="text-muted-foreground mb-6"
-              >
+              <p className="text-xs text-zinc-300 mb-4 px-1 leading-relaxed">
                 {getPhaseMessage()}
-              </motion.p>
+              </p>
 
               {/* Continue button */}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 }}
-              >
-                <Button onClick={onClose} className="w-full">
-                  Continue Learning
-                </Button>
-              </motion.div>
-            </div>
-
-            {/* Confetti effect */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden">
-              {[...Array(12)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ 
-                    y: -20, 
-                    x: Math.random() * 300 - 150,
-                    rotate: 0,
-                    opacity: 1 
-                  }}
-                  animate={{ 
-                    y: 400, 
-                    rotate: Math.random() * 720,
-                    opacity: 0 
-                  }}
-                  transition={{ 
-                    duration: 2 + Math.random(), 
-                    delay: 0.2 + Math.random() * 0.5,
-                    ease: "easeIn" 
-                  }}
-                  className="absolute top-0 w-2 h-2"
-                  style={{
-                    left: `${Math.random() * 100}%`,
-                    backgroundColor: [
-                      "hsl(270, 70%, 60%)",
-                      "hsl(330, 70%, 65%)",
-                      "hsl(45, 90%, 55%)",
-                      "hsl(150, 60%, 50%)",
-                    ][i % 4]
-                  }}
-                />
-              ))}
+              <Button onClick={onClose} size="sm" className="w-full rounded-xl bg-primary hover:bg-primary/90 text-white font-medium py-3 text-xs">
+                Continue Teaching
+              </Button>
             </div>
           </motion.div>
-        </motion.div>
+        </>
       )}
     </AnimatePresence>
   );

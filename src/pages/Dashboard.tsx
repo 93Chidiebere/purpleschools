@@ -146,6 +146,11 @@ export default function Dashboard() {
   // Add new achievement to queue with a small delay to prevent race conditions
   useEffect(() => {
     if (newAchievement) {
+      // Skip daily login popups to prevent duplicate modals on login
+      if (newAchievement.type === "daily_login") {
+        clearNewAchievement();
+        return;
+      }
       const timer = setTimeout(() => {
         setModalQueue(prev => [...prev, { message: newAchievement.message, emoji: newAchievement.emoji }]);
         clearNewAchievement();
