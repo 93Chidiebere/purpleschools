@@ -1,0 +1,205 @@
+{
+  "curriculum_version": "NERDC-WASSCE-v1.1",
+  "last_updated": "2026-07-13",
+  "subjects": [
+    {
+      "subject": "Mathematics",
+      "topic": "Quadratic Equations",
+      "grade_level": "Senior Secondary (SS1-SS3)",
+      "curriculum_frameworks": ["NERDC", "WASSCE", "NECO"],
+      "learning_objectives": [
+        "Identify coefficients a, b, and c in quadratic equations.",
+        "Solve quadratic equations using factorization and completing the square methods.",
+        "Apply the general quadratic formula to solve equations with real and complex roots.",
+        "Determine the nature of roots using the discriminant."
+      ],
+      "marking_scheme_rules": [
+        "Award 1 method mark [M1] for correctly factorizing or substituting values into the quadratic formula.",
+        "Award 1 method mark [M1] for equating individual factors to zero (e.g., x-2=0 or x+3=0).",
+        "Award 1 accuracy mark [A1] for each correct root value.",
+        "Note: Jumping straight to final answers without intermediate steps loses up to 50% of allocated marks."
+      ],
+      "common_student_misconceptions": [
+        "Failing to write '= 0' at each stage of equation manipulation.",
+        "Applying the quadratic formula with incorrect signs (e.g. using -b instead of the correct sign balance).",
+        "Omitting the plus-minus sign, leading to only one root instead of two."
+      ]
+    },
+    {
+      "subject": "Science (Biology)",
+      "topic": "Photosynthesis",
+      "grade_level": "Senior Secondary (SS1-SS2)",
+      "curriculum_frameworks": ["NERDC", "WASSCE", "NECO"],
+      "learning_objectives": [
+        "Define photosynthesis in terms of chlorophyll-bearing cells producing organic compounds.",
+        "Identify raw materials (carbon dioxide, water) and conditions (sunlight, chlorophyll).",
+        "Write and balance the chemical equation representing photosynthesis.",
+        "Explain the role of stomata and vascular bundles in resource transport."
+      ],
+      "marking_scheme_rules": [
+        "Award 1 mark for green plants and chlorophyll in definition.",
+        "Award 1 mark for converting carbon dioxide and water into glucose and oxygen.",
+        "Award 1 mark for mentioning the presence of sunlight/energy.",
+        "Award 2 marks for the balanced chemical equation: 6CO2 + 6H2O -> C6H12O6 + 6O2.",
+        "Deduct 1 mark if equation is unbalanced. Deduct 1 mark if sunlight/chlorophyll is missing from the arrow."
+      ],
+      "common_student_misconceptions": [
+        "Suggesting that photosynthesis occurs at night or in the absence of light.",
+        "Confusing carbon dioxide (reactant) with oxygen (product) in the conversion stage.",
+        "Writing unbalanced molecular formulas (e.g. C6H12O6 as C6H10O5)."
+      ]
+    },
+    {
+      "subject": "English Language",
+      "topic": "Essay Writing",
+      "grade_level": "Senior Secondary (SS1-SS3)",
+      "curriculum_frameworks": ["NERDC", "WASSCE", "NECO"],
+      "learning_objectives": [
+        "Write clear, coherent essays addressing the specific prompt instructions.",
+        "Organize the essay structure using introduction, body paragraphs, and conclusion.",
+        "Use appropriate registers and vocabulary for formal or informal writing.",
+        "Maintain mechanical accuracy in grammar, spelling, and punctuation."
+      ],
+      "marking_scheme_rules": [
+        "Content (10 Marks): Full addressing of task details.",
+        "Organisation (10 Marks): Paragraphing, logical flow, addresses and salutations where appropriate.",
+        "Expression (20 Marks): Word variety, sentence structural complexity.",
+        "Mechanical Accuracy (10 Marks): Strict deduction of 0.5 marks for EVERY grammatical, spelling, or punctuation error."
+      ],
+      "common_student_misconceptions": [
+        "Mixing formal and informal abbreviations (e.g. using 'won't' or 'gonna' in a formal letter).",
+        "Writing long, single-paragraph compositions without structured transitions.",
+        "Comma splicing (joining independent clauses with just a comma instead of a semicolon or period)."
+      ]
+    },
+    {
+      "subject": "Physics",
+      "topic": "Equations of Motion",
+      "grade_level": "Senior Secondary (SS1-SS2)",
+      "curriculum_frameworks": ["NERDC", "WASSCE", "NECO"],
+      "learning_objectives": [
+        "State the three basic equations of linear motion.",
+        "Define all symbols involved (v, u, a, t, s) and their standard SI units.",
+        "Explain the condition under which these equations apply (constant acceleration).",
+        "Solve numerical problems involving displacement, velocity, and time."
+      ],
+      "marking_scheme_rules": [
+        "Award 1 mark per correct equation: v = u + at, s = ut + 0.5at^2, v^2 = u^2 + 2as.",
+        "Award 1 mark for correct unit symbols in final answers (e.g. m/s^2 for acceleration).",
+        "Award 1 mark for explicitly stating that acceleration must be uniform/constant."
+      ],
+      "common_student_misconceptions": [
+        "Applying linear motion equations to circular or variable-acceleration motions.",
+        "Confusing initial velocity (u) with final velocity (v).",
+        "Using inconsistent unit systems (e.g. combining velocity in km/h with time in seconds)."
+      ]
+    },
+    {
+      "subject": "Chemistry",
+      "topic": "Chemical Bonding",
+      "grade_level": "Senior Secondary (SS1-SS2)",
+      "curriculum_frameworks": ["NERDC", "WASSCE", "NECO"],
+      "learning_objectives": [
+        "Explain the octet and duplet rules of valence electrons.",
+        "Define ionic (electrovalent) bonding and explain it as electron transfer.",
+        "Define covalent bonding and explain it as electron sharing.",
+        "List examples of substances containing ionic and covalent bonds."
+      ],
+      "marking_scheme_rules": [
+        "Award 2 marks for electrovalent bonding details: attraction of opposite charges, electron transfer from metal to non-metal.",
+        "Award 2 marks for covalent bonding details: sharing of valence electron pairs between non-metals.",
+        "Award 1 mark for listing appropriate examples (NaCl, H2O)."
+      ],
+      "common_student_misconceptions": [
+        "Believing ionic bonds share electrons.",
+        "Listing noble gases as active participants in ionic or covalent bonding.",
+        "Assuming all molecular compounds can conduct electricity."
+      ]
+    },
+    {
+      "subject": "Civic Education",
+      "topic": "Human Rights",
+      "grade_level": "Senior Secondary (SS1-SS3)",
+      "curriculum_frameworks": ["NERDC", "NECO"],
+      "learning_objectives": [
+        "Define human rights and their core attributes (universal, inalienable).",
+        "Categorize rights into civil, political, economic, and social classes.",
+        "Explain the role of the Constitution and judiciary in protecting human rights.",
+        "Identify bodies responsible for human rights advocacy (e.g., NHRC)."
+      ],
+      "marking_scheme_rules": [
+        "Award 2 marks for defining rights as universal entitlements that cannot be taken away.",
+        "Award 2 marks for classifying civil/political (life, fair hearing) vs economic/social (education, work).",
+        "Award 1 mark for mentioning constitution safeguarding."
+      ],
+      "common_student_misconceptions": [
+        "Confusing legal privileges (e.g. driving license) with fundamental human rights.",
+        "Assuming that human rights can be suspended by arbitrary personal authority."
+      ]
+    },
+    {
+      "subject": "Economics",
+      "topic": "Demand and Supply",
+      "grade_level": "Senior Secondary (SS1-SS3)",
+      "curriculum_frameworks": ["NERDC", "WASSCE", "NECO"],
+      "learning_objectives": [
+        "State the Law of Demand and the Law of Supply.",
+        "Explain the downward slope of the demand curve using income and substitution effects.",
+        "Draw and label demand, supply, and equilibrium graphs.",
+        "Differentiate between a shift in demand and a movement along the demand curve."
+      ],
+      "marking_scheme_rules": [
+        "Award 2 marks for Law of Demand, including ceteris paribus (other things being equal) clause.",
+        "Award 2 marks for explaining downward slope (income effect, substitution effect).",
+        "Award 1 mark for Law of Supply details."
+      ],
+      "common_student_misconceptions": [
+        "Forgetting to include the 'ceteris paribus' (all other things equal) constraint.",
+        "Confusing 'change in demand' (curve shift) with 'change in quantity demanded' (movement along the curve)."
+      ]
+    },
+    {
+      "subject": "Python Coding",
+      "topic": "Loops & Functions",
+      "grade_level": "Senior Secondary (SS2-SS3 / Advanced Elective)",
+      "curriculum_frameworks": ["NERDC Computer Studies", "Cambridge IGCSE", "AP Computer Science"],
+      "learning_objectives": [
+        "Use loops (for and while) to control program repetition without manual code duplication.",
+        "Understand Python indentations, colons, and basic syntax rules.",
+        "Define reusable logic blocks using functions (def keyword).",
+        "Distinguish parameters (placeholders) from arguments (passed values)."
+      ],
+      "marking_scheme_rules": [
+        "Award 2 marks for correct loop construction: 'for i in range(10):' syntax, indentation, and range bounds.",
+        "Award 2 marks for correct function declaration: 'def function_name(param):' with a valid return statement.",
+        "Award 1 mark for explaining the difference between parameters and arguments."
+      ],
+      "common_student_misconceptions": [
+        "Forgetting colons (:) at the end of loop/function definitions.",
+        "Incorrectly mixing spaces and tabs, causing IndentationErrors.",
+        "Confusing print() (displaying values) with return (returning values to a caller)."
+      ]
+    },
+    {
+      "subject": "Introductory AI",
+      "topic": "Neural Networks",
+      "grade_level": "Senior Secondary (SS3 / Advanced Elective)",
+      "curriculum_frameworks": ["NERDC Technical Education", "AP Computer Science", "Introductory AI"],
+      "learning_objectives": [
+        "Define a neural network and describe its input, hidden, and output layers.",
+        "Explain the roles of weights and biases in artificial neurons.",
+        "Explain backpropagation and how networks learn from prediction errors.",
+        "Identify applications of neural networks in computer vision and natural language."
+      ],
+      "marking_scheme_rules": [
+        "Award 2 marks for explaining layer structure: input nodes receive data, hidden layers compute, output layers classify.",
+        "Award 2 marks for weight (signal strength) and bias (activation threshold shift) descriptions.",
+        "Award 1 mark for backpropagation: error calculations adjusting weights backwards."
+      ],
+      "common_student_misconceptions": [
+        "Believing a neural network is a biological component rather than math/code.",
+        "Assuming neural networks learn instantaneously without training iterations."
+      ]
+    }
+  ]
+}

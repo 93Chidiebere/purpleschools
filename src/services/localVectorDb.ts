@@ -27,7 +27,7 @@ const waecDatabase: WAECMarkingScheme[] = [
   },
   {
     id: "bio_photosynthesis",
-    subject: "Science",
+    subject: "Science (Biology)",
     topic: "Photosynthesis",
     keywords: ["photosynthesis", "chlorophyll", "plants", "equation", "light"],
     markingGuide: `WAEC marking scheme for Photosynthesis:
@@ -42,7 +42,7 @@ const waecDatabase: WAECMarkingScheme[] = [
   },
   {
     id: "english_essay",
-    subject: "English",
+    subject: "English Language",
     topic: "Essay Writing",
     keywords: ["essay", "letter", "writing", "composition", "formal"],
     markingGuide: `WAEC Essay Writing (Composition) Rubric (Total: 50 Marks):
@@ -54,6 +54,102 @@ const waecDatabase: WAECMarkingScheme[] = [
       "Poor paragraph structure and transition between ideas.",
       "Numerous mechanical accuracy spelling/grammatical errors.",
       "Incorrect address and salutation formats in formal and informal letters."
+    ]
+  },
+  {
+    id: "phys_motion",
+    subject: "Physics",
+    topic: "Equations of Motion",
+    keywords: ["motion", "equations", "acceleration", "velocity", "linear"],
+    markingGuide: `Physics marking scheme for Equations of Motion:
+- State three equations of motion [3 Marks]: v = u + at, s = ut + 0.5*a*t^2, v^2 = u^2 + 2as.
+- Correctly define symbols [1 Mark]: v = final velocity, u = initial velocity, a = acceleration, t = time, s = displacement.
+- Emphasize constant acceleration requirement [1 Mark].
+- Total allocation: 5 Marks.`,
+    commonMistakes: [
+      "Confusing initial velocity (u) and final velocity (v).",
+      "Applying these equations to motions with variable acceleration without calculus.",
+      "Incorrect units (e.g. using km/h instead of m/s without conversion)."
+    ]
+  },
+  {
+    id: "chem_bonding",
+    subject: "Chemistry",
+    topic: "Chemical Bonding",
+    keywords: ["bonding", "ionic", "covalent", "electrovalent", "sharing", "transfer"],
+    markingGuide: `Chemistry marking scheme for Chemical Bonding:
+- Ionic (Electrovalent) Bonding Definition [2 Marks]: Electrostatic force of attraction between oppositely charged ions, formed by electron transfer from a metal to a non-metal.
+- Covalent Bonding Definition [2 Marks]: Formed by the sharing of valence electron pairs between non-metal atoms.
+- Give examples [1 Mark]: NaCl for Ionic, H2O or CO2 for Covalent.
+- Total allocation: 5 Marks.`,
+    commonMistakes: [
+      "Suggesting ionic bonds form by sharing electrons.",
+      "Listing metal-metal combinations as covalent bonding.",
+      "Forgetting to mention that valence electrons are the ones participating in bonding."
+    ]
+  },
+  {
+    id: "civic_rights",
+    subject: "Civic Education",
+    topic: "Human Rights",
+    keywords: ["rights", "human rights", "fundamental", "citizenship", "constitution"],
+    markingGuide: `Civic Education marking scheme for Human Rights:
+- Definition [2 Marks]: Moral or legal entitlements that every human possesses by virtue of being human, which are universal and inalienable.
+- List categories of rights [2 Marks]: Civil/Political (right to life, fair hearing) and Economic/Social/Cultural (right to education, work).
+- Mention role of constitution [1 Mark]: Safeguarding citizen rights.
+- Total allocation: 5 Marks.`,
+    commonMistakes: [
+      "Confusing human rights with state laws.",
+      "Failing to explain what 'inalienable' means (cannot be taken away).",
+      "Omitting civil and political categories in classification."
+    ]
+  },
+  {
+    id: "econ_demand",
+    subject: "Economics",
+    topic: "Demand and Supply",
+    keywords: ["demand", "supply", "price", "elasticity", "equilibrium", "curve"],
+    markingGuide: `Economics marking scheme for Law of Demand and Supply:
+- Law of Demand [2 Marks]: Other things being equal, the higher the price, the lower the quantity demanded, and vice versa.
+- Explanation of Demand Curve slope [2 Marks]: Slopes downwards from left to right due to the income effect, substitution effect, and law of diminishing marginal utility.
+- Law of Supply [1 Mark]: Other things being equal, the higher the price, the higher the quantity supplied.
+- Total allocation: 5 Marks.`,
+    commonMistakes: [
+      "Forgetting the phrase 'other things being equal' (ceteris paribus) when stating the law.",
+      "Confusing a change in quantity demanded (along the curve) with a shift in demand (new curve).",
+      "Stating that supply slopes downwards."
+    ]
+  },
+  {
+    id: "py_loops",
+    subject: "Python Coding",
+    topic: "Loops & Functions",
+    keywords: ["loops", "functions", "python", "syntax", "def", "for"],
+    markingGuide: `Python Coding marking scheme for Loops & Functions:
+- For Loop Syntax [2 Marks]: Explain 'for i in range(10):' syntax, noting indentations and the range parameters.
+- Function Declaration [2 Marks]: Define reusable blocks using 'def function_name(parameter):' and using 'return' for output.
+- Parameters vs Arguments [1 Mark]: Parameters are placeholders in function definition, arguments are actual values passed.
+- Total allocation: 5 Marks.`,
+    commonMistakes: [
+      "Forgetting the colon (:) at the end of the loop or function definition line.",
+      "Forgetting proper indentation for code blocks under for/def statements.",
+      "Confusing print statements with return statements."
+    ]
+  },
+  {
+    id: "ai_networks",
+    subject: "Introductory AI",
+    topic: "Neural Networks",
+    keywords: ["neural", "network", "weights", "ai", "backpropagation", "learning"],
+    markingGuide: `Introductory AI marking scheme for Neural Networks:
+- Definition [2 Marks]: Computational models inspired by human brain structure, comprising input, hidden, and output layers of interconnected nodes (neurons).
+- Role of Weights & Biases [2 Marks]: Weights adjust the strength of connections between nodes, biases shift the activation functions.
+- Backpropagation [1 Mark]: The learning algorithm that calculates the error gradient and adjusts weights backwards to minimize prediction errors.
+- Total allocation: 5 Marks.`,
+    commonMistakes: [
+      "Describing a neural network as a physical brain implant rather than software/math.",
+      "Failing to explain how nodes are structured in layers.",
+      "Omitting the role of errors/feedback in backpropagation."
     ]
   }
 ];
