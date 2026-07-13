@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { GraduationCap, BookOpen, Heart, ArrowRight } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { API_BASE } from "@/config";
 
 export default function AuthPage() {
   const navigate = useNavigate();
@@ -18,9 +19,6 @@ export default function AuthPage() {
     school: "",
     className: "",
   });
-
-  const API_BASE = "https://purpleshoolserver.onrender.com";
-  // const API_BASE = "http://localhost:5000";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

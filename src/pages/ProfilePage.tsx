@@ -15,6 +15,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useLevelProgressContext } from "@/contexts/LevelProgressContext";
+import { API_BASE } from "@/config";
 import {
   ArrowLeft,
   User,
@@ -86,7 +87,7 @@ export default function ProfilePage() {
       const token = localStorage.getItem("token");
 
 
-      const res = await fetch("https://purpleshoolserver.onrender.com/profile/me", {
+      const res = await fetch(`${API_BASE}/profile/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -121,7 +122,7 @@ export default function ProfilePage() {
     mutationFn: async (updatedData: any) => {
       const token = localStorage.getItem("token");
 
-      const res = await fetch("https://purpleshoolserver.onrender.com/profile/me", {
+      const res = await fetch(`${API_BASE}/profile/me`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
