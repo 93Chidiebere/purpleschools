@@ -11,7 +11,6 @@ import {
   Award,
   Zap,
   TrendingUp,
-  CheckCircle2,
   Users,
   GraduationCap,
   ArrowRight,
@@ -25,16 +24,16 @@ import {
 import { FeedbackContactSection } from "@/components/sections/FeedbackContactSection";
 
 const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true },
-  transition: { duration: 0.5 }
+  transition: { duration: 0.6, ease: "easeOut" as any }
 };
 
 const staggerContainer = {
   initial: {},
   whileInView: {
-    transition: { staggerChildren: 0.1 }
+    transition: { staggerChildren: 0.15 }
   },
   viewport: { once: true }
 };
@@ -43,45 +42,43 @@ export default function LandingPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#0b0615] text-white selection:bg-primary/30 selection:text-white relative overflow-hidden">
+      
+      {/* Decorative Blur Background Orbs */}
+      <div className="absolute top-[-25%] left-[-15%] w-[600px] h-[600px] bg-primary/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-[40%] right-[-10%] w-[500px] h-[500px] bg-accent/8 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-15%] left-[20%] w-[600px] h-[600px] bg-primary/8 rounded-full blur-[150px] pointer-events-none" />
 
       {/* Hero Section */}
-      <section className="pt-16 pb-12 md:pt-24 md:pb-20 px-4">
+      <section className="pt-24 pb-16 md:pt-32 md:pb-24 px-4 relative z-10">
         <div className="container mx-auto max-w-4xl text-center">
           <motion.div {...fadeInUp}>
-            <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 bg-primary/10 border border-primary/20">
+            <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 bg-white/[0.03] border border-white/10 rounded-full shadow-[0_0_15px_rgba(255,255,255,0.03)]">
               <GraduationCap className="w-4 h-4 text-primary" />
-              <span className="text-sm font-semibold text-primary">PurpleSchool AI</span>
+              <span className="text-xs font-semibold text-zinc-300 tracking-wide">PurpleSchool AI Engine</span>
             </div>
           </motion.div>
 
           <motion.h1
             {...fadeInUp}
-            className="text-4xl md:text-6xl font-bold mb-6 tracking-tight leading-tight text-foreground"
+            className="text-4xl md:text-7xl font-extrabold mb-6 tracking-tight leading-[1.1] text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-200 to-primary/80"
           >
             Learn by Teaching.<br />
-            Meet <span className="text-primary">Chidi</span>, your AI Student.
+            Meet <span className="text-primary font-black relative drop-shadow-[0_0_20px_rgba(124,58,237,0.3)]">Chidi</span>, your AI Student.
           </motion.h1>
 
           <motion.p
             {...fadeInUp}
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-6"
+            className="text-base md:text-lg text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            Traditional cramming is outdated. Prove you understand your subjects by explaining them to Chidi, a curious but confused student preparing for WAEC exams.
-          </motion.p>
-
-          <motion.p
-            {...fadeInUp}
-            className="text-sm text-muted-foreground max-w-lg mx-auto mb-10"
-          >
-            PurpleSchool uses the **Feynman Technique** to build deep comprehension. It grades your explanations against official marking schemes, running **100% offline** on your device.
+            Ditch rote memorization. Prove you understand your syllabus by explaining concepts to Chidi, a virtual student preparing for WAEC exams.
           </motion.p>
 
           <motion.div {...fadeInUp} className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button
               size="lg"
               onClick={() => navigate('/auth')}
-              className="text-base px-8 w-full sm:w-auto rounded-none"
+              className="text-base px-8 py-7 rounded-xl bg-primary hover:bg-primary/95 text-white font-bold w-full sm:w-auto shadow-[0_0_25px_rgba(124,58,237,0.3)] transition-all"
             >
               Start Teaching Now
               <ArrowRight className="w-4 h-4 ml-2" />
@@ -95,9 +92,9 @@ export default function LandingPage() {
                   donateSection.scrollIntoView({ behavior: "smooth" });
                 }
               }}
-              className="text-base px-8 w-full sm:w-auto rounded-none"
+              className="text-base px-8 py-7 rounded-xl border-white/10 bg-white/[0.02] hover:bg-white/[0.06] text-white w-full sm:w-auto transition-all"
             >
-              <HeartHandshake className="w-4 h-4 mr-2" />
+              <HeartHandshake className="w-4 h-4 mr-2 text-primary" />
               Support Our Mission
             </Button>
           </motion.div>
@@ -105,30 +102,30 @@ export default function LandingPage() {
       </section>
 
       {/* The Feynman Principle Section */}
-      <section className="py-20 px-4 bg-muted/30 border-y border-border">
+      <section className="py-24 px-4 bg-white/[0.01] border-y border-white/5 relative z-10">
         <div className="container mx-auto max-w-4xl">
-          <motion.div {...fadeInUp} className="text-center mb-12">
+          <motion.div {...fadeInUp} className="text-center mb-16">
             <p className="text-xs font-bold text-primary uppercase tracking-wider mb-2">The Science of Learning</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-white">
               To Teach is to Learn Twice
             </h2>
-            <p className="text-muted-foreground mt-4 max-w-xl mx-auto">
-              Studies prove that teaching someone else is the most effective way to secure concepts in long-term memory. 
+            <p className="text-zinc-400 mt-4 max-w-xl mx-auto text-sm leading-relaxed">
+              Based on the **Feynman Technique**, translating complex concepts into simple explanations forces deep conceptual understanding.
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-            <Card className="p-6 bg-card rounded-none">
-              <h3 className="text-lg font-bold text-primary mb-3">Why Cramming Fails</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                Memorizing past question papers gives a false sense of security. If a WAEC examiner tweaks the numbers or wording, crammers fail because they don't understand the underlying logic.
+            <Card className="p-8 bg-white/[0.02] border-white/10 rounded-2xl">
+              <h3 className="text-lg font-bold text-red-400 mb-3">Why Cramming Fails</h3>
+              <p className="text-sm text-zinc-400 leading-relaxed">
+                Rote memorization makes you fragile. If an exam paper alters a single word or parameter, crammers struggle because they lack the core logical framework.
               </p>
             </Card>
 
-            <Card className="p-6 bg-card rounded-none">
-              <h3 className="text-lg font-bold text-success mb-3">Why Teaching Succeeds</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                When you explain a topic to Chidi, your brain must simplify complex formulas, find analogies, and logically structure steps. This builds unbreakable understanding.
+            <Card className="p-8 bg-white/[0.02] border-white/10 rounded-2xl shadow-[0_0_30px_rgba(124,58,237,0.05)]">
+              <h3 className="text-lg font-bold text-success mb-3">Why Teaching Works</h3>
+              <p className="text-sm text-zinc-400 leading-relaxed">
+                Guiding Chidi requires you to breakdown formulas, formulate analogies, and structure your steps. This anchors knowledge permanently in your brain.
               </p>
             </Card>
           </div>
@@ -136,12 +133,12 @@ export default function LandingPage() {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 px-4">
+      <section className="py-24 px-4 relative z-10">
         <div className="container mx-auto max-w-4xl">
-          <motion.div {...fadeInUp} className="text-center mb-16">
-            <p className="text-xs font-bold text-primary uppercase tracking-wider mb-2">The PurpleSchool Loop</p>
-            <h2 className="text-3xl md:text-4xl font-bold">
-              Choose. Teach. Evaluate.
+          <motion.div {...fadeInUp} className="text-center mb-20">
+            <p className="text-xs font-bold text-primary uppercase tracking-wider mb-2">The Interface Flow</p>
+            <h2 className="text-3xl md:text-5xl font-extrabold">
+              How PurpleSchool Works
             </h2>
           </motion.div>
 
@@ -156,87 +153,40 @@ export default function LandingPage() {
               {
                 step: "01",
                 title: "Select a Topic",
-                desc: "Choose a subject and topic from your WAEC syllabus (e.g. Quadratic Equations, Photosynthesis, or Essay Formatting)."
+                desc: "Choose from core WAEC subjects (Mathematics, Science, or English) to initialize the study block."
               },
               {
                 step: "02",
-                title: "Teach Chidi",
-                desc: "Expose concepts to Chidi, your virtual student, through a Socratic chat. Answer their curious questions in simple, local terms."
+                title: "Instruct Chidi",
+                desc: "Chat Socratically with Chidi. Respond to their questions, correct their logic, and explain concepts simply."
               },
               {
                 step: "03",
-                title: "Get Graded",
-                desc: "Receive a Teacher's Report Card. PurpleSchool compares your explanations against the official WAEC marking schemes to find gaps."
+                title: "Review Report Card",
+                desc: "Submit the session to receive a Teacher's Report Card grading you directly against official WAEC marking schemes."
               }
             ].map((item, i) => (
               <motion.div
                 key={i}
                 variants={fadeInUp}
-                className="p-6 bg-card border border-border rounded-none hover:border-primary/40 transition-colors"
+                className="p-8 bg-white/[0.02] border border-white/10 rounded-2xl hover:border-primary/40 hover:bg-white/[0.04] transition-all duration-300"
               >
-                <span className="text-3xl font-black text-primary/20 block mb-4">{item.step}</span>
-                <h3 className="text-lg font-bold mb-2 text-foreground">{item.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                <span className="text-4xl font-black text-primary/10 block mb-6">{item.step}</span>
+                <h3 className="text-lg font-bold mb-3 text-white">{item.title}</h3>
+                <p className="text-sm text-zinc-400 leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </motion.div>
         </div>
       </section>
 
-      {/* Why Different from ChatGPT */}
-      <section className="py-20 px-4 bg-muted/30 border-y border-border">
+      {/* Gamification Grid */}
+      <section className="py-24 px-4 bg-white/[0.01] border-y border-white/5 relative z-10">
         <div className="container mx-auto max-w-4xl">
-          <motion.div {...fadeInUp} className="text-center mb-12">
-            <p className="text-xs font-bold text-primary uppercase tracking-wider mb-2">PurpleSchool vs. Generic AI</p>
-            <h2 className="text-3xl md:text-4xl font-bold">
-              Why not just use ChatGPT?
-            </h2>
-            <p className="text-muted-foreground mt-4 max-w-xl mx-auto">
-              ChatGPT is built for general conversation. PurpleSchool is custom-engineered for West African secondary school success.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-            <div className="space-y-4">
-              <h3 className="text-lg font-bold text-foreground">Generic AIs (ChatGPT/Gemini)</h3>
-              {[
-                "Generates verbose, complex answers that encourage cramming.",
-                "Unaware of specific West African exam grading parameters.",
-                "Consumes high-bandwidth internet data continuously.",
-                "No progress tracking, streaks, or student learning path."
-              ].map((text, i) => (
-                <div key={i} className="flex gap-3 items-start">
-                  <div className="w-1.5 h-1.5 bg-destructive rounded-full mt-2 shrink-0" />
-                  <p className="text-sm text-muted-foreground">{text}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="text-lg font-bold text-primary">PurpleSchool local AI (Chidi)</h3>
-              {[
-                "Forces active learning by placing you in the teacher's seat.",
-                "Compares your teachings against WAEC marking schemes.",
-                "Runs 100% offline in the browser to save parent data costs.",
-                "Gamified streaks, achievements, and level-up loops."
-              ].map((text, i) => (
-                <div key={i} className="flex gap-3 items-start">
-                  <CheckCircle2 className="w-4 h-4 text-success shrink-0 mt-1" />
-                  <p className="text-sm text-muted-foreground font-medium">{text}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Gamification */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto max-w-4xl">
-          <motion.div {...fadeInUp} className="text-center mb-14">
-            <p className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Gamified for Motivation</p>
-            <h2 className="text-3xl md:text-4xl font-bold">
-              Small wins. Big confidence.
+          <motion.div {...fadeInUp} className="text-center mb-16">
+            <p className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Build Habits</p>
+            <h2 className="text-3xl md:text-5xl font-extrabold">
+              Gamified progress tracking
             </h2>
           </motion.div>
 
@@ -245,24 +195,24 @@ export default function LandingPage() {
             initial="initial"
             whileInView="whileInView"
             viewport={{ once: true }}
-            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-10"
+            className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10"
           >
             {[
-              { icon: Zap, label: "Earn XP for every lesson taught" },
-              { icon: Flame, label: "Build daily study streaks" },
-              { icon: Award, label: "Unlock mentorship badges" },
-              { icon: TrendingUp, label: "Track syllabus coverage" },
-              { icon: Shield, label: "Your progress is cached locally" }
+              { icon: Zap, label: "Earn XP for lessons taught" },
+              { icon: Flame, label: "Keep your daily streak alive" },
+              { icon: Award, label: "Unlock teacher status badges" },
+              { icon: TrendingUp, label: "Watch your grade scores grow" },
+              { icon: Shield, label: "Progress stored completely offline" }
             ].map((item, i) => (
               <motion.div
                 key={i}
                 variants={fadeInUp}
-                className="flex flex-col items-center text-center p-4 bg-card border border-border rounded-none"
+                className="flex flex-col items-center text-center p-6 bg-white/[0.02] border border-white/10 rounded-2xl hover:border-white/20 transition-all"
               >
-                <div className="w-10 h-10 bg-primary/10 flex items-center justify-center mb-3">
-                  <item.icon className="w-5 h-5 text-primary" />
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+                  <item.icon className="w-6 h-6 text-primary" />
                 </div>
-                <p className="text-xs font-medium text-muted-foreground">{item.label}</p>
+                <p className="text-xs font-medium text-zinc-300 leading-relaxed">{item.label}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -270,22 +220,22 @@ export default function LandingPage() {
       </section>
 
       {/* Offline First Callout */}
-      <section className="py-16 px-4 bg-primary text-primary-foreground border-y border-border">
+      <section className="py-20 px-4 bg-gradient-to-r from-primary/30 to-purple-900/30 border-y border-primary/20 relative z-10">
         <div className="container mx-auto max-w-3xl text-center space-y-6">
-          <Laptop className="w-12 h-12 mx-auto" />
-          <h2 className="text-2xl md:text-4xl font-bold">No Internet? Zero Data? No Problem.</h2>
-          <p className="text-lg text-primary-foreground/80 max-w-xl mx-auto">
-            Once loaded, the AI student model runs completely offline using your phone or laptop's local WebGPU chip. Teach Chidi anywhere, without consuming your parents' mobile data bundle.
+          <Laptop className="w-14 h-14 mx-auto text-primary" />
+          <h2 className="text-3xl md:text-5xl font-extrabold text-white">No Internet. Zero Data Cost.</h2>
+          <p className="text-base md:text-lg text-zinc-300 max-w-xl mx-auto leading-relaxed">
+            Chidi runs completely offline on your device using WebGPU hardware acceleration. Once installed, teach and practice anywhere without consuming mobile data.
           </p>
         </div>
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 px-4">
+      <section className="py-24 px-4 relative z-10">
         <div className="container mx-auto max-w-4xl">
-          <motion.div {...fadeInUp} className="text-center mb-14">
-            <p className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Student Stories</p>
-            <h2 className="text-3xl md:text-4xl font-bold">
+          <motion.div {...fadeInUp} className="text-center mb-16">
+            <p className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Student Reviews</p>
+            <h2 className="text-3xl md:text-5xl font-extrabold">
               What student teachers say
             </h2>
           </motion.div>
@@ -301,36 +251,36 @@ export default function LandingPage() {
               {
                 name: "Adaeze O.",
                 class: "SS3, Lagos",
-                quote: "Teaching Chidi quadratic equations forced me to review the steps myself. I went from failing to getting an A1 in WAEC maths!",
+                quote: "Explaining quadratic equations to Chidi forced me to study the formula steps myself. I passed my WAEC maths with an A1!",
                 rating: 5
               },
               {
                 name: "Emeka C.",
                 class: "SS2, Enugu",
-                quote: "The Teacher Report Card is a game-changer. It showed me exactly what minor details I missed in my explanations.",
+                quote: "The Teacher Report Card is brilliant. It told me exactly what examiner markers look for in physics steps.",
                 rating: 5
               },
               {
                 name: "Fatima A.",
                 class: "SS3, Kano",
-                quote: "Explaining photosynthesis to Chidi helped me understand the chemical reaction instead of just memorizing the words.",
+                quote: "Explaining biology concepts to Chidi made the details click. I stopped cramming and started understanding.",
                 rating: 5
               }
             ].map((testimonial, i) => (
               <motion.div
                 key={i}
                 variants={fadeInUp}
-                className="p-6 bg-card border border-border rounded-none"
+                className="p-8 bg-white/[0.02] border border-white/10 rounded-2xl hover:bg-white/[0.04] transition-all"
               >
                 <div className="flex gap-1 mb-4">
                   {[...Array(testimonial.rating)].map((_, j) => (
-                    <Star key={j} className="w-4 h-4 fill-accent text-accent" />
+                    <Star key={j} className="w-4 h-4 fill-primary text-primary" />
                   ))}
                 </div>
-                <p className="text-sm text-muted-foreground mb-4 italic">"{testimonial.quote}"</p>
+                <p className="text-sm text-zinc-400 mb-6 italic leading-relaxed">"{testimonial.quote}"</p>
                 <div>
-                  <p className="font-semibold text-foreground">{testimonial.name}</p>
-                  <p className="text-xs text-muted-foreground">{testimonial.class}</p>
+                  <p className="font-bold text-white text-sm">{testimonial.name}</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">{testimonial.class}</p>
                 </div>
               </motion.div>
             ))}
@@ -339,20 +289,20 @@ export default function LandingPage() {
       </section>
 
       {/* Trust Badges */}
-      <section className="py-12 px-4 bg-muted/30 border-y border-border">
+      <section className="py-16 px-4 bg-white/[0.01] border-y border-white/5 relative z-10">
         <div className="container mx-auto max-w-4xl">
           <motion.div
             {...fadeInUp}
-            className="flex flex-wrap justify-center items-center gap-6 md:gap-12"
+            className="flex flex-wrap justify-center items-center gap-6 md:gap-16"
           >
             {[
               { icon: BadgeCheck, text: "WAEC Syllabus Aligned" },
               { icon: Shield, text: "100% Offline Caching" },
               { icon: Users, text: "Built for West African Candidates" }
             ].map((badge, i) => (
-              <div key={i} className="flex items-center gap-2 text-muted-foreground">
+              <div key={i} className="flex items-center gap-2.5 text-zinc-400">
                 <badge.icon className="w-5 h-5 text-primary" />
-                <span className="text-sm font-semibold">{badge.text}</span>
+                <span className="text-sm font-semibold tracking-wide">{badge.text}</span>
               </div>
             ))}
           </motion.div>
@@ -360,11 +310,11 @@ export default function LandingPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 px-4">
+      <section className="py-24 px-4 relative z-10">
         <div className="container mx-auto max-w-3xl">
-          <motion.div {...fadeInUp} className="text-center mb-14">
+          <motion.div {...fadeInUp} className="text-center mb-16">
             <p className="text-xs font-bold text-primary uppercase tracking-wider mb-2">FAQs</p>
-            <h2 className="text-3xl md:text-4xl font-bold">
+            <h2 className="text-3xl md:text-5xl font-extrabold">
               Frequently Asked Questions
             </h2>
           </motion.div>
@@ -374,30 +324,30 @@ export default function LandingPage() {
               {[
                 {
                   question: "What is PurpleSchool AI?",
-                  answer: "PurpleSchool is an offline-first learning platform that uses the Feynman Technique (learning by teaching). Instead of answering questions, you teach Chidi, your virtual AI student, and receive detailed feedback based on WAEC marking guidelines."
+                  answer: "PurpleSchool is an offline-first learning platform built around the Feynman Technique. Instead of asking questions, you practice teaching Chidi, your virtual AI student, and receive report cards based on WAEC marking guidelines."
                 },
                 {
                   question: "How does it work offline?",
-                  answer: "On first load, PurpleSchool downloads a highly compressed AI model (approx. 950MB) and stores it in your browser cache. After that, the AI running calculations happen 100% locally on your computer/phone's GPU with zero internet data cost."
+                  answer: "On first load, PurpleSchool downloads a 950MB AI model and caches it in your browser cache. After that initial setup, all calculations occur locally on your device's GPU, requiring no internet data."
                 },
                 {
                   question: "Is it really free?",
-                  answer: "Yes! PurpleSchool offers free access to all core subjects. We are committed to making high-quality tutoring tools free and open to all students."
+                  answer: "Yes, PurpleSchool offers free access to all core curriculum subjects. We are committed to democratizing tutoring access for all students."
                 },
                 {
-                  question: "Does it cover my specific syllabus?",
-                  answer: "Absolutely. Our local database is populated with the West African Examination Council (WAEC), NECO, and JAMB syllabus guides. Chidi asks questions specifically tailored to highlight steps that earn marks in these exams."
+                  question: "Does it align with the WAEC syllabus?",
+                  answer: "Yes. The questions Chidi asks are systematically anchored to West African Examination Council (WAEC), NECO, and JAMB syllabus frameworks."
                 }
               ].map((faq, i) => (
                 <AccordionItem
                   key={i}
                   value={`item-${i}`}
-                  className="bg-card border border-border px-6"
+                  className="bg-white/[0.02] border border-white/10 px-6 rounded-xl overflow-hidden"
                 >
-                  <AccordionTrigger className="text-left hover:no-underline font-semibold">
+                  <AccordionTrigger className="text-left hover:no-underline font-semibold py-4 text-white">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground leading-relaxed">
+                  <AccordionContent className="text-zinc-400 leading-relaxed pb-4 text-sm">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -408,25 +358,25 @@ export default function LandingPage() {
       </section>
 
       {/* Donate Section */}
-      <section id="donate" className="py-20 px-4 bg-muted/30 border-t border-border">
+      <section id="donate" className="py-24 px-4 bg-white/[0.01] border-t border-white/5 relative z-10">
         <div className="container mx-auto max-w-4xl">
-          <motion.div {...fadeInUp} className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Help us keep learning free for every child
+          <motion.div {...fadeInUp} className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-extrabold mb-4">
+              Help us keep learning free
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              Behind every lesson taught on PurpleSchool is a student striving for a better future. Your support helps us update and maintain our offline syllabus library.
+            <p className="text-zinc-400 max-w-xl mx-auto text-sm leading-relaxed">
+              We need donor support to keep the platform ad-free and continuously update our offline curriculum databases.
             </p>
           </motion.div>
 
-          <motion.div {...fadeInUp} className="bg-card p-8 border border-border text-center max-w-md mx-auto">
+          <motion.div {...fadeInUp} className="bg-white/[0.02] p-8 border border-white/10 rounded-2xl text-center max-w-md mx-auto shadow-[0_0_40px_rgba(124,58,237,0.05)]">
             <h3 className="text-xl font-bold mb-6">Sponsor a Student</h3>
-            <div className="p-4 bg-muted/50 border border-border mb-6">
-              <p className="text-2xl font-black text-primary">₦5,000</p>
-              <p className="text-xs text-muted-foreground mt-1">Sponsor a student's offline database access</p>
+            <div className="p-5 bg-white/[0.02] border border-white/10 rounded-xl mb-6">
+              <p className="text-3xl font-black text-primary">₦5,000</p>
+              <p className="text-xs text-zinc-500 mt-1">Fund offline curriculum database updates</p>
             </div>
             <div className="flex gap-4 justify-center">
-              <Button size="lg" className="w-full rounded-none">
+              <Button size="lg" className="w-full py-6 rounded-xl bg-primary hover:bg-primary/95 text-white font-bold">
                 Donate Now
               </Button>
             </div>
@@ -437,13 +387,13 @@ export default function LandingPage() {
       <FeedbackContactSection />
 
       {/* Footer */}
-      <footer className="py-12 px-4 border-t border-border bg-card">
+      <footer className="py-14 px-4 border-t border-white/5 bg-[#07030e] relative z-10">
         <div className="container mx-auto max-w-4xl flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-2">
-            <GraduationCap className="w-5 h-5 text-primary" />
-            <span className="font-bold text-lg">PurpleSchool</span>
+            <GraduationCap className="w-6 h-6 text-primary" />
+            <span className="font-extrabold text-xl tracking-tight text-white">PurpleSchool</span>
           </div>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-zinc-600 text-center md:text-right">
             © 2026 PurpleSchool. Founded by Chidiebere V. Christopher. Live at https://purpleschool.org
           </p>
         </div>
@@ -454,7 +404,7 @@ export default function LandingPage() {
 
 function Card({ children, className, onClick }: { children: React.ReactNode; className?: string; onClick?: () => void }) {
   return (
-    <div className={`border border-border bg-card p-6 shadow-soft ${className}`} onClick={onClick}>
+    <div className={`border bg-card p-6 shadow-soft ${className}`} onClick={onClick}>
       {children}
     </div>
   );

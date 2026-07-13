@@ -4,12 +4,13 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { GraduationCap, BookOpen, Heart, ArrowRight } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
+import { GraduationCap, ArrowRight } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 import { API_BASE } from "@/config";
 
 export default function AuthPage() {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -27,7 +28,6 @@ export default function AuthPage() {
     try {
       const url = isLogin ? `${API_BASE}/auth/login` : `${API_BASE}/auth/register`;
 
-      // Just send formData; backend handles required fields
       const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -38,29 +38,28 @@ export default function AuthPage() {
 
       if (!res.ok) {
         toast({
-          title: "Error",
-          description: data.message || "Something went wrong",
+          title: "Failed to Connect",
+          description: data.error || data.message || "Something went wrong. Please check database connection.",
           variant: "destructive",
         });
         setLoading(false);
         return;
       }
 
-      // ✅ Save token & user for auto-login
+      // Save credentials
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
       toast({
         title: isLogin ? "Welcome Back!" : "Account Created!",
-        description: `Hello ${data.user.name}, let's continue your learning journey.`,
+        description: `Hello ${data.user.name}, let's start studying.`,
       });
 
-      // Navigate to dashboard
       navigate("/dashboard");
     } catch (err: any) {
       toast({
-        title: "Network Error",
-        description: err.message || "Something went wrong",
+        title: "Connection Error",
+        description: err.message || "Failed to reach backend server. Ensure it is running on port 5000.",
         variant: "destructive",
       });
     } finally {
@@ -69,58 +68,99 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen primary-calm flex flex-col">
-      {/* Hero */}
-      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="px-6 pt-12 pb-8 text-center">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-2xl shadow-glow mb-6">
-          <GraduationCap className="w-8 h-8 text-primary-foreground" />
+    <div className="min-h-screen bg-[#0f0a1c] flex flex-col justify-center items-center relative overflow-hidden px-4 py-12">
+      
+      {/* Radiant Background Blur */}
+      <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-accent/15 rounded-full blur-[120px] pointer-events-none" />
+
+      {/* Header */}
+      <motion.div 
+        initial={{ opacity: 0, y: -25 }} 
+        animate={{ opacity: 1, y: 0 }} 
+        className="text-center mb-8 z-10"
+      >
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 border border-primary/30 rounded-2xl shadow-[0_0_30px_rgba(124,58,237,0.25)] mb-4">
+          <GraduationCap className="w-8 h-8 text-primary" />
         </div>
-        <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">PurpleSchool</h1>
-        The AI tutor that supports{" "}
-            <span className="text-primary">West African Examination Council (WAEC)</span>
+        <h1 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">PurpleSchool</h1>
+        <p className="text-sm text-muted-foreground mt-2 max-w-xs mx-auto">
+          The Socratic offline learning network for West African candidates
+        </p>
       </motion.div>
 
-      {/* Features */}
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="flex justify-center gap-6 px-6 pb-8">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <BookOpen className="w-4 h-4 text-primary" />
-          <span>Adaptive Learning</span>
-        </div>
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Heart className="w-4 h-4 text-accent" />
-          <span>Gentle Support</span>
-        </div>
-      </motion.div>
-
-      {/* Auth Card */}
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="flex-1 px-4 pb-8 " >
-        <Card className="max-w-md mx-auto rounded-none" >
+      {/* Glassmorphic Auth Card */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }} 
+        animate={{ opacity: 1, scale: 1 }} 
+        transition={{ delay: 0.1 }}
+        className="w-full max-w-md z-10"
+      >
+        <Card className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]">
           <CardHeader className="text-center pb-4">
-            <CardTitle className="text-2xl">{isLogin ? "Welcome Back!" : "Join PurpleSchool"}</CardTitle>
-            <CardDescription>
-              {isLogin ? "Continue your learning journey" : "Start your personalized learning adventure"}
+            <CardTitle className="text-2xl font-bold text-white">
+              {isLogin ? "Welcome Back!" : "Join PurpleSchool"}
+            </CardTitle>
+            <CardDescription className="text-zinc-400">
+              {isLogin ? "Log in to teach Chidi" : "Create an account to start teaching"}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               {!isLogin && (
                 <>
-                  <Input placeholder="Your name" className="rounded-none" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
-                  <Input placeholder="School name" className="rounded-none" value={formData.school} onChange={(e) => setFormData({ ...formData, school: e.target.value })} />
-                  <Input placeholder="Class (e.g., JSS1- SSS3)" className="rounded-none" value={formData.className} onChange={(e) => setFormData({ ...formData, className: e.target.value })} />
+                  <Input 
+                    placeholder="Your name" 
+                    className="rounded-xl bg-white/[0.02] border-white/10 text-white placeholder-zinc-500 focus:border-primary/50 focus:ring-primary/50" 
+                    value={formData.name} 
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })} 
+                    required
+                  />
+                  <Input 
+                    placeholder="School name" 
+                    className="rounded-xl bg-white/[0.02] border-white/10 text-white placeholder-zinc-500 focus:border-primary/50 focus:ring-primary/50" 
+                    value={formData.school} 
+                    onChange={(e) => setFormData({ ...formData, school: e.target.value })} 
+                    required
+                  />
+                  <Input 
+                    placeholder="Class (e.g., JSS1 - SSS3)" 
+                    className="rounded-xl bg-white/[0.02] border-white/10 text-white placeholder-zinc-500 focus:border-primary/50 focus:ring-primary/50" 
+                    value={formData.className} 
+                    onChange={(e) => setFormData({ ...formData, className: e.target.value })} 
+                    required
+                  />
                 </>
               )}
-              <Input type="email" placeholder="Email address" className="rounded-none" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} required />
-              <Input type="password" placeholder="Password" className="rounded-none" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} required />
+              <Input 
+                type="email" 
+                placeholder="Email address" 
+                className="rounded-xl bg-white/[0.02] border-white/10 text-white placeholder-zinc-500 focus:border-primary/50 focus:ring-primary/50" 
+                value={formData.email} 
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })} 
+                required 
+              />
+              <Input 
+                type="password" 
+                placeholder="Password" 
+                className="rounded-xl bg-white/[0.02] border-white/10 text-white placeholder-zinc-500 focus:border-primary/50 focus:ring-primary/50" 
+                value={formData.password} 
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })} 
+                required 
+              />
 
-              <Button type="submit" className="w-full rounded-none" size="lg" disabled={loading}>
-                {loading ? "Processing..." : isLogin ? "Start Learning" : "Create Account"}
+              <Button type="submit" className="w-full rounded-xl bg-primary hover:bg-primary/95 text-white font-semibold py-6 mt-2" disabled={loading}>
+                {loading ? "Connecting..." : isLogin ? "Start Learning" : "Create Account"}
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </form>
 
             <div className="mt-6 text-center">
-              <button type="button" onClick={() => setIsLogin(!isLogin)} className="text-sm text-muted-foreground hover:text-primary transition-colors">
+              <button 
+                type="button" 
+                onClick={() => setIsLogin(!isLogin)} 
+                className="text-sm text-zinc-400 hover:text-primary transition-colors"
+              >
                 {isLogin ? "Don't have an account? Sign up" : "Already have an account? Log in"}
               </button>
             </div>
