@@ -98,6 +98,18 @@ export default function LandingPage() {
               Support Our Mission
             </Button>
           </motion.div>
+
+          {/* Centered Brand Hero Image */}
+          <motion.div
+            {...fadeInUp}
+            className="mt-16 max-w-xl mx-auto rounded-3xl overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(124,58,237,0.15)] relative group"
+          >
+            <img 
+              src="/purpleschool-hero.jpg" 
+              alt="PurpleSchool - Learn. Grow. Succeed." 
+              className="w-full h-auto object-cover"
+            />
+          </motion.div>
         </div>
       </section>
 
