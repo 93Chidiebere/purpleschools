@@ -401,8 +401,12 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="py-14 px-4 border-t border-white/5 bg-[#07030e] relative z-10">
         <div className="container mx-auto max-w-4xl flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-2">
-            <GraduationCap className="w-6 h-6 text-primary" />
+          <div className="flex items-center gap-2.5">
+            <img 
+              src="/purpleschool-logo.png" 
+              alt="PurpleSchool Logo" 
+              className="w-8 h-8 rounded-lg object-cover border border-white/10"
+            />
             <span className="font-extrabold text-xl tracking-tight text-white">PurpleSchool</span>
           </div>
           <p className="text-xs text-zinc-600 text-center md:text-right">

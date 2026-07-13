@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { GraduationCap, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { API_BASE } from "@/config";
 
@@ -80,9 +80,11 @@ export default function AuthPage() {
         animate={{ opacity: 1, y: 0 }} 
         className="text-center mb-8 z-10"
       >
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 border border-primary/30 rounded-2xl shadow-[0_0_30px_rgba(124,58,237,0.25)] mb-4">
-          <GraduationCap className="w-8 h-8 text-primary" />
-        </div>
+        <img 
+          src="/purpleschool-logo.png" 
+          alt="PurpleSchool Logo" 
+          className="w-16 h-16 rounded-2xl shadow-[0_0_30px_rgba(124,58,237,0.25)] mb-4 object-cover border border-white/10"
+        />
         <h1 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">PurpleSchool</h1>
         <p className="text-sm text-muted-foreground mt-2 max-w-xs mx-auto">
           The Socratic offline learning network for global secondary school candidates

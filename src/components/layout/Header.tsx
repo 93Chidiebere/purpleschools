@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, BookOpen, User, GraduationCap, Info } from "lucide-react";
+import { Home, BookOpen, User, Info } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { Avatar } from "@/components/shared/Avatar";
@@ -33,9 +33,11 @@ useEffect(() => {
       <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
         {/* Logo & Brand */}
         <Link to="/dashboard" className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-soft">
-            <GraduationCap className="w-5 h-5 text-primary-foreground" />
-          </div>
+          <img 
+            src="/purpleschool-logo.png" 
+            alt="PurpleSchool Logo" 
+            className="w-10 h-10 rounded-xl object-cover shadow-soft border border-white/10"
+          />
           <span className="text-xl font-bold text-gradient">PurpleSchool</span>
         </Link>
 
