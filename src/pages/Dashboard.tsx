@@ -297,14 +297,14 @@ export default function Dashboard() {
               </div>
               <div className="relative z-10">
                 <h2 className="text-xl font-bold text-foreground mb-2">
-                  Ready to Learn?
+                  Ready to Teach?
                 </h2>
                 <p className="text-muted-foreground mb-4">
-                  Your AI tutor is here to help you understand anything, at your own pace.
+                  Prove your understanding of subjects by teaching. Explain concepts to Chidi, your AI student.
                 </p>
-                <Button onClick={() => navigate("/learn")} size="lg" className="w-full sm:w-auto rounded-none">
+                <Button onClick={() => navigate("/teach")} size="lg" className="w-full sm:w-auto rounded-none">
                   <MessageCircle className="w-5 h-5 mr-2" />
-                  Start Learning
+                  Start Teaching
                 </Button>
               </div>
             </CardContent>
@@ -317,7 +317,7 @@ export default function Dashboard() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <h3 className="text-lg font-semibold text-foreground mb-4">Your Learning Level</h3>
+          <h3 className="text-lg font-semibold text-foreground mb-4">Your Teaching Level</h3>
           <Card className="overflow-hidden rounded-none">
             <CardContent className="p-6">
               <div className="flex items-center gap-6">

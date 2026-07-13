@@ -44,6 +44,7 @@ export default function LearnPage() {
   const [isEngineLoaded, setIsEngineLoaded] = useState(false);
   const [loadPercent, setLoadPercent] = useState(0);
   const [loadText, setLoadText] = useState("");
+  const [isCloudFallback, setIsCloudFallback] = useState(false);
 
   // Session states
   const [selectedTopic, setSelectedTopic] = useState<{ id: string; name: string; topic: string } | null>(null);
@@ -97,25 +98,16 @@ export default function LearnPage() {
     }
   }, [isLoaded, recordLearnWelcome]);
 
-  // Start Offline Engine
+  // Start Offline Engine with Cloud AI Fallback
   const handleStartEngine = async (topic: typeof subjectsList[0]) => {
     setSelectedTopic(topic);
     setIsInitializing(true);
+    setIsCloudFallback(false);
     
     // Track subject diversity engagement
     recordSubjectEngagement(topic.name);
 
-    try {
-      await localLLM.loadModel((text, percent) => {
-        setLoadText(text);
-        setLoadPercent(percent);
-      });
-      
-      setIsEngineLoaded(true);
-      setIsInitializing(false);
-
-      // Fetch WAEC Marking Scheme for prompt grounding
-      const matchedScheme = localVectorDb.searchMarkingSchemes(topic.name, topic.topic);
+    const initializeChat = (matchedScheme: any) => {
       const markingGuideText = matchedScheme ? matchedScheme.markingGuide : "Explain steps clearly.";
 
       // Initial Student AI system instruction
@@ -143,7 +135,7 @@ Never break character or mention that you have a marking scheme guide.`,
       } else if (topic.id === "science") {
         greeting = "Hello Teacher! 🌱 I'm reading about photosynthesis for Biology class. The textbook says plants make food using light, but it seems like magic to me. What are the actual ingredients they use, and how do they cook it?";
       } else {
-        greeting = "Good day, sir/ma! ✍️ I'm trying to write my WAEC practice essay, but my teacher said I will lose many marks in 'Mechanical Accuracy'. What does that mean, and how do I format my writing to get full marks?";
+        greeting = "Good day, sir/ma! ✍️ I'm trying to write my practice essay, but my teacher said I will lose many marks in 'Mechanical Accuracy'. What does that mean, and how do I format my writing to get full marks?";
       }
 
       setMessages([
@@ -155,13 +147,40 @@ Never break character or mention that you have a marking scheme guide.`,
           timestamp: new Date()
         }
       ]);
-    } catch (err) {
-      console.error(err);
-      setIsInitializing(false);
+    };
+
+    const matchedScheme = localVectorDb.searchMarkingSchemes(topic.name, topic.topic);
+
+    // Try WebGPU first if supported
+    if (gpuSupported !== false) {
+      try {
+        await localLLM.loadModel((text, percent) => {
+          setLoadText(text);
+          setLoadPercent(percent);
+        });
+        
+        setIsEngineLoaded(true);
+        setIsInitializing(false);
+        initializeChat(matchedScheme);
+        return;
+      } catch (err) {
+        console.error("Local GPU load failed, falling back to Cloud AI Server:", err);
+      }
     }
+
+    // CLOUD FALLBACK PATH
+    console.log("Switching to Cloud AI Fallback Mode...");
+    setIsCloudFallback(true);
+    setLoadText("Connecting to Cloud Server AI...");
+    
+    setTimeout(() => {
+      setIsEngineLoaded(true);
+      setIsInitializing(false);
+      initializeChat(matchedScheme);
+    }, 1000);
   };
 
-  // Send Message locally
+  // Send Message locally or through cloud fallback
   const handleSend = async () => {
     if (!input.trim() || isTyping) return;
 
@@ -177,34 +196,60 @@ Never break character or mention that you have a marking scheme guide.`,
     setIsTyping(true);
     recordQuestion();
 
-    // Prepare message log for local LLM
-    const history = [...messages, userMsg].map(m => ({
-      role: m.role,
-      content: m.content
-    }));
-
-    // Create an assistant message placeholder for streaming
-    const assistantMsgId = (Date.now() + 1).toString();
-    const assistantMsgPlaceholder: Message = {
-      id: assistantMsgId,
-      role: "assistant",
-      content: "",
-      timestamp: new Date()
-    };
-    
-    setMessages(prev => [...prev, assistantMsgPlaceholder]);
+    const chatHistory = [...messages, userMsg];
 
     try {
-      await localLLM.chat(history, (token) => {
-        setMessages(prev => 
-          prev.map(m => m.id === assistantMsgId ? { ...m, content: m.content + token } : m)
-        );
-      });
+      if (isCloudFallback) {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/chat/socratic`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            messages: chatHistory.map(m => ({ role: m.role, content: m.content })),
+            topic: selectedTopic?.topic,
+            subject: selectedTopic?.name
+          })
+        });
+
+        if (!response.ok) throw new Error("Cloud Socratic query failed");
+        const data = await response.json();
+
+        setMessages(prev => [...prev, {
+          id: Date.now().toString(),
+          role: "assistant",
+          content: data.reply,
+          timestamp: new Date()
+        }]);
+      } else {
+        // Local WebGPU Chat
+        const history = chatHistory.map(m => ({
+          role: m.role,
+          content: m.content
+        }));
+
+        const assistantMsgId = (Date.now() + 1).toString();
+        const assistantMsgPlaceholder: Message = {
+          id: assistantMsgId,
+          role: "assistant",
+          content: "",
+          timestamp: new Date()
+        };
+        
+        setMessages(prev => [...prev, assistantMsgPlaceholder]);
+
+        await localLLM.chat(history, (token) => {
+          setMessages(prev => 
+            prev.map(m => m.id === assistantMsgId ? { ...m, content: m.content + token } : m)
+          );
+        });
+      }
     } catch (err) {
       console.error(err);
-      setMessages(prev => 
-        prev.map(m => m.id === assistantMsgId ? { ...m, content: "Sorry, I had a glitch in my local engine. Could you repeat that?" } : m)
-      );
+      setMessages(prev => [...prev, {
+        id: Date.now().toString(),
+        role: "assistant",
+        content: "Sorry, I had a connection glitch. Could you repeat that?",
+        timestamp: new Date()
+      }]);
     } finally {
       setIsTyping(false);
     }
@@ -218,16 +263,35 @@ Never break character or mention that you have a marking scheme guide.`,
     const matchedScheme = selectedTopic ? localVectorDb.searchMarkingSchemes(selectedTopic.name, selectedTopic.topic) : null;
     const rubric = matchedScheme ? matchedScheme.markingGuide : "Verify steps.";
 
-    // Compile chat logs
-    const logs = messages
-      .filter(m => m.role !== "system")
-      .map(m => `${m.role === "user" ? "Teacher" : "Student"}: ${m.content}`)
-      .join("\n");
+    try {
+      if (isCloudFallback) {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/chat/evaluate`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            messages: messages.map(m => ({ role: m.role, content: m.content })),
+            topic: selectedTopic?.topic,
+            subject: selectedTopic?.name,
+            rubric
+          })
+        });
 
-    const evaluationPrompt = [
-      {
-        role: "system",
-        content: `You are a curriculum examiner. Evaluate the teacher's lesson transcript based on this marking rubric:
+        if (!response.ok) throw new Error("Cloud evaluation query failed");
+        const parsed = await response.json();
+        setReportCard(parsed);
+        
+        const xpEarned = parsed.score * 15;
+        addXP(xpEarned, "reverse_socratic_teaching");
+      } else {
+        const logs = messages
+          .filter(m => m.role !== "system")
+          .map(m => `${m.role === "user" ? "Teacher" : "Student"}: ${m.content}`)
+          .join("\n");
+
+        const evaluationPrompt = [
+          {
+            role: "system",
+            content: `You are a curriculum examiner. Evaluate the teacher's lesson transcript based on this marking rubric:
 ===
 ${rubric}
 ===
@@ -238,31 +302,28 @@ Write a concise report card. You must respond in this exact JSON format:
   "gaps": "<one sentence highlighting what curriculum steps the teacher forgot to state>",
   "positive": "<one sentence highlighting what the teacher did exceptionally well>"
 }`
-      },
-      {
-        role: "user",
-        content: `Here is the lesson log:\n${logs}`
-      }
-    ];
+          },
+          {
+            role: "user",
+            content: `Here is the lesson log:\n${logs}`
+          }
+        ];
 
-    try {
-      const evaluationResult = await localLLM.chat(evaluationPrompt as any, () => {});
-      // Extract JSON block
-      const jsonStart = evaluationResult.indexOf("{");
-      const jsonEnd = evaluationResult.lastIndexOf("}");
-      if (jsonStart !== -1 && jsonEnd !== -1) {
-        const parsed = JSON.parse(evaluationResult.substring(jsonStart, jsonEnd + 1));
-        setReportCard(parsed);
-        
-        // Award XP based on teacher score
-        const xpEarned = parsed.score * 15;
-        addXP(xpEarned, "reverse_socratic_teaching");
-      } else {
-        throw new Error("Invalid output format");
+        const evaluationResult = await localLLM.chat(evaluationPrompt as any, () => {});
+        const jsonStart = evaluationResult.indexOf("{");
+        const jsonEnd = evaluationResult.lastIndexOf("}");
+        if (jsonStart !== -1 && jsonEnd !== -1) {
+          const parsed = JSON.parse(evaluationResult.substring(jsonStart, jsonEnd + 1));
+          setReportCard(parsed);
+          
+          const xpEarned = parsed.score * 15;
+          addXP(xpEarned, "reverse_socratic_teaching");
+        } else {
+          throw new Error("Invalid output format");
+        }
       }
     } catch (err) {
       console.error("Evaluation failed:", err);
-      // Fallback dummy report if JSON parsing fails
       setReportCard({
         score: 7,
         accuracy: "Your explanations of the basic concepts were correct and encouraging.",
@@ -314,13 +375,24 @@ Write a concise report card. You must respond in this exact JSON format:
         </div>
       </div>
 
-      {/* WebGPU Not Supported Error Banner */}
+      {/* WebGPU Support Status / Cloud Mode Indicator */}
       {gpuSupported === false && (
-        <div className="bg-destructive/10 text-destructive border-b border-destructive/20 p-4">
-          <div className="max-w-3xl mx-auto flex gap-3 items-center">
-            <AlertCircle className="w-5 h-5 flex-shrink-0" />
-            <p className="text-sm">
-              Your device or browser does not support WebGPU acceleration. To run local models offline, please use Google Chrome or Microsoft Edge.
+        <div className="bg-warning/10 text-warning border-b border-warning/20 p-3">
+          <div className="max-w-3xl mx-auto flex gap-2.5 items-center justify-center text-center">
+            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+            <p className="text-xs font-semibold">
+              WebGPU offline acceleration is not supported on this browser. PurpleSchool is operating in Cloud Server AI fallback mode.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {isEngineLoaded && isCloudFallback && (
+        <div className="bg-primary/10 text-primary border-b border-primary/20 p-3">
+          <div className="max-w-3xl mx-auto flex gap-2 items-center justify-center text-center">
+            <AlertCircle className="w-4 h-4 flex-shrink-0 animate-pulse" />
+            <p className="text-xs font-semibold">
+              Running in Cloud Server AI Fallback Mode.
             </p>
           </div>
         </div>

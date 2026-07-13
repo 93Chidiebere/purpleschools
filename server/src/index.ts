@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes";
 import profileRoutes from "./routes/profileRoutes";
+import chatRoutes from "./routes/chatRoutes";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use(express.json());
 // Main routers
 app.use("/auth", authRoutes);
 app.use("/profile", profileRoutes);
+app.use("/chat", chatRoutes);
 
 // Server status checking
 app.get("/health", (req, res) => {

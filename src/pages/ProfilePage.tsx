@@ -334,7 +334,7 @@ export default function ProfilePage() {
                     <div className="p-6 text-center">
                       <div className="text-3xl mb-2">🎯</div>
                       <p className="text-muted-foreground text-sm">
-                        No achievements yet. Start learning!
+                        No achievements yet. Start teaching!
                       </p>
                     </div>
                   ) : (
@@ -410,7 +410,7 @@ export default function ProfilePage() {
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center">
                   <p className="text-3xl font-bold text-gradient">{user.daysActive}</p>
-                  <p className="text-sm text-muted-foreground">Days Learning</p>
+                  <p className="text-sm text-muted-foreground">Days Teaching</p>
                 </div>
                 <div className="text-center">
                   <p className="text-3xl font-bold text-gradient">{user.streak}</p>

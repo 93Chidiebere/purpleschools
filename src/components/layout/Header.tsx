@@ -9,7 +9,7 @@ import { useLevelProgressContext } from "@/contexts/LevelProgressContext";
 
 const navItems = [
   { icon: Home, label: "Home", path: "/dashboard" },
-  { icon: BookOpen, label: "Learn", path: "/learn" },
+  { icon: BookOpen, label: "Teach", path: "/teach" },
   { icon: Info, label: "About", path: "/about" },
   { icon: User, label: "Profile", path: "/profile" },
 ];
