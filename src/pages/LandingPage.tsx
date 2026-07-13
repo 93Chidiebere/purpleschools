@@ -15,7 +15,6 @@ import {
   GraduationCap,
   ArrowRight,
   Flame,
-  Star,
   Shield,
   BadgeCheck,
   HeartHandshake,
@@ -242,64 +241,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-24 px-4 relative z-10">
-        <div className="container mx-auto max-w-4xl">
-          <motion.div {...fadeInUp} className="text-center mb-16">
-            <p className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Student Reviews</p>
-            <h2 className="text-3xl md:text-5xl font-extrabold">
-              What student teachers say
-            </h2>
-          </motion.div>
-
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true }}
-            className="grid md:grid-cols-3 gap-6"
-          >
-            {[
-              {
-                name: "Adaeze O.",
-                class: "SS3, Lagos",
-                quote: "Explaining quadratic equations to Chidi forced me to study the formula steps myself. I passed my WAEC maths with an A1!",
-                rating: 5
-              },
-              {
-                name: "Emeka C.",
-                class: "SS2, Enugu",
-                quote: "The Teacher Report Card is brilliant. It told me exactly what examiner markers look for in physics steps.",
-                rating: 5
-              },
-              {
-                name: "Fatima A.",
-                class: "SS3, Kano",
-                quote: "Explaining biology concepts to Chidi made the details click. I stopped cramming and started understanding.",
-                rating: 5
-              }
-            ].map((testimonial, i) => (
-              <motion.div
-                key={i}
-                variants={fadeInUp}
-                className="p-8 bg-white/[0.02] border border-white/10 rounded-2xl hover:bg-white/[0.04] transition-all"
-              >
-                <div className="flex gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, j) => (
-                    <Star key={j} className="w-4 h-4 fill-primary text-primary" />
-                  ))}
-                </div>
-                <p className="text-sm text-zinc-400 mb-6 italic leading-relaxed">"{testimonial.quote}"</p>
-                <div>
-                  <p className="font-bold text-white text-sm">{testimonial.name}</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">{testimonial.class}</p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
       {/* Trust Badges */}
       <section className="py-16 px-4 bg-white/[0.01] border-y border-white/5 relative z-10">
         <div className="container mx-auto max-w-4xl">
@@ -410,7 +351,7 @@ export default function LandingPage() {
             <span className="font-extrabold text-xl tracking-tight text-white">PurpleSchool</span>
           </div>
           <p className="text-xs text-zinc-600 text-center md:text-right">
-            © 2026 PurpleSchool. Founded by Chidiebere V. Christopher. Live at https://purpleschool.org
+            © 2026 PurpleSchool by UNICCO
           </p>
         </div>
       </footer>
