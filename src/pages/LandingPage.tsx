@@ -203,7 +203,7 @@ export default function LandingPage() {
               <motion.div
                 key={i}
                 variants={fadeInUp}
-                className="flex flex-col items-center text-center p-6 bg-white/[0.02] border border-white/10 rounded-2xl hover:border-white/20 transition-all"
+                className="flex flex-col items-center text-center p-6 bg-white/[0.02] border border-white/10 rounded-2xl hover:border-white/20 transition-colors"
               >
                 <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
                   <item.icon className="w-6 h-6 text-primary" />
