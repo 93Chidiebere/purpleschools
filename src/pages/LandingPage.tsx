@@ -8,13 +8,9 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import {
-  Award,
-  Zap,
-  TrendingUp,
   Users,
   GraduationCap,
   ArrowRight,
-  Flame,
   Shield,
   BadgeCheck,
   Laptop
@@ -173,38 +169,6 @@ export default function LandingPage() {
               </motion.div>
             ))}
           </motion.div>
-        </div>
-      </section>
-
-      {/* Gamification Grid */}
-      <section className="py-24 px-4 bg-white/[0.01] border-y border-white/5 relative z-10">
-        <div className="container mx-auto max-w-4xl">
-          <motion.div {...fadeInUp} className="text-center mb-16">
-            <p className="text-xs font-bold text-primary uppercase tracking-wider mb-2">Build Habits</p>
-            <h2 className="text-3xl md:text-5xl font-extrabold">
-              Gamified progress tracking
-            </h2>
-          </motion.div>
-
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
-            {[
-              { icon: Zap, label: "Earn XP for lessons taught" },
-              { icon: Flame, label: "Keep your daily streak alive" },
-              { icon: Award, label: "Unlock teacher status badges" },
-              { icon: TrendingUp, label: "Watch your grade scores grow" },
-              { icon: Shield, label: "Progress stored completely offline" }
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="flex flex-col items-center text-center p-6 bg-white/[0.02] border border-white/10 rounded-2xl hover:border-white/20 transition-colors"
-              >
-                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
-                  <item.icon className="w-6 h-6 text-primary" />
-                </div>
-                <p className="text-xs font-medium text-zinc-300 leading-relaxed">{item.label}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
