@@ -20,152 +20,7 @@ interface Message {
   timestamp: Date;
 }
 
-const subjectsData: Record<string, { id: string; name: string; topics: any[] }> = {
-  math: {
-    id: "math",
-    name: "Mathematics",
-    topics: [
-      {
-        id: "quadratic",
-        title: "Quadratic Equations",
-        juniorDesc: "Learn how to factorize simple quadratic expressions where a = 1 (JSS Level).",
-        seniorDesc: "Solve complex quadratic equations using the general formula and completing the square (SS Level).",
-        juniorGreeting: "Hi Teacher! 👋 I am trying to solve this math problem: x² + 5x + 6 = 0. My textbook says I should look for two numbers that multiply to 6 and add to 5. Why is that? Can you explain how to factorize this?",
-        seniorGreeting: "Good day, Teacher! ⚡ I am studying advanced quadratic equations ax² + bx + c = 0. I saw this formula x = (-b ± √(b²-4ac))/2a. But what does the part under the square root do? What is the discriminant, and how does it tell us if roots are real or imaginary?",
-        juniorMarkingGuide: "JSS3 Math Quadratic Equations: Identify factors of c that sum to b [2 Marks]. Factorize trinomial into (x+p)(x+q) = 0 [1 Mark]. Solve for x [1 Mark].",
-        seniorMarkingGuide: "SS2 Math Quadratic Equations: State full quadratic formula [1 Mark]. Substitute coefficients correctly [1 Mark]. Explain discriminant b²-4ac [2 Marks]. Calculate correct real/imaginary roots [1 Mark]."
-      }
-    ]
-  },
-  science: {
-    id: "science",
-    name: "Science (Biology)",
-    topics: [
-      {
-        id: "photosynthesis",
-        title: "Photosynthesis",
-        juniorDesc: "Learn the basic ingredients (sunlight, water, carbon dioxide) plants use to make food (JSS Level).",
-        seniorDesc: "Understand Light and Dark reactions, chloroplast structure, and the balanced molecular equation (SS Level).",
-        juniorGreeting: "Hello Teacher! 🌱 I'm reading about photosynthesis for Integrated Science. The textbook says plants make food using leaves. What are the actual ingredients they need, and what do they produce?",
-        seniorGreeting: "Hello, Teacher! 🌿 I am preparing for my biology exam on photosynthesis. I understand that plants convert carbon dioxide and water into glucose. But I'm confused about the Light-dependent and Light-independent (Dark) reactions. Can you explain the chemical process and write out the balanced molecular equation?",
-        juniorMarkingGuide: "JSS3 Science Photosynthesis: Define as food-making process in green plants [1 Mark]. List reactants (CO2, H2O, sunlight) [2 Marks]. List products (Glucose, Oxygen) [1 Mark].",
-        seniorMarkingGuide: "SS2 Biology Photosynthesis: Write balanced chemical equation 6CO2 + 6H2O -> C6H12O6 + 6O2 [2 Marks]. Explain light reaction (photolysis of water) [2 Marks]. Explain dark reaction (carbon fixation) [1 Mark]."
-      }
-    ]
-  },
-  english: {
-    id: "english",
-    name: "English Language",
-    topics: [
-      {
-        id: "essay",
-        title: "Essay Writing",
-        juniorDesc: "Learn the structure of informal letters and simple narrative essays (JSS Level).",
-        seniorDesc: "Format formal letters, argumentative essays, and score high in mechanical accuracy (SS Level).",
-        juniorGreeting: "Hi Teacher! ✍️ I want to write an informal letter to my friend telling them about my holiday. How many addresses do I need, and how should I start and end the letter?",
-        seniorGreeting: "Good day, sir/ma! ✍️ I'm writing a formal argumentative essay on 'Should boarding schools be banned?'. My teacher said I will lose many marks in 'Mechanical Accuracy' for punctuation and comma splices. Can you explain what these errors are, and how to organize my arguments to get full marks?",
-        juniorMarkingGuide: "JSS3 English Essay: Include single address of sender and date [1 Mark]. Use friendly greeting and warm opening [1 Mark]. Organize into distinct body paragraphs [1 Mark]. Friendly sign-off (e.g. Yours sincerely/affectionately) [1 Mark].",
-        seniorMarkingGuide: "SS2 English Essay: Content addressing all prompts [10 Marks]. Proper organization including formal/informal addresses [10 Marks]. Correct mechanical accuracy with -0.5 deduction per error [10 Marks]. Varied expression and registers [20 Marks]."
-      }
-    ]
-  },
-  physics: {
-    id: "physics",
-    name: "Physics",
-    topics: [
-      {
-        id: "motion",
-        title: "Equations of Motion",
-        juniorDesc: "Introduction to speed, velocity, and basic distance formula (JSS Level).",
-        seniorDesc: "Learn the three linear equations of motion and uniform acceleration calculations (SS Level).",
-        juniorGreeting: "Hi Teacher! ⚡ We are learning about speed and velocity in Basic Science. Is there any difference between speed and velocity, and how do we calculate average speed?",
-        seniorGreeting: "Good day, Teacher! ⚡ I'm trying to learn the equations of motion for Physics, like v = u + at and s = ut + 1/2at^2. What do these letters represent, how are they derived, and when are they valid?",
-        juniorMarkingGuide: "JSS3 Basic Science Motion: Define speed as distance per unit time [2 Marks]. State standard unit is m/s [1 Mark]. Define velocity as speed in a specific direction [2 Marks].",
-        seniorMarkingGuide: "SS2 Physics Motion: State all three linear motion equations [3 Marks]. Explain the requirement of constant/uniform acceleration [1 Mark]. Define all symbols with standard units [1 Mark]."
-      }
-    ]
-  },
-  chemistry: {
-    id: "chemistry",
-    name: "Chemistry",
-    topics: [
-      {
-        id: "bonding",
-        title: "Chemical Bonding",
-        juniorDesc: "Learn the differences between mixture and compound elements (JSS Level).",
-        seniorDesc: "Understand valence electron shells, ionic electron transfer, and covalent electron sharing (SS Level).",
-        juniorGreeting: "Hello Teacher! 🧪 In Basic Science, we are learning about mixtures and compounds. What is the difference between them, and why can we separate mixtures easily but not compounds?",
-        seniorGreeting: "Hello, Teacher! 🧪 We are studying chemical bonding in Chemistry class. I don't understand the difference between ionic and covalent bonds. How do atoms decide to share or transfer valence electrons, and what are examples of each?",
-        juniorMarkingGuide: "JSS3 Science Elements: Define element, mixture, and compound [3 Marks]. Give examples of physical separation techniques [2 Marks].",
-        seniorMarkingGuide: "SS2 Chemistry Bonding: Define ionic bonding as electrostatic force from electron transfer [2 Marks]. Define covalent bonding as valence electron sharing between non-metals [2 Marks]. List NaCl and H2O examples [1 Mark]."
-      }
-    ]
-  },
-  civic: {
-    id: "civic",
-    name: "Civic Education",
-    topics: [
-      {
-        id: "rights",
-        title: "Human Rights",
-        juniorDesc: "Learn basic citizen rights and national values (JSS Level).",
-        seniorDesc: "Understand civic/political rights, economic/social rights, and constitutional safeguards (SS Level).",
-        juniorGreeting: "Good day, Teacher! ⚖️ In Civic Education, we are discussing human rights. What are some rights that I have as a child and a citizen of Nigeria?",
-        seniorGreeting: "Good day, sir/ma! ⚖️ We are studying fundamental human rights in Civic Education. What does it mean for rights to be universal and inalienable, how are they classified (like civil vs economic), and how does the constitution protect them?",
-        juniorMarkingGuide: "JSS3 Civic Rights: List 3 basic rights of a citizen (life, education, association) [3 Marks]. Explain duties of citizens [2 Marks].",
-        seniorMarkingGuide: "SS2 Civic Rights: Define rights as universal/inalienable entitlements [2 Marks]. Classify civil/political vs economic/social categories [2 Marks]. Mention constitution and judicial protection [1 Mark]."
-      }
-    ]
-  },
-  economics: {
-    id: "economics",
-    name: "Economics",
-    topics: [
-      {
-        id: "demand",
-        title: "Demand and Supply",
-        juniorDesc: "Basic introduction to buying, selling, and markets (JSS Level).",
-        seniorDesc: "Explain the law of demand, law of supply, price mechanism, and market equilibrium (SS Level).",
-        juniorGreeting: "Hello Teacher! 📈 What is a market, and why do prices of things change when there is a scarcity or abundance?",
-        seniorGreeting: "Hello Teacher! 📈 I am studying the Law of Demand and Supply for Economics. I see that the demand curve slopes downwards, but I don't understand the income effect, substitution effect, and what ceteris paribus means. Can you explain?",
-        juniorMarkingGuide: "JSS3 Social Studies Market: Define market as place of exchange [2 Marks]. Explain how high supply lowers prices [3 Marks].",
-        seniorMarkingGuide: "SS2 Economics Demand: State law of demand with 'ceteris paribus' clause [2 Marks]. Explain slope using income and substitution effects [2 Marks]. State law of supply [1 Mark]."
-      }
-    ]
-  },
-  python: {
-    id: "python",
-    name: "Python Coding",
-    topics: [
-      {
-        id: "loops",
-        title: "Loops & Functions",
-        juniorDesc: "Introduction to writing simple printing commands and calculations in Python (JSS Level).",
-        seniorDesc: "Write conditional blocks, for/while loops, and declare functions with parameters and returns (SS Level).",
-        juniorGreeting: "Hi Teacher! 🐍 I want to write a Python program that prints my name 5 times. How do I write a simple print line, and what is a variable in Python?",
-        seniorGreeting: "Hi Teacher! 🐍 I am learning Python coding. I want to repeat code using for loops instead of copy-pasting, and declare reusable functions. How do I write 'for i in range(10):', and how do parameters differ from arguments?",
-        juniorMarkingGuide: "JSS3 Computer Python: Print statement syntax [2 Marks]. Declare string variable [2 Marks]. Run simple script [1 Mark].",
-        seniorMarkingGuide: "SS2 Python Loops: Write valid 'for i in range(...):' syntax with indentation [2 Marks]. Declare function using 'def' and 'return' [2 Marks]. Explain parameters vs arguments [1 Mark]."
-      }
-    ]
-  },
-  ai: {
-    id: "ai",
-    name: "Introductory AI",
-    topics: [
-      {
-        id: "networks",
-        title: "Neural Networks",
-        juniorDesc: "Learn what artificial intelligence is and simple examples like Siri or Google Translate (JSS Level).",
-        seniorDesc: "Understand feedforward layers, weights/biases, activation functions, and backpropagation optimization (SS Level).",
-        juniorGreeting: "Hello Teacher! 🤖 What is Artificial Intelligence (AI), and how do smart assistants like Siri understand what I say?",
-        seniorGreeting: "Hello Teacher! 🤖 I am reading about Introductory Artificial Intelligence. I saw terms like 'Neural Network', 'Weights and Biases', and 'Backpropagation'. What are the layers of a neural network, and how do weights adjust using error values?",
-        juniorMarkingGuide: "JSS3 AI Basics: Define AI as machines performing human tasks [2 Marks]. List 3 daily AI applications [3 Marks].",
-        seniorMarkingGuide: "SS2 AI Neural Networks: Explain layer structure (input, hidden, output) [2 Marks]. Define weights and biases role [2 Marks]. Explain backpropagation error adjustments [1 Mark]."
-      }
-    ]
-  }
-};
+import { subjectsData } from "@/data/subjectsData";
 
 export default function LearnPage() {
   const navigate = useNavigate();
@@ -190,6 +45,7 @@ export default function LearnPage() {
   // Session states
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
   const [selectedTopic, setSelectedTopic] = useState<any | null>(null);
+  const [showStudyCompanion, setShowStudyCompanion] = useState(false);
   const [userClass, setUserClass] = useState<string>("SS2");
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -523,9 +379,14 @@ Write a concise report card. You must respond in this exact JSON format:
             </div>
           </div>
           {isEngineLoaded && !reportCard && (
-            <Button size="sm" variant="outline" onClick={handleCompleteLesson} disabled={isEvaluating}>
-              {isEvaluating ? "Analyzing..." : "Complete Lesson"}
-            </Button>
+            <div className="flex gap-2">
+              <Button size="sm" variant="ghost" onClick={() => setShowStudyCompanion(true)} className="flex items-center gap-1">
+                <BookOpen className="w-4 h-4 text-primary" /> <span className="hidden sm:inline">Study Notes</span>
+              </Button>
+              <Button size="sm" variant="outline" onClick={handleCompleteLesson} disabled={isEvaluating}>
+                {isEvaluating ? "Analyzing..." : "Complete Lesson"}
+              </Button>
+            </div>
           )}
         </div>
       </div>
@@ -751,9 +612,14 @@ Write a concise report card. You must respond in this exact JSON format:
                   </div>
                 </div>
 
-                <Button className="w-full mt-4 rounded-none" size="lg" onClick={handleReset}>
-                  Start Another Lesson
-                </Button>
+                <div className="flex flex-col gap-2 mt-6">
+                  <Button className="w-full rounded-none flex items-center justify-center gap-2" size="lg" onClick={() => setShowStudyCompanion(true)}>
+                    <BookOpen className="w-4 h-4" /> Review Topic Study Guide
+                  </Button>
+                  <Button className="w-full rounded-none" variant="outline" size="lg" onClick={handleReset}>
+                    Start Another Lesson
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           </motion.div>
@@ -786,6 +652,90 @@ Write a concise report card. You must respond in this exact JSON format:
               Explain clearly, state formula parameters, and watch mechanical errors!
             </p>
           </div>
+        </div>
+      )}
+
+      {/* Study Companion Drawer */}
+      {showStudyCompanion && selectedTopic?.studyNotes && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex justify-end">
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            className="w-full max-w-lg bg-card h-full flex flex-col shadow-soft border-l border-border p-6 overflow-y-auto"
+          >
+            <div className="flex items-center justify-between border-b border-border pb-4 mb-4">
+              <div className="flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-primary" />
+                <h3 className="font-bold text-foreground text-lg">Study Companion</h3>
+              </div>
+              <Button variant="ghost" size="sm" onClick={() => setShowStudyCompanion(false)} className="text-xs text-muted-foreground hover:text-foreground">
+                Close Notes
+              </Button>
+            </div>
+
+            <div className="space-y-6">
+              <div>
+                <span className="text-xs font-semibold px-2 py-0.5 bg-primary/10 text-primary uppercase">
+                  {selectedTopic.name}
+                </span>
+                <h4 className="text-xl font-black text-foreground mt-1">{selectedTopic.topic}</h4>
+              </div>
+
+              {/* Core Concept */}
+              <div className="space-y-2">
+                <h5 className="font-bold text-foreground text-xs uppercase tracking-wider text-primary/80">
+                  Core Concept
+                </h5>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {selectedTopic.studyNotes.concept}
+                </p>
+              </div>
+
+              {/* Key Formulas */}
+              {selectedTopic.studyNotes.formulas && selectedTopic.studyNotes.formulas.length > 0 && (
+                <div className="space-y-2 bg-muted/30 p-4 border border-border">
+                  <h5 className="font-bold text-foreground text-xs uppercase tracking-wider text-primary/80">
+                    Key Formulas & Rules
+                  </h5>
+                  <div className="space-y-2">
+                    {selectedTopic.studyNotes.formulas.map((formula: string, idx: number) => (
+                      <div key={idx} className="text-sm text-foreground font-mono bg-card p-2 border border-border/50">
+                        <MathRenderer text={formula} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Step-by-Step Guide */}
+              {selectedTopic.studyNotes.steps && selectedTopic.studyNotes.steps.length > 0 && (
+                <div className="space-y-2">
+                  <h5 className="font-bold text-foreground text-xs uppercase tracking-wider text-primary/80">
+                    Syllabus Checklist / Steps
+                  </h5>
+                  <ol className="list-decimal list-inside space-y-2 text-sm text-muted-foreground">
+                    {selectedTopic.studyNotes.steps.map((step: string, idx: number) => (
+                      <li key={idx} className="leading-relaxed">
+                        <span className="text-foreground ml-1">{step}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              )}
+
+              {/* Worked Example */}
+              {selectedTopic.studyNotes.workedExample && (
+                <div className="space-y-2 border-t border-border pt-4">
+                  <h5 className="font-bold text-foreground text-xs uppercase tracking-wider text-primary/80">
+                    Worked Example
+                  </h5>
+                  <div className="bg-success/5 border border-success/20 p-4 rounded-none text-xs text-muted-foreground leading-relaxed whitespace-pre-wrap font-mono">
+                    {selectedTopic.studyNotes.workedExample}
+                  </div>
+                </div>
+              )}
+            </div>
+          </motion.div>
         </div>
       )}
 
