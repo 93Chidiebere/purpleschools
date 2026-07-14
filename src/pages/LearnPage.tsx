@@ -370,11 +370,11 @@ Write a concise report card. You must respond in this exact JSON format:
   };
 
   return (
-    <div className="min-h-screen bg-calm flex flex-col">
+    <div className="min-h-screen bg-calm flex flex-col md:pt-16">
       <Header />
 
       {/* Header bar */}
-      <div className="sticky top-0 z-30 bg-card/95 backdrop-blur-md border-b border-border px-4 py-3">
+      <div className="sticky top-0 md:top-16 z-30 bg-card/95 backdrop-blur-md border-b border-border px-4 py-3">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button
