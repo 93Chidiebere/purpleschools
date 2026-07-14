@@ -17,7 +17,6 @@ import {
   Flame,
   Shield,
   BadgeCheck,
-  HeartHandshake,
   Laptop
 } from "lucide-react";
 import { FeedbackContactSection } from "@/components/sections/FeedbackContactSection";
@@ -73,7 +72,7 @@ export default function LandingPage() {
             Ditch rote memorization. Prove you understand your syllabus by explaining concepts to Chidi, a virtual student preparing for global exams.
           </motion.p>
 
-          <motion.div {...fadeInUp} className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <motion.div {...fadeInUp} className="flex gap-4 justify-center items-center">
             <Button
               size="lg"
               onClick={() => navigate('/auth')}
@@ -81,20 +80,6 @@ export default function LandingPage() {
             >
               Start Teaching Now
               <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              onClick={() => {
-                const donateSection = document.getElementById("donate");
-                if (donateSection) {
-                  donateSection.scrollIntoView({ behavior: "smooth" });
-                }
-              }}
-              className="text-base px-8 py-7 rounded-xl border-white/10 bg-white/[0.02] hover:bg-white/[0.06] text-white w-full sm:w-auto transition-all"
-            >
-              <HeartHandshake className="w-4 h-4 mr-2 text-primary" />
-              Support Our Mission
             </Button>
           </motion.div>
 
@@ -306,33 +291,6 @@ export default function LandingPage() {
                 </AccordionItem>
               ))}
             </Accordion>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Donate Section */}
-      <section id="donate" className="py-24 px-4 bg-white/[0.01] border-t border-white/5 relative z-10">
-        <div className="container mx-auto max-w-4xl">
-          <motion.div {...fadeInUp} className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-extrabold mb-4">
-              Help us keep learning free
-            </h2>
-            <p className="text-zinc-400 max-w-xl mx-auto text-sm leading-relaxed">
-              We need donor support to keep the platform ad-free and continuously update our offline curriculum databases.
-            </p>
-          </motion.div>
-
-          <motion.div {...fadeInUp} className="bg-white/[0.02] p-8 border border-white/10 rounded-2xl text-center max-w-md mx-auto shadow-[0_0_40px_rgba(124,58,237,0.05)]">
-            <h3 className="text-xl font-bold mb-6">Sponsor a Student</h3>
-            <div className="p-5 bg-white/[0.02] border border-white/10 rounded-xl mb-6">
-              <p className="text-3xl font-black text-primary">₦5,000</p>
-              <p className="text-xs text-zinc-500 mt-1">Fund offline curriculum database updates</p>
-            </div>
-            <div className="flex gap-4 justify-center">
-              <Button size="lg" className="w-full py-6 rounded-xl bg-primary hover:bg-primary/95 text-white font-bold">
-                Donate Now
-              </Button>
-            </div>
           </motion.div>
         </div>
       </section>
