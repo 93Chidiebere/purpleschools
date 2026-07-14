@@ -581,7 +581,7 @@ Write a concise report card. You must respond in this exact JSON format:
                           <span className="text-xs font-semibold px-2 py-0.5 bg-primary/10 text-primary">Subject</span>
                           <BookOpen className="w-4 h-4 text-muted-foreground" />
                         </div>
-                        <CardTitle className="text-lg mt-2 text-white">{sub.name}</CardTitle>
+                        <CardTitle className="text-lg mt-2 text-foreground">{sub.name}</CardTitle>
                         <CardDescription className="text-xs mt-1">
                           {sub.topics.length} topic{sub.topics.length !== 1 ? "s" : ""} available
                         </CardDescription>
@@ -637,7 +637,7 @@ Write a concise report card. You must respond in this exact JSON format:
                             </span>
                             <BookOpen className="w-4 h-4 text-muted-foreground" />
                           </div>
-                          <CardTitle className="text-lg mt-2 text-white">{topicItem.title}</CardTitle>
+                          <CardTitle className="text-lg mt-2 text-foreground">{topicItem.title}</CardTitle>
                           <CardDescription className="text-sm mt-1">{descText}</CardDescription>
                         </CardHeader>
                       </Card>
