@@ -186,13 +186,7 @@ export default function LandingPage() {
             </h2>
           </motion.div>
 
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true }}
-            className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10"
-          >
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
             {[
               { icon: Zap, label: "Earn XP for lessons taught" },
               { icon: Flame, label: "Keep your daily streak alive" },
@@ -200,18 +194,17 @@ export default function LandingPage() {
               { icon: TrendingUp, label: "Watch your grade scores grow" },
               { icon: Shield, label: "Progress stored completely offline" }
             ].map((item, i) => (
-              <motion.div
+              <div
                 key={i}
-                variants={fadeInUp}
                 className="flex flex-col items-center text-center p-6 bg-white/[0.02] border border-white/10 rounded-2xl hover:border-white/20 transition-colors"
               >
                 <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
                   <item.icon className="w-6 h-6 text-primary" />
                 </div>
                 <p className="text-xs font-medium text-zinc-300 leading-relaxed">{item.label}</p>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
