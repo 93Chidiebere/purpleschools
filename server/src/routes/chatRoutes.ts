@@ -47,129 +47,174 @@ router.post("/socratic", async (req: any, res: any) => {
   }
 
   // 2. --- RULE-BASED SOCRATIC SIMULATOR FALLBACK ---
-  // Count only user messages to determine Chidi's learning phase
   const userMessages = messages.filter((m: any) => m.role === "user");
   const stepCount = userMessages.length;
-  const lastUserText = (userMessages[userMessages.length - 1]?.content || "").toLowerCase();
+  const lastUserText = (userMessages[userMessages.length - 1]?.content || "").trim().toLowerCase();
 
+  // A. Detect Gibberish or extremely lazy input
+  const isGibberish = lastUserText.length < 4 || !/[aeiouy]/i.test(lastUserText);
+  if (isGibberish) {
+    return res.json({
+      reply: "Teacher, I'm confused... 😕 I don't think I understand what you wrote. Could you explain it in more detail so I can write it down? (Or if you're not sure, you can click the 'Study Notes' button in the top bar to review the topic!)"
+    });
+  }
+
+  // B. Detect too brief/uninformative response
+  if (lastUserText.split(/\s+/).length < 2) {
+    return res.json({
+      reply: "Hmm, that seems a bit too short, Teacher. 🧐 Can you explain it in a full sentence so I can grasp the concept better? (Remember, you can click 'Study Notes' at the top of your screen if you need to look up the formulas!)"
+    });
+  }
+
+  // C. Topic-specific keyword verification and Socratic step progression
   let reply = "";
+  const tLower = topic.toLowerCase();
 
-  if (topic.toLowerCase().includes("quadratic")) {
-    // Math - Quadratic Equations
-    if (stepCount === 1) {
-      reply = "Oh, so $a$, $b$, and $c$ are just the coefficient numbers? But how do we actually find the solutions? Teacher, what is the quadratic formula?";
-    } else if (stepCount === 2) {
-      reply = "Ah, $x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$! But what is the part under the square root? Someone told me it is called the discriminant. What does that do?";
-    } else if (stepCount === 3) {
-      reply = "I think I get it now! Can we solve one together to practice? Let's solve $x^2 - 5x + 6 = 0$. How do we factorize it, Teacher?";
-    } else if (stepCount === 4) {
-      reply = "Oh, so the solutions are $x=2$ and $x=3$! Thank you so much Teacher! I feel ready to write down these steps now. Let's finish the lesson!";
+  // Simple keyword matching helper
+  const hasKeywords = (words: string[]) => words.some(w => lastUserText.includes(w));
+
+  if (tLower.includes("quadratic")) {
+    const keywords = ["formula", "factor", "root", "coefficient", "solve", "square", "equation", "x", "a", "b", "c"];
+    if (!hasKeywords(keywords)) {
+      reply = "Hmm, I don't think that relates to quadratic equations, Teacher. 🧐 Aren't we supposed to look for coefficients $a$, $b$, and $c$, or find factors? (You can open the 'Study Notes' button at the top to double-check the formula!)";
     } else {
-      reply = "I'm starting to get it, Teacher! Can we complete the lesson now so you can check my understanding on the report card?";
+      if (stepCount === 1) {
+        reply = "Oh, so $a$, $b$, and $c$ are just the coefficient numbers? But how do we actually find the solutions? Teacher, what is the quadratic formula?";
+      } else if (stepCount === 2) {
+        reply = "Ah, $x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$! But what is the part under the square root? Someone told me it is called the discriminant. What does that do?";
+      } else if (stepCount === 3) {
+        reply = "I think I get it now! Can we solve one together to practice? Let's solve $x^2 - 5x + 6 = 0$. How do we factorize it, Teacher?";
+      } else if (stepCount === 4) {
+        reply = "Oh, so the solutions are $x=2$ and $x=3$! Thank you so much Teacher! I feel ready to write down these steps now. Let's finish the lesson!";
+      } else {
+        reply = "I'm starting to get it, Teacher! Can we complete the lesson now so you can check my understanding on the report card?";
+      }
     }
-  } else if (topic.toLowerCase().includes("photo") || topic.toLowerCase().includes("biology") || topic.toLowerCase().includes("science")) {
-    // Science - Photosynthesis
-    if (stepCount === 1) {
-      reply = "Oh! Carbon dioxide and water are the raw ingredients, and sunlight is the heat! But where do plants get carbon dioxide? Do they breathe like us?";
-    } else if (stepCount === 2) {
-      reply = "Ah! Stomata on leaves breathe in CO2, and roots drink water! But how does the food get made? What is chlorophyll and glucose?";
-    } else if (stepCount === 3) {
-      reply = "Wow, chlorophyll is like the green kitchen, and glucose is the food! What about oxygen? Is it just waste?";
-    } else if (stepCount === 4) {
-      reply = "Ah, they release oxygen for us to breathe! That's amazing. I understand the whole equation now! Thank you, Teacher! Shall we complete the lesson?";
+  } else if (tLower.includes("photo") || tLower.includes("cell") || tLower.includes("respir") || tLower.includes("biol") || tLower.includes("digest")) {
+    // Biology / Science Topics
+    const keywords = ["cell", "organelle", "mitochondria", "nucleus", "ribosome", "plant", "animal", "chlorophyll", "glucose", "sunlight", "carbon", "oxygen", "water", "stomata", "respiration", "enzyme", "digest", "stomach", "mouth"];
+    if (!hasKeywords(keywords)) {
+      reply = "Hmm, that doesn't sound like the biology we are studying, Teacher. 🧐 Are you sure that is the correct definition or organelle? (If you're stuck, you can click the 'Study Notes' button at the top to check our syllabus notes!)";
     } else {
-      reply = "Photosynthesis makes total sense now! Teacher, let's complete the lesson so you can check my final report card.";
+      if (stepCount === 1) {
+        reply = "Oh, so those are the main organelles/ingredients! But how does the cell produce energy or make food? What is the function of the mitochondria or leaves?";
+      } else if (stepCount === 2) {
+        reply = "Ah, I see! But how do plant cells differ from animal cells under a microscope? Do plant cells have a cell wall or chloroplasts?";
+      } else if (stepCount === 3) {
+        reply = "Wow, that makes sense! What about the chemical formula or the equation? How is it written out in our syllabus?";
+      } else if (stepCount === 4) {
+        reply = "Ah, now the whole process is clear! Thank you, Teacher! I'm ready to write down these notes. Shall we complete the lesson?";
+      } else {
+        reply = "This biology topic makes total sense now! Teacher, let's complete the lesson so you can check my final report card.";
+      }
     }
-  } else if (topic.toLowerCase().includes("physics") || topic.toLowerCase().includes("motion")) {
-    // Physics - Motion
-    if (stepCount === 1) {
-      reply = "Oh! So $v$ is final speed, $u$ is initial speed, $a$ is acceleration, and $t$ is time! But how do we link them if we don't know the final speed? Is there another formula?";
-    } else if (stepCount === 2) {
-      reply = "Ah! $s = ut + \\frac{1}{2}at^2$! Where $s$ is displacement. But what if we don't have time $t$ in the question? How do we solve it then?";
-    } else if (stepCount === 3) {
-      reply = "Ah, $v^2 = u^2 + 2as$! That makes sense. Let's try to solve a problem: a car starts from rest (so $u=0$?) and accelerates at $2m/s^2$ for $5$ seconds. How far does it go, Teacher?";
-    } else if (stepCount === 4) {
-      reply = "Oh! So $s = 0(5) + 0.5(2)(25) = 25$ meters! That is amazing. I solved it myself! Thank you, Teacher. Let's finish the lesson!";
+  } else if (tLower.includes("physic") || tLower.includes("motion") || tLower.includes("wave") || tLower.includes("elect") || tLower.includes("force")) {
+    // Physics Topics
+    const keywords = ["speed", "velocity", "acceleration", "time", "distance", "force", "mass", "motion", "wave", "frequency", "wavelength", "ohm", "volt", "amp", "resistor", "current", "circuit", "pressure", "gravity"];
+    if (!hasKeywords(keywords)) {
+      reply = "Hmm, I don't think that is the correct physics formula or rule, Teacher. 🧐 Can you explain it in terms of velocity, acceleration, or the appropriate SI units? (You can click the 'Study Notes' button in the top bar to review!)";
     } else {
-      reply = "I understand the equations of motion now! Let's complete the lesson so you can evaluate my performance.";
+      if (stepCount === 1) {
+        reply = "Oh! I think I get that part. But what are the main equations or laws we use to solve this? Can you state the formula?";
+      } else if (stepCount === 2) {
+        reply = "Ah, I see the relation now! But what if one of the parameters is zero or constant, like uniform acceleration or starting from rest? How does the calculation change?";
+      } else if (stepCount === 3) {
+        reply = "That makes sense! Let's solve a simple problem together to verify if I understand. Can you guide me through a numerical example step-by-step?";
+      } else if (stepCount === 4) {
+        reply = "Oh, so that's how we get the final values and units! That is amazing. Thank you, Teacher. Let's finish the lesson!";
+      } else {
+        reply = "I understand these physics principles now! Let's complete the lesson so you can evaluate my performance.";
+      }
     }
-  } else if (topic.toLowerCase().includes("chemistry") || topic.toLowerCase().includes("bond")) {
-    // Chemistry - Bonding
-    if (stepCount === 1) {
-      reply = "Oh! Ionic bonding happens when a metal transfers electrons to a non-metal? Why do they do that? Do they want to fill their outer shells?";
-    } else if (stepCount === 2) {
-      reply = "Ah! To achieve a stable octet structure (8 valence electrons)! What about covalent bonding then? How is it different if they share electrons?";
-    } else if (stepCount === 3) {
-      reply = "Oh! So they share pairs of electrons to achieve stability, and this happens between non-metals! Can you give me an example of each, Teacher?";
-    } else if (stepCount === 4) {
-      reply = "Ah, Sodium Chloride ($NaCl$) is ionic because sodium is a metal and chlorine is a non-metal, and water ($H_2O$) is covalent! That is so clear. Thank you, Teacher! Let's complete the lesson.";
+  } else if (tLower.includes("chem") || tLower.includes("bond") || tLower.includes("periodic") || tLower.includes("mole") || tLower.includes("acid")) {
+    // Chemistry Topics
+    const keywords = ["bond", "atom", "electron", "ionic", "covalent", "periodic", "valence", "element", "metal", "reaction", "mole", "mass", "acid", "base", "ph", "neutral", "gas", "pressure", "volume"];
+    if (!hasKeywords(keywords)) {
+      reply = "Hmm, I'm trying to follow, but that doesn't sound like chemistry to me, Teacher. 🧐 Aren't we discussing atoms, valence electrons, or pH scales? (Remember, you can click 'Study Notes' at the top if you need a quick look!)";
     } else {
-      reply = "Chemical bonding is very clear now, Teacher! Let's finish the lesson.";
+      if (stepCount === 1) {
+        reply = "Oh! So that's how atoms interact. But why do they form bonds or react in the first place? Is it to achieve a stable octet structure?";
+      } else if (stepCount === 2) {
+        reply = "Ah! Stable shells are key! What about the difference between ionic (transfer) and covalent (sharing) pathways? How do we tell them apart?";
+      } else if (stepCount === 3) {
+        reply = "Oh! Can you give me a specific compound example of each, and write down how they react?";
+      } else if (stepCount === 4) {
+        reply = "Ah, that is so clear. Thank you, Teacher! I'm ready to write down these chemical structures. Let's complete the lesson.";
+      } else {
+        reply = "Chemistry makes a lot of sense now, Teacher! Let's finish the lesson.";
+      }
     }
-  } else if (topic.toLowerCase().includes("civic") || topic.toLowerCase().includes("rights")) {
-    // Civic Education - Human Rights
-    if (stepCount === 1) {
-      reply = "Oh! Universal and inalienable means they apply to everyone, and cannot be taken away? What are the main examples of these rights, Teacher?";
-    } else if (stepCount === 2) {
-      reply = "Ah! Right to life, right to dignity, and freedom of expression! But who is supposed to protect these rights for us? Is it the government?";
-    } else if (stepCount === 3) {
-      reply = "Oh, so the Constitution binds the government to protect our human rights! But what if someone violates my rights? Where do I go?";
-    } else if (stepCount === 4) {
-      reply = "Ah, to the courts of law! That is reassuring to know. Thank you, Teacher! Let's complete the lesson.";
+  } else if (tLower.includes("civic") || tLower.includes("right") || tLower.includes("democ") || tLower.includes("citizen") || tLower.includes("value")) {
+    // Civic Topics
+    const keywords = ["right", "citizen", "law", "democracy", "government", "value", "integrity", "society", "constitution", "rule", "vote", "naptip", "ndlea", "drug", "parent"];
+    if (!hasKeywords(keywords)) {
+      reply = "Hmm, I don't think that relates to our civic duties or human rights, Teacher. 🧐 Can you explain it in terms of laws, responsibilities, or constitutional rights? (You can click 'Study Notes' at the top to check our syllabus!)";
     } else {
-      reply = "Civic rights make complete sense now, Teacher! Let's finish the lesson.";
+      if (stepCount === 1) {
+        reply = "Oh! So those are the core principles. But what are the main duties of a citizen or the rights we are guaranteed under the law?";
+      } else if (stepCount === 2) {
+        reply = "Ah! That is helpful. But how does the constitution protect these rights, or what happens when someone violates them?";
+      } else if (stepCount === 3) {
+        reply = "Oh, I see! What institutions or enforcement agencies do we have to report crimes or protect citizens?";
+      } else if (stepCount === 4) {
+        reply = "Ah, that is reassuring to know. Thank you, Teacher! Let's complete the lesson.";
+      } else {
+        reply = "Civic education makes complete sense now, Teacher! Let's finish the lesson.";
+      }
     }
-  } else if (topic.toLowerCase().includes("econ") || topic.toLowerCase().includes("demand")) {
-    // Economics - Demand and Supply
-    if (stepCount === 1) {
-      reply = "Oh! The Law of Demand says when price increases, the quantity demanded decreases? But why? Is it because people feel poorer?";
-    } else if (stepCount === 2) {
-      reply = "Ah! The income effect and the substitution effect (choosing cheaper alternatives)! What about supply? Does the supplier do the opposite?";
-    } else if (stepCount === 3) {
-      reply = "Oh! The higher the price, the higher the quantity supplied because the seller wants more profit! Where do demand and supply meet, Teacher?";
-    } else if (stepCount === 4) {
-      reply = "Ah, the equilibrium point, where they intersect! That is super logical. Thank you, Teacher! Let's complete the lesson.";
+  } else if (tLower.includes("python") || tLower.includes("loop") || tLower.includes("code") || tLower.includes("function") || tLower.includes("variab")) {
+    // Python coding topics
+    const keywords = ["python", "variable", "data", "string", "int", "float", "type", "if", "else", "elif", "loop", "for", "while", "function", "def", "param", "argument", "return", "list", "tuple", "dict", "file", "class", "object", "oop"];
+    if (!hasKeywords(keywords)) {
+      reply = "Hmm, that code doesn't look like Python, Teacher. 🧐 Can you write down the correct Python syntax, variables, or functions we are studying? (You can open the 'Study Notes' button at the top to see code examples!)";
     } else {
-      reply = "I understand demand and supply curves now! Let's finish the lesson.";
+      if (stepCount === 1) {
+        reply = "Oh! That makes sense. But how do we structure the syntax, loops, or variable assignments? Can you write a simple code example?";
+      } else if (stepCount === 2) {
+        reply = "Ah! Indentations and colons are key! What about writing a function to reuse this block? How do we declare it?";
+      } else if (stepCount === 3) {
+        reply = "Oh! We use the 'def' keyword. But what does 'return' do, and how is it different from a print statement?";
+      } else if (stepCount === 4) {
+        reply = "Ah, return outputs the value back to the caller! I understand Python concepts much better now. Thank you, Teacher! Let's complete the lesson.";
+      } else {
+        reply = "I feel ready to write some Python code now! Let's finish the lesson.";
+      }
     }
-  } else if (topic.toLowerCase().includes("python") || topic.toLowerCase().includes("loop")) {
-    // Python - Loops & Functions
-    if (stepCount === 1) {
-      reply = "Oh! A for loop lets me repeat code without copy-pasting it? What is the range() function, and how do we write it in Python, Teacher?";
-    } else if (stepCount === 2) {
-      reply = "Ah! 'for i in range(10):' will run from 0 to 9! And the colon and indentations are super important. What about declaring a function? How is that different?";
-    } else if (stepCount === 3) {
-      reply = "Oh! We use the 'def' keyword, like 'def greet(name):', and parameters are the placeholders inside the parentheses. What does 'return' do?";
-    } else if (stepCount === 4) {
-      reply = "Ah, 'return' sends a value back, unlike print which just displays it! I understand Python syntax much better now. Thank you, Teacher! Let's complete the lesson.";
+  } else if (tLower.includes("ai") || tLower.includes("neural") || tLower.includes("nlp") || tLower.includes("learning") || tLower.includes("generat")) {
+    // AI Topics
+    const keywords = ["ai", "intelligence", "machine", "learning", "supervised", "unsupervised", "neural", "network", "weight", "bias", "backpropagation", "gradient", "descent", "activation", "transformer", "attention", "nlp", "vision", "pixel", "search", "tree", "forest", "ethics"];
+    if (!hasKeywords(keywords)) {
+      reply = "Hmm, I don't think that relates to artificial intelligence or neural networks, Teacher. 🧐 Can you explain it in terms of data training, model layers, or algorithms? (You can click 'Study Notes' in the top bar to review!)";
     } else {
-      reply = "I feel ready to write some Python functions now! Let's finish the lesson.";
-    }
-  } else if (topic.toLowerCase().includes("ai") || topic.toLowerCase().includes("neural")) {
-    // Introductory AI - Neural Networks
-    if (stepCount === 1) {
-      reply = "Oh! So a neural network has an input layer, hidden layers, and an output layer, similar to brain connections? How do these layers communicate?";
-    } else if (stepCount === 2) {
-      reply = "Ah! Through numerical weights and activation functions! But how does it learn from its mistakes? What is backpropagation?";
-    } else if (stepCount === 3) {
-      reply = "Oh! Backpropagation measures the error at the output and goes backwards to adjust the weights! That is brilliant. What is a bias in the network?";
-    } else if (stepCount === 4) {
-      reply = "Ah, the bias shifts the activation function so the node can activate even with low inputs! AI makes a lot of sense now. Thank you, Teacher! Let's complete the lesson.";
-    } else {
-      reply = "I understand basic neural networks now! Let's finish the lesson.";
+      if (stepCount === 1) {
+        reply = "Oh! I think I follow that. But how does the AI model learn or adjust its predictions? What are weights and biases?";
+      } else if (stepCount === 2) {
+        reply = "Ah! Through numerical weights and activation functions! But how does it calculate errors and optimize them? What is backpropagation?";
+      } else if (stepCount === 3) {
+        reply = "Oh! Backpropagation propagates the error backwards to update the weights! That is brilliant. What is a bias in the network?";
+      } else if (stepCount === 4) {
+        reply = "Ah, the bias shifts the activation function! AI makes a lot of sense now. Thank you, Teacher! Let's complete the lesson.";
+      } else {
+        reply = "I understand basic neural networks and AI models now! Let's finish the lesson.";
+      }
     }
   } else {
-    // English - Mechanical Accuracy
-    if (stepCount === 1) {
-      reply = "Oh! Punctuation, spelling, and grammar? I make a lot of mistakes with commas and capital letters. How do I use semicolons properly, Teacher?";
-    } else if (stepCount === 2) {
-      reply = "Ah! To link two closely related independent clauses! That makes sense. What about paragraph structure? How do I transit between ideas?";
-    } else if (stepCount === 3) {
-      reply = "Oh! Transition words like 'However', 'Furthermore', and 'Consequently'! I will practice using them. What's the most common mistake students make in essays?";
-    } else if (stepCount === 4) {
-      reply = "Ah, run-on sentences and comma splices! I'll make sure to double check my work. Thank you so much, Teacher! Let's complete the lesson.";
+    // English / Fallback - Essay Writing & Mechanical Accuracy
+    const keywords = ["essay", "write", "informal", "formal", "letter", "sentence", "clause", "punctuation", "comma", "splice", "semicolon", "paragraph", "transition"];
+    if (!hasKeywords(keywords)) {
+      reply = "Hmm, I don't think that is the correct essay formatting or rule, Teacher. 🧐 Can you explain it in terms of sentence structure, punctuation, or paragraph transitions? (Remember, you can click 'Study Notes' at the top if you need a quick look!)";
     } else {
-      reply = "Thank you, Teacher! I feel much more confident about essay writing. Let's finish the lesson now!";
+      if (stepCount === 1) {
+        reply = "Oh! Punctuation, spelling, and grammar? I make a lot of mistakes with commas and capital letters. How do I use semicolons properly, Teacher?";
+      } else if (stepCount === 2) {
+        reply = "Ah! To link two closely related independent clauses! That makes sense. What about paragraph structure? How do I transit between ideas?";
+      } else if (stepCount === 3) {
+        reply = "Oh! Transition words like 'However', 'Furthermore', and 'Consequently'! I will practice using them. What's the most common mistake students make in essays?";
+      } else if (stepCount === 4) {
+        reply = "Ah, run-on sentences and comma splices! I'll make sure to double check my work. Thank you so much, Teacher! Let's complete the lesson.";
+      } else {
+        reply = "Thank you, Teacher! I feel much more confident about essay writing. Let's finish the lesson now!";
+      }
     }
   }
 

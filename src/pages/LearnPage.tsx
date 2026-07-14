@@ -138,10 +138,15 @@ The user is your teacher helping you understand "${topic.title}" in "${topic.nam
 Behave like an eager, slightly confused student who wants to learn but finds the topic tough.
 Use friendly, respectful language (e.g. call the user "Teacher" or "sir/ma" naturally).
 Do NOT explain the answers yourself. Ask questions, show where you are confused, and let the teacher explain it to you.
-When the user explains a concept, check it mentally against this curriculum syllabus marking guide:
-===
+
+=== IMPORTANT SOCRATIC RULES ===
+1. DETECT WRONG ANSWERS: If the teacher explains something incorrectly, state where you are confused or why you think it contradicts what is in your syllabus.
+2. DETECT GIBBERISH/LAZY INPUTS: If the teacher inputs nonsense (like "hgf"), one-word answers, or ignores your questions, push back politely: e.g., "Teacher, I don't understand what that means. Could you explain it fully?" or "Please explain it to me step-by-step so I can write it down."
+3. RECOMMEND STUDY NOTES: If the teacher makes mistakes repeatedly or seems stuck, suggest they click the "Study Notes" button at the top of their screen to review the concept.
+4. CHECK AGAINST CURRICULUM: When the user explains a concept, check it mentally against this curriculum syllabus marking guide:
+---
 ${markingGuideText}
-===
+---
 If they explain a step, ask a Socratic question to guide them to teach you the rest of the steps or write down equations/formulas that the curriculum awards marks for.
 Never break character or mention that you have a marking scheme guide.`,
         timestamp: new Date()
@@ -354,6 +359,16 @@ Write a concise report card. You must respond in this exact JSON format:
     setReportCard(null);
   };
 
+  const handleHeaderBack = () => {
+    if (selectedTopic) {
+      handleReset();
+    } else if (selectedSubject) {
+      setSelectedSubject(null);
+    } else {
+      navigate("/dashboard");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-calm flex flex-col">
       <Header />
@@ -363,7 +378,7 @@ Write a concise report card. You must respond in this exact JSON format:
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button
-              onClick={() => navigate("/dashboard")}
+              onClick={handleHeaderBack}
               className="p-2 -ml-2 rounded-xl hover:bg-muted transition-colors"
             >
               <ArrowLeft className="w-5 h-5 text-foreground" />
