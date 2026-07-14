@@ -20,7 +20,9 @@ import {
   Trophy,
   Sparkles,
   ChevronRight,
-  BookOpen
+  BookOpen,
+  Download,
+  Smartphone
 } from "lucide-react";
 
 interface User {
@@ -37,6 +39,7 @@ export default function Dashboard() {
   const [user, setUser] = useState<User | null>(null);
   const [showMicroWin, setShowMicroWin] = useState(false);
   const [showStreak, setShowStreak] = useState(false);
+  const [showDownloadModal, setShowDownloadModal] = useState(false);
   const [microWinMessage, setMicroWinMessage] = useState("");
   const [microWinEmoji, setMicroWinEmoji] = useState("🎯");
 
@@ -311,6 +314,40 @@ export default function Dashboard() {
           </Card>
         </motion.div>
 
+        {/* App Promo Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25 }}
+          className="mb-8"
+        >
+          <Card className="overflow-hidden rounded-none border border-primary/20 bg-primary/5">
+            <CardContent className="p-6 relative">
+              <div className="absolute top-4 right-4 opacity-10">
+                <Smartphone className="w-16 h-16 text-primary" />
+              </div>
+              <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div>
+                  <h3 className="text-lg font-bold text-foreground mb-1">
+                    Get PurpleSchool on your Phone
+                  </h3>
+                  <p className="text-sm text-muted-foreground text-left">
+                    Install natively on Android or iOS to teach Chidi offline anywhere with zero data cost.
+                  </p>
+                </div>
+                <Button
+                  onClick={() => setShowDownloadModal(true)}
+                  variant="outline"
+                  className="w-full md:w-auto rounded-none border-primary text-primary hover:bg-primary/10 whitespace-nowrap"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  Get Mobile App
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+
         {/* Learning Level Progress */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -424,6 +461,67 @@ export default function Dashboard() {
         onClose={clearLevelUpMessage}
         level={levelUpMessage?.level || null}
       />
+
+      {/* App Download Modal */}
+      {showDownloadModal && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="w-full max-w-md bg-card border border-border shadow-soft p-6 flex flex-col relative text-left"
+          >
+            <h3 className="text-xl font-bold text-foreground mb-2 flex items-center gap-2">
+              <Smartphone className="w-5 h-5 text-primary" /> Install PurpleSchool App
+            </h3>
+            <p className="text-sm text-muted-foreground mb-6">
+              PurpleSchool supports offline learning natively. Follow the instructions for your device:
+            </p>
+
+            <div className="space-y-6">
+              {/* Android Instructions */}
+              <div className="p-4 bg-muted/40 border border-border/50 rounded-none space-y-3">
+                <h4 className="font-bold text-foreground text-sm flex items-center gap-2">
+                  <span className="w-2 h-2 bg-success rounded-full" /> For Android Devices
+                </h4>
+                <div className="text-xs text-muted-foreground space-y-2 leading-relaxed pl-1">
+                  <p>1. <strong>Direct PWA Install:</strong> Open your Chrome settings menu (three dots at top right) and tap <strong>&quot;Add to Home screen&quot;</strong> or <strong>&quot;Install app&quot;</strong>.</p>
+                  <p>2. <strong>Direct APK Download:</strong> If you prefer a standalone installer, click the button below to download the Android APK file.</p>
+                </div>
+                <Button
+                  onClick={() => {
+                    window.location.href = "/downloads/purpleschool.apk";
+                  }}
+                  size="sm"
+                  className="w-full rounded-none mt-2 flex items-center justify-center gap-1.5"
+                >
+                  <Download className="w-4 h-4" /> Download Android APK
+                </Button>
+              </div>
+
+              {/* iOS Instructions */}
+              <div className="p-4 bg-muted/40 border border-border/50 rounded-none space-y-2">
+                <h4 className="font-bold text-foreground text-sm flex items-center gap-2">
+                  <span className="w-2 h-2 bg-primary rounded-full" /> For Apple iOS (iPhone/iPad)
+                </h4>
+                <div className="text-xs text-muted-foreground space-y-1.5 leading-relaxed pl-1">
+                  <p>1. Open this website in your <strong>Safari Browser</strong>.</p>
+                  <p>2. Tap the <strong>Share</strong> button <span className="font-mono bg-background px-1 border border-border">⎋</span> (square icon with an upward arrow) in the bottom navigation bar.</p>
+                  <p>3. Scroll down the menu and tap <strong>&quot;Add to Home Screen&quot;</strong>.</p>
+                  <p>4. Tap <strong>&quot;Add&quot;</strong> in the top-right corner. It will install instantly on your home screen!</p>
+                </div>
+              </div>
+            </div>
+
+            <Button
+              onClick={() => setShowDownloadModal(false)}
+              variant="outline"
+              className="w-full rounded-none mt-6"
+            >
+              Close
+            </Button>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 }
