@@ -52,6 +52,7 @@ interface User {
   favoriteQuote: string;
   personalNotes: string;
   role?: string;
+  studentId?: string;
 }
 
 export default function ProfilePage() {
@@ -312,6 +313,11 @@ export default function ProfilePage() {
                 <div className="flex-1 min-w-0">
                   <h2 className="text-xl font-bold text-foreground truncate">{user.name}</h2>
                   <p className="text-muted-foreground text-sm truncate">{user.email}</p>
+                  {user.studentId && (
+                    <p className="text-xs font-semibold text-primary/80 mt-0.5">
+                      Student ID: <span className="font-mono text-primary font-bold">{user.studentId}</span>
+                    </p>
+                  )}
                   {user.favoriteQuote && (
                     <p className="text-xs text-primary font-medium italic mt-1.5 bg-primary/5 border-l-2 border-primary py-1 px-2.5 max-w-[280px] break-words">
                       "{user.favoriteQuote}"
@@ -580,9 +586,16 @@ export default function ProfilePage() {
                       >
                         <div className="flex items-center justify-between">
                           <span className="font-bold text-foreground text-sm">{u.name}</span>
-                          <span className="text-xs px-2 py-0.5 bg-primary/10 border border-primary/20 text-primary uppercase font-bold tracking-wider">
-                            {u.className}
-                          </span>
+                          <div className="flex gap-2">
+                            {u.studentId && (
+                              <span className="text-[10px] px-2 py-0.5 bg-zinc-800 text-zinc-300 font-mono border border-zinc-700">
+                                {u.studentId}
+                              </span>
+                            )}
+                            <span className="text-xs px-2 py-0.5 bg-primary/10 border border-primary/20 text-primary uppercase font-bold tracking-wider">
+                              {u.className}
+                            </span>
+                          </div>
                         </div>
                         
                         <div className="grid grid-cols-2 gap-y-1.5 gap-x-4 text-muted-foreground">

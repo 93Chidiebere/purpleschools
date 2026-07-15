@@ -189,11 +189,11 @@ export default function AuthPage() {
               )}
               <Input 
                 type={isLogin ? "text" : "email"} 
-                placeholder={isLogin ? "Email or Username" : "Email address (Optional)"} 
+                placeholder={isLogin ? "Email or Student ID (e.g. A001)" : "Email address"} 
                 className="rounded-xl bg-white/[0.02] border-white/10 text-white placeholder-zinc-500 focus:border-primary/50 focus:ring-primary/50" 
                 value={formData.email} 
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })} 
-                required={isLogin} 
+                required={true} 
               />
               <Input 
                 type="password" 

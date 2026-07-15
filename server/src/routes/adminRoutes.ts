@@ -20,7 +20,7 @@ router.get("/users", authenticateToken, async (req: AuthenticatedRequest, res: R
     const usersResult = await query(
       `SELECT id, name, email, school, class_name AS "className", age, gender, 
               school_state AS "schoolState", favorite_subject AS "favoriteSubject", 
-              role, streak, days_active AS "daysActive", xp
+              role, streak, days_active AS "daysActive", xp, student_id AS "studentId"
        FROM users 
        ORDER BY id DESC`
     );
