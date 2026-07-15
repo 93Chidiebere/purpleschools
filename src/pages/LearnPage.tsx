@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Avatar } from "@/components/shared/Avatar";
 import { BottomNav } from "@/components/layout/BottomNav";
 import { Header } from "@/components/layout/Header";
+import { useToast } from "@/hooks/use-toast";
 import { Send, ArrowLeft, GraduationCap, BookOpen, AlertCircle, RefreshCw, Award } from "lucide-react";
 import { useLevelProgressContext } from "@/contexts/LevelProgressContext";
 import { MathRenderer } from "@/components/shared/MathRenderer";
@@ -24,6 +25,7 @@ import { subjectsData } from "@/data/subjectsData";
 
 export default function LearnPage() {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const { 
     recordQuestion, 
     startStudySession, 
@@ -690,6 +692,14 @@ Write a concise report card. You must respond in this exact JSON format:
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
+                onPaste={(e) => {
+                  e.preventDefault();
+                  toast({
+                    title: "Pasting is disabled",
+                    description: "Please explain the concept in your own words by typing it out.",
+                    variant: "destructive",
+                  });
+                }}
                 placeholder="Type your explanation here to teach..."
                 className="flex-1 rounded-none"
                 disabled={isTyping || isEvaluating}
