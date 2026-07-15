@@ -83,6 +83,7 @@ export default function ProfilePage() {
       return res.json();
     },
     enabled: user?.role === "admin",
+    staleTime: 0, // Always fetch latest users from Supabase on mount
   });
 
   const [isEditingQuote, setIsEditingQuote] = useState(false);
