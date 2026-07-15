@@ -14,6 +14,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { useLevelProgressContext } from "@/contexts/LevelProgressContext";
 import { API_BASE } from "@/config";
 import {
@@ -58,6 +65,65 @@ export default function ProfilePage() {
     favoriteQuote: "",
     personalNotes: "",
   });
+
+  const [isEditingQuote, setIsEditingQuote] = useState(false);
+  const [quoteInput, setQuoteInput] = useState("");
+  
+  const [isEditingNotes, setIsEditingNotes] = useState(false);
+  const [notesInput, setNotesInput] = useState("");
+  
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+
+  const handleSaveQuote = () => {
+    updateProfileMutation.mutate(
+      { favoriteQuote: quoteInput },
+      {
+        onSuccess: () => {
+          setIsEditingQuote(false);
+        }
+      }
+    );
+  };
+
+  const handleSaveNotes = () => {
+    updateProfileMutation.mutate(
+      { personalNotes: notesInput },
+      {
+        onSuccess: () => {
+          setIsEditingNotes(false);
+        }
+      }
+    );
+  };
+
+  const handleResetProgress = () => {
+    localStorage.removeItem("purpleschool_game_state_v3");
+    localStorage.removeItem("purpleschool_achievements_v4");
+    toast({
+      title: "Learning progress reset",
+      description: "Your local teaching stats and achievements have been cleared.",
+    });
+    setIsPrivacyOpen(false);
+    window.location.reload();
+  };
+
+  const handleExportData = () => {
+    const gameState = localStorage.getItem("purpleschool_game_state_v3") || "{}";
+    const achievements = localStorage.getItem("purpleschool_achievements_v4") || "[]";
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(
+      JSON.stringify({ gameState: JSON.parse(gameState), achievements: JSON.parse(achievements) }, null, 2)
+    );
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", `purpleschool_backup_${user?.name || "student"}.json`);
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+    toast({
+      title: "Data exported",
+      description: "Your learning progress file has been downloaded successfully.",
+    });
+  };
 
   const formatTime = (date: Date) => {
     const now = new Date();
@@ -312,8 +378,27 @@ export default function ProfilePage() {
                       }
                       placeholder="Share a thought or quote..."
                     />
+                  ) : isEditingQuote ? (
+                    <div className="flex gap-2 w-full mt-1">
+                      <Input
+                        value={quoteInput}
+                        onChange={(e) => setQuoteInput(e.target.value)}
+                        placeholder="Type your quote/status..."
+                        className="flex-1 rounded-none"
+                      />
+                      <Button size="sm" className="rounded-none" onClick={handleSaveQuote} disabled={updateProfileMutation.isPending}>Save</Button>
+                      <Button size="sm" className="rounded-none" variant="ghost" onClick={() => setIsEditingQuote(false)}>Cancel</Button>
+                    </div>
                   ) : (
-                    <p className="text-foreground">{user.favoriteQuote || "No quote set yet."}</p>
+                    <div 
+                      className="cursor-pointer hover:bg-muted/30 p-2 -ml-2 rounded-lg transition-all"
+                      onClick={() => {
+                        setQuoteInput(user.favoriteQuote || "");
+                        setIsEditingQuote(true);
+                      }}
+                    >
+                      <p className="text-foreground">{user.favoriteQuote || "No quote set yet. Click here to add one!"}</p>
+                    </div>
                   )}
                 </div>
               </div>
@@ -418,7 +503,10 @@ export default function ProfilePage() {
             </Popover>
 
             {/* Privacy */}
-            <Card className="cursor-pointer hover:shadow-soft transition-all rounded-none">
+            <Card 
+              className="cursor-pointer hover:shadow-soft transition-all rounded-none"
+              onClick={() => setIsPrivacyOpen(true)}
+            >
               <CardContent className="p-4 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 bg-primary/10 flex items-center justify-center">
@@ -460,9 +548,28 @@ export default function ProfilePage() {
                   className="w-full h-32 p-3 bg-muted/40 border border-border focus:border-primary/50 text-foreground text-sm rounded-none focus:outline-none resize-none font-sans"
                   placeholder="Type your notes here..."
                 />
+              ) : isEditingNotes ? (
+                <div className="space-y-3">
+                  <textarea
+                    value={notesInput}
+                    onChange={(e) => setNotesInput(e.target.value)}
+                    className="w-full h-32 p-3 bg-muted/40 border border-border focus:border-primary/50 text-foreground text-sm rounded-none focus:outline-none resize-none font-sans"
+                    placeholder="Type your study notes here..."
+                  />
+                  <div className="flex gap-2">
+                    <Button size="sm" className="rounded-none" onClick={handleSaveNotes} disabled={updateProfileMutation.isPending}>Save Notes</Button>
+                    <Button size="sm" className="rounded-none" variant="outline" onClick={() => setIsEditingNotes(false)}>Cancel</Button>
+                  </div>
+                </div>
               ) : (
-                <div className="p-4 bg-muted/20 border border-dashed border-border/80 text-sm text-foreground whitespace-pre-wrap leading-relaxed min-h-[100px] select-text">
-                  {user.personalNotes || "No personal notes written yet. Click 'Edit Profile' to add yours!"}
+                <div 
+                  className="p-4 bg-muted/20 border border-dashed border-border/80 text-sm text-foreground whitespace-pre-wrap leading-relaxed min-h-[100px] select-text cursor-pointer hover:bg-muted/30 transition-all"
+                  onClick={() => {
+                    setNotesInput(user.personalNotes || "");
+                    setIsEditingNotes(true);
+                  }}
+                >
+                  {user.personalNotes || "No personal notes written yet. Click here to add yours!"}
                 </div>
               )}
             </CardContent>
@@ -521,6 +628,43 @@ export default function ProfilePage() {
           </p>
         </motion.div>
       </main>
+
+      {/* Privacy Settings Dialog */}
+      <Dialog open={isPrivacyOpen} onOpenChange={setIsPrivacyOpen}>
+        <DialogContent className="bg-[#120a21]/95 text-white border border-white/10 rounded-2xl max-w-sm mx-auto p-6 shadow-2xl backdrop-blur-md">
+          <DialogHeader>
+            <DialogTitle className="text-lg font-bold text-white flex items-center gap-2">
+              <Shield className="w-5 h-5 text-primary" /> Privacy & Data Control
+            </DialogTitle>
+            <DialogDescription className="text-zinc-400 text-xs mt-2 leading-relaxed">
+              Manage your personal data, local Socratic databases, and progress states. Your chat logs are stored locally on your device for absolute privacy.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3 mt-4">
+            <Button
+              className="w-full justify-start rounded-none text-xs font-semibold text-white bg-primary/20 hover:bg-primary/30 border-primary/20"
+              variant="outline"
+              onClick={handleExportData}
+            >
+              Export Learning Progress (JSON)
+            </Button>
+            <Button
+              className="w-full justify-start rounded-none text-xs font-semibold text-destructive hover:bg-destructive/10 hover:text-destructive border-destructive/20"
+              variant="outline"
+              onClick={handleResetProgress}
+            >
+              Reset Offline Progress History
+            </Button>
+            <Button
+              className="w-full justify-start rounded-none text-xs font-semibold text-zinc-400 hover:text-white"
+              variant="ghost"
+              onClick={() => setIsPrivacyOpen(false)}
+            >
+              Close Privacy Settings
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <BottomNav />
     </div>
