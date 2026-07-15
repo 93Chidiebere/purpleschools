@@ -34,7 +34,8 @@ import {
   ChevronRight,
   Check,
   Quote,
-  FileText
+  FileText,
+  Users
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import PageLoader from "@/components/shared/purpleLoad";
@@ -50,6 +51,7 @@ interface User {
   topicsExplored: number;
   favoriteQuote: string;
   personalNotes: string;
+  role?: string;
 }
 
 export default function ProfilePage() {
@@ -64,6 +66,21 @@ export default function ProfilePage() {
     className: "",
     favoriteQuote: "",
     personalNotes: "",
+  });
+
+  const { data: adminUsersData, isLoading: isAdminUsersLoading } = useQuery({
+    queryKey: ["adminUsers"],
+    queryFn: async () => {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`${API_BASE}/admin/users`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!res.ok) throw new Error("Failed to fetch admin users");
+      return res.json();
+    },
+    enabled: user?.role === "admin",
   });
 
   const [isEditingQuote, setIsEditingQuote] = useState(false);
@@ -522,6 +539,66 @@ export default function ProfilePage() {
             </Card>
           </div>
         </motion.div>
+
+        {/* Admin Dashboard Console */}
+        {user?.role === "admin" && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.12 }}
+            className="mt-6"
+          >
+            <Card className="rounded-none border border-primary/20">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between mb-4 border-b border-border pb-3">
+                  <div>
+                    <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
+                      <Users className="w-5 h-5 text-primary" /> Admin User Directory
+                    </h3>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      Monitor and review student accounts as they register.
+                    </p>
+                  </div>
+                  <span className="text-xs font-semibold px-2.5 py-1 bg-primary/10 border border-primary/20 text-primary">
+                    {adminUsersData?.users?.length || 0} Registered
+                  </span>
+                </div>
+
+                {isAdminUsersLoading ? (
+                  <p className="text-sm text-muted-foreground text-center py-4">Loading student directory...</p>
+                ) : (
+                  <div className="space-y-4 max-h-[350px] overflow-y-auto pr-1">
+                    {adminUsersData?.users?.map((u: any) => (
+                      <div 
+                        key={u.id} 
+                        className="p-3.5 bg-muted/20 border border-border/60 hover:border-primary/25 transition-all text-xs space-y-2 select-text"
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="font-bold text-foreground text-sm">{u.name}</span>
+                          <span className="text-xs px-2 py-0.5 bg-primary/10 border border-primary/20 text-primary uppercase font-bold tracking-wider">
+                            {u.className}
+                          </span>
+                        </div>
+                        
+                        <div className="grid grid-cols-2 gap-y-1.5 gap-x-4 text-muted-foreground">
+                          <p><strong className="text-foreground/80">Email:</strong> {u.email || "N/A"}</p>
+                          <p><strong className="text-foreground/80">School:</strong> {u.school}</p>
+                          <p><strong className="text-foreground/80">State:</strong> {u.schoolState || "N/A"}</p>
+                          <p><strong className="text-foreground/80">Fav Subject:</strong> {u.favoriteSubject || "N/A"}</p>
+                          <p><strong className="text-foreground/80">Age / Gender:</strong> {u.age || "N/A"} yrs / {u.gender || u.gender === "" ? u.gender : "N/A"}</p>
+                          <p><strong className="text-foreground/80">Teaching XP:</strong> {u.xp || 0} XP</p>
+                        </div>
+                      </div>
+                    ))}
+                    {(!adminUsersData?.users || adminUsersData.users.length === 0) && (
+                      <p className="text-sm text-muted-foreground text-center py-4">No student records found.</p>
+                    )}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
 
         {/* Personal Study Notes */}
         <motion.div

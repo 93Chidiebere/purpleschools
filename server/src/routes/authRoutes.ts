@@ -8,19 +8,28 @@ const JWT_SECRET = process.env.JWT_SECRET || "fallback_secret_key";
 
 // Register user
 router.post("/register", async (req: Request, res: Response): Promise<void> => {
-  const { name, email, password, school, className } = req.body;
+  const { name, email, password, school, className, age, gender, schoolState, favoriteSubject } = req.body;
 
-  if (!name || !email || !password || !school || !className) {
+  if (!name || !password || !school || !className || !age || !gender || !schoolState || !favoriteSubject) {
     res.status(400).json({ error: "All fields are required" });
     return;
   }
 
   try {
-    // Check if user already exists
-    const existingUser = await query("SELECT id FROM users WHERE email = $1", [email]);
-    if (existingUser.rows.length > 0) {
-      res.status(409).json({ error: "Email is already registered" });
+    // Check if name already exists
+    const existingName = await query("SELECT id FROM users WHERE name = $1", [name]);
+    if (existingName.rows.length > 0) {
+      res.status(409).json({ error: "Username/Name is already taken" });
       return;
+    }
+
+    // Check if email already exists
+    if (email) {
+      const existingUser = await query("SELECT id FROM users WHERE email = $1", [email]);
+      if (existingUser.rows.length > 0) {
+        res.status(409).json({ error: "Email is already registered" });
+        return;
+      }
     }
 
     // Hash password
@@ -29,10 +38,10 @@ router.post("/register", async (req: Request, res: Response): Promise<void> => {
 
     // Insert user
     const result = await query(
-      `INSERT INTO users (name, email, password_hash, school, class_name, streak, days_active)
-       VALUES ($1, $2, $3, $4, $5, 0, 0)
-       RETURNING id, name, email, school, class_name, streak, days_active`,
-      [name, email, passwordHash, school, className]
+      `INSERT INTO users (name, email, password_hash, school, class_name, age, gender, school_state, favorite_subject, role, streak, days_active)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, 'user', 0, 0)
+       RETURNING id, name, email, school, class_name, age, gender, school_state, favorite_subject, role, streak, days_active`,
+      [name, email || null, passwordHash, school, className, parseInt(age) || null, gender, schoolState, favoriteSubject]
     );
 
     const user = result.rows[0];
@@ -49,6 +58,11 @@ router.post("/register", async (req: Request, res: Response): Promise<void> => {
         email: user.email,
         school: user.school,
         className: user.class_name,
+        age: user.age,
+        gender: user.gender,
+        schoolState: user.school_state,
+        favoriteSubject: user.favorite_subject,
+        role: user.role,
         streak: user.streak,
         daysActive: user.days_active
       }
@@ -64,19 +78,19 @@ router.post("/login", async (req: Request, res: Response): Promise<void> => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    res.status(400).json({ error: "Email and password are required" });
+    res.status(400).json({ error: "Email/Name and password are required" });
     return;
   }
 
   try {
-    // Get user details
+    // Get user details by email or name
     const result = await query(
-      "SELECT id, name, email, password_hash, school, class_name, streak, days_active FROM users WHERE email = $1",
+      "SELECT id, name, email, password_hash, school, class_name, age, gender, school_state, favorite_subject, role, streak, days_active FROM users WHERE email = $1 OR name = $1",
       [email]
     );
 
     if (result.rows.length === 0) {
-      res.status(401).json({ error: "Invalid email or password" });
+      res.status(401).json({ error: "Invalid email/name or password" });
       return;
     }
 
@@ -85,7 +99,7 @@ router.post("/login", async (req: Request, res: Response): Promise<void> => {
     // Compare passwords
     const isMatch = await bcrypt.compare(password, user.password_hash);
     if (!isMatch) {
-      res.status(401).json({ error: "Invalid email or password" });
+      res.status(401).json({ error: "Invalid email/name or password" });
       return;
     }
 
@@ -101,6 +115,11 @@ router.post("/login", async (req: Request, res: Response): Promise<void> => {
         email: user.email,
         school: user.school,
         className: user.class_name,
+        age: user.age,
+        gender: user.gender,
+        schoolState: user.school_state,
+        favoriteSubject: user.favorite_subject,
+        role: user.role,
         streak: user.streak,
         daysActive: user.days_active
       }

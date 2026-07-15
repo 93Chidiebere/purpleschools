@@ -19,6 +19,10 @@ export default function AuthPage() {
     password: "",
     school: "",
     className: "",
+    age: "",
+    gender: "",
+    schoolState: "",
+    favoriteSubject: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -139,15 +143,52 @@ export default function AuthPage() {
                     onChange={(e) => setFormData({ ...formData, className: e.target.value })} 
                     required
                   />
+                  
+                  {/* Additional parameters requested */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <Input 
+                      type="number"
+                      placeholder="Age" 
+                      className="rounded-xl bg-white/[0.02] border-white/10 text-white placeholder-zinc-500 focus:border-primary/50 focus:ring-primary/50" 
+                      value={formData.age} 
+                      onChange={(e) => setFormData({ ...formData, age: e.target.value })} 
+                      required
+                    />
+                    <select
+                      className="rounded-xl bg-white/[0.02] border border-white/10 text-zinc-300 placeholder-zinc-500 focus:border-primary/50 focus:ring-primary/50 px-3 h-10 text-sm bg-[#120a21]/95 focus:outline-none w-full"
+                      value={formData.gender}
+                      onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
+                      required
+                    >
+                      <option value="" disabled className="text-zinc-500 bg-[#0f0a1c]">Gender</option>
+                      <option value="Male" className="text-white bg-[#0f0a1c]">Male</option>
+                      <option value="Female" className="text-white bg-[#0f0a1c]">Female</option>
+                      <option value="Other" className="text-white bg-[#0f0a1c]">Other</option>
+                    </select>
+                  </div>
+                  <Input 
+                    placeholder="School Location (State)" 
+                    className="rounded-xl bg-white/[0.02] border-white/10 text-white placeholder-zinc-500 focus:border-primary/50 focus:ring-primary/50" 
+                    value={formData.schoolState} 
+                    onChange={(e) => setFormData({ ...formData, schoolState: e.target.value })} 
+                    required
+                  />
+                  <Input 
+                    placeholder="Favourite Subject" 
+                    className="rounded-xl bg-white/[0.02] border-white/10 text-white placeholder-zinc-500 focus:border-primary/50 focus:ring-primary/50" 
+                    value={formData.favoriteSubject} 
+                    onChange={(e) => setFormData({ ...formData, favoriteSubject: e.target.value })} 
+                    required
+                  />
                 </>
               )}
               <Input 
-                type="email" 
-                placeholder="Email address" 
+                type={isLogin ? "text" : "email"} 
+                placeholder={isLogin ? "Email or Username" : "Email address (Optional)"} 
                 className="rounded-xl bg-white/[0.02] border-white/10 text-white placeholder-zinc-500 focus:border-primary/50 focus:ring-primary/50" 
                 value={formData.email} 
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })} 
-                required 
+                required={isLogin} 
               />
               <Input 
                 type="password" 

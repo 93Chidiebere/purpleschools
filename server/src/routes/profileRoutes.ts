@@ -15,7 +15,7 @@ router.get("/me", authenticateToken, async (req: AuthenticatedRequest, res: Resp
 
   try {
     const result = await query(
-      "SELECT name, email, school, class_name, streak, days_active, questions_asked, topics_explored, favorite_quote, personal_notes, xp, highest_xp_ever FROM users WHERE id = $1",
+      "SELECT name, email, school, class_name, streak, days_active, questions_asked, topics_explored, favorite_quote, personal_notes, xp, highest_xp_ever, role, age, gender, school_state AS school_state, favorite_subject AS favorite_subject FROM users WHERE id = $1",
       [userId]
     );
 
@@ -39,7 +39,12 @@ router.get("/me", authenticateToken, async (req: AuthenticatedRequest, res: Resp
         favoriteQuote: user.favorite_quote,
         personalNotes: user.personal_notes,
         xp: user.xp,
-        highestXpEver: user.highest_xp_ever
+        highestXpEver: user.highest_xp_ever,
+        role: user.role,
+        age: user.age,
+        gender: user.gender,
+        schoolState: user.school_state,
+        favoriteSubject: user.favorite_subject
       }
     });
   } catch (err) {
@@ -74,7 +79,7 @@ router.put("/me", authenticateToken, async (req: AuthenticatedRequest, res: Resp
            highest_xp_ever = COALESCE($11, highest_xp_ever),
            updated_at = CURRENT_TIMESTAMP
        WHERE id = $12
-       RETURNING name, email, school, class_name, streak, days_active, questions_asked, topics_explored, favorite_quote, personal_notes, xp, highest_xp_ever`,
+       RETURNING name, email, school, class_name, streak, days_active, questions_asked, topics_explored, favorite_quote, personal_notes, xp, highest_xp_ever, role, age, gender, school_state, favorite_subject`,
       [name, school, className, streak, daysActive, questionsAsked, topicsExplored, favoriteQuote, personalNotes, xp, highestXpEver, userId]
     );
 
@@ -98,7 +103,12 @@ router.put("/me", authenticateToken, async (req: AuthenticatedRequest, res: Resp
         favoriteQuote: updatedUser.favorite_quote,
         personalNotes: updatedUser.personal_notes,
         xp: updatedUser.xp,
-        highestXpEver: updatedUser.highest_xp_ever
+        highestXpEver: updatedUser.highest_xp_ever,
+        role: updatedUser.role,
+        age: updatedUser.age,
+        gender: updatedUser.gender,
+        schoolState: updatedUser.school_state,
+        favoriteSubject: updatedUser.favorite_subject
       }
     });
   } catch (err) {
