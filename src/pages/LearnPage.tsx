@@ -46,6 +46,7 @@ export default function LearnPage() {
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
   const [selectedTopic, setSelectedTopic] = useState<any | null>(null);
   const [showStudyCompanion, setShowStudyCompanion] = useState(false);
+  const [selectedLevel, setSelectedLevel] = useState<"jss" | "sss">("jss");
   const [userClass, setUserClass] = useState<string>("SS2");
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -98,6 +99,8 @@ export default function LearnPage() {
         const parsed = JSON.parse(userData);
         if (parsed.className) {
           setUserClass(parsed.className);
+          const isJuniorProfile = parsed.className.toLowerCase().startsWith("j");
+          setSelectedLevel(isJuniorProfile ? "jss" : "sss");
         }
       } catch (e) {
         console.error("Failed to parse user class:", e);
@@ -121,7 +124,7 @@ export default function LearnPage() {
     // Track subject diversity engagement
     recordSubjectEngagement(topic.name);
 
-    const isJunior = userClass.toLowerCase().startsWith("j");
+    const isJunior = selectedLevel === "jss";
     const matchedScheme = {
       markingGuide: isJunior ? topic.juniorMarkingGuide : topic.seniorMarkingGuide
     };
@@ -395,8 +398,8 @@ Write a concise report card. You must respond in this exact JSON format:
           </div>
           {isEngineLoaded && !reportCard && (
             <div className="flex gap-2">
-              <Button size="sm" variant="ghost" onClick={() => setShowStudyCompanion(true)} className="flex items-center gap-1">
-                <BookOpen className="w-4 h-4 text-primary" /> <span className="hidden sm:inline">Study Notes</span>
+              <Button size="sm" variant="ghost" onClick={() => setShowStudyCompanion(true)} className="flex items-center gap-1.5 border border-primary/20 bg-primary/5 hover:bg-primary/10">
+                <BookOpen className="w-4 h-4 text-primary" /> <span>Study Notes</span>
               </Button>
               <Button size="sm" variant="outline" onClick={handleCompleteLesson} disabled={isEvaluating}>
                 {isEvaluating ? "Analyzing..." : "Complete Lesson"}
@@ -445,8 +448,40 @@ Write a concise report card. You must respond in this exact JSON format:
                   </p>
                 </div>
 
+                {/* Level Toggle Selector */}
+                <div className="flex justify-center mb-8">
+                  <div className="bg-white/[0.02] border border-white/10 p-1 flex gap-1 rounded-none max-w-sm w-full">
+                    <button
+                      onClick={() => {
+                        setSelectedLevel("jss");
+                        setSelectedSubject(null);
+                      }}
+                      className={`flex-1 py-2 text-xs font-bold transition-all rounded-none ${
+                        selectedLevel === "jss"
+                          ? "bg-primary text-primary-foreground shadow"
+                          : "text-muted-foreground hover:text-foreground"
+                      }`}
+                    >
+                      Junior Secondary (JSS)
+                    </button>
+                    <button
+                      onClick={() => {
+                        setSelectedLevel("sss");
+                        setSelectedSubject(null);
+                      }}
+                      className={`flex-1 py-2 text-xs font-bold transition-all rounded-none ${
+                        selectedLevel === "sss"
+                          ? "bg-primary text-primary-foreground shadow"
+                          : "text-muted-foreground hover:text-foreground"
+                      }`}
+                    >
+                      Senior Secondary (SSS)
+                    </button>
+                  </div>
+                </div>
+
                 <div className="grid md:grid-cols-2 gap-4">
-                  {Object.values(subjectsData).map((sub) => (
+                  {Object.values(subjectsData[selectedLevel]).map((sub) => (
                     <Card
                       key={sub.id}
                       className="cursor-pointer hover:border-primary/50 transition-all rounded-none hover:shadow-soft animate-fadeIn"
@@ -482,7 +517,7 @@ Write a concise report card. You must respond in this exact JSON format:
 
                 <div className="text-center max-w-lg mx-auto mb-8">
                   <h2 className="text-2xl font-bold text-foreground">
-                    {subjectsData[selectedSubject].name} Topics
+                    {subjectsData[selectedLevel][selectedSubject].name} Topics
                   </h2>
                   <p className="text-muted-foreground mt-2 text-sm">
                     Select a topic to start teaching your AI student, Chidi.
@@ -490,8 +525,8 @@ Write a concise report card. You must respond in this exact JSON format:
                 </div>
 
                 <div className="grid gap-4">
-                  {subjectsData[selectedSubject].topics.map((topicItem: any) => {
-                    const isJunior = userClass.toLowerCase().startsWith("j");
+                  {subjectsData[selectedLevel][selectedSubject].topics.map((topicItem: any) => {
+                    const isJunior = selectedLevel === "jss";
                     const descText = isJunior ? topicItem.juniorDesc : topicItem.seniorDesc;
                     return (
                       <Card
@@ -501,7 +536,7 @@ Write a concise report card. You must respond in this exact JSON format:
                           const enriched = {
                             ...topicItem,
                             topic: topicItem.title,
-                            name: subjectsData[selectedSubject].name
+                            name: subjectsData[selectedLevel][selectedSubject].name
                           };
                           handleStartEngine(enriched);
                         }}

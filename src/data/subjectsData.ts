@@ -1,12 +1,14 @@
+// PurpleSchool Dual-Stream Curriculum Database (JSS & SSS)
+
 export interface Topic {
   id: string;
   title: string;
-  juniorDesc: string;
-  seniorDesc: string;
-  juniorGreeting: string;
-  seniorGreeting: string;
-  juniorMarkingGuide: string;
-  seniorMarkingGuide: string;
+  juniorDesc?: string;
+  seniorDesc?: string;
+  juniorGreeting?: string;
+  seniorGreeting?: string;
+  juniorMarkingGuide?: string;
+  seniorMarkingGuide?: string;
   studyNotes: {
     concept: string;
     formulas: string[];
@@ -21,1819 +23,3052 @@ export interface Subject {
   topics: Topic[];
 }
 
-export const subjectsData: Record<string, Subject> = {
+// ----------------------------------------------------
+// 1. JUNIOR SECONDARY SCHOOL (JSS) SUBJECTS DATABASE
+// ----------------------------------------------------
+export const jssSubjectsData: Record<string, Subject> = {
   math: {
     id: "math",
-    name: "Mathematics",
+    name: "Mathematics (JSS)",
     topics: [
       {
-        id: "quadratic",
-        title: "Quadratic Equations",
-        juniorDesc: "Learn how equations with squares work and find simple integer roots.",
-        seniorDesc: "Solve standard forms using factorization, completing the square, and the quadratic formula.",
-        juniorGreeting: "Hi Teacher! 👋 I see equations like $x^2 - 5x + 6 = 0$ in my homework. I know $x$ is a number, but why does it have a little 2 on top? How do we find what $x$ is?",
-        seniorGreeting: "Hello Teacher! 📐 I am trying to solve quadratic equations of form $ax^2 + bx + c = 0$. Can you show me how factorization works, and how the general quadratic formula is derived and used?",
-        juniorMarkingGuide: "1. Define what a quadratic equation is.\n2. Explain that x^2 means x multiplied by itself.\n3. Show how to find factors that add to -5 and multiply to +6.",
-        seniorMarkingGuide: "1. State coefficients a, b, and c in ax^2 + bx + c = 0.\n2. State the quadratic formula: $x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$.\n3. Calculate the discriminant $D = b^2 - 4ac$ to explain the nature of roots.",
+        id: "fractions",
+        title: "Fractions & Decimals",
+        juniorDesc: "Learn how to add, subtract, multiply, and divide fractions and decimals.",
+        juniorGreeting: "Hi Teacher! 👋 I am trying to add 1/2 and 1/3, but my friend says I should just add the tops to get 2/5. Is that correct? How do I find a common denominator?",
+        juniorMarkingGuide: "JSS Math Fractions: Find the Lowest Common Multiple (LCM) of denominators [2 Marks]. Convert numerators correctly [1 Mark]. Add numerators and simplify [1 Mark].",
         studyNotes: {
-          concept: "A quadratic equation is a polynomial equation of degree 2. The standard form is $ax^2 + bx + c = 0$, where $a \\neq 0$. The solutions are called the roots of the equation.",
+          concept: "To add or subtract fractions with different denominators, you must first convert them to equivalent fractions with the same denominator using the Lowest Common Multiple (LCM).",
           formulas: [
-            "Standard Form: $ax^2 + bx + c = 0$",
-            "Quadratic Formula: $x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$",
-            "Discriminant: $D = b^2 - 4ac$ ($D > 0$: 2 real roots, $D = 0$: 1 real root, $D < 0$: no real roots)"
+            "\\text{Equivalent Fraction: } \\frac{a}{b} = \\frac{a \\times k}{b \\times k}",
+            "\\frac{a}{b} + \\frac{c}{d} = \\frac{(a \\times d) + (b \\times c)}{b \\times d}"
           ],
           steps: [
-            "Identify the values of $a$, $b$, and $c$.",
-            "Choose a method: Factorization, Completing the Square, or Quadratic Formula.",
-            "If using the formula, calculate the discriminant first to verify if real roots exist.",
-            "Substitute $a$, $b$, and $c$ into the quadratic formula and simplify for both the positive (+) and negative (-) cases."
+            "Find the Least Common Denominator (LCM of the denominators).",
+            "Rewrite each fraction with the common denominator.",
+            "Add or subtract the numerators while keeping the denominator the same.",
+            "Simplify the resulting fraction if possible."
           ],
-          workedExample: "Solve $x^2 - 5x + 6 = 0$.\nHere $a=1, b=-5, c=6$.\nUsing factorization, find two numbers that multiply to $6$ and add to $-5$. These are $-2$ and $-3$.\nSo, $(x - 2)(x - 3) = 0$.\nTherefore, $x = 2$ or $x = 3$."
+          workedExample: "Problem: Calculate 1/2 + 1/3.\n\nSolution:\n1. The denominators are 2 and 3. The LCM of 2 and 3 is 6.\n2. Convert 1/2: Multiply top and bottom by 3 -> 3/6.\n3. Convert 1/3: Multiply top and bottom by 2 -> 2/6.\n4. Add: 3/6 + 2/6 = (3 + 2)/6 = 5/6.\nAnswer: 5/6"
         }
       },
       {
-        id: "simultaneous",
-        title: "Simultaneous Equations",
-        juniorDesc: "Learn how to find values for two variables like x and y using simple scales.",
-        seniorDesc: "Solve system of linear equations in two variables using substitution and elimination.",
-        juniorGreeting: "Good day, Teacher! ⚖️ I have a puzzle: 'A book and a pen cost $15. Two books and a pen cost $25.' How do I write this in math and find the price of each?",
-        seniorGreeting: "Hello Teacher! 📊 We are studying simultaneous linear equations. Could you explain when it's best to use substitution versus elimination, and solve a system with fractions?",
-        juniorMarkingGuide: "1. Translate the word puzzle into two equations.\n2. Subtract the first equation from the second to find the book's price.\n3. Substitute the book's price to find the pen's price.",
-        seniorMarkingGuide: "1. Set up equations: Eq1: x + y = 15, Eq2: 2x + y = 25.\n2. Perform elimination: Eq2 - Eq1 yields x = 10.\n3. Substitute x back into Eq1 to find y = 5.",
+        id: "lcm_hcf",
+        title: "LCM & HCF",
+        juniorDesc: "Find the Lowest Common Multiple and Highest Common Factor of numbers.",
+        juniorGreeting: "Good day, Teacher! I have the numbers 12 and 18. What is the difference between HCF and LCM, and how do I find them using prime factors?",
+        juniorMarkingGuide: "JSS Math LCM & HCF: List prime factors of both numbers [2 Marks]. Find HCF by multiplying common factors [1 Mark]. Find LCM by multiplying all factors with highest powers [1 Mark].",
         studyNotes: {
-          concept: "Simultaneous equations are a set of two or more equations containing multiple variables that must all be satisfied at the same time.",
+          concept: "The Highest Common Factor (HCF) is the largest number that divides two or more numbers exactly. The Lowest Common Multiple (LCM) is the smallest positive integer that is divisible by all numbers.",
           formulas: [
-            "General Form: $a_1x + b_1y = c_1$ and $a_2x + b_2y = c_2$"
+            "\\text{HCF} = \\text{product of common prime factors with lowest powers}",
+            "\\text{LCM} = \\text{product of all prime factors with highest powers}"
           ],
           steps: [
-            "Elimination: Multiply one or both equations by constants to make the coefficients of one variable equal, then add or subtract equations.",
-            "Substitution: Express one variable in terms of the other from one equation, then substitute it into the second equation.",
-            "Solve the resulting single-variable equation.",
-            "Substitute the solved variable value back into one of the original equations to find the second variable."
+            "Express each number as a product of prime factors.",
+            "For HCF, identify factors common to all numbers and multiply their lowest powers.",
+            "For LCM, multiply the highest powers of all prime factors present."
           ],
-          workedExample: "Solve $x + y = 12$ and $2x - y = 3$.\nUsing Elimination, add the two equations together:\n$(x + 2x) + (y - y) = 12 + 3 \\implies 3x = 15 \\implies x = 5$.\nSubstitute $x=5$ into first equation: $5 + y = 12 \\implies y = 7$.\nRoots are $x=5, y=7$."
+          workedExample: "Problem: Find HCF and LCM of 12 and 18.\n\nSolution:\n1. Prime factors:\n   12 = 2^2 * 3\n   18 = 2 * 3^2\n2. HCF: Common factors with lowest power -> 2^1 * 3^1 = 6.\n3. LCM: All factors with highest power -> 2^2 * 3^2 = 4 * 9 = 36.\nAnswer: HCF = 6, LCM = 36"
         }
       },
       {
-        id: "trig",
-        title: "Trigonometric Ratios",
-        juniorDesc: "Solve right-angled triangles using basic Sine, Cosine, and Tangent angles.",
-        seniorDesc: "Apply SOH CAH TOA, Pythagoras theorem, and solve angles of elevation/depression.",
-        juniorGreeting: "Hi Teacher! 📐 I am trying to figure out why triangles have special buttons on my calculator like 'sin', 'cos', and 'tan'. What do they do?",
-        seniorGreeting: "Good day, Teacher! ⛰️ I'm trying to solve a word problem where a boy looks up at the top of a tree. How do I set up the tangent ratio for angles of elevation?",
-        juniorMarkingGuide: "1. Define SOH CAH TOA clearly.\n2. Label the hypotenuse, opposite, and adjacent sides relative to a given angle.\n3. Calculate a simple ratio.",
-        seniorMarkingGuide: "1. State Pythagoras: $a^2 + b^2 = c^2$.\n2. Apply the tangent ratio: $\\tan(\\theta) = \\frac{\\text{Opposite}}{\\text{Adjacent}}$.\n3. Calculate angle of elevation using inverse trigonometric functions.",
+        id: "simple_interest",
+        title: "Simple Interest",
+        juniorDesc: "Calculate Simple Interest, Principal, Rate, and Time.",
+        juniorGreeting: "Hello Teacher! 💰 If I borrow ₦10,000 at a 5% interest rate for 2 years, how do I calculate the interest I have to pay? What does Principal mean?",
+        juniorMarkingGuide: "JSS Math Simple Interest: State formula I = PRT/100 [1 Mark]. Substitute Principal, Rate, and Time [2 Marks]. Calculate correct interest [1 Mark].",
         studyNotes: {
-          concept: "Trigonometry deals with the relationship between side lengths and angles of triangles. For right-angled triangles, the ratios are defined relative to an angle $\\theta$.",
+          concept: "Simple Interest is the money paid or earned for borrowing or lending money, calculated as a percentage of the original principal amount over time.",
           formulas: [
-            "Sine: $\\sin(\\theta) = \\frac{\\text{Opposite}}{\\text{Hypotenuse}}$",
-            "Cosine: $\\cos(\\theta) = \\frac{\\text{Adjacent}}{\\text{Hypotenuse}}$",
-            "Tangent: $\\tan(\\theta) = \\frac{\\text{Opposite}}{\\text{Adjacent}}$",
-            "Pythagoras Theorem: $\\text{Opp}^2 + \\text{Adj}^2 = \\text{Hyp}^2$"
+            "I = \\frac{P \\times R \\times T}{100}",
+            "A = P + I"
           ],
           steps: [
-            "Identify the right angle and label the three sides relative to the reference angle $\\theta$.",
-            "Determine which ratio (Sin, Cos, or Tan) connects the known sides/angles with the unknown.",
-            "Set up the equation and solve for the missing variable."
+            "Identify P (Principal), R (Rate in percentage), and T (Time in years).",
+            "Substitute these values into the simple interest formula.",
+            "Solve for Interest (I).",
+            "Add Interest to Principal to find the Total Amount (A) if required."
           ],
-          workedExample: "Find the height of a tree if the angle of elevation to the top is $30^\\circ$ from a distance of $10\\text{m}$.\nLet height be $h$ (Opposite) and distance be $10\\text{m}$ (Adjacent).\nUse Tangent: $\\tan(30^\\circ) = \\frac{h}{10}$.\nSince $\\tan(30^\\circ) \\approx 0.577$, then $h = 10 \\times 0.577 = 5.77\\text{m}$."
+          workedExample: "Problem: Find the simple interest on ₦5,000 for 3 years at 4% per annum.\n\nSolution:\n1. Identify: P = 5000, R = 4, T = 3.\n2. Formula: I = (P * R * T) / 100\n3. Calculate: I = (5000 * 4 * 3) / 100 = 60000 / 100 = 600.\nAnswer: Simple Interest = ₦600"
         }
       },
       {
-        id: "indices",
-        title: "Indices and Logarithms",
-        juniorDesc: "Understand indices as repeated multiplication and simple power rules.",
-        seniorDesc: "Solve equations using the laws of indices and indices conversion to logarithms.",
-        juniorGreeting: "Hello Teacher! ⚡ I know $2 \\times 3 = 6$, but why is $2^3 = 8$? What are the rules when multiplying numbers with powers like $2^3 \\times 2^2$?",
-        seniorGreeting: "Good day, Teacher! 📈 I am stuck on an index equation: $3^{2x-1} = 27$. How do I change base to solve this, and how does it relate to logarithms?",
-        juniorMarkingGuide: "1. Explain base and exponent/power.\n2. State the multiplication law: $a^x \\times a^y = a^{x+y}$.\n3. Calculate simple exponents manually.",
-        seniorMarkingGuide: "1. Convert 27 to base 3: $27 = 3^3$.\n2. Equate the exponents: $2x - 1 = 3$.\n3. State the logarithm conversion rule: $y = b^x \\iff \\log_b(y) = x$.",
+        id: "angles",
+        title: "Angles & Triangles",
+        juniorDesc: "Understand angles on a straight line, parallel lines, and sum of angles in a triangle.",
+        juniorGreeting: "Hi Teacher! I am looking at a triangle. Why do the three inside angles always add up to 180 degrees? Can you prove it or show me?",
+        juniorMarkingGuide: "JSS Math Angles: State sum of angles in a triangle is 180 degrees [2 Marks]. Use equation to solve for unknown angle [2 Marks].",
         studyNotes: {
-          concept: "Indices represent repeated multiplication of a base number. Logarithms are the inverse operations of indices, representing the power to which a base must be raised to get a number.",
+          concept: "An angle is formed when two lines meet. Angles on a straight line add up to 180°, and the interior angles of any triangle always sum to 180°.",
           formulas: [
-            "Multiplication Law: $a^m \\times a^n = a^{m+n}$",
-            "Division Law: $a^m \\div a^n = a^{m-n}$",
-            "Power Law: $(a^m)^n = a^{mn}$",
-            "Zero Power: $a^0 = 1$",
-            "Logarithm Conversion: $y = b^x \\iff \\log_b(y) = x$"
+            "\\angle A + \\angle B + \\angle C = 180^\\circ \\quad \\text{(Sum in Triangle)}",
+            "x + y = 180^\\circ \\quad \\text{(Angles on a straight line)}"
           ],
           steps: [
-            "Simplify index terms by converting all bases to prime factors where possible.",
-            "Apply the appropriate multiplication, division, or power laws.",
-            "To solve index equations, make bases on both sides identical and equate the exponents.",
-            "Convert index equations to logarithms to isolate powers if bases cannot be equated."
+            "Identify known angles in the triangle or on the line.",
+            "Write an equation summing angles to 180°.",
+            "Subtract the sum of known angles from 180° to find the unknown angle."
           ],
-          workedExample: "Solve $2^{x+1} = 16$.\nConvert 16 to base 2: $16 = 2^4$.\nNow write: $2^{x+1} = 2^4$.\nEquate exponents: $x + 1 = 4 \\implies x = 3$."
+          workedExample: "Problem: In triangle ABC, angle A = 50° and angle B = 70°. Find angle C.\n\nSolution:\n1. Equation: A + B + C = 180\n2. Substitute: 50 + 70 + C = 180\n3. Solve: 120 + C = 180 -> C = 180 - 120 = 60.\nAnswer: Angle C = 60°"
         }
       },
       {
-        id: "coordinate",
-        title: "Coordinate Geometry",
-        juniorDesc: "Plot points on Cartesian plane (x, y) and find distances visually.",
-        seniorDesc: "Calculate distance, midpoint, slope/gradient, and equations of straight lines.",
-        juniorGreeting: "Hi Teacher! 📍 I'm looking at a grid with $X$ and $Y$ lines. What does a point like $(3, -2)$ mean, and how do we draw a straight line through it?",
-        seniorGreeting: "Hello Teacher! 📏 I have two points $A(2, 3)$ and $B(6, 11)$. Can you teach me the formula to find the distance between them, their midpoint, and the equation of the line passing through them?",
-        juniorMarkingGuide: "1. Locate x-coordinate (horizontal) and y-coordinate (vertical) on the Cartesian plane.\n2. Draw lines to mark the intersection point.\n3. Plot a second point and draw a connecting straight line.",
-        seniorMarkingGuide: "1. Apply distance formula: $d = \\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}$.\n2. Calculate gradient/slope: $m = \\frac{y_2-y_1}{x_2-x_1}$.\n3. Write equation of straight line using $y - y_1 = m(x - x_1)$.",
+        id: "perimeter_area",
+        title: "Area & Perimeter of Shapes",
+        juniorDesc: "Calculate the perimeter and area of basic shapes: squares, rectangles, and triangles.",
+        juniorGreeting: "Hello Teacher! I have a rectangle with length 8cm and width 5cm. How do I find its perimeter and area? Are the units different?",
+        juniorMarkingGuide: "JSS Math Area & Perimeter: State correct formulas for rectangle [2 Marks]. Compute perimeter with cm unit [1 Mark]. Compute area with cm² unit [1 Mark].",
         studyNotes: {
-          concept: "Coordinate Geometry is the study of geometry using a coordinate system. Points are mapped on a 2D plane using $(x,y)$ coordinate pairs.",
+          concept: "Perimeter is the total boundary length of a shape (measured in linear units like cm). Area is the total surface space inside the shape (measured in square units like cm²).",
           formulas: [
-            "Distance: $d = \\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}$",
-            "Midpoint: $M = \\left(\\frac{x_1+x_2}{2}, \\frac{y_1+y_2}{2}\\right)$",
-            "Slope/Gradient: $m = \\frac{y_2-y_1}{x_2-x_1}$",
-            "Line Equation: $y - y_1 = m(x - x_1)$ or $y = mx + c$"
+            "\\text{Rectangle Perimeter} = 2(L + W)",
+            "\\text{Rectangle Area} = L \\times W",
+            "\\text{Triangle Area} = \\frac{1}{2} \\times B \\times H"
           ],
           steps: [
-            "Label coordinates $(x_1, y_1)$ and $(x_2, y_2)$ for the given points.",
-            "Substitute into the distance or midpoint formulas as required.",
-            "Find the slope first if looking for a line equation, then plug a point into the equation."
+            "Identify lengths of the base, height, length, or width from the shape.",
+            "Apply the correct perimeter formula (add all side lengths).",
+            "Apply the correct area formula (multiply appropriate sides).",
+            "Ensure units are in cm for perimeter and cm² for area."
           ],
-          workedExample: "Find the slope and equation of the line through $(1, 2)$ and $(3, 6)$.\nGradient $m = \\frac{6 - 2}{3 - 1} = \\frac{4}{2} = 2$.\nUse line equation: $y - y_1 = m(x - x_1) \\implies y - 2 = 2(x - 1)$.\n$y - 2 = 2x - 2 \\implies y = 2x$."
+          workedExample: "Problem: A rectangle is 6cm long and 4cm wide. Find its perimeter and area.\n\nSolution:\n1. Perimeter = 2 * (L + W) = 2 * (6 + 4) = 2 * 10 = 20cm.\n2. Area = L * W = 6 * 4 = 24cm².\nAnswer: Perimeter = 20cm, Area = 24cm²"
         }
       },
       {
-        id: "probability",
-        title: "Probability",
-        juniorDesc: "Simple chance of rolling dice or flipping coins (heads/tails).",
-        seniorDesc: "Solve conditional probability, independent events, and tree diagrams.",
-        juniorGreeting: "Good day, Teacher! 🎲 If I roll a standard six-sided die, what is the chance that I get an even number? Why is probability always a fraction?",
-        seniorGreeting: "Hello Teacher! 🃏 We are studying probability. What is the difference between mutually exclusive and independent events? Can you show me how to draw a tree diagram for picking marbles without replacement?",
-        juniorMarkingGuide: "1. State definition: Probability = (number of favorable outcomes) / (total outcomes).\n2. Count total sides of a die (6) and even numbers (2, 4, 6 = 3 sides).\n3. Simplify the fraction 3/6 to 1/2.",
-        seniorMarkingGuide: "1. Define independent events: $P(A \\cap B) = P(A) \\times P(B)$.\n2. Define mutually exclusive events: $P(A \\cup B) = P(A) + P(B)$.\n3. Calculate probability of consecutive selections adjusting totals for 'no replacement'.",
+        id: "statistics",
+        title: "Statistics (Mean, Median, Mode)",
+        juniorDesc: "Calculate average values: mean, median, and mode for a set of simple data.",
+        juniorGreeting: "Good day, Teacher! 📊 I have this list of test marks: 5, 8, 5, 6, 10. How do I calculate the Mean, Median, and Mode? When is one better than the other?",
+        juniorMarkingGuide: "JSS Math Statistics: Calculate Mean by dividing sum by count [2 Marks]. Arrange data and locate Median [1 Mark]. Identify highest frequency Mode [1 Mark].",
         studyNotes: {
-          concept: "Probability measures the likelihood of an event occurring. It ranges from 0 (impossible) to 1 (certain). Events can be independent (outcome of one doesn't affect another) or dependent.",
+          concept: "Mean is the numerical average. Median is the middle number when data is arranged in ascending order. Mode is the number that appears most frequently.",
           formulas: [
-            "Basic Probability: $P(E) = \\frac{n(E)}{n(S)}$",
-            "Complementary Event: $P(E') = 1 - P(E)$",
-            "Independent Events: $P(A \\cap B) = P(A) \\times P(B)$",
-            "Mutually Exclusive: $P(A \\cup B) = P(A) + P(B)$"
+            "\\text{Mean } (\\bar{x}) = \\frac{\\sum x}{n}",
+            "\\text{Median} = \\text{middle value of sorted list}"
           ],
           steps: [
-            "Define the sample space $S$ and count total outcomes $n(S)$.",
-            "Define the event $E$ and count successful outcomes $n(E)$.",
-            "Divide $n(E)$ by $n(S)$ and simplify.",
-            "For multiple events, check if replacement occurs to determine if probabilities change for subsequent events."
+            "For Mean: Add all values together and divide by total number of values.",
+            "For Median: Sort data from lowest to highest. If odd count, take the center. If even, average the two middle values.",
+            "For Mode: Find the value that occurs most often."
           ],
-          workedExample: "A bag has 3 red and 2 blue marbles. A marble is picked, not replaced, and a second is picked. Find P(Red then Blue).\nFirst pick: $P(R1) = \\frac{3}{5}$.\nSecond pick (no replacement, 4 marbles left, 2 blue): $P(B2) = \\frac{2}{4} = \\frac{1}{2}$.\nMultiply: $P(R1 \\text{ and } B2) = \\frac{3}{5} \\times \\frac{1}{2} = \\frac{3}{10}$."
+          workedExample: "Problem: Find mean, median, and mode of: 3, 7, 3, 5, 2.\n\nSolution:\n1. Sorted list: 2, 3, 3, 5, 7. Count (n) = 5.\n2. Mean = (2 + 3 + 3 + 5 + 7) / 5 = 20 / 5 = 4.\n3. Median = middle value (3rd item) = 3.\n4. Mode = most frequent number = 3.\nAnswer: Mean=4, Median=3, Mode=3"
         }
       },
       {
-        id: "mensuration",
-        title: "Mensuration",
-        juniorDesc: "Learn simple areas (rectangles, circles) and volumes of cuboids.",
-        seniorDesc: "Calculate total surface area and volume of cylinders, cones, and spheres.",
-        juniorGreeting: "Hi Teacher! 📦 I have a cylindrical tin of milk. How do I calculate the total amount of metal used to make the tin, and how much milk can it hold?",
-        seniorGreeting: "Good day, Teacher! 🍦 I'm studying the mensuration of 3D shapes. How do I derive the curved surface area of a cone, and calculate the volume of a sphere?",
-        juniorMarkingGuide: "1. State cylinder surface area formula components (top, bottom, curved side).\n2. Calculate flat circular ends: $2 \\times \\pi r^2$.\n3. Calculate curved side: $2\\pi rh$.",
-        seniorMarkingGuide: "1. State Total Surface Area of cylinder: $2\\pi r(r + h)$.\n2. State Cone Volume: $V = \\frac{1}{3}\\pi r^2 h$.\n3. State Sphere Volume: $V = \\frac{4}{3}\\pi r^3$ and calculate using radius.",
+        id: "algebra",
+        title: "Basic Algebra",
+        juniorDesc: "Learn how to simplify expressions using letters like x and y.",
+        juniorGreeting: "Hi Teacher! I see expressions like 3x + 2y + x - y. Why can't I just add everything together to get 5xy? What are like terms?",
+        juniorMarkingGuide: "JSS Math Algebra: Group like terms correctly [2 Marks]. Add/subtract coefficients of like terms [2 Marks].",
         studyNotes: {
-          concept: "Mensuration is the branch of mathematics dealing with the measurement of geometric figures, including perimeter, area, and volume.",
+          concept: "Algebra uses symbols/letters to represent numbers. In algebraic expressions, you can only combine 'like terms' (terms that have identical variables).",
           formulas: [
-            "Cylinder Volume: $V = \\pi r^2 h$",
-            "Cylinder Surface Area: $A = 2\\pi r^2 + 2\\pi rh$",
-            "Cone Volume: $V = \\frac{1}{3}\\pi r^2 h$",
-            "Sphere Volume: $V = \\frac{4}{3}\\pi r^3$"
+            "a \\cdot x + b \\cdot x = (a + b)x",
+            "x + x = 2x \\quad \\text{but} \\quad x + y \\text{ cannot be simplified}"
           ],
           steps: [
-            "Identify the parameters (radius $r$, height $h$, slant height $l$).",
-            "Choose the correct formula for volume or surface area.",
-            "Substitute constants (like $\\pi \\approx \\frac{22}{7}$ or $3.142$) and simplify."
+            "Group terms containing the same variables together.",
+            "Group constant numbers together.",
+            "Add or subtract the coefficients of the grouped like terms.",
+            "Write down the simplified final expression."
           ],
-          workedExample: "Find the volume of a cylinder with radius $7\\text{cm}$ and height $10\\text{cm}$.\nUse $V = \\pi r^2 h$.\n$V = \\frac{22}{7} \\times 7 \\times 7 \\times 10$.\n$V = 22 \\times 7 \\times 10 = 1540\\text{cm}^3$."
+          workedExample: "Problem: Simplify: 4a + 5b - 2a + b.\n\nSolution:\n1. Group 'a' terms: 4a - 2a = 2a.\n2. Group 'b' terms: 5b + b = 6b.\n3. Combine: 2a + 6b.\nAnswer: 2a + 6b"
         }
       },
       {
-        id: "sequence",
-        title: "Sequence and Series",
-        juniorDesc: "Find missing numbers in simple arithmetic patterns (e.g. 2, 4, 6...).",
-        seniorDesc: "Solve AP and GP nth terms, sums, and infinite geometric series.",
-        juniorGreeting: "Hello Teacher! 🔢 If a pattern starts like $3, 7, 11, 15...$, how do I find the 50th number without writing them all down?",
-        seniorGreeting: "Good day, Teacher! 📈 I am studying Geometric Progressions. How do I calculate the sum to infinity of a GP where the numbers get smaller and smaller, like $8, 4, 2, 1...$?",
-        juniorMarkingGuide: "1. Identify the first term (a) and common difference (d).\n2. Write the formula: $T_n = a + (n-1)d$.\n3. Substitute a=3, d=4, n=50 to get the 50th term.",
-        seniorMarkingGuide: "1. State common ratio for GP: $r = \\frac{T_2}{T_1} = 0.5$.\n2. State sum to infinity formula: $S_\\infty = \\frac{a}{1 - r}$ for $|r| < 1$.\n3. Compute sum to infinity using first term a=8 and r=0.5.",
+        id: "linear_equations",
+        title: "Linear Equations",
+        juniorDesc: "Solve simple equations where x is to be found, e.g., 2x + 5 = 15.",
+        juniorGreeting: "Good day, Teacher! 🔑 I'm trying to solve 3x - 4 = 11. My textbook says I should add 4 to both sides. Why do we do the opposite operations to solve for x?",
+        juniorMarkingGuide: "JSS Math Linear Equations: Add/subtract constant from both sides [2 Marks]. Divide both sides by coefficient of x [2 Marks].",
         studyNotes: {
-          concept: "An Arithmetic Progression (AP) is a sequence where the difference between consecutive terms is constant. A Geometric Progression (GP) is a sequence where the ratio of consecutive terms is constant.",
+          concept: "Solving an equation means finding the value of the variable that makes the equation true. We isolate the variable by performing inverse operations on both sides of the equal sign.",
           formulas: [
-            "AP nth Term: $T_n = a + (n-1)d$",
-            "AP Sum: $S_n = \\frac{n}{2}[2a + (n-1)d]$",
-            "GP nth Term: $T_n = ar^{n-1}$",
-            "GP Sum: $S_n = \\frac{a(r^n - 1)}{r - 1}$ (for $r > 1$)",
-            "GP Sum to Infinity: $S_\\infty = \\frac{a}{1-r}$ (for $|r| < 1$)"
+            "ax + b = c \\implies ax = c - b \\implies x = \\frac{c - b}{a}"
           ],
           steps: [
-            "Determine if the sequence is an AP (common difference) or GP (common ratio).",
-            "Identify the first term $a$, and the difference $d$ or ratio $r$.",
-            "Select the correct nth term or sum formula based on the question.",
-            "Substitute and evaluate."
+            "Isolate the variable term by adding/subtracting constants on both sides.",
+            "Isolate the variable itself by multiplying/dividing coefficients on both sides.",
+            "Verify your answer by substituting it back into the original equation."
           ],
-          workedExample: "Find the 10th term of the GP $3, 6, 12...$.\nHere $a=3, r = \\frac{6}{3} = 2$.\nUse $T_n = ar^{n-1} \\implies T_{10} = 3 \\times 2^{10-1}$.\n$T_{10} = 3 \\times 2^9 = 3 \\times 512 = 1536$."
+          workedExample: "Problem: Solve 3x - 5 = 10.\n\nSolution:\n1. Add 5 to both sides: 3x = 10 + 5 -> 3x = 15.\n2. Divide both sides by 3: x = 15 / 3 -> x = 5.\nAnswer: x = 5"
         }
       },
       {
-        id: "matrices",
-        title: "Matrices",
-        juniorDesc: "Organize numbers in rows and columns and add simple tables.",
-        seniorDesc: "Perform matrix multiplication, find determinants, and calculate 2x2 inverses.",
-        juniorGreeting: "Hi Teacher! 📊 I saw some numbers written inside square brackets like a grid. What is a matrix, and how do we add two of them together?",
-        seniorGreeting: "Good day, Teacher! 🧮 I'm trying to solve simultaneous equations using matrices. How do I calculate the determinant and the inverse of a 2x2 matrix?",
-        juniorMarkingGuide: "1. Explain rows (horizontal) and columns (vertical).\n2. Explain that only matrices of the same dimension can be added.\n3. Add corresponding elements.",
-        seniorMarkingGuide: "1. Calculate determinant of $\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}$ as $ad - bc$.\n2. Write the adjoint matrix swap elements and negate signs.\n3. State inverse formula: $A^{-1} = \\frac{1}{\\det(A)} \\text{adj}(A)$.",
+        id: "probability_intro",
+        title: "Intro to Probability",
+        juniorDesc: "Learn the chance of an event happening using fractions from 0 to 1.",
+        juniorGreeting: "Hello Teacher! 🎲 If I roll a normal 6-sided die, what is the probability of rolling an even number? How do I calculate this as a fraction?",
+        juniorMarkingGuide: "JSS Math Probability: Count successful outcomes [1 Mark]. Count total possible outcomes [1 Mark]. Write fraction and simplify [2 Marks].",
         studyNotes: {
-          concept: "A matrix is a rectangular array of numbers arranged in rows and columns. Matrices can be added, subtracted, and multiplied under specific dimensional rules.",
+          concept: "Probability is the measure of the likelihood that an event will occur, calculated as the ratio of favorable outcomes to the total number of possible outcomes.",
           formulas: [
-            "Determinant: $\\det\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix} = ad - bc$",
-            "Inverse: $\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}^{-1} = \\frac{1}{ad-bc}\\begin{pmatrix} d & -b \\\\ -c & a \\end{pmatrix}$"
+            "P(\\text{Event}) = \\frac{\\text{Number of Favorable Outcomes}}{\\text{Total Number of Possible Outcomes}}"
           ],
           steps: [
-            "For addition/multiplication, verify that dimensions are compatible.",
-            "To multiply matrices, take the dot product of rows of the first with columns of the second.",
-            "To find the inverse of a 2x2 matrix, calculate the determinant, swap diagonal elements, negate non-diagonals, and multiply by $\\frac{1}{\\det}$."
+            "List all possible outcomes (sample space) and count them.",
+            "Identify the outcomes that meet your event criteria (favorable outcomes) and count them.",
+            "Create a fraction with favorable outcomes on top and total outcomes on the bottom.",
+            "Simplify the fraction to its lowest terms."
           ],
-          workedExample: "Find the determinant of $A = \\begin{pmatrix} 3 & 4 \\\\ 1 & 2 \\end{pmatrix}$.\n$\\det(A) = ad - bc = (3 \\times 2) - (4 \\times 1) = 6 - 4 = 2$."
+          workedExample: "Problem: A bag contains 3 red balls and 5 blue balls. If a ball is picked at random, what is the probability it is red?\n\nSolution:\n1. Favorable outcomes (red balls) = 3.\n2. Total outcomes (total balls) = 3 + 5 = 8.\n3. Probability = 3 / 8.\nAnswer: P(Red) = 3/8"
         }
       },
       {
-        id: "calculus",
-        title: "Calculus (Differentiation)",
-        juniorDesc: "Understand curves and gradients as rise-over-run on graphs.",
-        seniorDesc: "Find derivatives of polynomials using power rule and first principles.",
-        juniorGreeting: "Hello Teacher! 📈 I know how to find the slope of a straight line, but how do we find the slope of a curved line that changes at every point?",
-        seniorGreeting: "Good day, Teacher! 📐 We are starting differentiation. Can you explain the power rule $d/dx(x^n) = nx^{n-1}$ and show me how to differentiate from first principles?",
-        juniorMarkingGuide: "1. Define gradient as rise / run.\n2. Explain that for curves, the gradient is found by drawing a tangent line at a point.\n3. Estimate tangent slope.",
-        seniorMarkingGuide: "1. Define first principles derivative: $f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}$.\n2. Apply the power rule to differentiate $3x^2 + 5x$.\n3. Solve for $dy/dx = 6x + 5$.",
+        id: "binary_numbers",
+        title: "Binary Number System",
+        juniorDesc: "Understand base-2 numbers using 0 and 1 and convert base-10 to binary.",
+        juniorGreeting: "Hi Teacher! 💻 We are learning computer binary codes. How do I convert the normal number 13 into binary? Why do computers use base 2?",
+        juniorMarkingGuide: "JSS Math Binary: Divide repeatedly by 2 [2 Marks]. Record remainders [1 Mark]. Read remainders from bottom to top [1 Mark].",
         studyNotes: {
-          concept: "Calculus is the mathematical study of continuous change. Differentiation is the process of finding the rate at which a function changes relative to its input (gradient of tangent).",
+          concept: "The binary number system is a base-2 system that uses only two digits: 0 and 1. Computers use it because transistors can be in two states: off (0) or on (1).",
           formulas: [
-            "Power Rule: $\\frac{d}{dx}(x^n) = nx^{n-1}$",
-            "First Principles: $f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}$",
-            "Constant Rule: $\\frac{d}{dx}(c) = 0$"
+            "\\text{Base 10 representation: } d_n \\cdot 2^n + \\dots + d_0 \\cdot 2^0"
           ],
           steps: [
-            "Locate variable terms and identify their powers.",
-            "Apply the power rule: multiply the term by its current exponent, then reduce the exponent by 1.",
-            "Differentiate sum of terms individually."
+            "Divide the decimal number by 2.",
+            "Write down the remainder (which will be 0 or 1).",
+            "Divide the quotient by 2 again and record the remainder.",
+            "Repeat until the quotient is 0.",
+            "Write the remainders in reverse order (bottom to top) to get the binary number."
           ],
-          workedExample: "Differentiate $y = 3x^2 - 4x + 5$.\nUsing power rule:\n$\\frac{dy}{dx} = (3 \\times 2)x^{2-1} - 4x^{1-1} + 0$\n$\\frac{dy}{dx} = 6x - 4$."
+          workedExample: "Problem: Convert 9 (base 10) to binary.\n\nSolution:\n1. 9 / 2 = 4 remainder 1\n2. 4 / 2 = 2 remainder 0\n3. 2 / 2 = 1 remainder 0\n4. 1 / 2 = 0 remainder 1\n5. Read remainders bottom to top: 1, 0, 0, 1.\nAnswer: 1001 in binary (base 2)"
         }
       }
     ]
   },
   science: {
     id: "science",
-    name: "Science (Biology)",
+    name: "Basic Science (JSS)",
     topics: [
       {
-        id: "photosynthesis",
-        title: "Photosynthesis",
-        juniorDesc: "Learn how green leaves use water and sunlight to make food.",
-        seniorDesc: "Study chloroplast structures, light/dark reactions, and balanced equations.",
-        juniorGreeting: "Hi Teacher! 🌿 I read that plants 'eat' sunlight. That sounds strange! How do leaves make food, and what ingredients do they need?",
-        seniorGreeting: "Good day, Teacher! 🌱 I'm trying to learn the details of photosynthesis. Can you explain the light-dependent and light-independent (Calvin cycle) reactions, and the balanced equation?",
-        juniorMarkingGuide: "1. Identify raw materials: carbon dioxide, water.\n2. State conditions: sunlight, chlorophyll.\n3. Mention glucose (food) and oxygen (by-product) produced.",
-        seniorMarkingGuide: "1. Write chemical equation: $6CO_2 + 6H_2O \\rightarrow C_6H_{12}O_6 + 6O_2$.\n2. Explain photolysis of water in the light reaction (occurs in grana/thylakoids).\n3. Explain carbon dioxide fixation in the dark reaction (occurs in stroma).",
+        id: "living_things",
+        title: "Living & Non-Living Things",
+        juniorDesc: "Learn characteristics of living things: MR NIGER D (Movement, Respiration, Nutrition, etc.).",
+        juniorGreeting: "Hello Teacher! 🌱 I'm learning about characteristics of living things. My book says there is a mnemonic 'MR NIGER D'. What does each letter stand for, and how does a plant show movement?",
+        juniorMarkingGuide: "JSS Science Living Things: Define living vs non-living [1 Mark]. Explain MR NIGER D letters [2 Marks]. Give example of plant movement (phototropism/sleep movements) [1 Mark].",
         studyNotes: {
-          concept: "Photosynthesis is the process by which green plants, algae, and some bacteria convert light energy into chemical energy (glucose) using carbon dioxide and water.",
-          formulas: [
-            "Chemical Equation: $6CO_2 + 6H_2O \\xrightarrow{\\text{Light/Chlorophyll}} C_6H_{12}O_6 + 6O_2$"
-          ],
-          steps: [
-            "Light Reaction: Occurs in the thylakoid membrane. Sunlight splits water molecules (photolysis) releasing oxygen gas, ATP, and NADPH.",
-            "Dark Reaction (Calvin Cycle): Occurs in the stroma. ATP and NADPH drive the fixation of carbon dioxide to synthesize glucose."
-          ],
-          workedExample: "Why is chlorophyll essential for photosynthesis?\nChlorophyll is a green pigment inside chloroplasts. Its main job is to absorb light energy (primarily blue and red wavelengths) and channel it to split water molecules during the light-dependent phase."
-        }
-      },
-      {
-        id: "cell_structure",
-        title: "Cell Structure & Function",
-        juniorDesc: "Discover cell building blocks under a microscope.",
-        seniorDesc: "Examine organelle structures and differences between plant and animal cells.",
-        juniorGreeting: "Hello Teacher! 🔬 I heard that all living things are made of tiny boxes called cells. What is inside a cell, and how do they stay alive?",
-        seniorGreeting: "Good day, Teacher! 🧫 I'm studying cytology. Can you explain the functions of the mitochondria, nucleus, and ribosomes, and outline key differences between plant and animal cells?",
-        juniorMarkingGuide: "1. Define a cell as the basic unit of life.\n2. Name the nucleus, cytoplasm, and cell membrane.\n3. Explain that plant cells have cell walls and animal cells do not.",
-        seniorMarkingGuide: "1. List functions: Mitochondria (ATP synthesis), Nucleus (genetic storage), Ribosomes (protein synthesis).\n2. Contrast cell wall (cellulose) in plants vs cell membrane only in animals.\n3. State presence of large central vacuole and chloroplasts in plant cells.",
-        studyNotes: {
-          concept: "The cell is the structural and functional unit of all living organisms. Cells contain organelles suspended in cytoplasm, managed by a nucleus.",
+          concept: "Living things possess life, exhibit cellular organization, and carry out life processes. Non-living things do not perform these life processes.",
           formulas: [],
           steps: [
-            "Plant Cells contain: Cell wall, chloroplasts, large central vacuole.",
-            "Animal Cells contain: Centrioles, small temporary vacuoles, no cell wall.",
-            "Organelles: Nucleus (control center), Mitochondria (powerhouse), Ribosomes (factories)."
+            "Lorem Ipsum placeholders removed. Memorize MR NIGER D: Movement, Respiration, Nutrition, Irritability (Sensitivity), Growth, Excretion, Reproduction, Death.",
+            "Provide evidence of these processes in plants (e.g. roots grow towards water, leaves grow towards light)."
           ],
-          workedExample: "State two differences between a cell wall and a cell membrane.\n1. A cell wall is rigid, made of cellulose, and fully permeable (found in plants).\n2. A cell membrane is flexible, made of lipids/proteins, and selectively (semi) permeable."
+          workedExample: "Question: List 4 characteristics of living things and give one example of irritability in plants.\n\nAnswer:\n1. Characteristics: Nutrition, Growth, Reproduction, Movement.\n2. Irritability in plants: The Mimosa pudica plant folds its leaves immediately when touched. Another example is phototropism, where plants bend towards sunlight."
         }
       },
       {
-        id: "respiration",
-        title: "Respiration",
-        juniorDesc: "Find out how breathing turns food into energy.",
-        seniorDesc: "Compare aerobic and anaerobic respiration and explain ATP production.",
-        juniorGreeting: "Hi Teacher! 🫁 I know breathing is taking in oxygen, but why does my body need oxygen? How does it help turn food into energy?",
-        seniorGreeting: "Good day, Teacher! ⚡ I am studying cellular respiration. Can you explain glycolysis, the Krebs cycle, and differentiate between aerobic and anaerobic pathways?",
-        juniorMarkingGuide: "1. Differentiate breathing (mechanical) from respiration (chemical).\n2. State that glucose is broken down to release energy.\n3. Mention carbon dioxide and water vapor as products we breathe out.",
-        seniorMarkingGuide: "1. Write aerobic respiration equation: $C_6H_{12}O_6 + 6O_2 \\rightarrow 6CO_2 + 6H_2O + 38\\text{ ATP}$.\n2. Explain anaerobic pathway (lactic acid in muscles, ethanol/CO2 in yeast).\n3. State site of reactions: Glycolysis (cytoplasm), Krebs (mitochondrial matrix).",
+        id: "cells_basic",
+        title: "Plant & Animal Cells (Basic)",
+        juniorDesc: "Identify basic cell components: cell wall, cell membrane, nucleus, and cytoplasm.",
+        juniorGreeting: "Good day, Teacher! 🔬 I am studying basic cells. What is the difference between a plant cell and an animal cell? Why do only plant cells have a cell wall?",
+        juniorMarkingGuide: "JSS Science Cells: State cell is basic unit of life [1 Mark]. List 3 differences (cell wall, chloroplast, shape) [2 Marks]. Name nucleus function [1 Mark].",
         studyNotes: {
-          concept: "Respiration is the biochemical process where cells break down glucose to release energy in the form of Adenosine Triphosphate (ATP).",
-          formulas: [
-            "Aerobic Respiration: $C_6H_{12}O_6 + 6O_2 \\rightarrow 6CO_2 + 6H_2O + \\text{Energy (ATP)}$",
-            "Anaerobic (Yeast): $C_6H_{12}O_6 \\rightarrow 2C_2H_5OH + 2CO_2 + \\text{Energy (2 ATP)}$"
-          ],
-          steps: [
-            "Glycolysis: Glucose is split into two pyruvate molecules in the cytoplasm, yielding 2 ATP.",
-            "Krebs Cycle: Pyruvate is oxidized in the mitochondria to release carbon dioxide and high-energy electrons.",
-            "Electron Transport Chain: Uses oxygen to generate bulk ATP (approx 34-36) and water."
-          ],
-          workedExample: "Why do our muscles ache during heavy exercise?\nDuring intense exercise, oxygen supply to muscles is insufficient. The cells switch to anaerobic respiration, producing lactic acid. Lactic acid accumulation causes muscle fatigue and cramps."
-        }
-      },
-      {
-        id: "circulatory",
-        title: "Circulatory System",
-        juniorDesc: "Learn how the heart pumps blood through your body.",
-        seniorDesc: "Map double circulation, heart chambers, and blood cell functions.",
-        juniorGreeting: "Hello Teacher! ❤️ I can feel my heart beating fast when I run. What is the heart actually doing, and how does blood travel to my toes and back?",
-        seniorGreeting: "Good day, Teacher! 🩸 I'm studying the human circulatory system. Could you explain the path of blood through the double circulation loop, and explain the roles of arteries, veins, and capillaries?",
-        juniorMarkingGuide: "1. Identify the heart as a muscular pump.\n2. State that arteries carry blood away from the heart, veins return it.\n3. Mention red blood cells carry oxygen.",
-        seniorMarkingGuide: "1. Map double loop: Pulmonary (lungs) and Systemic (body) circulation.\n2. Contrast arteries (thick wall, high pressure, no valves) vs veins (thin wall, low pressure, valves).\n3. Explain functions of Red cells (hemoglobin/oxygen), White cells (defense), and Platelets (clotting).",
-        studyNotes: {
-          concept: "The circulatory system is a network of organs and vessels that transport oxygen, nutrients, hormones, and waste products throughout the body.",
+          concept: "A cell is the basic structural and functional unit of all living organisms. Plant cells have rigid cell walls and chloroplasts for photosynthesis, while animal cells have flexible cell membranes.",
           formulas: [],
           steps: [
-            "Deoxygenated blood enters the Right Atrium -> Right Ventricle -> Pulmonary Artery -> Lungs.",
-            "Oxygenated blood returns via Pulmonary Vein -> Left Atrium -> Left Ventricle -> Aorta -> Body.",
-            "Capillaries: Microscopic vessels where oxygen and nutrient exchange takes place."
+            "Identify the nucleus (brain of the cell, contains DNA).",
+            "Identify the cytoplasm (jelly-like fluid where reactions occur).",
+            "State differences: Plant cells have a cell wall, chloroplasts, and a large central vacuole; animal cells do not."
           ],
-          workedExample: "Why are the walls of the left ventricle thicker than the right ventricle?\nThe left ventricle must pump blood to the entire body (systemic circulation), requiring high pressure. The right ventricle only pumps blood to the nearby lungs (pulmonary circulation), requiring less pressure."
+          workedExample: "Question: Draw comparison table between plant and animal cells.\n\nAnswer:\nFeature | Plant Cell | Animal Cell\nCell Wall | Present | Absent\nChloroplast | Present | Absent\nVacuole | Large, Central | Small, Scattered\nShape | Fixed, Rectangular | Irregular, Circular"
         }
       },
       {
-        id: "digestive",
-        title: "Digestive System",
-        juniorDesc: "Follow a bite of food from mouth to stomach.",
-        seniorDesc: "Understand mechanical/chemical digestion and digestive enzymes.",
-        juniorGreeting: "Hi Teacher! 🍎 I just ate an apple. What happens to it inside my stomach, and how does my body absorb the nutrients from it?",
-        seniorGreeting: "Good day, Teacher! 🧪 We are studying digestion. Can you explain where the digestion of carbohydrates, proteins, and fats starts and ends, and name the enzymes responsible?",
-        juniorMarkingGuide: "1. List the path of food: mouth, esophagus, stomach, small intestine, large intestine.\n2. Explain teeth chew food (physical) and stomach juices break it down (chemical).\n3. State that nutrients are absorbed in the small intestine.",
-        seniorMarkingGuide: "1. Name enzymes: Amylase (saliva/starch), Pepsin (stomach/protein), Lipase (pancreas/fats).\n2. Explain the role of bile (produced in liver, stored in gallbladder) in emulsifying fats.\n3. State that villi in the ileum increase surface area for absorption.",
+        id: "digestive_system",
+        title: "Human Digestive System",
+        juniorDesc: "Learn how food is broken down in the mouth, stomach, and intestines.",
+        juniorGreeting: "Hi Teacher! 🍎 When I eat bread, how does my body digest it? What is the role of saliva in the mouth, and where is the food absorbed into my blood?",
+        juniorMarkingGuide: "JSS Science Digestion: Trace food path (mouth, esophagus, stomach, small intestine, large intestine) [2 Marks]. Explain salivary amylase function [1 Mark]. State small intestine role [1 Mark].",
         studyNotes: {
-          concept: "Digestion is the breakdown of large insoluble food molecules into small water-soluble molecules that can be absorbed into the bloodstream.",
+          concept: "Digestion is the breakdown of large insoluble food molecules into small water-soluble food molecules that can be absorbed into the blood plasma.",
           formulas: [],
           steps: [
-            "Ingestion: Food is chewed in the mouth; salivary amylase begins starch breakdown.",
-            "Stomach: Gastric juice containing hydrochloric acid and pepsin begins protein breakdown.",
-            "Duodenum: Bile emulsifies lipids; pancreatic juice finishes chemical digestion.",
-            "Absorption: Soluble food is absorbed through villi in the small intestine."
+            "Mouth: Mechanical chewing and chemical breakdown of starch by saliva enzymes.",
+            "Stomach: Mixing food with hydrochloric acid and enzymes to digest protein.",
+            "Small Intestine: Complete digestion and absorption of nutrients into the bloodstream.",
+            "Large Intestine: Absorption of water and elimination of waste."
           ],
-          workedExample: "What is the function of hydrochloric acid (HCl) in the stomach?\nHCl provides an acidic pH (approx 1.5 - 2.0) necessary for pepsin to actively digest proteins, and it kills bacteria ingested with food."
+          workedExample: "Question: What happens to a piece of yam (carbohydrate) in the mouth and small intestine during digestion?\n\nAnswer:\n1. In the mouth, teeth chew the yam (mechanical digestion) and saliva (salivary amylase) breaks down complex starch into simpler sugar (chemical digestion).\n2. In the small intestine, pancreatic enzymes complete the breakdown of carbohydrate into glucose, which is then absorbed through the villi walls into the blood."
         }
       },
       {
-        id: "genetics",
-        title: "Genetics & Heredity",
-        juniorDesc: "Learn why children look like their parents (eye and hair color).",
-        seniorDesc: "Study DNA, monohybrid crosses, and Mendel's laws of inheritance.",
-        juniorGreeting: "Hello Teacher! 🧬 People say I have my mother's eyes and my father's smile. How do these traits pass from parents to children?",
-        seniorGreeting: "Good day, Teacher! 🧮 I'm trying to draw a Genetic Cross (Punnett square) for a cross between a heterozygous tall plant (Tt) and a dwarf plant (tt). Can you show me how to calculate the ratio?",
-        juniorMarkingGuide: "1. Define genes as instructions for traits.\n2. Explain that half of our genes come from each parent.\n3. Give examples of inherited traits (eye color, blood group).",
-        seniorMarkingGuide: "1. Define dominant, recessive, homozygous, and heterozygous alleles.\n2. Set up the Punnett square: Tt x tt.\n3. State the genotypic ratio (1 Tt : 1 tt) and phenotypic ratio (1 Tall : 1 Dwarf).",
+        id: "light_energy",
+        title: "Light Energy & Reflection",
+        juniorDesc: "Learn about light travels in straight lines and the laws of reflection.",
+        juniorGreeting: "Hello, Teacher! 💡 How does light travel? When I look into a mirror, why does my left hand appear as the right hand? What is the law of reflection?",
+        juniorMarkingGuide: "JSS Science Light: State light travels in straight lines [1 Mark]. State Law of Reflection (angle of incidence = angle of reflection) [2 Marks]. Define lateral inversion [1 Mark].",
         studyNotes: {
-          concept: "Genetics is the study of genes, genetic variation, and heredity in living organisms. Dominant alleles mask the expression of recessive alleles.",
+          concept: "Light is a form of energy that travels in straight lines (rectilinear propagation). When light hits a smooth surface, it bounces off according to the laws of reflection.",
           formulas: [
-            "Monohybrid Cross Ratios (Heterozygous x Heterozygous): Phenotype = 3:1, Genotype = 1:2:1"
+            "i = r \\quad \\text{(Angle of Incidence = Angle of Reflection)}"
           ],
           steps: [
-            "Identify the genotypes of the parents.",
-            "Separate parent alleles to form gametes.",
-            "Draw a 2x2 grid (Punnett square) and combine alleles.",
-            "Count phenotypes and genotypes to calculate ratios."
+            "Draw a normal line perpendicular to the reflecting surface.",
+            "Measure the angle of incidence (between incoming ray and normal).",
+            "Ensure the angle of reflection equals this angle.",
+            "Note that mirrors produce laterally inverted images (left appears right)."
           ],
-          workedExample: "Cross two heterozygous tall plants (Tt).\nGametes: T and t.\nGrid intersections: TT (Homozygous Tall), Tt (Heterozygous Tall), Tt (Heterozygous Tall), tt (Homozygous Dwarf).\nPhenotypic Ratio: 3 Tall : 1 Dwarf."
+          workedExample: "Problem: A ray of light strikes a flat mirror at an angle of 30° to the normal. What is the angle of reflection?\n\nSolution:\n1. According to the Law of Reflection, the angle of incidence (i) equals the angle of reflection (r).\n2. Given: i = 30°.\n3. Therefore, r = 30°.\nAnswer: Angle of reflection = 30°"
         }
       },
       {
-        id: "nervous",
-        title: "Nervous System",
-        juniorDesc: "Understand how your brain receives signals and triggers movements.",
-        seniorDesc: "Map the reflex arc, neurons, and synapse neurotransmitter roles.",
-        juniorGreeting: "Hi Teacher! 🧠 If I touch something hot, I pull my hand away instantly before I even think about it. How does my body react so quickly?",
-        seniorGreeting: "Good day, Teacher! ⚡ We are studying coordination. Can you explain the components of the reflex arc, the structure of a neuron, and how signals cross the synapse?",
-        juniorMarkingGuide: "1. Identify the brain and spinal cord as the nervous control center.\n2. Explain nerves carry electrical messages.\n3. Differentiate sensory nerves (feeling) from motor nerves (moving).",
-        seniorMarkingGuide: "1. Map reflex arc path: Receptor -> Sensory Neuron -> Relay Neuron (Spinal Cord) -> Motor Neuron -> Effector (Muscle).\n2. Explain that a synapse is a microscopic gap between neurons.\n3. Mention chemical neurotransmitters transmit signals across the synapse.",
+        id: "forces_gravity",
+        title: "Forces & Gravity",
+        juniorDesc: "Understand push/pull forces, friction, and gravity pull on objects.",
+        juniorGreeting: "Good day, Teacher! 🍎 Why does an apple fall down to the ground instead of floating up? What is the difference between contact and non-contact forces?",
+        juniorMarkingGuide: "JSS Science Force: Define force as push or pull [1 Mark]. Define gravity as pull towards center of Earth [1 Mark]. Differentiate contact vs non-contact force [2 Marks].",
         studyNotes: {
-          concept: "The nervous system coordinates body activities by transmitting electrical impulses and chemical signals between the brain, spinal cord, and organs.",
+          concept: "A force is a push or pull on an object. Gravity is a non-contact force that pulls objects towards the center of the Earth.",
+          formulas: [
+            "W = m \\cdot g \\quad \\text{(Weight = Mass } \\times \\text{ Gravity)}"
+          ],
+          steps: [
+            "Identify contact forces (e.g. friction, pushing a cart, tension).",
+            "Identify non-contact forces (e.g. gravity, magnetism, electrostatic force).",
+            "Understand that mass remains constant, but weight changes depending on gravity."
+          ],
+          workedExample: "Question: A stone has a mass of 5kg. If the acceleration due to gravity is 10 m/s², what is its weight on Earth?\n\nSolution:\n1. Formula: Weight = mass * gravity (W = m * g)\n2. Substitute: W = 5 * 10 = 50 Newtons.\nAnswer: Weight = 50 N"
+        }
+      },
+      {
+        id: "states_of_matter",
+        title: "States of Matter",
+        juniorDesc: "Learn about solids, liquids, and gases and how heating changes them.",
+        juniorGreeting: "Hi Teacher! 🧊 I put ice on a hot pan and it turns to liquid, then disappears as steam. What is happening to the particles during melting and evaporation?",
+        juniorMarkingGuide: "JSS Science Matter: List 3 states of matter [1 Mark]. Explain particle arrangement in each state [2 Marks]. Define melting and boiling [1 Mark].",
+        studyNotes: {
+          concept: "Matter is anything that has mass and takes up space. It exists in three primary states: Solid (tightly packed particles), Liquid (loosely packed, flowing particles), and Gas (freely moving particles).",
           formulas: [],
           steps: [
-            "Receptors detect a stimulus (e.g. heat).",
-            "Sensory neuron sends an electrical impulse to the Central Nervous System (CNS).",
-            "Relay neuron in the spinal cord bypasses the brain for instant reaction.",
-            "Motor neuron carries the command to the effector muscle, causing contraction."
+            "Heating adds energy, making particles move faster and break bonds (melting, boiling).",
+            "Cooling removes energy, slowing down particles (condensation, freezing)."
           ],
-          workedExample: "Describe what happens when an impulse reaches a synapse.\nWhen an electrical impulse reaches the axon terminal, it triggers the release of chemical neurotransmitters into the synaptic cleft. These diffuse across the gap and bind to receptors on the next neuron, triggering a new electrical impulse."
+          workedExample: "Question: Compare the shape and volume of solids, liquids, and gases.\n\nAnswer:\nState | Shape | Volume\nSolid | Fixed | Fixed\nLiquid | Takes container shape | Fixed\nGas | Takes container shape | Fills container volume"
         }
       },
       {
-        id: "ecology",
-        title: "Ecology & Ecosystems",
-        juniorDesc: "Learn how plants and animals live together in food chains.",
-        seniorDesc: "Study food webs, energy pyramids, and carbon/nitrogen cycles.",
-        juniorGreeting: "Hello Teacher! 🌾 I see food chains like 'Grass -> Zebra -> Lion'. What happens if all the grass disappears, and how does energy flow through the chain?",
-        seniorGreeting: "Good day, Teacher! 🔄 We are discussing ecology. Can you explain why energy is lost as it moves up trophic levels, and outline the stages of the nitrogen cycle?",
-        juniorMarkingGuide: "1. Define producers (plants) and consumers (animals).\n2. Explain that food chains show who eats whom.\n3. Explain that a lack of grass causes zebras to starve, which leaves lions without food.",
-        seniorMarkingGuide: "1. Explain the 10% Rule: only 10% of energy is transferred to the next trophic level.\n2. Detail nitrogen fixation (Rhizobium in root nodules), nitrification (Nitrosomonas/Nitrobacter), and denitrification.\n3. Identify decomposers' role in recycling carbon back to the atmosphere.",
+        id: "elements_intro",
+        title: "Intro to Elements & Compounds",
+        juniorDesc: "Learn what elements, mixtures, and compounds are and simple examples.",
+        juniorGreeting: "Good day, Teacher! 🧪 My textbook says water is a compound made of hydrogen and oxygen, but air is a mixture. What is the difference between a mixture and a compound?",
+        juniorMarkingGuide: "JSS Science Chemistry: Define element [1 Mark]. Differentiate compound (chemically joined) vs mixture (physically combined) [2 Marks]. Give examples [1 Mark].",
         studyNotes: {
-          concept: "Ecology is the study of relationships between living organisms and their physical environment. Energy flows directionally through ecosystems, while nutrients cycle.",
+          concept: "An element is a pure substance made of only one type of atom. A compound consists of atoms of different elements chemically bonded together. A mixture consists of substances physically combined without chemical bonding.",
           formulas: [
-            "Ecological Efficiency: $\\text{Transfer Efficiency} \\approx 10\\%$"
+            "\\text{Water (Compound): } H_2O",
+            "\\text{Air (Mixture): } N_2 + O_2 + CO_2 + \\dots"
           ],
           steps: [
-            "Producers capture sunlight to fix carbon.",
-            "Herbivores eat producers, receiving 10% of the energy.",
-            "Carnivores eat herbivores, losing 90% of energy at each step as heat and respiration.",
-            "Nitrogen Cycle: Nitrogen gas ($N_2$) is fixed into nitrates ($NO_3^-$) for plant absorption."
+            "Determine if components can be separated physically (mixture) or require chemical reactions (compound).",
+            "Identify if properties change (compounds have new properties; mixture components retain original properties)."
           ],
-          workedExample: "Why do food chains rarely have more than 5 links?\nBecause energy is lost (90%) as heat and metabolic work at each trophic level. By the 5th level, the remaining energy is too small to support a viable population of higher consumers."
+          workedExample: "Question: State three differences between a mixture of iron filings and sulfur, and the compound Iron(II) Sulfide (FeS).\n\nAnswer:\n1. Separation: Iron filings can be separated from sulfur physically using a magnet. FeS cannot be separated using a magnet.\n2. Energy change: Creating FeS produces heat/light (chemical reaction). Mixing iron and sulfur physically produces no heat change.\n3. Properties: Iron filings in the mixture still look dark and magnetic. FeS is a completely new yellow-gray solid with different properties."
         }
       },
       {
-        id: "excretory",
-        title: "Excretory System",
-        juniorDesc: "Learn how the kidneys clean your blood and remove waste.",
-        seniorDesc: "Explain kidney nephron structures and homeostatic osmoregulation.",
-        juniorGreeting: "Hi Teacher! 💧 I know we drink water and urinate, but how do my kidneys actually separate waste from blood? What happens if they stop working?",
-        seniorGreeting: "Good day, Teacher! 🫁 We are studying homeostasis. Can you explain ultrafiltration and selective reabsorption in the nephron, and the role of ADH in osmoregulation?",
-        juniorMarkingGuide: "1. Identify the kidneys, bladder, and skin as excretory organs.\n2. Explain that blood carries wastes to the kidneys to be filtered.\n3. State that waste is removed as urine.",
-        seniorMarkingGuide: "1. Explain ultrafiltration in the Bowman's capsule (high pressure filters small molecules).\n2. Explain selective reabsorption of glucose and water in the proximal convoluted tubule.\n3. Detail how Antidiuretic Hormone (ADH) increases water reabsorption in the collecting duct during dehydration.",
+        id: "pollution",
+        title: "Environmental Pollution",
+        juniorDesc: "Learn about air, water, and land pollution, causes, and how to stop them.",
+        juniorGreeting: "Hello Teacher! 🏭 There is a lot of plastic trash in our local stream and smoke in the air. What are the main types of pollution, and how do they affect human health?",
+        juniorMarkingGuide: "JSS Science Pollution: Define pollution [1 Mark]. List 3 types (Air, Water, Land/Noise) [2 Marks]. Suggest prevention methods (recycling, waste management) [1 Mark].",
         studyNotes: {
-          concept: "Excretion is the elimination of metabolic waste products from the body. The kidney filters blood, balances electrolytes, and maintains water volume (osmoregulation).",
+          concept: "Pollution is the introduction of harmful materials (pollutants) into the natural environment, causing damage to ecosystems and human health.",
           formulas: [],
           steps: [
-            "Ultrafiltration: Glomerular blood pressure forces water, glucose, salts, and urea into Bowman's capsule.",
-            "Reabsorption: Useful substances (glucose, amino acids, water) are pumped back into capillaries.",
-            "Excretion: Concentrated waste (urea, excess salts, water) form urine in the collecting duct."
+            "Air Pollution: Caused by exhaust fumes, factory smoke. Leads to breathing diseases.",
+            "Water Pollution: Caused by sewage, industrial chemicals, plastic dumping. Leads to typhoid/cholera.",
+            "Land Pollution: Caused by solid waste, pesticides, mining."
           ],
-          workedExample: "Explain the effect of drinking lots of water on ADH secretion.\nDrinking lots of water lowers blood concentration. The pituitary gland decreases ADH secretion. Less ADH makes the kidney collecting ducts less permeable to water, resulting in large volumes of dilute urine."
+          workedExample: "Question: List three human activities that cause water pollution and suggest two ways to control it.\n\nAnswer:\nCauses:\n1. Discharging untreated industrial chemicals into rivers.\n2. Dumping plastic bags and household garbage into gutters/streams.\n3. Oil spills from pipelines.\nControl methods:\n1. Enforcing strict laws against dumping waste in water bodies.\n2. Treating industrial sewage before discharge."
         }
       },
       {
-        id: "reproduction",
-        title: "Reproduction",
-        juniorDesc: "Find out how seeds grow into plants and how animals have babies.",
-        seniorDesc: "Compare mitosis vs meiosis and study plant/human fertilization.",
-        juniorGreeting: "Hello Teacher! 🌸 I see bees visiting flowers all the time. How does this help the flower make seeds and grow new plants?",
-        seniorGreeting: "Good day, Teacher! 🔬 We are studying cell division. Can you explain the differences in purposes and outcomes between mitosis and meiosis, and describe double fertilization in flowering plants?",
-        juniorMarkingGuide: "1. Define pollination as transfer of pollen from anther to stigma.\n2. Explain that pollen fertilizes the ovule to make seeds.\n3. Mention wind or insects as agents of pollination.",
-        seniorMarkingGuide: "1. Mitosis: 1 division, 2 diploid identical cells (growth). Meiosis: 2 divisions, 4 haploid gamete cells (reproduction).\n2. Explain double fertilization: one sperm fuses with egg (zygote), second fuses with polar nuclei (endosperm).\n3. State chromosome number changes during meiosis ($2n \\rightarrow n$).",
+        id: "sti_awareness",
+        title: "STI & HIV Awareness",
+        juniorDesc: "Learn about Sexually Transmitted Infections, transmission routes, and prevention.",
+        juniorGreeting: "Hi Teacher! In Basic Science, we are discussing health and hygiene. What does STI stand for? How is HIV transmitted, and what are the main prevention methods?",
+        juniorMarkingGuide: "JSS Science STI: Define STI [1 Mark]. List transmission routes (unprotected contact, blood transfusion, sharing sharp objects) [2 Marks]. List prevention methods [1 Mark].",
         studyNotes: {
-          concept: "Reproduction is the biological process by which new individual organisms are produced. Cell division occurs via Mitosis (growth) or Meiosis (gamete production).",
+          concept: "Sexually Transmitted Infections (STIs) are infections passed from one person to another through sexual contact, blood sharing, or mother-to-child transmission.",
+          formulas: [],
+          steps: [
+            "Understand transmission: Unprotected sexual activity, sharing unsterilized needles/razor blades, infected mother to child during birth.",
+            "Understand prevention: Abstinence (most effective), faithful partner, sterilizing sharp tools, screening blood before transfusion."
+          ],
+          workedExample: "Question: List three ways HIV can be transmitted and state two ways it CANNOT be transmitted.\n\nAnswer:\nTransmission routes:\n1. Sharing unsterilized clippers, needles, or razor blades.\n2. Transfusion of unscreened infected blood.\n3. Unprotected sexual contact with an infected person.\nCannot be transmitted by:\n1. Shaking hands, hugging, or sharing food.\n2. Mosquito bites."
+        }
+      },
+      {
+        id: "basic_circuits",
+        title: "Basic Electrical Circuits",
+        juniorDesc: "Understand path of current, open/closed switches, and simple bulb connections.",
+        juniorGreeting: "Hello Teacher! 🔌 I have a battery, wire, and a bulb. How do I connect them to make the bulb light up? What is the difference between an open and closed circuit?",
+        juniorMarkingGuide: "JSS Science Circuits: Draw simple circuit diagram [2 Marks]. Explain open switch stops current [1 Mark]. Define conductors vs insulators [1 Mark].",
+        studyNotes: {
+          concept: "An electrical circuit is a complete closed loop path through which electrical current can flow. Conductors allow current to pass, while insulators block it.",
           formulas: [
-            "Mitosis Output: $2n \\rightarrow 2n$ (2 identical cells)",
-            "Meiosis Output: $2n \\rightarrow n$ (4 unique gametes)"
+            "V = I \\cdot R \\quad \\text{(Ohm's Law Intro)}"
           ],
           steps: [
-            "Mitosis stages: Prophase, Metaphase, Anaphase, Telophase.",
-            "Meiosis halves the genetic code so that fertilization restores diploidy ($n + n = 2n$).",
-            "In plants, pollen lands on the stigma, grows a tube down to the ovary, and releases sperm."
+            "Closed Circuit: Current flows because the path is unbroken (switch is closed).",
+            "Open Circuit: Current cannot flow because there is a break in the path (switch is open).",
+            "Conductors: Metals (copper, iron). Insulators: Plastic, wood, rubber."
           ],
-          workedExample: "Contrast Mitosis and Meiosis in terms of location and genetic outcome.\n1. Mitosis occurs in somatic (body) cells; results in 2 genetically identical diploid ($2n$) cells.\n2. Meiosis occurs in germ (reproductive) cells; results in 4 genetically unique haploid ($n$) gametes."
+          workedExample: "Question: Draw a schematic diagram of a basic circuit containing a battery, a closed switch, and a light bulb. Explain what happens if you add a rubber band in the path.\n\nAnswer:\n1. The diagram should show a battery connected via wires through a switch to a bulb in a closed loop.\n2. If you cut the wire and add a rubber band, the bulb will turn off. This is because rubber is an insulator and does not allow electric current to pass, turning the circuit into an open circuit."
         }
       }
     ]
   },
-  physics: {
-    id: "physics",
-    name: "Physics",
+  tech: {
+    id: "tech",
+    name: "Basic Technology (JSS)",
     topics: [
       {
-        id: "kinematics",
-        title: "Equations of Motion",
-        juniorDesc: "Measure speed, distance, and travel times for moving cars.",
-        seniorDesc: "Solve linear acceleration using the three equations of motion.",
-        juniorGreeting: "Hi Teacher! 🚗 I'm trying to calculate how long it takes a car traveling at $60\\text{ km/h}$ to travel $120\\text{ km}$. How do I write this formula?",
-        seniorGreeting: "Good day, Teacher! ⚡ I have a physics problem: 'A car accelerates uniformly from rest at $2\\text{ m/s}^2$ for $5\\text{ seconds}$.' Which equation of motion do I use to find its final speed and displacement?",
-        juniorMarkingGuide: "1. State the speed formula: Speed = Distance / Time.\n2. Re-arrange formula: Time = Distance / Speed.\n3. Divide 120 by 60 to get 2 hours.",
-        seniorMarkingGuide: "1. State three equations of motion: $v = u + at$, $s = ut + 0.5at^2$, $v^2 = u^2 + 2as$.\n2. Identify knowns: initial velocity $u = 0$, acceleration $a = 2$, time $t = 5$.\n3. Calculate final velocity: $v = 0 + (2 \\times 5) = 10\\text{ m/s}$ and $s = 0.5 \\times 2 \\times 25 = 25\\text{ m}$.",
+        id: "woodwork_tools",
+        title: "Woodwork Hand Tools",
+        juniorDesc: "Learn about measuring, marking, cutting, and driving tools in woodwork.",
+        juniorGreeting: "Good day, Teacher! 🔨 We are entering the woodwork workshop. What tools do we use for cutting wood? What is the difference between a ripsaw and a crosscut saw?",
+        juniorMarkingGuide: "JSS Tech Woodwork: List 4 tool categories (measuring, marking, cutting, holding) [2 Marks]. State difference between ripsaw (along grain) and crosscut saw (across grain) [2 Marks].",
         studyNotes: {
-          concept: "Equations of motion describe the behavior of a physical system in terms of its motion as a function of time. They apply only under constant linear acceleration.",
-          formulas: [
-            "First Equation: $v = u + at$",
-            "Second Equation: $s = ut + \\frac{1}{2}at^2$",
-            "Third Equation: $v^2 = u^2 + 2as$",
-            "Average Velocity: $v_{\\text{avg}} = \\frac{u+v}{2}$"
-          ],
+          concept: "Woodwork hand tools are manual tools used in preparing wood joints and structures. They are classified by function.",
+          formulas: [],
           steps: [
-            "Write down all known variables ($u$, $v$, $a$, $t$, $s$) from the question.",
-            "Identify the unknown variable you need to calculate.",
-            "Choose the equation that contains the knowns and the single unknown.",
-            "Substitute and solve, paying attention to SI units."
+            "Measuring: Tape measure, steel rule.",
+            "Marking: Try-square, marking gauge.",
+            "Cutting: Ripsaw (cuts along grain), Crosscut saw (cuts across grain), chisels.",
+            "Holding: G-clamp, bench vice."
           ],
-          workedExample: "A stone is dropped from a cliff ($u=0$) and hits the ground after $3\\text{s}$. Find height of cliff ($g = 10\\text{ m/s}^2$).\nUse $s = ut + \\frac{1}{2}gt^2$.\n$s = (0 \\times 3) + \\frac{1}{2}(10)(3^2)$.\n$s = 5 \\times 9 = 45\\text{m}$."
+          workedExample: "Question: Classify the following tools: Try-square, Jack plane, G-clamp, Claw hammer.\n\nAnswer:\n1. Try-square: Marking tool (used to test squareness).\n2. Jack plane: Planning/Cutting tool (used to make wood surfaces smooth).\n3. G-clamp: Holding tool (used to clamp pieces together).\n4. Claw hammer: Driving tool (used to drive or pull out nails)."
         }
       },
       {
-        id: "newton_laws",
-        title: "Newton's Laws of Motion",
-        juniorDesc: "Learn why items slide when a car brakes (inertia).",
-        seniorDesc: "Understand inertia, force calculations using F=ma, and action-reaction.",
-        juniorGreeting: "Hello Teacher! 🍎 If I throw a ball in space, will it keep moving forever? Why does a book on a table stay still unless I push it?",
-        seniorGreeting: "Good day, Teacher! 🎯 I'm studying Newton's Second Law. How do I solve friction problems using $F_{\\text{net}} = ma$? Can you explain why weight changes in a moving elevator?",
-        juniorMarkingGuide: "1. Define inertia as resistance to change in motion.\n2. State that things stay still or keep moving unless pushed (First Law).\n3. Explain that a heavier object requires a bigger push.",
-        seniorMarkingGuide: "1. State Second Law formula: $F = ma$ (Force = mass x acceleration).\n2. Contrast mass (constant quantity of matter) vs weight (force of gravity $W=mg$).\n3. Set up net force equation including friction: $F_{\\text{applied}} - F_{\\text{friction}} = ma$.",
+        id: "metalwork_tools",
+        title: "Metalwork Hand Tools",
+        juniorDesc: "Understand cutting and marking tools used for metal: files, hacksaws, and scribers.",
+        juniorGreeting: "Hi Teacher! ⚙️ How do we cut metal bars? Can we use a woodwork saw, or do we need a hacksaw? How do we mark lines on metal?",
+        juniorMarkingGuide: "JSS Tech Metalwork: Name hacksaw as metal cutting tool [1 Mark]. Name scriber for marking [1 Mark]. List 2 file types (flat, round) [2 Marks].",
         studyNotes: {
-          concept: "Newton's laws of motion describe the relationship between a body and the forces acting upon it, and its motion in response to those forces.",
-          formulas: [
-            "Newton's Second Law: $F_{\\text{net}} = ma$",
-            "Weight: $W = mg$",
-            "Frictional Force: $F_f = \\mu R$ (where $\\mu$ is friction coefficient and $R$ is normal reaction)"
-          ],
+          concept: "Metalwork hand tools are designed to mark, cut, and shape metals. Since metal is harder than wood, these tools are made of high-grade steel.",
+          formulas: [],
           steps: [
-            "Draw a free-body diagram showing all forces acting on the object.",
-            "Determine the net force along the direction of acceleration ($F_{\\text{net}} = \\sum F$).",
-            "Apply $F_{\\text{net}} = ma$ to solve for acceleration or mass."
+            "Marking: Scriber (metal pencil), center punch, dividers.",
+            "Cutting: Hacksaw, cold chisel, snips (for sheet metal).",
+            "Shaping: Files (flat, half-round, triangular) to smooth edges."
           ],
-          workedExample: "A force of $20\\text{N}$ pulls a $4\\text{kg}$ block along a rough surface with friction force of $4\\text{N}$. Find acceleration.\nNet Force $F_{\\text{net}} = F_{\\text{applied}} - F_{\\text{friction}} = 20 - 4 = 16\\text{N}$.\nUse $F_{\\text{net}} = ma \\implies 16 = 4 \\times a \\implies a = 4\\text{ m/s}^2$."
+          workedExample: "Question: Why do we use a scriber instead of a pencil to mark lines on a steel plate, and what tool is used to make a starter dimple for drilling?\n\nAnswer:\n1. A pencil mark can be easily rubbed off or obscured by oil and rust. A scriber has a hardened steel tip that scratches a permanent line into the metal surface.\n2. A center punch struck by a hammer is used to make a small dimple (indentation) in metal to prevent the drill bit from slipping."
         }
       },
       {
-        id: "work_energy",
-        title: "Work, Energy, and Power",
-        juniorDesc: "Define simple work (pushing objects) and electrical energy.",
-        seniorDesc: "Calculate Kinetic Energy, Potential Energy, and conservation of mechanical energy.",
-        juniorGreeting: "Hi Teacher! ⚡ If I hold a heavy box without moving, am I doing work in physics? What is the difference between energy and power?",
-        seniorGreeting: "Good day, Teacher! 🎢 I'm trying to solve a roller-coaster problem using the Conservation of Mechanical Energy. How do I equate Potential Energy $mgh$ at the top to Kinetic Energy $0.5mv^2$ at the bottom?",
-        juniorMarkingGuide: "1. Define work as force multiplied by distance moved.\n2. Explain that holding a box stationary does zero work because distance is zero.\n3. Define power as the speed of doing work.",
-        seniorMarkingGuide: "1. State formulas: $\\text{Work} = Fd$, $\\text{Kinetic Energy} = \\frac{1}{2}mv^2$, $\\text{Potential Energy} = mgh$.\n2. State Law of Conservation of Energy: $E_{\\text{total}} = KE + PE = \\text{constant}$.\n3. Solve: $mgh_{\\text{top}} = \\frac{1}{2}mv^2_{\\text{bottom}} \\implies v = \\sqrt{2gh}$.",
+        id: "drawing_instruments",
+        title: "Drawing Instruments",
+        juniorDesc: "Identify technical drawing tools: T-square, set-square, compasses, and board.",
+        juniorGreeting: "Hello Teacher! 📐 I want to start technical drawing. Why do we need a T-square and set-squares? How do we draw horizontal and vertical lines?",
+        juniorMarkingGuide: "JSS Tech Drawing: Name T-square function (horizontal lines) [2 Marks]. Name set-square function (vertical/angle lines) [2 Marks].",
         studyNotes: {
-          concept: "Work is done when a force acting on an object causes it to move. Energy is the capacity to do work, and Power is the rate at which work is done.",
-          formulas: [
-            "Work Done: $W = Fd\\cos(\\theta)$",
-            "Kinetic Energy: $KE = \\frac{1}{2}mv^2$",
-            "Potential Energy: $PE = mgh$",
-            "Power: $P = \\frac{W}{t} = Fv$"
-          ],
+          concept: "Technical drawing instruments are precision tools used to produce accurate engineering and architectural diagrams.",
+          formulas: [],
           steps: [
-            "Check if force and displacement are in the same direction.",
-            "Determine the type of energy involved (height = potential, motion = kinetic).",
-            "Apply Conservation of Energy: Initial Mechanical Energy = Final Mechanical Energy."
+            "T-Square: Glides along the drawing board edge to draw horizontal lines.",
+            "Set-Squares (30°/60° and 45°): Rest on the T-square to draw vertical lines and specific angles.",
+            "Compass: Used to draw circles and arcs."
           ],
-          workedExample: "A $2\\text{kg}$ object falls from a height of $5\\text{m}$. Find its velocity just before hitting the ground ($g=10\\text{ m/s}^2$).\nInitial $PE = mgh = 2 \\times 10 \\times 5 = 100\\text{J}$.\nAt the bottom, all $PE$ converts to $KE$: $\\frac{1}{2}mv^2 = 100$.\n$\\frac{1}{2}(2)v^2 = 100 \\implies v^2 = 100 \\implies v = 10\\text{ m/s}$."
+          workedExample: "Question: List four drawing instruments and state the use of each.\n\nAnswer:\n1. Drawing Board: Provides a flat, smooth surface to mount the paper.\n2. T-Square: Used as a guide to draw horizontal lines.\n3. Set-Squares: Used to draw vertical lines at 90° and angled lines at 30°, 45°, and 60°.\n4. Compass: Used to draw circles and arcs."
         }
       },
       {
-        id: "waves",
-        title: "Wave Motion",
-        juniorDesc: "Learn about sound waves, water ripples, and pitch.",
-        seniorDesc: "Examine transverse and longitudinal waves, and solve using $v=f\\lambda$.",
-        juniorGreeting: "Hello Teacher! 🔊 How does sound travel through the air to my ears? Why does sound travel faster in water than in air?",
-        seniorGreeting: "Good day, Teacher! 🌊 I'm studying wave equations. Can you explain the difference between transverse and longitudinal waves, and solve a problem using $v = f\\lambda$?",
-        juniorMarkingGuide: "1. Define sound as vibrations traveling through a medium.\n2. Explain sound needs particles to travel, so it cannot travel in a vacuum.\n3. Explain that water particles are packed tighter, allowing faster vibration transfer.",
-        seniorMarkingGuide: "1. Contrast transverse (particles vibrate perpendicular to wave) vs longitudinal (particles vibrate parallel to wave).\n2. State wave speed formula: $v = f\\lambda$ (velocity = frequency x wavelength).\n3. Calculate wavelength if velocity is $340\\text{ m/s}$ and frequency is $170\\text{ Hz}$ ($340/170 = 2\\text{m}$).",
+        id: "scale_drawing",
+        title: "Scale Drawing",
+        juniorDesc: "Learn how to reduce or enlarge real-world dimensions on paper.",
+        juniorGreeting: "Good day, Teacher! 📏 I want to draw a real school building that is 50 meters wide on my standard drawing paper. How do I use scale drawing (like 1:100) to fit it?",
+        juniorMarkingGuide: "JSS Tech Scale: Explain scale notation (ratio) [1 Mark]. Perform reduction calculation correctly [2 Marks]. State unit conversion [1 Mark].",
         studyNotes: {
-          concept: "A wave is a disturbance that transfers energy from one point to another without transferring matter. Waves are transverse or longitudinal.",
+          concept: "Scale drawing allows us to represent large objects on paper by reducing their size proportionally, or small objects by enlarging them.",
           formulas: [
-            "Wave Equation: $v = f\\lambda$",
-            "Frequency: $f = \\frac{1}{T}$ (where $T$ is period)"
+            "\\text{Drawing Length} = \\text{Real Length} \\times \\text{Scale Factor}",
+            "\\text{Scale Ratio} = 1 : K \\quad (1\\text{ unit on drawing} = K\\text{ units in reality})"
           ],
           steps: [
-            "Identify wave parameters: speed $v$, frequency $f$, wavelength $\\lambda$, period $T$.",
-            "Convert units to standard SI (e.g., cm to meters, kHz to Hz).",
-            "Substitute into $v = f\\lambda$ to solve for the missing term."
+            "Convert real-world measurements to centimeters (e.g. 1m = 100cm).",
+            "Divide by the scale denominator (for reduction).",
+            "Draw the computed length on paper."
           ],
-          workedExample: "A radio transmitter broadcasts waves at a frequency of $100\\text{ MHz}$ ($10^8\\text{ Hz}$). If wave speed is $3 \\times 10^8\\text{ m/s}$, find wavelength.\nUse $v = f\\lambda \\implies \\lambda = \\frac{v}{f}$.\n$\\lambda = \\frac{3 \\times 10^8}{10^8} = 3\\text{m}$."
+          workedExample: "Problem: A room is 6m long. Calculate its length on paper using a scale of 1:50.\n\nSolution:\n1. Convert real length to cm: 6m = 6 * 100 = 600cm.\n2. Apply scale 1:50: Divide 600cm by 50.\n3. Calculation: 600 / 50 = 12cm.\nAnswer: The line drawn on paper should be 12cm."
         }
       },
       {
-        id: "electrostatics",
-        title: "Electrostatics",
-        juniorDesc: "See how balloons stick to walls using static electricity charges.",
-        seniorDesc: "Understand electric charges, Coulomb's Law, and electric field lines.",
-        juniorGreeting: "Hi Teacher! 🎈 Why does a plastic comb attract small bits of paper after I rub it on my dry hair? How do positive and negative charges behave?",
-        seniorGreeting: "Good day, Teacher! ⚡ I am studying Coulomb's Law. Can you explain the formula $F = k \\frac{q_1 q_2}{r^2}$ and show me how to draw electric field lines for unlike charges?",
-        juniorMarkingGuide: "1. Explain that rubbing transfers tiny charges (electrons) between objects.\n2. State the basic rule: Like charges repel, opposite charges attract.\n3. Explain that static means the charges stay in one place instead of flowing.",
-        seniorMarkingGuide: "1. State Coulomb's Law: Force is directly proportional to product of charges and inversely proportional to square of distance.\n2. Identify parameters: $q_1, q_2$ (charges in Coulombs), $r$ (distance in meters), $k$ (electrostatic constant).\n3. Explain that electric field lines flow out of positive charges and into negative charges.",
+        id: "energy_intro",
+        title: "Kinetic & Potential Energy",
+        juniorDesc: "Learn about energy of motion and stored energy with simple examples.",
+        juniorGreeting: "Hello Teacher! ⚡ If I hold a heavy stone at the top of a roof, what kind of energy does it have? What happens to this energy when I drop it?",
+        juniorMarkingGuide: "JSS Tech Energy: Define Potential Energy (stored/position) [1 Mark]. Define Kinetic Energy (motion) [1 Mark]. Explain conservation transition [2 Marks].",
         studyNotes: {
-          concept: "Electrostatics is the study of electromagnetic phenomena that occur when electric charges are at rest.",
+          concept: "Potential Energy (PE) is stored energy due to an object's position or state. Kinetic Energy (KE) is energy possessed by an object due to its motion. Energy cannot be created or destroyed, only transformed.",
           formulas: [
-            "Coulomb's Law: $F = k\\frac{q_1 q_2}{r^2}$ (where $k \\approx 9 \\times 10^9\\text{ N m}^2/\\text{C}^2$)",
-            "Electric Field Strength: $E = \\frac{F}{q} = k\\frac{Q}{r^2}$"
+            "P.E. = m \\cdot g \\cdot h \\quad \\text{(Potential Energy)}",
+            "K.E. = \\frac{1}{2} m \\cdot v^2 \\quad \\text{(Kinetic Energy)}"
           ],
           steps: [
-            "Convert charge values from microcoulombs ($\\mu\\text{C}$) to Coulombs ($\\times 10^{-6}$).",
-            "Substitute charge values and distance into Coulomb's equation.",
-            "Calculate force and determine direction (attraction if unlike signs, repulsion if identical)."
+            "At the highest point, velocity is zero, so KE = 0 and PE is maximum.",
+            "As it falls, height decreases (PE decreases) and speed increases (KE increases).",
+            "Just before hitting the ground, height is zero (PE = 0) and KE is maximum."
           ],
-          workedExample: "Calculate force between two $2\\text{ }\mu\\text{C}$ charges separated by $0.1\\text{m}$ in a vacuum.\n$q_1 = 2 \\times 10^{-6}\\text{C}, q_2 = 2 \\times 10^{-6}\\text{C}, r = 0.1\\text{m}, k = 9 \\times 10^9$.\n$F = 9 \\times 10^9 \\times \\frac{(2 \\times 10^{-6})(2 \\times 10^{-6})}{(0.1)^2}$.\n$F = 9 \\times 10^9 \\times \\frac{4 \\times 10^{-12}}{0.01} = \\frac{3.6 \\times 10^{-2}}{10^{-2}} = 3.6\\text{N}$ (repulsion)."
+          workedExample: "Question: A ball of mass 2kg is held at a height of 5m. Calculate its Potential Energy (g = 10 m/s²). What happens to this energy when it is released?\n\nSolution:\n1. PE = m * g * h = 2 * 10 * 5 = 100 Joules.\n2. When released, this stored Potential Energy transforms into Kinetic Energy as the speed increases during the fall.\nAnswer: P.E. = 100 J"
         }
       },
       {
-        id: "electricity",
-        title: "Current Electricity",
-        juniorDesc: "Learn how batteries power simple bulb circuits.",
-        seniorDesc: "Apply Ohm's Law and solve series and parallel resistor networks.",
-        juniorGreeting: "Hello Teacher! 💡 If I build a circuit, why does adding more bulbs in a single line make them all dimmer? What is the difference between voltage and current?",
-        seniorGreeting: "Good day, Teacher! 🔌 We are solving resistor networks. Can you teach me the formulas for total resistance in series and parallel, and how to apply Ohm's Law $V=IR$?",
-        juniorMarkingGuide: "1. Define current as flow of electricity (amps) and voltage as pressure (volts).\n2. Explain series circuit (bulbs share same path, dividing voltage).\n3. Explain parallel circuit (bulbs have separate paths, keeping full voltage).",
-        seniorMarkingGuide: "1. State Ohm's Law: $V = IR$ (Voltage = Current x Resistance).\n2. Series total: $R_T = R_1 + R_2 + R_3$.\n3. Parallel total: $\\frac{1}{R_T} = \\frac{1}{R_1} + \\frac{1}{R_2} + \\frac{1}{R_3}$.",
+        id: "gears_belts",
+        title: "Transmission of Force (Gears)",
+        juniorDesc: "Understand how gears, belts, and chains transmit motion and speed.",
+        juniorGreeting: "Hi Teacher! 🚲 When I pedal my bicycle, how does the chain transmit force from my pedals to the back wheel? What happens to speed if a big gear turns a small gear?",
+        juniorMarkingGuide: "JSS Tech Gears: Explain driver vs driven gear [2 Marks]. State that big gear turning small gear increases speed [2 Marks].",
         studyNotes: {
-          concept: "Current electricity is the flow of electric charge through a conductor. Resistance opposes this flow, while voltage drives it.",
+          concept: "Force and motion are transmitted from one part of a machine to another using mechanical systems: gears (meshing teeth), belt drives (pulleys), and chain drives.",
           formulas: [
-            "Ohm's Law: $V = IR$",
-            "Series Resistors: $R_{\\text{eq}} = R_1 + R_2 + \\dots$",
-            "Parallel Resistors: $\\frac{1}{R_{\\text{eq}}} = \\frac{1}{R_1} + \\frac{1}{R_2} + \\dots$",
-            "Electric Power: $P = VI = I^2R = \\frac{V^2}{R}$"
+            "\\text{Gear Ratio} = \\frac{\\text{Teeth of Driven Gear}}{\\text{Teeth of Driver Gear}}",
+            "N_1 \\cdot T_1 = N_2 \\cdot T_2 \\quad (\\text{Speed } \\times \\text{ Teeth = Constant})"
           ],
           steps: [
-            "Determine if the resistors are arranged in series (end-to-end) or parallel (side-by-side).",
-            "Calculate the equivalent total resistance ($R_{\\text{eq}}$).",
-            "Use Ohm's Law $V = IR$ with total voltage to find the circuit's total current."
+            "Driver Gear: The gear connected to the input force (e.g. pedals).",
+            "Driven Gear: The gear receiving the motion (e.g. back wheel).",
+            "Speed Multiplication: Small driven gear rotates faster than a large driver gear."
           ],
-          workedExample: "Find total current from a $12\\text{V}$ battery connected to two $6\\text{ }\Omega$ resistors in parallel.\nTotal resistance: $\\frac{1}{R_p} = \\frac{1}{6} + \\frac{1}{6} = \\frac{2}{6} = \\frac{1}{3} \\implies R_p = 3\\text{ }\Omega$.\nTotal Current: $I = \\frac{V}{R} = \\frac{12}{3} = 4\\text{A}$."
+          workedExample: "Question: A driver gear has 40 teeth and turns a driven gear with 10 teeth. If the driver rotates at 100 rpm, how fast does the driven gear rotate?\n\nSolution:\n1. Formula: N1 * T1 = N2 * T2\n2. Substitute: 100 * 40 = N2 * 10\n3. Calculate: N2 = 4000 / 10 = 400 rpm.\nAnswer: Driven gear rotates at 400 rpm (speed quadrupled)."
         }
       },
       {
-        id: "electromagnetism",
-        title: "Electromagnetism",
-        juniorDesc: "Make a temporary magnet using wire wrapped around an iron nail.",
-        seniorDesc: "Study magnetic fields around currents and Faraday's law of induction.",
-        juniorGreeting: "Hi Teacher! 🧲 How does wrapping insulated wire around a steel nail and connecting it to a battery turn the nail into a magnet? Does it work with copper nails?",
-        seniorGreeting: "Good day, Teacher! ⚡ We are studying induction. Can you explain Lenz's Law and Faraday's Law, and explain how a transformer steps voltage up or down?",
-        juniorMarkingGuide: "1. Explain that electric current creates a magnetic field around the wire.\n2. Explain that wrapping it around iron concentrates and magnetizes the core.\n3. State that steel/iron are magnetic materials, but copper is not.",
-        seniorMarkingGuide: "1. State Faraday's Law: Induced electromotive force is proportional to rate of change of magnetic flux.\n2. State Lenz's Law: Induced current direction opposes the change that created it.\n3. State Transformer formula: $\\frac{V_p}{V_s} = \\frac{N_p}{N_s}$ and define terms.",
+        id: "concrete_materials",
+        title: "Building Materials (Concrete)",
+        juniorDesc: "Learn the ingredients of concrete (cement, sand, gravel, water) and mixing ratios.",
+        juniorGreeting: "Hello Teacher! 🧱 Why do builders mix cement, sand, water, and stones together? What happens if they add too much water, and how does concrete set?",
+        juniorMarkingGuide: "JSS Tech Materials: List 4 concrete ingredients [2 Marks]. Explain hydration setting [1 Mark]. State role of reinforcement steel [1 Mark].",
         studyNotes: {
-          concept: "Electromagnetism describes the interaction between electrical currents and magnetic fields. Electromagnetic induction occurs when a changing magnetic field generates an electric current.",
+          concept: "Concrete is a composite building material that hardens over time. It is highly resistant to compression (crushing forces) but weak in tension (stretching forces).",
           formulas: [
-            "Transformer Equation: $\\frac{V_p}{V_s} = \\frac{N_p}{N_s} = \\frac{I_s}{I_p}$ (where $p$ is primary, $s$ is secondary)"
+            "\\text{Concrete} = \\text{Cement} + \\text{Fine Aggregate (Sand)} + \\text{Coarse Aggregate (Gravel)} + \\text{Water}"
           ],
           steps: [
-            "Identify the number of turns in coils ($N_p, N_s$) and voltages ($V_p, V_s$).",
-            "Apply the transformer equation to find the unknown turns or voltage.",
-            "Determine if it is a Step-Up ($V_s > V_p$) or Step-Down ($V_s < V_p$) transformer."
+            "Standard mixing ratio: e.g., 1 part cement, 2 parts sand, 4 parts gravel (1:2:4 ratio).",
+            "Water triggers a chemical reaction called hydration that binds the elements.",
+            "Adding steel bars creates 'reinforced concrete' which handles tension loads."
           ],
-          workedExample: "A transformer has $100$ primary turns and $500$ secondary turns. If primary voltage is $12\\text{V}$, find secondary voltage.\nUse $\\frac{12}{V_s} = \\frac{100}{500} \\implies \\frac{12}{V_s} = \\frac{1}{5}$.\n$V_s = 12 \\times 5 = 60\\text{V}$ (Step-Up)."
+          workedExample: "Question: What is reinforced concrete, and why is steel placed inside concrete beams?\n\nAnswer:\n1. Reinforced concrete is concrete that has steel reinforcing bars (rebars) embedded inside it before it cures.\n2. Concrete is very strong under compression (pushing) but weak in tension (pulling/bending). Steel is highly resistant to tension. By combining them, the steel handles the stretching forces under loads, preventing the beam from snapping."
         }
       },
       {
-        id: "radioactivity",
-        title: "Radioactivity",
-        juniorDesc: "Understand atoms, radiation, and safety warnings.",
-        seniorDesc: "Contrast alpha, beta, gamma decay, and calculate half-life decay equations.",
-        juniorGreeting: "Hello Teacher! ☢️ I saw a yellow danger sign with three black triangles. What is radioactivity, and why is it dangerous to humans?",
-        seniorGreeting: "Good day, Teacher! ⚛️ I'm solving nuclear decay equations. Can you explain the changes in atomic and mass numbers during Alpha ($\\alpha$) and Beta ($\\beta$) emission, and show me how to calculate half-life decay?",
-        juniorMarkingGuide: "1. Define radioactivity as unstable atoms releasing energy to become stable.\n2. State that radiation can damage living human cells.\n3. Explain safety precautions (lead shields, distance).",
-        seniorMarkingGuide: "1. Alpha decay: subtracts 4 from mass number, 2 from atomic number ($^4_2\\text{He}$). \n2. Beta decay: mass number unchanged, adds 1 to atomic number ($^0_{-1}\\text{e}$).\n3. Calculate remaining mass using $N(t) = N_0 \\left(\\frac{1}{2}\\right)^{t / T_{1/2}}$ where $t$ is time and $T_{1/2}$ is half-life.",
+        id: "workshop_safety",
+        title: "Safety Rules in Workshop",
+        juniorDesc: "Learn how to prevent accidents in the wood and metal workshops.",
+        juniorGreeting: "Hi Teacher! 🥽 What safety precautions must I take before using any workshop tools? What is PPE?",
+        juniorMarkingGuide: "JSS Tech Safety: Define PPE (Personal Protective Equipment) [1 Mark]. List 3 safety rules (goggles, boots, tidy workspace) [2 Marks]. State fire safety [1 Mark].",
         studyNotes: {
-          concept: "Radioactivity is the spontaneous disintegration of unstable atomic nuclei, accompanied by the emission of ionizing radiation (alpha particles, beta particles, or gamma rays).",
-          formulas: [
-            "Alpha Decay: $^{M}_{A}\\text{X} \\rightarrow ^{M-4}_{A-2}\\text{Y} + ^4_2\\text{He}$",
-            "Beta Decay: $^{M}_{A}\\text{X} \\rightarrow ^{M}_{A+1}\\text{Y} + ^0_{-1}\\text{e}$",
-            "Half-Life: $N = N_0 \\left(\\frac{1}{2}\\right)^n$ (where $n = \\frac{\\text{total time}}{\\text{half-life}}$)"
-          ],
+          concept: "Workshop safety rules are guidelines designed to prevent accidents, injuries, and tool damage during workshop operations.",
+          formulas: [],
           steps: [
-            "For decay equations, balance the mass numbers (top) and atomic numbers (bottom) on both sides.",
-            "For half-life problems, determine the number of half-life cycles ($n$) that fit into the elapsed time.",
-            "Halve the original quantity ($N_0$) consecutively $n$ times."
+            "Wear appropriate Personal Protective Equipment (PPE): safety goggles, boots, gloves.",
+            "Do not run or play in the workshop.",
+            "Keep the workshop floor clean of oil spills and sawdust.",
+            "Always use the correct tool for the job."
           ],
-          workedExample: "A radioactive sample has a half-life of $5\\text{ days}$. If the original mass is $80\\text{g}$, what mass remains after $15\\text{ days}$?\nNumber of cycles $n = \\frac{15}{5} = 3$ cycles.\nMass remaining $N = 80 \\times \\left(\\frac{1}{2}\\right)^3 = 80 \\times \\frac{1}{8} = 10\\text{g}$."
+          workedExample: "Question: State four safety rules that must be obeyed in a basic technology workshop.\n\nAnswer:\n1. Wear safety boots with steel toe caps to protect feet from falling heavy metals.\n2. Wear safety goggles when cutting, grinding, or hammering to protect eyes from flying chips.\n3. Never operate a machine without the teacher's permission and supervision.\n4. Keep floors clean of oil, water, and scrap pieces to prevent slipping accidents."
         }
       },
       {
-        id: "fluid_pressure",
-        title: "Pressure in Fluids",
-        juniorDesc: "Learn why heavy boats float while small stones sink.",
-        seniorDesc: "Calculate fluid pressure using P=hdg and explain Archimedes' principle.",
-        juniorGreeting: "Hi Teacher! 🚢 If a tiny iron nail sinks in water, how does a massive steel cruise ship manage to float on the ocean without sinking?",
-        seniorGreeting: "Good day, Teacher! 🌊 We are studying fluid mechanics. Can you explain Archimedes' principle of buoyancy, and show me how to calculate hydrostatic pressure at the bottom of a dam?",
-        juniorMarkingGuide: "1. Define density: mass divided by volume.\n2. Explain that a ship is mostly hollow (filled with air), making its overall density lower than water.\n3. Mention the upward pushing force of water (upthrust).",
-        seniorMarkingGuide: "1. State Archimedes' Principle: Upthrust equals the weight of fluid displaced.\n2. State hydrostatic pressure formula: $P = h\\rho g$ (height x density x gravity).\n3. Calculate pressure at $10\\text{m}$ depth in fresh water (density $1000\\text{ kg/m}^3$) as $10 \\times 1000 \\times 10 = 100,000\\text{ Pa}$.",
+        id: "electronics_resistors",
+        title: "Basic Electronics (Resistors)",
+        juniorDesc: "Introduction to resistors, color codes, and simple current control.",
+        juniorGreeting: "Good day, Teacher! ⚡ In Basic Tech, we are studying circuits. What does a resistor do, and how do we read the colorful stripes on it?",
+        juniorMarkingGuide: "JSS Tech Resistors: Define resistor (opposes current flow) [1 Mark]. Explain Ohm's Law formula V=IR [2 Marks]. State unit is Ohm [1 Mark].",
         studyNotes: {
-          concept: "Fluid pressure is the pressure exerted by a fluid at any point within it. Archimedes' principle states that any object floating or submerged experiences an upward buoyant force (upthrust) equal to the weight of the displaced fluid.",
+          concept: "A resistor is an electronic component that limits or regulates the flow of electrical current in a circuit.",
           formulas: [
-            "Hydrostatic Pressure: $P = h\\rho g$",
-            "Buoyancy (Upthrust): $F_b = V\\rho g$ (where $V$ is submerged volume)"
+            "R = \\frac{V}{I} \\quad \\text{(Resistance = Voltage / Current)}",
+            "V = I \\cdot R"
           ],
           steps: [
-            "Identify the depth $h$, fluid density $\\rho$, and acceleration due to gravity $g$.\n2. Multiply the values together to find the pressure in Pascals ($Pa$).\n3. For floating objects, equate upthrust force to weight of the object ($W = F_b$)."
+            "Resistance is measured in Ohms (Ω).",
+            "Read color code bands: Band 1 (first digit), Band 2 (second digit), Band 3 (multiplier), Band 4 (tolerance)."
           ],
-          workedExample: "Calculate pressure at a depth of $5\\text{m}$ in a swimming pool ($\\rho = 1000\\text{ kg/m}^3, g=10\\text{ m/s}^2$).\n$P = h\\rho g = 5 \\times 1000 \\times 10 = 50,000\\text{ Pa}$ ($50\\text{ kPa}$)."
+          workedExample: "Question: A resistor limits current to 0.5 Amperes when connected to a 10 Volt battery. Find its resistance.\n\nSolution:\n1. Formula: R = V / I\n2. Substitute: R = 10 / 0.5 = 20 Ohms.\nAnswer: Resistance = 20 Ω"
         }
       },
       {
-        id: "gravitation",
-        title: "Gravitation",
-        juniorDesc: "Understand gravity as the force pulling everything down to Earth.",
-        seniorDesc: "Apply Newton's law of universal gravitation and solve force fields.",
-        juniorGreeting: "Hello Teacher! 🌍 Why do things always fall to the ground when dropped? Does the moon fall towards Earth too?",
-        seniorGreeting: "Good day, Teacher! 🌌 We are studying universal gravitation. Can you explain the formula $F = G \\frac{m_1 m_2}{r^2}$ and differentiate between $g$ and $G$?",
-        juniorMarkingGuide: "1. Define gravity as an invisible pulling force exerted by the Earth.\n2. Explain that heavier planets have stronger pulls.\n3. State that gravity keeps the moon in orbit around Earth.",
-        seniorMarkingGuide: "1. State Universal Gravitation formula: $F = G\\frac{m_1 m_2}{r^2}$.\n2. Contrast $G$ (Universal Gravitational Constant $\\approx 6.67 \\times 10^{-11}$) vs $g$ (local acceleration due to gravity $\\approx 9.8\\text{ m/s}^2$).\n3. State relationship: $g = \\frac{GM}{R^2}$ where $M$ and $R$ are planet mass and radius.",
+        id: "machine_maintenance",
+        title: "Maintenance of Machines",
+        juniorDesc: "Learn how to take care of machines: lubrication, cleaning, and painting.",
+        juniorGreeting: "Hello Teacher! ⚙️ Why do mechanical machines squeak or heat up when running? What is friction, and how does lubrication help?",
+        juniorMarkingGuide: "JSS Tech Maintenance: Define lubrication [2 Marks]. List 2 other maintenance methods (cleaning, tightening bolts, painting) [2 Marks].",
         studyNotes: {
-          concept: "Gravitation is a natural phenomenon by which all things with mass or energy are attracted to one another.",
-          formulas: [
-            "Gravitational Force: $F = G\\frac{m_1 m_2}{r^2}$ (where $G \\approx 6.67 \\times 10^{-11}\\text{ N m}^2/\\text{kg}^2$)",
-            "Gravitational Field: $g = \\frac{GM}{R^2}$"
-          ],
+          concept: "Maintenance is the action taken to keep machines, tools, and equipment in good working order to extend their lifespan and prevent breakdowns.",
+          formulas: [],
           steps: [
-            "Identify masses ($m_1, m_2$) and separation distance ($r$).",
-            "Square the distance first ($r^2$).",
-            "Substitute constants and simplify, paying attention to scientific notation powers."
+            "Lubrication: Applying oil or grease to reduce friction and wear between moving parts.",
+            "Cleaning: Removing dust, dirt, and scraps.",
+            "Prevention of Rust: Painting or oiling metal parts to prevent oxidation."
           ],
-          workedExample: "Find the gravitational pull between two $50\\text{kg}$ spheres separated by $2\\text{m}$ in space.\n$F = G\\frac{50 \\times 50}{2^2} = G\\frac{2500}{4} = 625G$.\n$F = 625 \\times (6.67 \\times 10^{-11}) \\approx 4.17 \\times 10^{-8}\\text{N}$."
+          workedExample: "Question: Explain the difference between preventive maintenance and corrective maintenance, giving an example of each.\n\nAnswer:\n1. Preventive Maintenance: Actions taken before a machine breaks down to prevent failure. Example: Regularly oiling a sewing machine or check engine oil.\n2. Corrective Maintenance: Actions taken to fix or replace parts after a machine breaks down. Example: Replacing a snapped drive belt or broken gear teeth."
         }
       }
     ]
   },
-  chemistry: {
-    id: "chemistry",
-    name: "Chemistry",
+  english: {
+    id: "english",
+    name: "English Language (JSS)",
     topics: [
       {
-        id: "bonding",
-        title: "Chemical Bonding",
-        juniorDesc: "Learn why atoms join together like magnets.",
-        seniorDesc: "Contrast ionic, covalent, and metallic bonds, and explain octet rules.",
-        juniorGreeting: "Hi Teacher! 🧪 I saw drawings of atoms sharing hands to make water. Why do atoms want to bind together? What holds them in place?",
-        seniorGreeting: "Good day, Teacher! ⚛️ I'm studying chemical bonding. Can you explain the octet rule, and contrast how ionic bonds (electron transfer) differ from covalent bonds (sharing)?",
-        juniorMarkingGuide: "1. Explain that atoms bind to become stable.\n2. Describe that sharing or transferring links them together.\n3. Give common examples: table salt (ionic), water (covalent).",
-        seniorMarkingGuide: "1. Define the Octet Rule (seeking 8 electrons in the outermost valence shell).\n2. Explain ionic bonding (metal transfers electrons to non-metal, creating electrostatic attraction).\n3. Explain covalent bonding (sharing of electrons between non-metals to achieve octet).",
+        id: "parts_speech",
+        title: "Parts of Speech",
+        juniorDesc: "Learn the 8 basic parts of speech: nouns, verbs, adjectives, etc.",
+        juniorGreeting: "Hi Teacher! 📝 I'm confused about the parts of speech. How do I tell the difference between an adjective and an adverb in a sentence?",
+        juniorMarkingGuide: "JSS English Grammar: List at least 5 parts of speech [2 Marks]. Differentiate adjective (modifies noun) vs adverb (modifies verb/adjective) [2 Marks].",
         studyNotes: {
-          concept: "Chemical bonding describes the attraction between atoms, ions or molecules that enables the formation of chemical compounds. Atoms bind to achieve a stable octet (8 valence electrons) configuration.",
+          concept: "Parts of speech are categories of words divided by their function in a sentence. There are eight basic parts of speech.",
           formulas: [],
           steps: [
-            "Check valence electrons of the atoms.",
-            "Determine if bonding is between Metal + Non-metal (Ionic) or Non-metal + Non-metal (Covalent).",
-            "Draw Lewis dot structures representing electron transfers or shared pairs."
+            "Noun (name of person/place/thing), Pronoun (replaces noun).",
+            "Verb (action/state), Adjective (describes a noun).",
+            "Adverb (describes a verb, adjective, or other adverb).",
+            "Preposition (shows position/time), Conjunction (joins words/clauses), Interjection (expresses emotion)."
           ],
-          workedExample: "Explain how Sodium Chloride (NaCl) is formed.\nSodium ($Na$, $2,8,1$) has 1 valence electron and transfers it to Chlorine ($Cl$, $2,8,7$), which has 7 valence electrons. This forms $Na^+$ and $Cl^-$ ions. The electrostatic attraction between these oppositely charged ions forms the ionic bond."
+          workedExample: "Question: Identify the parts of speech for the capitalized words in: 'The QUICK brown fox jumped Swiftly over the lazy dog.'\n\nAnswer:\n1. QUICK: Adjective (describes the noun 'fox').\n2. SWIFTLY: Adverb (describes how the fox 'jumped')."
         }
       },
       {
-        id: "periodic_table",
-        title: "Periodic Table Trends",
-        juniorDesc: "Explore the elements table and find metals vs gases.",
-        seniorDesc: "Analyze trends in atomic radius, electronegativity, and ionization energy.",
-        juniorGreeting: "Hello Teacher! 📊 I see this massive colorful table of elements in chemistry. How is it organized, and why are metals grouped together?",
-        seniorGreeting: "Good day, Teacher! 🧪 We are studying periodic trends. Can you explain how and why atomic radius, electronegativity, and ionization energy change across a period and down a group?",
-        juniorMarkingGuide: "1. Explain that elements are organized by atomic number (protons).\n2. Differentiate metals (left side) and non-metals/gases (right side).\n3. State that columns (groups) share similar chemical properties.",
-        seniorMarkingGuide: "1. Atomic Radius: decreases across a period (nuclear pull increases), increases down a group (shells added).\n2. Ionization Energy: increases across a period (stronger nuclear pull holds electrons), decreases down a group.\n3. Electronegativity: increases across a period, decreases down a group.",
+        id: "nouns_pronouns",
+        title: "Nouns & Pronouns",
+        juniorDesc: "Understand different types of nouns and replacing them with subject/object pronouns.",
+        juniorGreeting: "Good day, Teacher! What is the difference between a proper noun and a common noun? Why do we use pronouns like 'he', 'she', or 'them'?",
+        juniorMarkingGuide: "JSS English Grammar: Define Proper Noun (needs capitalization) vs Common Noun [2 Marks]. Give examples [2 Marks].",
         studyNotes: {
-          concept: "The Periodic Table arranges chemical elements by atomic number. Periodic trends are patterns in element properties determined by atomic structure and nuclear attraction.",
+          concept: "A noun is a naming word. A pronoun is a word used in place of a noun to avoid repetition.",
           formulas: [],
           steps: [
-            "Across a Period (left-to-right): Protons increase, nuclear charge pulls shells closer. Radius decreases; electronegativity and ionization energy increase.",
-            "Down a Group (top-to-bottom): Principal energy levels (shells) are added. Radius increases; electronegativity and ionization energy decrease."
+            "Proper Noun: Specific name, always capitalized (e.g. Nigeria, Chidi).",
+            "Common Noun: General name (e.g. country, student).",
+            "Pronouns: Subject pronouns (I, you, he, she, it, we, they) vs Object pronouns (me, you, him, her, it, us, them)."
           ],
-          workedExample: "Why does Fluorine have a higher electronegativity than Lithium?\nFluorine is on the far right of Period 2. It has more protons (stronger nuclear charge) and a smaller atomic radius than Lithium, enabling its nucleus to attract bonding electrons much more strongly."
+          workedExample: "Question: Rewrite the sentence to replace repeated nouns with pronouns: 'Chidi saw the dog, and Chidi threw the ball to the dog.'\n\nAnswer:\n'Chidi saw the dog, and HE threw the ball to IT.' (He replaces 'Chidi', It replaces 'the dog')"
         }
       },
       {
-        id: "stoichiometry",
-        title: "Stoichiometry & Mole Concept",
-        juniorDesc: "Balance basic chemical equations (e.g. hydrogen + oxygen).",
-        seniorDesc: "Calculate moles, molar mass, and limiting reactants in balanced equations.",
-        juniorGreeting: "Hi Teacher! 🧪 I see chemistry equations like $H_2 + O_2 \\rightarrow H_2O$. Why do we need to balance them by putting numbers in front?",
-        seniorGreeting: "Good day, Teacher! 🧮 I'm stuck on mole calculations. Can you explain Avogadro's number, how to calculate mass from moles using $n = m/M$, and how to balance stoichiometry?",
-        juniorMarkingGuide: "1. Explain the Law of Conservation of Mass: atoms cannot be created or destroyed.\n2. Show that there are 2 oxygen atoms on the left, so we must have 2 on the right.\n3. Balance: $2H_2 + O_2 \\rightarrow 2H_2O$.",
-        seniorMarkingGuide: "1. State the mole formula: $n = \\frac{\\text{mass}}{\\text{molar mass}}$.\n2. Use stoichiometry ratios from a balanced equation to convert moles of reactant to product.\n3. Define Avogadro's constant: $6.02 \\times 10^{23}\\text{ particles/mole}$.",
+        id: "verbs_tenses",
+        title: "Verbs & Tenses",
+        juniorDesc: "Learn Present, Past, and Future tenses and regular/irregular verbs.",
+        juniorGreeting: "Hello Teacher! I am writing a story. What is the difference between Present Continuous ('is playing') and Past Simple ('played')? How do irregular verbs change?",
+        juniorMarkingGuide: "JSS English Grammar: Differentiate present, past, and future tense [2 Marks]. Give example of regular verb (adds -ed) and irregular verb (changes form, e.g., write-wrote) [2 Marks].",
         studyNotes: {
-          concept: "Stoichiometry measures quantitative relationships between reactants and products in a balanced chemical equation. The mole is the SI unit for amount of substance.",
-          formulas: [
-            "Moles: $n = \\frac{m}{M}$ (where $m$ is mass, $M$ is molar mass)",
-            "Gas Volume at STP: $V = n \\times 22.4\\text{ dm}^3$",
-            "Avogadro's Number: $N_A = 6.02 \\times 10^{23}\\text{ particles/mol}$"
-          ],
-          steps: [
-            "Write and balance the chemical equation.",
-            "Convert given mass or volume to moles.",
-            "Use the mole ratio from the balanced equation coefficients to find the moles of the unknown substance.",
-            "Convert the resulting moles back to mass or volume as requested."
-          ],
-          workedExample: "Calculate mass of carbon dioxide ($CO_2$) produced when $12\\text{g}$ of carbon burns completely. ($C=12, O=16$).\nEquation: $C + O_2 \\rightarrow CO_2$.\nMoles of C: $n = \\frac{12}{12} = 1\\text{ mol}$.\nMole ratio C to $CO_2$ is 1:1, so we get 1 mole of $CO_2$.\nMolar mass of $CO_2 = 12 + (16 \\times 2) = 44\\text{ g/mol}$.\nMass of $CO_2 = n \\times M = 1 \\times 44 = 44\\text{g}$."
-        }
-      },
-      {
-        id: "acids_bases",
-        title: "Acids, Bases, and Salts",
-        juniorDesc: "Learn about sour acids (lemon) and bitter bases (soap) and pH.",
-        seniorDesc: "Calculate pH, neutralization reactions, and explain acid-base titrations.",
-        juniorGreeting: "Hello Teacher! 🍋 Why do lemons taste sour while soap feels slippery and tastes bitter? What is this pH scale they use to measure them?",
-        seniorGreeting: "Good day, Teacher! 🧪 We are studying acid-base equilibria. Can you explain Bronsted-Lowry theory, write a neutralization equation, and show me how to calculate pH using $-\\log[H^+]$?",
-        juniorMarkingGuide: "1. Define acids (sour, turn blue litmus red) and bases (bitter, feel slippery, turn red litmus blue).\n2. Explain pH scale: 0-6 is acid, 7 is neutral (water), 8-14 is base.\n3. Mention indicator colors (litmus paper).",
-        seniorMarkingGuide: "1. Define pH formula: $\\text{pH} = -\\log_{10}[H^+]$.\n2. Write neutralization: $\\text{Acid} + \\text{Base} \\rightarrow \\text{Salt} + \\text{Water}$ (e.g. $HCl + NaOH \\rightarrow NaCl + H_2O$).\n3. Calculate pH of $0.01\\text{ M } HCl$ solution ($-\\log[10^{-2}] = 2$).",
-        studyNotes: {
-          concept: "Acids release hydrogen ions ($H^+$) in aqueous solution, while bases release hydroxide ions ($OH^-$). Neutralization is the reaction between an acid and base to produce salt and water.",
-          formulas: [
-            "pH Equation: $\\text{pH} = -\\log_{10}[H^+]$",
-            "pOH Equation: $\\text{pOH} = -\\log_{10}[OH^-]$",
-            "Relationship: $\\text{pH} + \\text{pOH} = 14$"
-          ],
-          steps: [
-            "Identify if the compound is a strong acid (dissociates completely) or weak acid.",
-            "Determine the concentration of hydrogen ions $[H^+]$ in moles/dm$^3$.",
-            "Apply the log formula to calculate pH."
-          ],
-          workedExample: "Calculate pH of a $0.001\\text{ M}$ solution of hydrochloric acid ($HCl$).\nSince $HCl$ is a strong acid, it dissociates completely: $[H^+] = 0.001\\text{ M} = 10^{-3}\\text{ M}$.\n$\\text{pH} = -\\log_{10}(10^{-3}) = 3$."
-        }
-      },
-      {
-        id: "gas_laws",
-        title: "Gas Laws",
-        juniorDesc: "Learn why balloons expand when heated.",
-        seniorDesc: "Apply Boyle's, Charles's, and Ideal Gas laws ($PV=nRT$).",
-        juniorGreeting: "Hi Teacher! 🎈 Why does a sealed bag of chips puff up when left in a hot car? How do temperature and pressure affect gases?",
-        seniorGreeting: "Good day, Teacher! 💨 I'm studying gas laws. Can you explain the equations for Boyle's and Charles's laws, and show me how to solve problems using the ideal gas equation $PV = nRT$?",
-        juniorMarkingGuide: "1. Explain that heating gas makes particles move faster and push outwards.\n2. State that cooling gas makes it shrink/contract.\n3. Give real-world examples (tire pressure drops in cold weather).",
-        seniorMarkingGuide: "1. State Boyle's Law ($P_1V_1 = P_2V_2$) and Charles's Law ($\\frac{V_1}{T_1} = \\frac{V_2}{T_2}$ using absolute Kelvin temperature).\n2. State Ideal Gas law: $PV = nRT$ and define R ($0.0821\\text{ L atm / mol K}$ or $8.314\\text{ J/mol K}$).\n3. Convert degrees Celsius to Kelvin by adding 273.15.",
-        studyNotes: {
-          concept: "Gas laws relate pressure, volume, temperature, and moles of a gas. Ideal gases follow these behaviors perfectly under standard conditions.",
-          formulas: [
-            "Boyle's Law: $P_1 V_1 = P_2 V_2$ (constant $T$)",
-            "Charles's Law: $\\frac{V_1}{T_1} = \\frac{V_2}{T_2}$ (constant $P$, $T$ in Kelvin)",
-            "General Gas Law: $\\frac{P_1 V_1}{T_1} = \\frac{P_2 V_2}{T_2}$",
-            "Ideal Gas Law: $PV = nRT$"
-          ],
-          steps: [
-            "Convert all temperatures from Celsius to Kelvin ($K = ^\\circ\\text{C} + 273$).",
-            "Verify units match the gas constant $R$ if using $PV=nRT$ (volume in liters, pressure in atm).",
-            "Rearrange the formula to isolate the target variable."
-          ],
-          workedExample: "A gas occupies $2\\text{L}$ at $300\\text{K}$. Find its volume if temperature increases to $600\\text{K}$ at constant pressure.\nUse Charles's Law: $\\frac{V_1}{T_1} = \\frac{V_2}{T_2} \\implies \\frac{2}{300} = \\frac{V_2}{600}$.\n$V_2 = \\frac{2 \\times 600}{300} = 4\\text{L}$."
-        }
-      },
-      {
-        id: "reaction_rates",
-        title: "Rates of Chemical Reactions",
-        juniorDesc: "Learn why food rots slower in a refrigerator.",
-        seniorDesc: "Explain collision theory, catalyst effects, and activation energy.",
-        juniorGreeting: "Hello Teacher! ❄️ Why does putting food in a fridge slow down decay? How does changing temperature affect chemical reactions?",
-        seniorGreeting: "Good day, Teacher! 🧪 We are studying kinetics. Can you explain collision theory, how catalysts speed up reactions, and draw an energy profile diagram showing activation energy?",
-        juniorMarkingGuide: "1. State that chemical reactions need particles to collide.\n2. Explain that cold temperatures slow down particle motion, reducing collisions.\n3. State that slower collisions mean slower decay.",
-        seniorMarkingGuide: "1. Explain Collision Theory: reactions occur only when particles collide with sufficient energy (activation energy) and correct orientation.\n2. Define activation energy ($E_a$).\n3. Explain that a catalyst provides an alternative pathway with lower activation energy.",
-        studyNotes: {
-          concept: "Chemical kinetics is the study of reaction rates. Rate depends on collision frequency and energy, which are altered by concentration, temperature, surface area, and catalysts.",
+          concept: "Verbs express action or state of being. Tenses indicate the time of the action (past, present, or future).",
           formulas: [],
           steps: [
-            "Collision frequency is increased by: higher concentration, higher temperature, larger surface area.",
-            "Collision energy is increased by: higher temperature (particles move faster).",
-            "Catalysts lower the activation energy barrier without being consumed."
+            "Present Tense: Action happening now (e.g. He walks).",
+            "Past Tense: Action already completed (e.g. He walked).",
+            "Future Tense: Action that will happen (e.g. He will walk).",
+            "Continuous Tense: Ongoing actions, uses verb + -ing (e.g. He is walking)."
           ],
-          workedExample: "How does a catalyst increase reaction rate?\nA catalyst offers an alternative reaction mechanism with a lower activation energy ($E_a$). Consequently, a larger fraction of reactant collisions possess energy greater than $E_a$, leading to more successful collisions per second."
+          workedExample: "Question: Convert the sentence 'They write an exam' into past continuous and future simple tenses.\n\nAnswer:\n1. Past Continuous: 'They WERE WRITING an exam.'\n2. Future Simple: 'They WILL WRITE an exam.'"
         }
       },
       {
-        id: "equilibrium",
-        title: "Chemical Equilibrium",
-        juniorDesc: "Understand reversible reactions like water evaporating and freezing.",
-        seniorDesc: "Apply Le Chatelier's principle and calculate equilibrium constants (Kc).",
-        juniorGreeting: "Hi Teacher! 🔄 If a reaction is reversible, does it mean it keeps switching back and forth forever? What does equilibrium mean?",
-        seniorGreeting: "Good day, Teacher! ⚖️ We are studying equilibrium. Can you explain Le Chatelier's principle, and predict how increasing pressure affects the reaction: $N_2(g) + 3H_2(g) \\rightleftharpoons 2NH_3(g)$?",
-        juniorMarkingGuide: "1. Define reversible reaction: a reaction that can go forward and backward.\n2. Explain equilibrium: when forward and backward speeds are equal.\n3. Explain that amounts of substances stop changing at equilibrium.",
-        seniorMarkingGuide: "1. State Le Chatelier's Principle: a system at equilibrium adjusts to counteract any external change imposed on it.\n2. Explain pressure effect: increasing pressure shifts equilibrium to the side with fewer gas moles (shifts right for Ammonia synthesis).\n3. State equilibrium expression: $K_c = \\frac{[NH_3]^2}{[N_2][H_2]^3}$.",
+        id: "punctuation",
+        title: "Punctuation Marks",
+        juniorDesc: "Learn how to use full stops, commas, question marks, and apostrophes correctly.",
+        juniorGreeting: "Hi Teacher! ✍️ My teacher marked me down for missing commas and apostrophes. When do I use an apostrophe for contraction versus possession?",
+        juniorMarkingGuide: "JSS English Grammar: Define comma rules (lists, pauses) [2 Marks]. Differentiate apostrophe for contraction (it's = it is) vs possession (Chidi's book) [2 Marks].",
         studyNotes: {
-          concept: "Dynamic equilibrium is reached in a closed system when the rates of the forward and reverse reactions are equal. Le Chatelier's principle predicts shifts in equilibrium.",
-          formulas: [
-            "Equilibrium Constant ($aA + bB \\rightleftharpoons cC + dD$): $K_c = \\frac{[C]^c [D]^d}{[A]^a [B]^b}$"
-          ],
+          concept: "Punctuation marks are symbols used to structure and organize written sentences, making them clear and readable.",
+          formulas: [],
           steps: [
-            "Write the balanced reversible chemical equation.",
-            "Write the $K_c$ expression (products on top, reactants on bottom, raised to power of coefficients).",
-            "Apply Le Chatelier's rules: shifts away from added chemicals, shifts to fewer gas moles when pressure increases."
+            "Full Stop (.): Ends a statement sentence.",
+            "Comma (,): Indicates a pause or separates list items.",
+            "Apostrophe ('): Used for contraction (e.g., don't, it's) or showing possession (e.g., the boy's bag)."
           ],
-          workedExample: "For the exothermic reaction: $A(g) + B(g) \\rightleftharpoons C(g) + \\text{Heat}$, how does increasing temperature affect equilibrium?\nIncreasing temperature adds heat to the system. According to Le Chatelier's principle, the system shifts to consume heat (endothermic direction), moving left (producing more A and B)."
+          workedExample: "Question: Correct the punctuation in this sentence: 'dont touch chidis book its not yours'\n\nAnswer:\n'Don't touch Chidi's book; it's not yours.' (Added capital D, contraction apostrophe for Don't, possessive apostrophe for Chidi's, semicolon, contraction apostrophe for it's, and full stop)"
         }
       },
       {
-        id: "organic",
-        title: "Organic Chemistry",
-        juniorDesc: "Learn about crude oil, fuels, and carbon atoms.",
-        seniorDesc: "Study hydrocarbons, functional groups, and IUPAC nomenclature.",
-        juniorGreeting: "Hello Teacher! ⛽ I know petrol, plastic, and cooking gas come from crude oil. Why is carbon so special that it makes all these different things?",
-        seniorGreeting: "Good day, Teacher! 🧪 I'm learning organic nomenclature. Can you explain how to name alkanes, alkenes, and alcohols using IUPAC rules, and explain structural isomerism?",
-        juniorMarkingGuide: "1. Explain carbon is unique because it can bond with up to 4 other atoms.\n2. Explain that carbon forms long chains and rings.\n3. Mention hydrocarbons are compounds made only of hydrogen and carbon.",
-        seniorMarkingGuide: "1. State IUPAC rules: find longest carbon chain, number it from side closest to branch/double bond.\n2. Contrast Alkanes (single bonds $C_nH_{2n+2}$) vs Alkenes (double bonds $C_nH_{2n}$) vs Alcohols (-OH group).\n3. Define structural isomers as compounds with same molecular formula but different structural arrangements (e.g. butane and isobutane).",
+        id: "active_passive",
+        title: "Active & Passive Voice",
+        juniorDesc: "Understand who is performing the action: 'Chidi ate bread' vs 'Bread was eaten by Chidi'.",
+        juniorGreeting: "Good day, Teacher! What is the difference between active and passive voice? Why does the object move to the front in passive voice?",
+        juniorMarkingGuide: "JSS English Grammar: Define active voice (Subject performs action) [1 Mark]. Define passive voice (Subject receives action) [1 Mark]. Convert active to passive correctly [2 Marks].",
         studyNotes: {
-          concept: "Organic chemistry is the study of carbon compounds. Carbon catenates (forms chains) due to its tetravalency.",
+          concept: "Active voice emphasizes the performer of the action (Subject + Verb + Object). Passive voice emphasizes the receiver or the action itself (Object + Auxiliary Verb + Past Participle + by Subject).",
           formulas: [
-            "Alkanes General Formula: $C_n H_{2n+2}$",
-            "Alkenes General Formula: $C_n H_{2n}$",
-            "Alkyne General Formula: $C_n H_{2n-2}$",
-            "Alcohols General Formula: $C_n H_{2n+1}OH$"
+            "\\text{Active: Subject} + \\text{Verb} + \\text{Object}",
+            "\\text{Passive: Object} + \\text{was/is} + \\text{Past Participle} + \\text{by Subject}"
           ],
           steps: [
-            "Identify the longest continuous carbon chain to determine the prefix (meth-, eth-, prop-, but-, pent-...).",
-            "Identify functional groups or double/triple bonds to determine the suffix (-ane, -ene, -ol).",
-            "Number the chain to give the functional groups the lowest possible position numbers."
+            "Identify the subject, verb, and object in the active sentence.",
+            "Move the object to the subject position.",
+            "Change the verb to the appropriate form of 'to be' + past participle.",
+            "Place the active subject at the end, introduced by the preposition 'by'."
           ],
-          workedExample: "Name the compound with formula $CH_3-CH_2-CH_2-OH$.\nThe longest chain has 3 carbons (prefix = prop-).\nIt contains single carbon-carbon bonds and has an $-OH$ group (suffix = -anol).\nSince the $-OH$ is on Carbon 1, the name is Propan-1-ol."
+          workedExample: "Problem: Convert 'The boy kicked the football' into the passive voice.\n\nSolution:\n1. Performer (Subject) = The boy. Action (Verb) = kicked (past tense). Receiver (Object) = the football.\n2. Passive structure: Football + was + kicked + by + the boy.\nAnswer: 'The football was kicked by the boy.'"
         }
       },
       {
-        id: "electrochemistry",
-        title: "Electrochemistry",
-        juniorDesc: "Learn how batteries make electricity and what rust is.",
-        seniorDesc: "Understand electrolysis, redox reactions, and Faraday's laws.",
-        juniorGreeting: "Hi Teacher! 🔋 Why does a copper key get coated with gold when we run an electric current through a liquid? How does electroplating work?",
-        seniorGreeting: "Good day, Teacher! 🧪 We are studying electrolysis. Can you explain the difference between the anode and cathode, detail Faraday's First Law ($m=zIt$), and explain redox (reduction-oxidation)?",
-        juniorMarkingGuide: "1. Define electrolysis: using electricity to break down a liquid chemical.\n2. Explain that metal is attracted to the negative key, coating it.\n3. State that the liquid contains metal particles (ions).",
-        seniorMarkingGuide: "1. Define anode (positive electrode, oxidation occurs) and cathode (negative electrode, reduction occurs).\n2. Explain Redox: Oxidation is loss of electrons, Reduction is gain of electrons (OIL RIG).\n3. State Faraday's First Law: $m = eIt$ or $m = \\left(\\frac{M}{nF}\\right)It$ where F = 96,500 C.",
+        id: "comprehension",
+        title: "Reading Comprehension",
+        juniorDesc: "Learn strategies to read passages and extract answers accurately.",
+        juniorGreeting: "Hello Teacher! 📖 When reading a comprehension passage, how do I find answers to questions quickly? Should I read the questions first?",
+        juniorMarkingGuide: "JSS English Reading: List skimming and scanning techniques [2 Marks]. Explain how to formulate answers in full sentences in own words [2 Marks].",
         studyNotes: {
-          concept: "Electrochemistry relates electrical energy and chemical change. Electrolysis uses electrical current to force a non-spontaneous chemical reaction.",
-          formulas: [
-            "Faraday's First Law: $m = zIt = \\left(\\frac{M}{nF}\\right)It$ (where $F \\approx 96,500\\text{ C/mol}$, $n$ is charge, $M$ is molar mass)",
-            "Charge: $Q = It$"
-          ],
+          concept: "Reading comprehension is the ability to read text, process it, and understand its meaning. Skimming and scanning help locate details efficiently.",
+          formulas: [],
           steps: [
-            "Identify current $I$ (amperes), time $t$ (seconds), molar mass $M$, and electron change $n$.",
-            "Convert time to seconds if given in minutes or hours.",
-            "Substitute into Faraday's equation to solve for mass ($m$) deposited at the cathode."
+            "Skimming: Reading quickly to get the main idea or gist.",
+            "Scanning: Looking for specific keywords, numbers, or names in the passage.",
+            "Avoid copying sentences directly; paraphrase in your own words."
           ],
-          workedExample: "Calculate charge passed when $2\\text{A}$ current flows for $5\\text{ minutes}$.\nTime $t = 5 \\times 60 = 300\\text{ seconds}$.\nCharge $Q = It = 2 \\times 300 = 600\\text{ Coulombs}$."
+          workedExample: "Question: Explain the difference between skimming and scanning.\n\nAnswer:\n1. Skimming is reading a passage rapidly to understand the general theme or main topic.\n2. Scanning is casting one's eyes quickly over the text to search for a specific piece of information, such as a date, a name, or a number."
         }
       },
       {
-        id: "atomic_structure",
-        title: "Atomic Structure",
-        juniorDesc: "Learn about protons, neutrons, and electrons inside atoms.",
-        seniorDesc: "Study quantum numbers, electron configuration, and s, p, d, f orbitals.",
-        juniorGreeting: "Hello Teacher! ⚛️ I know everything is made of atoms. But what is an atom made of, and how do electrons orbit around the center without falling in?",
-        seniorGreeting: "Good day, Teacher! 🧪 I'm learning quantum configurations. Can you explain how to write the electron configurations for Calcium (atomic number 20) using s, p, d, f orbitals?",
-        juniorMarkingGuide: "1. Name the three subatomic particles: proton (positive), neutron (neutral), electron (negative).\n2. Place protons and neutrons in the center (nucleus) and electrons orbiting outside.\n3. Explain opposite charge attraction holds electrons in orbit.",
-        seniorMarkingGuide: "1. Explain Aufbau Principle: fill lowest energy orbitals first ($1s \\rightarrow 2s \\rightarrow 2p \\rightarrow 3s \\rightarrow 3p \\rightarrow 4s$).\n2. Differentiate shell capacities: s (2), p (6), d (10), f (14).\n3. Write configuration for Ca (20): $1s^2 2s^2 2p^6 3s^2 3p^6 4s^2$.",
+        id: "informal_letter",
+        title: "Informal Letter Writing",
+        juniorDesc: "Learn the structure of a letter to a friend: address, date, body, sign-off.",
+        juniorGreeting: "Hi Teacher! ✉️ I want to write a letter to my cousin telling him about my school. How many addresses do I need, and how should I start and sign off?",
+        juniorMarkingGuide: "JSS English Writing: Include sender's address and date at top right [1 Mark]. Use friendly greeting (Dear...) [1 Mark]. Use casual register in body [1 Mark]. Sign off with Yours affectionately/sincerely + first name [1 Mark].",
         studyNotes: {
-          concept: "Atoms consist of a dense positive nucleus surrounded by negative electrons in specific probability regions called orbitals (s, p, d, f).",
-          formulas: [
-            "Max Electrons in Shell: $2n^2$"
-          ],
+          concept: "An informal letter is a personal letter written to friends, relatives, or acquaintances. It has a relaxed, friendly tone.",
+          formulas: [],
           steps: [
-            "Find the atomic number of the element (equals total electrons in neutral atom).",
-            "Fill orbitals in order of increasing energy level: $1s, 2s, 2p, 3s, 3p, 4s, 3d...$.",
-            "Observe the maximum electron limits for each orbital type."
+            "Write the writer's address and date at the top right-hand corner.",
+            "Write the salutation (e.g., Dear Bola,) on the left.",
+            "Write the body paragraphs (opening, main points, closing).",
+            "Sign-off on the right side using: Yours affectionately, or Yours sincerely, followed by your first name."
           ],
-          workedExample: "Write the electron configuration of Nitrogen (Atomic number 7).\nNitrogen has 7 electrons.\nFill $1s$ with 2: $1s^2$ (5 left).\nFill $2s$ with 2: $2s^2$ (3 left).\nFill $2p$ with 3: $2p^3$.\nConfiguration: $1s^2 2s^2 2p^3$."
+          workedExample: "Question: Outline the structure of an informal letter.\n\nAnswer:\n1. Writer's Address & Date (Top right)\n2. Salutation (e.g. Dear Bola,) (Left margin)\n3. Opening (Asking about their health/family)\n4. Body (Main news/messages)\n5. Closing (Expressing desire to hear back)\n6. Subscription (e.g. Yours affectionately,) + First Name"
+        }
+      },
+      {
+        id: "narrative_essay",
+        title: "Narrative Essay",
+        juniorDesc: "Learn how to write a story about an event or experience.",
+        juniorGreeting: "Hello Teacher! 📝 I am writing a story on 'My First Day in Secondary School'. How do I structure my story? Should I write in the past tense?",
+        juniorMarkingGuide: "JSS English Writing: Structure into Introduction, Body paragraphs, and Conclusion [1 Mark]. Write consistently in the past tense [2 Marks]. Use transition words [1 Mark].",
+        studyNotes: {
+          concept: "A narrative essay is a story-based essay that describes a sequence of events. It is usually written in the first-person ('I') and past tense.",
+          formulas: [],
+          steps: [
+            "Introduction: Introduce the setting, time, and main characters/hook.",
+            "Body Paragraphs: Build up the plot chronologically (what happened first, next, then).",
+            "Climax: Describe the most exciting point of the story.",
+            "Conclusion: Resolve the event and state what you learned."
+          ],
+          workedExample: "Question: State three key features of a narrative essay.\n\nAnswer:\n1. Plot/Setting: It tells a chronological story with a clear beginning, middle, and end.\n2. Tense: It is primarily written in the past tense since it recounts completed events.\n3. Theme/Moral: It often concludes with a lesson or reflection on the experience."
+        }
+      },
+      {
+        id: "descriptive_essay",
+        title: "Descriptive Essay",
+        juniorDesc: "Use sensory adjectives to describe a person, place, or object vividly.",
+        juniorGreeting: "Good day, Teacher! 🎨 I want to describe my favorite teacher or my village. How do I paint a picture in the reader's mind? What are sensory details?",
+        juniorMarkingGuide: "JSS English Writing: Use descriptive adjectives [2 Marks]. Incorporate sensory details (sight, sound, smell, feel) [2 Marks].",
+        studyNotes: {
+          concept: "A descriptive essay paints a picture in words of a person, place, thing, or idea using vivid details and sensory words.",
+          formulas: [],
+          steps: [
+            "Use sensory adjectives: Describe colors, shapes, sounds, smells, and textures.",
+            "Use figurative language: Similes and metaphors (e.g., 'as bright as the sun').",
+            "Organize spatially (e.g., describe from top to bottom, or near to far)."
+          ],
+          workedExample: "Question: Write a short descriptive paragraph describing a busy market scene using at least three sensory details.\n\nAnswer:\n'The bustling market was filled with the pungent smell of dried fish and fresh pepper. Vendors shouted their prices in loud, rhythmic chants that echoed off the metal roofs. Under the hot afternoon sun, baskets of bright red tomatoes and green vegetables glowed vividly, while sweat dripped down the faces of shoppers carrying heavy bags.'"
+        }
+      },
+      {
+        id: "synonyms_antonyms",
+        title: "Synonyms & Antonyms",
+        juniorDesc: "Learn words that mean the same (synonyms) and opposite (antonyms).",
+        juniorGreeting: "Hi Teacher! In English, we are studying vocabulary. What is the difference between a synonym and an antonym? Can you give me examples of 'diligent' and 'huge'?",
+        juniorMarkingGuide: "JSS English Vocabulary: Define synonym (same meaning) and antonym (opposite meaning) [2 Marks]. Give correct examples [2 Marks].",
+        studyNotes: {
+          concept: "Synonyms are words with similar meanings. Antonyms are words with opposite meanings. Building this vocabulary improves writing register.",
+          formulas: [],
+          steps: [
+            "Synonyms: e.g. Beautiful = Gorgeous, Happy = Joyful.",
+            "Antonyms: e.g. Tall = Short, Hot = Cold.",
+            "Pay attention to parts of speech: the synonym of a noun must be a noun."
+          ],
+          workedExample: "Question: Provide a synonym and an antonym for the words: 'diligent' and 'ancient'.\n\nAnswer:\n1. DILIGENT:\n   - Synonym: Hardworking / Industrious\n   - Antonym: Lazy / Indolent\n2. ANCIENT:\n   - Synonym: Old / Antique\n   - Antonym: Modern / New"
+        }
+      }
+    ]
+  },
+  social: {
+    id: "social",
+    name: "Social Studies (JSS)",
+    topics: [
+      {
+        id: "family",
+        title: "Family & Marriage",
+        juniorDesc: "Learn about Nuclear and Extended families, functions of family, and types of marriage.",
+        juniorGreeting: "Hi Teacher! 👋 We are learning about the family unit in Social Studies. What is the difference between a nuclear family and an extended family? What are the main functions of a family in society?",
+        juniorMarkingGuide: "JSS Social Studies Family: Define nuclear vs extended family [2 Marks]. List 3 functions of the family (procreation, socialization, protection, economic support) [2 Marks].",
+        studyNotes: {
+          concept: "The family is the primary social group and the basic unit of society. Marriage is the socially approved union between partners that forms the foundation of a family.",
+          formulas: [],
+          steps: [
+            "Nuclear Family: Consists of father, mother, and children.",
+            "Extended Family: Consists of nuclear family plus uncles, aunts, grandparents, and cousins.",
+            "Functions: Biological (procreation), Educational (socialization of children), Economic (providing food/shelter)."
+          ],
+          workedExample: "Question: Compare nuclear and extended families, and list three functions of the family unit.\n\nAnswer:\n1. Comparison: A nuclear family consists only of parents and their children living together. An extended family is larger and includes other relatives such as grandparents, uncles, aunts, and cousins.\n2. Functions: Procreation (bearing children), Socialization (teaching moral values), and Provision of basic needs (food, clothing, shelter)."
+        }
+      },
+      {
+        id: "culture_values",
+        title: "Culture & Social Values",
+        juniorDesc: "Understand material and non-material culture, and core values like honesty and cooperation.",
+        juniorGreeting: "Good day, Teacher! What does 'Culture' mean? What is the difference between material culture (food/clothes) and non-material culture (languages/beliefs)?",
+        juniorMarkingGuide: "JSS Social Studies Culture: Define culture as a way of life [1 Mark]. Differentiate material (tangible) vs non-material (intangible) culture [2 Marks]. Give examples [1 Mark].",
+        studyNotes: {
+          concept: "Culture is the total way of life of a group of people, shared and transmitted from one generation to another.",
+          formulas: [],
+          steps: [
+            "Material Culture: Physical, tangible objects (e.g., Nigerian traditional attire like Agbada, local foods like pounded yam, tools).",
+            "Non-Material Culture: Intangible elements (e.g., languages, greeting customs, religious beliefs, folk tales).",
+            "Social Values: Core beliefs that guide behavior in a community (honesty, respect for elders, tolerance)."
+          ],
+          workedExample: "Question: Define culture and classify the following into material and non-material culture: Ankara fabric, Yoruba language, respect for elders, clay pots.\n\nAnswer:\n1. Culture is the total way of life of a group of people including their beliefs, values, customs, and tools.\n2. Classifications:\n   - Material culture: Ankara fabric, clay pots.\n   - Non-material culture: Yoruba language, respect for elders."
+        }
+      },
+      {
+        id: "citizenship_rights",
+        title: "Citizenship & Rights",
+        juniorDesc: "Learn how one becomes a citizen (birth, naturalization) and basic human rights.",
+        juniorGreeting: "Hello Teacher! ⚖️ What does it mean to be a citizen of a country? How can someone who was not born in Nigeria become a Nigerian citizen?",
+        juniorMarkingGuide: "JSS Social Studies Citizenship: Define citizenship [1 Mark]. List 3 ways to acquire citizenship (birth, registration, naturalization) [2 Marks]. State one duty of a citizen [1 Mark].",
+        studyNotes: {
+          concept: "A citizen is a legal member of a country who enjoys constitutional rights and owes duties and loyalty to the state.",
+          formulas: [],
+          steps: [
+            "Acquisition by Birth: Parents are citizens.",
+            "Acquisition by Registration: E.g., foreign woman marrying a citizen.",
+            "Acquisition by Naturalization: Applying after meeting residency and character requirements.",
+            "Duties: Paying taxes, obeying laws, defending the nation."
+          ],
+          workedExample: "Question: List three ways to become a citizen of Nigeria and state two duties of a good citizen.\n\nAnswer:\nWays to acquire citizenship:\n1. Citizenship by Birth\n2. Citizenship by Registration\n3. Citizenship by Naturalization\nDuties of a citizen:\n1. Obedience to the laws of the country.\n2. Prompt payment of taxes."
+        }
+      },
+      {
+        id: "national_unity",
+        title: "National Unity & Symbols",
+        juniorDesc: "Understand the national flag, coat of arms, pledge, and anthem and why unity is important.",
+        juniorGreeting: "Hi Teacher! 🇳🇬 We are studying national symbols. What do the colors of the Nigerian flag represent? What do the black shield and white horses on the coat of arms stand for?",
+        juniorMarkingGuide: "JSS Social Studies Symbols: Explain flag colors (green = agriculture, white = peace) [2 Marks]. Explain coat of arms elements (horses = dignity, Y-shape = rivers Niger and Benue) [2 Marks].",
+        studyNotes: {
+          concept: "National symbols are signs or images that represent a country's values, history, and unity, serving to inspire patriotism.",
+          formulas: [],
+          steps: [
+            "National Flag: Green (agricultural wealth), White (peace and unity).",
+            "Coat of Arms: Black shield (fertile soil), White horses (dignity and strength), Y-shape (Rivers Niger and Benue meeting), Eagle (strength), Red flower (national beauty).",
+            "National Pledge & Anthem: Express commitment to national service and unity."
+          ],
+          workedExample: "Question: Explain the meaning of the colors of the Nigerian flag, and identify the rivers represented on the coat of arms.\n\nAnswer:\n1. National Flag: The two green stripes represent Nigeria's rich agricultural wealth, and the white center stripe represents peace and national unity.\n2. Rivers: The white wavy 'Y' shape on the black shield represents the confluence of the two major rivers in Nigeria: River Niger and River Benue."
+        }
+      },
+      {
+        id: "social_problems",
+        title: "Social Problems (Drug Abuse)",
+        juniorDesc: "Learn about drug abuse, its causes, effects on youth, and prevention.",
+        juniorGreeting: "Good day, Teacher! What is drug abuse? Why do some youths get addicted to drugs, and what agency in Nigeria fights drug abuse?",
+        juniorMarkingGuide: "JSS Social Studies Problems: Define drug abuse [1 Mark]. Name NDLEA as the anti-drug agency in Nigeria [1 Mark]. List 2 health/social effects [2 Marks].",
+        studyNotes: {
+          concept: "A social problem is a condition that disrupts or damages society. Drug abuse is the misuse or self-administration of chemical substances without medical prescription.",
+          formulas: [],
+          steps: [
+            "Causes: Peer pressure, depression, curiosity, lack of parental supervision.",
+            "Effects: Brain damage, mental illness, crime, school dropout.",
+            "Control Agencies: NDLEA (National Drug Law Enforcement Agency), NAFDAC."
+          ],
+          workedExample: "Question: Define drug abuse, name the agency responsible for fighting it in Nigeria, and state three consequences of drug abuse among teenagers.\n\nAnswer:\n1. Drug abuse is the taking of drugs without a doctor's prescription, or the excessive use of legal/illegal substances.\n2. Enforcement Agency: NDLEA (National Drug Law Enforcement Agency).\n3. Consequences: Brain damage and mental illness, high tendency to commit crimes, and poor academic performance leading to school dropout."
+        }
+      },
+      {
+        id: "road_safety",
+        title: "Road Safety & Signs",
+        juniorDesc: "Identify traffic lights, road signs (regulatory, warning), and safety tips for pedestrians.",
+        juniorGreeting: "Hello Teacher! 🚦 When crossing the road, what rules must I follow? What do the colors of the traffic lights mean? What does FRSC do?",
+        juniorMarkingGuide: "JSS Social Studies Safety: State meaning of traffic lights (red = stop, yellow = get ready, green = go) [2 Marks]. Name FRSC as safety agency [1 Mark]. State pedestrian crossing rule (zebra crossing) [1 Mark].",
+        studyNotes: {
+          concept: "Road safety refers to methods and measures used to prevent road users from being killed or seriously injured. The Federal Road Safety Corps (FRSC) manages this in Nigeria.",
+          formulas: [],
+          steps: [
+            "Traffic Lights: Red (Stop), Yellow/Amber (Ready), Green (Go).",
+            "Pedestrians: Use zebra crossings, pedestrian bridges, look left, right, and left again before crossing.",
+            "Road Signs: Regulatory (circles - e.g. Speed limit), Warning (triangles - e.g. sharp bend ahead), Informative (rectangles - e.g. Hospital ahead)."
+          ],
+          workedExample: "Question: Explain the three traffic light colors, name the agency responsible for road safety in Nigeria, and state where pedestrians should cross busy roads.\n\nAnswer:\n1. Traffic Lights: Red means stop, Yellow/Amber means prepare/get ready, and Green means go.\n2. Agency: FRSC (Federal Road Safety Corps).\n3. Crossing: Pedestrians should use zebra crossings or pedestrian footbridges where available."
+        }
+      },
+      {
+        id: "leadership",
+        title: "Leadership & Followership",
+        juniorDesc: "Learn qualities of a good leader and duties of constructive followers.",
+        juniorGreeting: "Good day, Teacher! What is the difference between a leader and a follower? What qualities make a leader successful, and why is cooperation important?",
+        juniorMarkingGuide: "JSS Social Studies Leadership: Define leadership and followership [2 Marks]. List 2 qualities of a good leader (honesty, accountability, vision) [2 Marks].",
+        studyNotes: {
+          concept: "Leadership is the ability to guide, direct, and influence people towards achieving a common goal. Followership is the willingness to support and cooperate with a leader to achieve goals.",
+          formulas: [],
+          steps: [
+            "Leader Qualities: Integrity, transparency, vision, courage, empathy.",
+            "Follower Duties: Cooperation, constructive feedback, obedience to laws, hard work."
+          ],
+          workedExample: "Question: State three qualities of a good leader and outline two roles of a good follower.\n\nAnswer:\nLeader qualities:\n1. Honesty and Integrity (being truthful and moral).\n2. Empathy (caring for the needs of the followers).\n3. Vision (having a clear plan for the future).\nFollower roles:\n1. Obeying group decisions and national laws.\n2. Offering constructive feedback instead of blind opposition."
+        }
+      },
+      {
+        id: "money_banking",
+        title: "Money & Banking Basics",
+        juniorDesc: "Learn functions of money and the difference between commercial and central banks.",
+        juniorGreeting: "Hi Teacher! 💵 Why do we use paper money instead of trading goods like our ancestors did (barter)? What is the role of the Central Bank of Nigeria (CBN)?",
+        juniorMarkingGuide: "JSS Social Studies Money: Explain barter system problem (coincidence of wants) [2 Marks]. State 2 functions of money (medium of exchange, store of value) [1 Mark]. Name Central Bank function (issues currency) [1 Mark].",
+        studyNotes: {
+          concept: "Money is any generally accepted medium of exchange. Before money, the Barter System (exchange of goods for goods) was used, which suffered from inefficiencies.",
+          formulas: [],
+          steps: [
+            "Barter Problem: Double coincidence of wants (you must want what I have, and I must want what you have).",
+            "Money Functions: Medium of exchange, measure of value, store of value, standard of deferred payment.",
+            "Banks: Central Bank (CBN - prints currency, regulates banks) vs Commercial Banks (First Bank, GTBank - takes deposits, gives loans)."
+          ],
+          workedExample: "Question: Why did the barter system fail, and what are the main differences between the Central Bank and Commercial Banks?\n\nAnswer:\n1. Barter Failure: It failed due to the difficulty of finding a 'double coincidence of wants' (e.g. a farmer with yams finding a tailor who wants yams and has clothes) and the lack of a common measure of value.\n2. Banks: The Central Bank (CBN) is a government agency that regulates the financial system, prints currency, and does not open accounts for individuals. Commercial Banks are business enterprises that take deposits, open accounts for the public, and lend money to make profit."
+        }
+      },
+      {
+        id: "trade_barter",
+        title: "Trade & Barter System",
+        juniorDesc: "Understand wholesale, retail, and international trade in simple terms.",
+        juniorGreeting: "Hello Teacher! In Social Studies, we are learning about buying and selling. What is the difference between wholesale trade and retail trade? What is international trade?",
+        juniorMarkingGuide: "JSS Social Studies Trade: Differentiate wholesale (bulk buying) vs retail (unit selling) [2 Marks]. Define international trade (buying/selling between countries) [2 Marks].",
+        studyNotes: {
+          concept: "Trade is the buying and selling of goods and services. It can be domestic (within a country) or international (between countries).",
+          formulas: [],
+          steps: [
+            "Wholesaler: Buys in bulk directly from manufacturers and sells in smaller quantities to retailers.",
+            "Retailer: Buys from wholesalers and sells in single units to final consumers.",
+            "International Trade: Exporting (selling out of the country) and Importing (buying into the country)."
+          ],
+          workedExample: "Question: Outline the chain of distribution from factory to consumer, and define import and export.\n\nAnswer:\n1. Chain of Distribution: Manufacturer -> Wholesaler -> Retailer -> Consumer.\n2. Definitions:\n   - Export: Selling locally produced goods/services to other countries (e.g. Nigeria selling crude oil to China).\n   - Import: Buying foreign-made goods/services into the local country (e.g. Nigeria buying electronics from Japan)."
+        }
+      },
+      {
+        id: "rights_jss",
+        title: "Human Rights (Basic)",
+        juniorDesc: "Learn about fundamental human rights and the right to education and life.",
+        juniorGreeting: "Good day, Teacher! ⚖️ What are human rights? Why is the right to education so important for a child like me? How do we protect our rights?",
+        juniorMarkingGuide: "JSS Social Studies Rights: Define human rights as basic entitlements [1 Mark]. List 3 examples (life, speech, education, assembly) [2 Marks]. Mention courts role [1 Mark].",
+        studyNotes: {
+          concept: "Human rights are basic rights and freedoms that belong to every person in the world, from birth until death, regardless of their nationality or background.",
+          formulas: [],
+          steps: [
+            "Characteristics: Universal (belongs to all), Inalienable (cannot be taken away).",
+            "Basic Examples: Right to life, right to education, right to freedom of movement, right to expression.",
+            "Protection: Human rights are defended in courts of law and written in the national Constitution."
+          ],
+          workedExample: "Question: Define human rights and list four examples of rights guaranteed to a child under the Nigerian Constitution.\n\nAnswer:\n1. Human rights are basic entitlements and freedoms that belong to every human being from birth to protect their dignity.\n2. Child Rights: Right to life, Right to free and compulsory basic education, Right to parental care, and Right to freedom of expression."
         }
       }
     ]
   },
   civic: {
     id: "civic",
-    name: "Civic Education",
+    name: "Civic Education (JSS)",
     topics: [
-      {
-        id: "human_rights",
-        title: "Fundamental Human Rights",
-        juniorDesc: "Learn about your basic rights as a child (education, safety).",
-        seniorDesc: "Study the Universal Declaration of Human Rights and legal protections.",
-        juniorGreeting: "Hi Teacher! ⚖️ What are human rights? Does every child have a right to go to school, and what happens if someone tries to stop them?",
-        seniorGreeting: "Good day, Teacher! 📜 We are studying civic rights. Can you explain the categories of human rights (civil, political, socio-economic), and discuss the history of the UDHR?",
-        juniorMarkingGuide: "1. Define human rights as basic freedoms every human deserves.\n2. List major rights: right to life, education, and protection from abuse.\n3. Explain that rights are protected by the law.",
-        seniorMarkingGuide: "1. Define UDHR (Universal Declaration of Human Rights, adopted by UN in 1948).\n2. Categorize: Civil/Political (right to vote, fair trial) vs Socio-Economic (education, work).\n3. Explain limitations of rights (e.g. your right to freedom of movement is limited during public health curfews or prison sentences).",
-        studyNotes: {
-          concept: "Fundamental Human Rights are moral principles or norms that describe standards of human behavior and are protected as natural and legal rights.",
-          formulas: [],
-          steps: [
-            "Human rights are: Universal (apply to all), Inalienable (cannot be taken away), Indivisible (all rights are equally important).",
-            "Legal backing is provided by: national constitutions (e.g. Chapter 4 of Nigerian Constitution) and international charters."
-          ],
-          workedExample: "Give an example of when a citizen's right to freedom of movement can be restricted.\nA citizen's right to movement can be legally restricted: 1) during a declared state of emergency or curfew, 2) if they are convicted of a crime and sentenced to prison, or 3) to prevent the spread of a contagious disease."
-        }
-      },
-      {
-        id: "democracy",
-        title: "Democracy & Rule of Law",
-        juniorDesc: "Understand how voting works and what elections are.",
-        seniorDesc: "Study the pillars of democracy, constitutional supremacy, and separation of powers.",
-        juniorGreeting: "Hello Teacher! 🗳️ I see adults voting during elections. What does 'democracy' mean, and why is it important that everyone follows the same laws?",
-        seniorGreeting: "Good day, Teacher! ⚖️ We are studying governance. Can you explain the concept of 'Rule of Law', discuss the separation of powers (Legislative, Executive, Judicial), and outline their checks and balances?",
-        juniorMarkingGuide: "1. Define democracy as government of the people, by the people, and for the people.\n2. Explain that voting allows citizens to choose their leaders.\n3. Explain that laws apply to everyone, including presidents and rich citizens.",
-        seniorMarkingGuide: "1. Define Rule of Law (supremacy of law, equality before the law, protection of rights).\n2. Explain Separation of Powers: Legislature (makes laws), Executive (enforces laws), Judiciary (interprets laws).\n3. Give examples of checks and balances (e.g. President vetoing bill, Senate confirming judges).",
-        studyNotes: {
-          concept: "Democracy is a system of government where power is vested in the people. The Rule of Law ensures that laws rule the land, preventing dictatorship.",
-          formulas: [],
-          steps: [
-            "Supremacy of the Law: The constitution is the highest law; no individual is above it.",
-            "Equality Before the Law: Laws apply equally to all citizens regardless of status.",
-            "Independence of the Judiciary: Courts must be free from political interference."
-          ],
-          workedExample: "Explain the role of the Judiciary in a democracy.\nThe Judiciary interprets the law. Its main job is to resolve legal disputes, protect citizen rights against abuse, and ensure that actions taken by the Executive and Legislature comply with the Constitution."
-        }
-      },
       {
         id: "national_values",
-        title: "National Values & Citizenship",
-        juniorDesc: "Learn how to be a good citizen and help your community.",
-        seniorDesc: "Analyze national integrity, patriotism, and constitutional duties.",
-        juniorGreeting: "Hi Teacher! 🇳🇬 What makes someone a good citizen? What are the symbols of my country, and how do I respect them?",
-        seniorGreeting: "Good day, Teacher! 🤝 We are studying citizenship. Can you explain the difference between a citizen by birth, registration, and naturalization, and outline our constitutional duties?",
-        juniorMarkingGuide: "1. Define a citizen as a legal member of a country.\n2. List positive traits: honesty, respect for elders, community service.\n3. Identify national symbols: flag, anthem, pledge.",
-        seniorMarkingGuide: "1. Define forms of citizenship: Birth (parents are citizens), Registration (marriage to a citizen), Naturalization (residency over a long period).\n2. List duties: paying taxes, defending the nation, voting, obeying laws.\n3. Discuss national values: integrity, discipline, patriotism, self-reliance.",
+        title: "National Values",
+        juniorDesc: "Learn about honesty, discipline, self-reliance, and cooperation.",
+        juniorGreeting: "Hello Teacher! 🤝 In Civic Education, we are discussing values. What is the difference between honesty and discipline, and why are values important for our country's growth?",
+        juniorMarkingGuide: "JSS Civic Values: Define values [1 Mark]. Explain honesty (truthfulness) and discipline (following rules) [2 Marks]. State importance [1 Mark].",
         studyNotes: {
-          concept: "Citizenship is the status of being a citizen, carrying rights and duties. National values are core beliefs that bind a society together.",
+          concept: "Values are the beliefs, principles, and standards that guide human behavior and define what is acceptable in a society.",
           formulas: [],
           steps: [
-            "Citizenship by Birth: Automatically acquired if parents belong to the nation.",
-            "Citizenship by Naturalization: Requires legal residency (usually 15 years in Nigeria), good character, and swearing an oath of allegiance."
+            "Honesty: Truthfulness, transparency, and refusal to cheat or lie.",
+            "Discipline: Self-control and obedience to rules and regulations.",
+            "Cooperation: Working together with others to achieve a shared goal.",
+            "Importance: Promotes peace, reduces crime, and encourages national development."
           ],
-          workedExample: "State three duties of a citizen.\n1. Obedience to the Constitution and laws of the state.\n2. Paying taxes honestly and promptly.\n3. Participating in civic duties such as voting during elections."
+          workedExample: "Question: Define values, and list three positive values that can help reduce corruption in Nigeria.\n\nAnswer:\n1. Values are core principles and moral standards that guide how people behave in a society.\n2. Core values to fight corruption: Integrity (acting morally at all times), Discipline (refusing shortcuts and respecting processes), and Patriotism (putting the country's interest first)."
         }
       },
       {
-        id: "cultism",
-        title: "Cultism & Societal Ills",
-        juniorDesc: "Learn about peer pressure and avoiding bad groups.",
-        seniorDesc: "Examine the origins, consequences, and prevention of secret cults.",
-        juniorGreeting: "Hello Teacher! 🏫 My seniors told me to stay away from 'secret societies' or cults. What are these groups, and why are they dangerous to students?",
-        seniorGreeting: "Good day, Teacher! ⚠️ We are studying cultism. Can you explain the origin of secret cults in educational institutions (e.g. Pyrate Confraternity) and discuss their negative consequences on individuals and society?",
-        juniorMarkingGuide: "1. Define peer pressure (friends forcing you to do bad things).\n2. Explain cults are secret violent groups.\n3. Advise reporting suspicious groups to teachers and parents.",
-        seniorMarkingGuide: "1. Explain historical origin (originally formed for positive social change, later degenerated into violent rivalries).\n2. List consequences: violence, academic expulsion, loss of lives, drug addiction.\n3. Discuss prevention: parental supervision, strict school punishments, counseling.",
+        id: "cooperation",
+        title: "Honesty & Cooperation",
+        juniorDesc: "Learn the benefits of working together and being truthful in public life.",
+        juniorGreeting: "Good day, Teacher! Why is cooperation important in school and at home? What happens when citizens refuse to cooperate with the government?",
+        juniorMarkingGuide: "JSS Civic Cooperation: Define cooperation [2 Marks]. List 2 benefits of cooperation (faster goal achievement, peace, progress) [2 Marks].",
         studyNotes: {
-          concept: "Cultism is membership in a secret cult group characterized by bizarre initiation rituals and secret oaths. It is a major social vice in secondary and tertiary schools.",
+          concept: "Cooperation is the process of working together to achieve a common goal. Honesty is the quality of being truthful, sincere, and trustworthy.",
           formulas: [],
           steps: [
-            "Causes: Peer pressure, search for protection, false sense of power, drug influence.",
-            "Effects: Violent clashes, loss of lives, mental illness, prison sentences, rustication."
+            "Benefits of Cooperation: Leads to faster achievement of goals, fosters unity and love, maintains peace, and prevents conflicts.",
+            "Attributes of Honesty: Integrity, transparency, fairness."
           ],
-          workedExample: "How can cultism be eradicated in schools?\nCultism can be checked by: 1) implementing strict laws and expelling cult members, 2) establishing counseling programs, and 3) organizing sensitisation campaigns for new students."
+          workedExample: "Question: State three benefits of cooperation in a classroom setting and list two attributes of an honest student.\n\nAnswer:\nBenefits of cooperation:\n1. It makes learning easier through study groups.\n2. It builds friendships and reduces bullying.\n3. It helps complete classroom projects quickly.\nAttributes of honesty:\n1. Telling the truth even when in trouble.\n2. Returning lost items to the owner or teacher."
         }
       },
       {
-        id: "trafficking",
-        title: "Human Trafficking",
-        juniorDesc: "Understand child labor and staying safe from strangers.",
-        seniorDesc: "Study human trafficking causes, consequences, and agency roles (NAPTIP).",
-        juniorGreeting: "Hi Teacher! 🛑 I heard a warning on the radio about human trafficking. What is it, and how do we protect children from being taken away?",
-        seniorGreeting: "Good day, Teacher! ⛓️ We are discussing human trafficking. Can you explain the causes (poverty, greed) and the role of agencies like NAPTIP in combatting it?",
-        juniorMarkingGuide: "1. Define trafficking as moving people by force or lies for work.\n2. Advise never accepting gifts or rides from strangers.\n3. Emphasize that children belong in school, not working.",
-        seniorMarkingGuide: "1. Define human trafficking: recruitment and transport of persons by threat or force for exploitation.\n2. Name agency: NAPTIP (National Agency for the Prohibition of Trafficking in Persons).\n3. Discuss effects: psychological trauma, loss of dignity, spread of diseases.",
+        id: "traffic_rules",
+        title: "Traffic Regulations",
+        juniorDesc: "Learn rules for road users and the role of traffic lights and wardens.",
+        juniorGreeting: "Hi Teacher! 🚦 Why do we have traffic regulations? What are the duties of the Federal Road Safety Corps (FRSC) on our highways?",
+        juniorMarkingGuide: "JSS Civic Traffic: Define traffic regulations [1 Mark]. List 3 rules (wear seatbelt, do not speed, obey traffic lights) [2 Marks]. State FRSC role [1 Mark].",
         studyNotes: {
-          concept: "Human trafficking is modern-day slavery. It involves commercial exploitation of vulnerable people through force, fraud, or coercion.",
+          concept: "Traffic regulations are rules and laws that direct the behavior of road users (drivers, pedestrians, cyclists) to ensure safety on the road.",
           formulas: [],
           steps: [
-            "Types: forced labor, child labor, sexual exploitation, organ harvesting.",
-            "NAPTIP functions: rescue victims, prosecute traffickers, rehabilitate survivors, sensitize communities."
+            "Regulatory Signs: Speed limits, No U-Turn (circular shapes).",
+            "Safety Rules: Wear seatbelts, do not make phone calls while driving, do not drive under the influence, obey traffic lights.",
+            "Agencies: FRSC, VIO, traffic wardens."
           ],
-          workedExample: "State two major causes of human trafficking.\n1. Poverty: Vulnerable families are easily tricked by promises of high-paying jobs in cities.\n2. Illiteracy: Lack of awareness makes individuals fall victim to false job scams."
+          workedExample: "Question: State three traffic regulations that drivers in Nigeria must obey and name the primary agency that enforces highway safety.\n\nAnswer:\n1. Regulations: Drivers must always wear their seatbelts, must not exceed the specified speed limit, and must stop at a red traffic light.\n2. Enforcing Agency: FRSC (Federal Road Safety Corps)."
         }
       },
       {
-        id: "drug_abuse",
-        title: "Drug Abuse & Law Enforcement",
-        juniorDesc: "Learn why drugs are only taken when prescribed by doctors.",
-        seniorDesc: "Classify drugs, analyze abuse causes, and study NDLEA roles.",
-        juniorGreeting: "Hello Teacher! 💊 Why can't we buy any medicine we want without a doctor's note? What is drug abuse, and how does it harm the brain?",
-        seniorGreeting: "Good day, Teacher! 🚫 We are studying drug abuse. Can you classify drugs (stimulants, depressants, hallucinogens), outline signs of addiction, and discuss the functions of the NDLEA?",
-        juniorMarkingGuide: "1. Explain that medicines are drugs used to cure illness under instructions.\n2. Define drug abuse: taking drugs without prescription or taking illegal substances.\n3. Explain that abuse damages organs and brain cells.",
-        seniorMarkingGuide: "1. Classify: Stimulants (speed up brain, e.g. cocaine), Depressants (slow down brain, e.g. alcohol), Hallucinogens (distort reality, e.g. LSD).\n2. Identify agency: NDLEA (National Drug Law Enforcement Agency).\n3. State NDLEA duties: intercept illicit drug shipments, destroy crops, arrest dealers.",
+        id: "community_service",
+        title: "Community Service",
+        juniorDesc: "Understand volunteer work, cleaning public spaces, and community development.",
+        juniorGreeting: "Hello Teacher! 🧹 What is community service? Why should we volunteer to clean our streets or plant trees for free? How does it benefit us?",
+        juniorMarkingGuide: "JSS Civic Service: Define community service as voluntary work [2 Marks]. List 2 examples (cleaning drainage, planting trees, directing traffic) [2 Marks].",
         studyNotes: {
-          concept: "Drug abuse is the habitual use of chemical substances in amounts or with methods that are harmful to the individual or others. It leads to physical and mental addiction.",
+          concept: "Community service is unpaid, voluntary work performed by an individual or group for the benefit and development of their local community.",
           formulas: [],
           steps: [
-            "Drug Misuse: using prescription medicine incorrectly.",
-            "Drug Abuse: using illegal drugs or abusing substances for euphoric feelings.",
-            "Treatment: detoxification, behavioral therapy, rehabilitation."
+            "Examples: Clearing gutters, maintaining public parks, painting community centers, teaching free lessons to younger children.",
+            "Benefits: Fosters patriotism, keeps environment healthy, reduces government spending, builds team spirit."
           ],
-          workedExample: "Difference between stimulants and depressants.\n1. Stimulants speed up the Central Nervous System, increasing heart rate and alertness.\n2. Depressants slow down the CNS, inducing relaxation and reducing reaction speeds."
+          workedExample: "Question: Define community service, and suggest three volunteer projects JSS students can start in their school compound.\n\nAnswer:\n1. Community service is voluntary, unpaid labor done to support and improve the local community.\n2. Student projects: Organizing a weekly litter-picking campaign, planting flowers along school pathways, and volunteering to keep the library neat."
         }
       },
       {
-        id: "parenthood",
-        title: "Responsible Parenthood",
-        juniorDesc: "Learn about the roles of parents in a happy family.",
-        seniorDesc: "Understand duties of parents, family planning, and child rearing.",
-        juniorGreeting: "Hi Teacher! 👨‍👩‍👧‍👦 What is a family? What are the duties of parents to their children, and how do children show respect in return?",
-        seniorGreeting: "Good day, Teacher! 🏡 We are studying family structures. Can you explain the duties of responsible parents, and discuss how family planning contributes to societal stability?",
-        juniorMarkingGuide: "1. Define family as people related by blood or marriage.\n2. State parents provide food, shelter, clothing, and education.\n3. Explain children show respect by helping with house chores and studying.",
-        seniorMarkingGuide: "1. List duties: moral guidance, physical provision, education, safety, emotional support.\n2. Define family planning: spacing child births to match family resources.\n3. Detail effects of poor parenting on society (juvenile delinquency, crime, school dropouts).",
+        id: "constitution_jss",
+        title: "Constitution & Laws",
+        juniorDesc: "Learn what a constitution is, types of constitutions, and why laws are made.",
+        juniorGreeting: "Good day, Teacher! 📖 What is a Constitution? Why is it called the supreme law of the land, and what is the difference between written and unwritten constitutions?",
+        juniorMarkingGuide: "JSS Civic Constitution: Define constitution [2 Marks]. Differentiate written (codified in single document) vs unwritten constitution [2 Marks].",
         studyNotes: {
-          concept: "Responsible parenthood is the ability of parents to detect and satisfy the needs of their children while guiding them to be useful citizens.",
+          concept: "A Constitution is the body of fundamental principles, rules, and laws according to which a state or country is governed.",
           formulas: [],
           steps: [
-            "Parental Duties: economic provision, education, moral upbringing, emotional security.",
-            "Child Duties: obedience, helping in the home, studying, taking care of aging parents."
+            "Supreme Law: All other laws must agree with the constitution; if they contradict it, they are invalid.",
+            "Written Constitution: Codified in a single document (e.g. Nigeria, USA).",
+            "Unwritten Constitution: Not in a single document, made of various laws, customs, and court judgments (e.g. United Kingdom)."
           ],
-          workedExample: "How does family planning affect a nation's economy?\nFamily planning helps manage population growth. When families space births, parents can afford quality education and healthcare, producing a highly skilled labor force that boosts the nation's GDP."
+          workedExample: "Question: Define a constitution, and state two reasons why a country needs a constitution to survive.\n\nAnswer:\n1. A constitution is the fundamental book of laws that defines how a country is governed and outlines the powers of the rulers.\n2. Importance:\n   - It protects the rights and freedoms of the citizens from abuse of power.\n   - It defines the duties, rights, and limits of the executive, legislative, and judicial arms of government."
         }
       },
       {
-        id: "government",
-        title: "Representative Government",
-        juniorDesc: "Learn how leaders are chosen by citizens (voting).",
-        seniorDesc: "Analyze electoral systems, voting processes, and INEC roles.",
-        juniorGreeting: "Hello Teacher! 🗳️ What is a government? How do we vote during elections, and what makes an election fair?",
-        seniorGreeting: "Good day, Teacher! 🏛️ We are studying democratic institutions. Can you explain different electoral systems (First-Past-the-Post vs Proportional Representation), and discuss the duties of INEC?",
-        juniorMarkingGuide: "1. Define government as the system that rules and organizes a country.\n2. Explain voting steps: register, get card, cast vote.\n3. State that secret voting (ballot) ensures safety and fairness.",
-        seniorMarkingGuide: "1. Contrast First-Past-the-Post (candidate with most votes wins) vs Proportional Representation (seats allocated by vote percentage).\n2. Identify agency: INEC (Independent National Electoral Commission).\n3. State INEC roles: register voters, register political parties, organize elections, declare results.",
+        id: "democratic_values",
+        title: "Democratic Values",
+        juniorDesc: "Understand voting, majority rule, tolerance, and respect for minority rights.",
+        juniorGreeting: "Hello Teacher! 🗳️ What is democracy? What are the core values of democracy, and why must the majority respect the opinions of the minority?",
+        juniorMarkingGuide: "JSS Civic Democracy: Define democracy (government of the people) [1 Mark]. List 3 democratic values (voting/elections, tolerance, rule of law, equality) [3 Marks].",
         studyNotes: {
-          concept: "Representative government is an electoral system where citizens vote to elect representatives to make laws and govern on their behalf.",
+          concept: "Democracy is a system of government where power is vested in the people, who rule either directly or through elected representatives.",
           formulas: [],
           steps: [
-            "Elections must be: free (no intimidation), fair (accurate counting), periodic (regular intervals).",
-            "Voter Registration: citizens get a voters card to prevent double voting."
+            "Rule of Law: The law applies equally to everyone, including leaders.",
+            "Tolerance: Accepting different political views, religions, and ethnic groups.",
+            "Equality: Every citizen has equal rights and opportunities under the law."
           ],
-          workedExample: "Difference between direct and indirect democracy.\n1. In Direct Democracy, citizens vote on laws themselves (e.g. ancient Athens).\n2. In Indirect (Representative) Democracy, citizens elect officials to vote on laws on their behalf (e.g. modern republics)."
+          workedExample: "Question: Define democracy and state three values that support a democratic society.\n\nAnswer:\n1. Democracy is a system of government where the citizens elect their leaders in free and fair elections.\n2. Democratic values: Rule of law (nobody is above the law), Political tolerance (respecting opposing opinions), and Citizen participation (voting in elections)."
         }
       },
       {
-        id: "constitution",
-        title: "Constitutional Development",
-        juniorDesc: "Learn what the constitution is and why we have rules.",
-        seniorDesc: "Trace historical constitutions and explain how laws are amended.",
-        juniorGreeting: "Hi Teacher! 📖 What is the Constitution? Is it just a book of rules? Why can't a president just make any laws they want?",
-        seniorGreeting: "Good day, Teacher! 🏛️ We are studying history. Can you trace the development of constitutions in Nigeria (Clifford, Richards, Macpherson, Lyttelton) and explain the amendment process?",
-        juniorMarkingGuide: "1. Define constitution as the supreme book of laws governing a country.\n2. Explain that the constitution limits the power of leaders.\n3. State that rules ensure order and peace.",
-        seniorMarkingGuide: "1. Trace colonial milestones: Clifford 1922 (elective principle), Richards 1946 (regionalism), Macpherson 1951 (national assembly), Lyttelton 1954 (federalism).\n2. Explain post-independence: 1963 Republic, 1979 Presidential, 1999 (current).\n3. State amendment process: requires 2/3 majority in National Assembly and approval by 2/3 of State Assemblies.",
+        id: "national_symbols_jss",
+        title: "National Symbols",
+        juniorDesc: "Identify national symbols and how to show respect for the flag and anthem.",
+        juniorGreeting: "Hi Teacher! How do we show respect for the national flag and the national anthem? What happens if someone treats them with disrespect?",
+        juniorMarkingGuide: "JSS Civic Symbols: List 3 national symbols [2 Marks]. Explain how to show respect (standing at attention, flying flag properly) [2 Marks].",
         studyNotes: {
-          concept: "Constitutional development is the process of writing, revising, and amending the supreme law of a state.",
+          concept: "National symbols represent the sovereignty, heritage, and values of a nation. Respecting them is a key duty of citizenship.",
           formulas: [],
           steps: [
-            "Colonial Era: Constitutions were written by British Governors to manage the colony.",
-            "Independence: Constitution gave sovereignty and established federal structures.",
-            "Amendments: Necessary to update laws to match modern societal changes."
+            "Respecting Anthem: Stand at attention when it is played, face the flag, and do not make noise.",
+            "Respecting Flag: Do not allow it to touch the ground, do not fly a torn flag, lower it at sunset."
           ],
-          workedExample: "Explain the main contribution of the Lyttelton Constitution of 1954.\nThe Lyttelton Constitution established a true federal structure in Nigeria, dividing powers between the central government and the regional governments (North, East, West)."
+          workedExample: "Question: State three national symbols of Nigeria and explain how citizens should behave when the national anthem is being sung.\n\nAnswer:\n1. Symbols: The National Flag, the Coat of Arms, and the National Passport.\n2. Behavior: Citizens must stand at attention (upright, hands at their sides), face the flag if visible, remain silent, and sing along with dignity."
         }
       },
       {
-        id: "nationalism",
-        title: "Nationalism & Integration",
-        juniorDesc: "Learn about national unity and historical freedom fighters.",
-        seniorDesc: "Study national integration, historical nationalist leaders, and building unity.",
-        juniorGreeting: "Hello Teacher! 🇳🇬 I see different tribes in my school (Yoruba, Igbo, Hausa). What is nationalism, and how do we stay united as one country?",
-        seniorGreeting: "Good day, Teacher! 🤝 We are studying history. Can you discuss the roles of nationalist leaders like Herbert Macaulay, Nnamdi Azikiwe, and Obafemi Awolowo in gaining independence, and explain how the NYSC scheme promotes national integration?",
-        juniorMarkingGuide: "1. Define nationalism as love for one's country and fighting for its freedom.\n2. Name major leaders: Azikiwe, Awolowo, Balewa.\n3. Explain that unity means working together despite different languages.",
-        seniorMarkingGuide: "1. Detail nationalist strategies: newspapers (West African Pilot), political parties (NCNC, AG), strikes.\n2. Define national integration: bringing diverse ethnic groups into a single national identity.\n3. State NYSC (National Youth Service Corps) goals: posting graduates to different states to learn cultures and build unity.",
+        id: "self_reliance",
+        title: "Self-Reliance",
+        juniorDesc: "Learn how starting skills and small businesses makes a person independent.",
+        juniorGreeting: "Good day, Teacher! What does it mean to be self-reliant? Why is acquiring hand skills (like carpentry or tailoring) better than waiting for government jobs?",
+        juniorMarkingGuide: "JSS Civic Self-Reliance: Define self-reliance [2 Marks]. List 2 benefits (financial independence, job creation, poverty reduction) [2 Marks].",
         studyNotes: {
-          concept: "Nationalism is devotion to one's nation, especially fighting for independence from colonial rule. National integration binds diverse groups into a cohesive unit.",
+          concept: "Self-reliance is the ability to depend on oneself, using personal skills and resources to earn a living without relying solely on employment from others or the government.",
           formulas: [],
           steps: [
-            "Nationalists used: media campaigns, political education, and trade unions to pressure colonial masters.",
-            "Integration programs: Federal Character principle, unity schools, and the NYSC scheme."
+            "Skills: Entrepreneurship, handcrafts, technical skills, agriculture.",
+            "Benefits: Promotes financial independence, creates employment, boosts local economy, reduces poverty."
           ],
-          workedExample: "How does the National Youth Service Corps (NYSC) promote unity?\nNYSC posts graduates to states other than their state of origin. This exposes them to new languages, traditions, and friendships, reducing ethnic prejudices and promoting national unity."
-        }
-      }
-    ]
-  },
-  economics: {
-    id: "economics",
-    name: "Economics",
-    topics: [
-      {
-        id: "demand_supply",
-        title: "Law of Demand & Supply",
-        juniorDesc: "Learn why prices go up when items are scarce.",
-        seniorDesc: "Understand demand curves, supply curves, equilibrium price, and elasticity.",
-        juniorGreeting: "Hi Teacher! 📈 I noticed that during holidays, the price of tomatoes in the market goes up. Why do sellers raise prices when many people want to buy?",
-        seniorGreeting: "Good day, Teacher! 📊 I am studying price theory. Can you explain why the demand curve slopes downwards while the supply curve slopes upwards, and show me how to calculate Price Elasticity of Demand?",
-        juniorMarkingGuide: "1. Define demand (buying) and supply (selling).\n2. Explain that high demand + low supply makes goods scarce, driving prices up.\n3. State that low demand + high supply drives prices down.",
-        seniorMarkingGuide: "1. State Law of Demand: quantity demanded varies inversely with price ($P \\uparrow, Q \\downarrow$).\n2. State Law of Supply: quantity supplied varies directly with price ($P \\uparrow, Q \\uparrow$).\n3. State Elasticity formula: $E_d = \\frac{\\% \\text{ change in } Q_d}{\\% \\text{ change in } P}$.",
-        studyNotes: {
-          concept: "The law of demand and supply determines market prices. Demand is the willingness and ability to buy, while supply is the willingness and ability to sell.",
-          formulas: [
-            "Price Elasticity of Demand: $E_d = \\frac{\\Delta Q}{\\Delta P} \\times \\frac{P_1}{Q_1}$",
-            "Percentage Change: $\\% \\Delta = \\frac{\\text{New} - \\text{Old}}{\\text{Old}} \\times 100$"
-          ],
-          steps: [
-            "Calculate the percentage change in quantity demanded.",
-            "Calculate the percentage change in price.",
-            "Divide the quantity change by the price change.",
-            "Interpret the result: $E_d > 1$ (elastic), $E_d < 1$ (inelastic), $E_d = 1$ (unitary)."
-          ],
-          workedExample: "Price of a pen increases from $10$ to $12$ (20% increase), causing demand to drop from $100$ to $90$ (10% decrease). Find $E_d$.\n$E_d = \\frac{\\% \\Delta Q_d}{\\% \\Delta P} = \\frac{-10\\%}{20\\%} = -0.5$.\nTaking the absolute value, $E_d = 0.5$ (inelastic)."
+          workedExample: "Question: Define self-reliance and list three vocational skills that can make secondary school graduates independent.\n\nAnswer:\n1. Self-reliance is the ability to rely on one's own efforts, skills, and resources to solve problems and make a living.\n2. Vocational skills: Computer programming/coding, tailoring/fashion design, and catering/bakery."
         }
       },
       {
-        id: "market_structures",
-        title: "Market Structures",
-        juniorDesc: "Learn about competition between shops.",
-        seniorDesc: "Compare perfect competition, monopoly, and oligopoly structures.",
-        juniorGreeting: "Hello Teacher! 🏪 In my neighborhood, there are five provision stores selling the same items. What happens if one store suddenly doubles its prices?",
-        seniorGreeting: "Good day, Teacher! 📈 We are studying market structures. Can you contrast the characteristics of Perfect Competition (many buyers/sellers, homogeneous products) with a Monopoly (single seller, barriers to entry)?",
-        juniorMarkingGuide: "1. Explain that high competition gives buyers choices.\n2. State that if a store doubles prices, customers will simply buy from other stores.\n3. Explain that stores must keep prices similar to survive.",
-        seniorMarkingGuide: "1. Perfect Competition: infinite buyers/sellers, perfect knowledge, free entry/exit, price takers.\n2. Monopoly: single seller, unique product, high barriers, price maker.\n3. Oligopoly: few dominant sellers, mutual interdependence (kinked demand curve).",
+        id: "cultural_diversity",
+        title: "Cultural Diversity",
+        juniorDesc: "Understand different ethnic groups in Nigeria and how to live in peace.",
+        juniorGreeting: "Hello Teacher! Nigeria has over 250 ethnic groups. Why is cultural diversity a strength, and how can we prevent tribal conflicts in our schools?",
+        juniorMarkingGuide: "JSS Civic Diversity: State Nigeria is multi-ethnic [1 Mark]. List 3 major ethnic groups (Hausa, Igbo, Yoruba) [1 Mark]. List 2 ways to promote unity (tolerance, inter-tribal marriage) [2 Marks].",
         studyNotes: {
-          concept: "Market structures describe the competitive environment in which buyers and sellers operate.",
-          formulas: [
-            "Profit Maximization: $MC = MR$ (Marginal Cost = Marginal Revenue)"
-          ],
-          steps: [
-            "Identify the number of sellers and barriers to entry.",
-            "Determine product type (homogeneous vs differentiated).",
-            "Determine pricing power (price taker vs price maker)."
-          ],
-          workedExample: "Why is a perfectly competitive firm a 'price taker'?\nBecause there are many firms producing identical products. If one firm raises its price, it will lose all its customers to competitors. If it lowers its price, it makes less profit. It must accept the market equilibrium price."
-        }
-      },
-      {
-        id: "inflation",
-        title: "Inflation",
-        juniorDesc: "Learn why money buys less over time (price increases).",
-        seniorDesc: "Study demand-pull and cost-push inflation, and fiscal/monetary controls.",
-        juniorGreeting: "Hi Teacher! 💸 My dad said that five years ago, $100 could buy a full bag of rice, but today it only buys a small portion. Why does money lose value?",
-        seniorGreeting: "Good day, Teacher! 📈 I am studying macroeconomics. Can you explain the difference between Demand-Pull and Cost-Push inflation, and how the Central Bank uses interest rates to control it?",
-        juniorMarkingGuide: "1. Define inflation as a persistent rise in prices over time.\n2. Explain that printing too much money decreases its value.\n3. Explain that when items are scarce, people compete to buy them, raising prices.",
-        seniorMarkingGuide: "1. Demand-Pull: aggregate demand exceeds supply ('too much money chasing too few goods').\n2. Cost-Push: rising production costs (wages, raw materials) push prices up.\n3. Central Bank control (Monetary Policy): raising interest rates increases borrowing costs, reducing spending and cooling inflation.",
-        studyNotes: {
-          concept: "Inflation is the general increase in prices and fall in the purchasing power of money.",
-          formulas: [
-            "Inflation Rate: $\\text{Rate} = \\frac{\\text{CPI}_2 - \\text{CPI}_1}{\\text{CPI}_1} \\times 100$"
-          ],
-          steps: [
-            "Identify the cause: excessive demand (Demand-Pull) or rising input costs (Cost-Push).",
-            "Monetary policy: increase reserve requirements, sell treasury bills, raise interest rates.",
-            "Fiscal policy: increase taxes, cut government expenditure."
-          ],
-          workedExample: "How does raising interest rates reduce inflation?\nRaising interest rates makes borrowing expensive for consumers and businesses. This reduces loans, cuts consumption and investment spending, lowers aggregate demand, and slows down price growth."
-        }
-      },
-      {
-        id: "national_income",
-        title: "National Income",
-        juniorDesc: "Learn how we measure a country's total wealth.",
-        seniorDesc: "Calculate GDP, GNP, and understand the Income, Output, and Expenditure methods.",
-        juniorGreeting: "Hello Teacher! 💰 How do we measure if a country is getting richer or poorer? What do terms like GDP mean?",
-        seniorGreeting: "Good day, Teacher! 📊 We are studying national income accounting. Can you show me how to calculate GDP using the Expenditure Method ($Y = C + I + G + [X - M]$), and explain the difference between GDP and GNP?",
-        juniorMarkingGuide: "1. Explain that countries measure total production to check economic health.\n2. Define GDP (Gross Domestic Product) as the value of all goods made in the country in a year.\n3. Explain that higher GDP means a growing economy with more jobs.",
-        seniorMarkingGuide: "1. State Expenditure formula: $\\text{GDP} = C + I + G + (X - M)$ (Consumption + Investment + Government + Net Exports).\n2. Contrast GDP (value produced within boundaries) vs GNP (value produced by citizens worldwide: $\\text{GNP} = \\text{GDP} + \\text{Net Factor Income from Abroad}$).\n3. List calculation difficulties: double counting, non-market transactions, inflation adjustments (Real vs Nominal).",
-        studyNotes: {
-          concept: "National Income is the total value of all final goods and services produced by a country in a year.",
-          formulas: [
-            "Expenditure GDP: $Y = C + I + G + (X - M)$",
-            "GNP: $\\text{GNP} = \\text{GDP} + \\text{NFIFA}$ (Net Factor Income from Abroad)"
-          ],
-          steps: [
-            "Gather data for consumer spending $C$, business investment $I$, government buying $G$, exports $X$, and imports $M$.",
-            "Subtract imports from exports ($X - M$).",
-            "Add the components: $C + I + G + (X - M)$."
-          ],
-          workedExample: "If $C=500, I=150, G=200, X=50, M=70$, calculate GDP.\n$\\text{Net Exports} = X - M = 50 - 70 = -20$.\n$\\text{GDP} = 500 + 150 + 200 + (-20) = 850 - 20 = 830$."
-        }
-      },
-      {
-        id: "money_banking",
-        title: "Money & Banking",
-        juniorDesc: "Learn about the barter system and why we use paper money.",
-        seniorDesc: "Analyze functions of money, commercial banks, and Central Bank monetary instruments.",
-        juniorGreeting: "Hi Teacher! 💵 Long ago, people traded cows for bags of corn (barter). Why did we switch to paper money, and what makes a paper note valuable?",
-        seniorGreeting: "Good day, Teacher! 🏦 We are studying banking. Can you explain the functions of money, how commercial banks create credit, and how the Central Bank acts as the lender of last resort?",
-        juniorMarkingGuide: "1. Define Barter System (trading goods directly).\n2. Explain barter problems: Double Coincidence of Wants (you must want what I have).\n3. State functions of money: medium of exchange, store of value, unit of account.",
-        seniorMarkingGuide: "1. Explain fractional reserve banking: banks keep a fraction of deposits and lend out the rest, creating credit.\n2. State Central Bank tools: Cash Reserve Ratio (CRR), Liquidity Ratio, Open Market Operations (OMO).\n3. Explain 'Lender of Last Resort': Central Bank lending funds to commercial banks facing liquidity crises.",
-        studyNotes: {
-          concept: "Money is any item widely accepted as payment. Banks facilitate financial transactions and manage money supply.",
-          formulas: [
-            "Money Multiplier: $M = \\frac{1}{\\text{Reserve Ratio}}$"
-          ],
-          steps: [
-            "Barter requirements: double coincidence of wants, divisibility, storage.",
-            "Money characteristics: portable, durable, divisible, scarce, acceptable.",
-            "Central Bank implements monetary policies to maintain price stability."
-          ],
-          workedExample: "If the cash reserve ratio is 10%, calculate the money multiplier.\n$\\text{Multiplier} = \\frac{1}{0.10} = 10$.\nThis means a new deposit of $100$ can theoretically create up to $1000$ in total bank deposits."
-        }
-      },
-      {
-        id: "trade",
-        title: "International Trade",
-        juniorDesc: "Learn why countries buy and sell goods from each other.",
-        seniorDesc: "Compare absolute and comparative advantage, and study balance of payments.",
-        juniorGreeting: "Hello Teacher! 🚢 Why can't Nigeria produce everything it needs, like cars and electronics, instead of buying them from other countries?",
-        seniorGreeting: "Good day, Teacher! 📊 We are studying international trade. Can you explain David Ricardo's Law of Comparative Advantage using a simple 2-country 2-product table?",
-        juniorMarkingGuide: "1. Explain trade allows access to resources not available locally (oil, technology).\n2. State it is cheaper to buy some goods from abroad than to manufacture them.\n3. Define exports (selling) and imports (buying).",
-        seniorMarkingGuide: "1. Define Comparative Advantage: a country should specialize in producing goods with the lowest opportunity cost.\n2. Draw table: Country A can produce 10 Cocoa or 5 Cars. Country B can produce 6 Cocoa or 2 Cars.\n3. Calculate opportunity cost ratios: A's cost for 1 Car is 2 Cocoa. B's cost for 1 Car is 3 Cocoa. Country A has comparative advantage in Cars.",
-        studyNotes: {
-          concept: "International trade is the exchange of goods and services across borders. Countries benefit from trade due to differences in resource endowments.",
-          formulas: [
-            "Opportunity Cost (Good X): $\\text{OC}_X = \\frac{\\text{Quantity of Good Y sacrificed}}{\\text{Quantity of Good X gained}}$"
-          ],
-          steps: [
-            "Set up a production possibilities table for two countries.",
-            "Calculate the opportunity cost of producing one unit of each good in both countries.",
-            "Assign specialization: the country with the lower opportunity cost specializes in that good."
-          ],
-          workedExample: "Country A: $10\\text{ Coffee}$ or $5\\text{ Tea}$. Country B: $8\\text{ Coffee}$ or $2\\text{ Tea}$.\nOpportunity cost of $1\\text{ Tea}$ in A: $\\frac{10}{5} = 2\\text{ Coffee}$.\nOpportunity cost of $1\\text{ Tea}$ in B: $\\frac{8}{2} = 4\\text{ Coffee}$.\nCountry A has a lower opportunity cost for Tea, so it should specialize in Tea and export it."
-        }
-      },
-      {
-        id: "public_finance",
-        title: "Public Finance",
-        juniorDesc: "Learn how the government gets money (taxes) and spends it.",
-        seniorDesc: "Analyze direct/indirect taxation, government budgets, and public debt.",
-        juniorGreeting: "Hi Teacher! 🏛️ Why does the government charge taxes? Where does the tax money go, and how is it used to build roads and schools?",
-        seniorGreeting: "Good day, Teacher! 📈 We are studying public finance. Can you differentiate between direct and indirect taxes, and discuss the economic effects of a budget deficit?",
-        juniorMarkingGuide: "1. Define tax as a compulsory payment to the government.\n2. List public services funded by taxes: schools, hospitals, security, roads.\n3. Mention major tax types like VAT (Value Added Tax).",
-        seniorMarkingGuide: "1. Direct Taxes: levied on income/wealth (PAYE, Company tax), burden cannot be shifted.\n2. Indirect Taxes: levied on goods/services (VAT, customs duties), burden can be shifted to consumers.\n3. Budget types: Surplus (Revenue > Expenditure), Deficit (Revenue < Expenditure, financed by borrowing/debt).",
-        studyNotes: {
-          concept: "Public finance deals with government revenue (taxation, royalties) and expenditure (budgets, infrastructure) to achieve social stability.",
-          formulas: [
-            "Budget Balance: $\\text{Balance} = \\text{Total Revenue} - \\text{Total Expenditure}$"
-          ],
-          steps: [
-            "Tax structures: Progressive (tax rate increases as income increases), Regressive (hits lower income harder), Proportional (flat rate).",
-            "Fiscal tools are adjusted to manage inflation or recession."
-          ],
-          workedExample: "Why is a sales tax considered regressive?\nBecause it is a flat percentage on purchases. A poor person spending $10$ on a taxed item pays the same tax amount as a rich person. However, that tax represents a much larger percentage of the poor person's income."
-        }
-      },
-      {
-        id: "economic_systems",
-        title: "Economic Systems",
-        juniorDesc: "Understand different ways societies organize work and shops.",
-        seniorDesc: "Contrast capitalism, socialism, and mixed economies.",
-        juniorGreeting: "Hello Teacher! 🌍 What is the difference between a country where the government owns all the businesses, and a country where individuals own them?",
-        seniorGreeting: "Good day, Teacher! 📊 We are studying economic systems. Can you outline the main characteristics, advantages, and disadvantages of Capitalism (Free Market) and Socialism (Command)?",
-        juniorMarkingGuide: "1. Explain that societies must choose how to allocate resources.\n2. Define capitalism: individuals own businesses to make profit.\n3. Define socialism: government owns businesses to share wealth.",
-        seniorMarkingGuide: "1. Capitalism: private ownership, price mechanism (invisible hand), profit motive, consumer sovereignty.\n2. Command (Socialism): state ownership, central planning, social welfare, no competition.\n3. Mixed Economy: combines private enterprise with government regulation (most modern nations).",
-        studyNotes: {
-          concept: "An economic system is a system of production, resource allocation, and distribution of goods and services within a society.",
+          concept: "Cultural diversity refers to the existence of a variety of cultural or ethnic groups within a single society.",
           formulas: [],
           steps: [
-            "Free Market: Prices determined by demand and supply; minimal government intervention.",
-            "Command Economy: Government decides what to produce, how to produce, and for whom.",
-            "Mixed: Government regulates monopolies, provides public goods, while allowing private business."
+            "Major Groups in Nigeria: Hausa, Igbo, Yoruba, Ijaw, Tiv, Fulani, Kanuri, etc.",
+            "Unity Strategies: Mutual respect, celebrating other cultures, inter-marriage, national festivals (NYSC)."
           ],
-          workedExample: "State one disadvantage of a command economy.\nLack of incentives: Since the state owns all enterprises and profits are not private, workers and managers have little motivation to innovate or improve efficiency, often leading to shortages and poor quality goods."
+          workedExample: "Question: Why does Nigeria have diverse cultures, and suggest two ways to promote peace among different ethnic groups in a boarding school.\n\nAnswer:\n1. Diversity: Nigeria has over 250 ethnic groups with unique history, languages, and locations before amalgamation.\n2. School Peace: Organizing cultural days where students dress in other tribes' attire and eat their foods, and enforcing zero-tolerance rules against tribal slurs or bullying."
         }
       },
       {
-        id: "unemployment",
-        title: "Unemployment",
-        juniorDesc: "Learn what it means to be out of work and how to find a job.",
-        seniorDesc: "Classify structural, frictional, and cyclical unemployment, and suggest solutions.",
-        juniorGreeting: "Hi Teacher! 💼 Why are some people unable to find jobs even when they have university degrees? What can a country do to create more jobs?",
-        seniorGreeting: "Good day, Teacher! 📈 We are discussing labor economics. Can you explain the difference between Frictional, Structural, and Cyclical unemployment, and discuss how to reduce them?",
-        juniorMarkingGuide: "1. Define unemployment: being able and willing to work but unable to find a job.\n2. Explain that jobs depend on businesses hiring.\n3. Suggest vocational training (learning practical skills like coding or farming).",
-        seniorMarkingGuide: "1. Frictional: temporary transition period (searching for a new job).\n2. Structural: mismatch between worker skills and available jobs (e.g. technology replacing manual labor).\n3. Cyclical: caused by economic recessions (general drop in demand).\n4. Solutions: expansionary policies for cyclical, retraining programs for structural.",
+        id: "public_property",
+        title: "Community Service & Public Property",
+        juniorDesc: "Learn how to take care of public properties like schools, parks, and roads.",
+        juniorGreeting: "Hi Teacher! Who owns public properties like our school desks, street lights, and tap water? Why do some people vandalize them, and how do we protect them?",
+        juniorMarkingGuide: "JSS Civic Property: Define public property (owned by government/community) [1 Mark]. Give 3 examples [1 Mark]. List 2 ways to protect them [2 Marks].",
         studyNotes: {
-          concept: "Unemployment occurs when people who are active and searching for work are unable to find employment.",
-          formulas: [
-            "Unemployment Rate: $\\text{Rate} = \\frac{\\text{Number of Unemployed}}{\\text{Total Labor Force}} \\times 100$"
-          ],
+          concept: "Public property is property owned by the government or the community for collective use, rather than by private individuals.",
+          formulas: [],
           steps: [
-            "Calculate labor force = employed + unemployed (excluding children, retirees, and discouraged workers).",
-            "Divide number of actively searching unemployed by total labor force.",
-            "Multiply by 100 to get percentage."
+            "Examples: Public schools, hospitals, roads, street lights, government buses, public water systems.",
+            "Protection: Avoid vandalism, report damage immediately, keep them clean, build civic responsibility."
           ],
-          workedExample: "In a town of 10,000 people, 6,000 are employed, 400 are unemployed and searching, and the rest are children/retired. Find unemployment rate.\nLabor Force = 6000 + 400 = 6400.\nUnemployment Rate = $\\frac{400}{6400} \\times 100 = 6.25\\%$."
-        }
-      },
-      {
-        id: "population",
-        title: "Population & Labor Force",
-        juniorDesc: "Understand why population census is conducted.",
-        seniorDesc: "Study Malthusian theory, optimum population, and labor mobility.",
-        juniorGreeting: "Hello Teacher! 👥 Why does the government count all the people in the country every few years (census)? What happens if a country's population grows too fast?",
-        seniorGreeting: "Good day, Teacher! 📈 We are studying demography. Can you explain Thomas Malthus's theory of population growth, and discuss the concept of 'Optimum Population'?",
-        juniorMarkingGuide: "1. Define census as official counting of a population.\n2. Explain census helps in planning (building enough schools, hospitals, electricity).\n3. Explain that rapid growth can stretch resources (food, water, jobs).",
-        seniorMarkingGuide: "1. Malthusian Theory: population grows geometrically (1, 2, 4, 8, 16...), while food supply grows arithmetically (1, 2, 3, 4, 5...).\n2. Malthusian checks: preventive checks (birth control) and positive checks (famine, war, disease).\n3. Optimum Population: population size that yields the highest output per head given the available resources.",
-        studyNotes: {
-          concept: "Demography is the study of human populations. Optimum population maximizes per capita income; overpopulation or underpopulation reduces it.",
-          formulas: [
-            "Population Growth Rate: $\\text{PGR} = \\text{Birth Rate} - \\text{Death Rate} + \\text{Net Migration}$"
-          ],
-          steps: [
-            "Calculate Net Migration = Immigration - Emigration.",
-            "Apply growth rate calculation: (Births - Deaths) + Net Migration.",
-            "Compare growth rate with food and resource growth to identify overpopulation risks."
-          ],
-          workedExample: "Explain the concept of 'underpopulation'.\nUnderpopulation occurs when a country's population is too small to fully utilize its available resources. Increasing the population would lead to a higher output per capita as resources are managed more efficiently."
+          workedExample: "Question: Define public property, list three examples, and suggest two ways to prevent the vandalism of public properties in local communities.\n\nAnswer:\n1. Public property is property funded by taxpayers and owned by the government for the benefit and use of the general public.\n2. Examples: Public schools, federal roads, and community tap water systems.\n3. Prevention: Forming community vigilante groups to watch over public assets, and reporting any suspicious activity or vandalism to the police."
         }
       }
     ]
   },
   python: {
     id: "python",
-    name: "Python Coding",
+    name: "Computer Studies (JSS)",
     topics: [
       {
-        id: "variables",
-        title: "Variables & Data Types",
-        juniorDesc: "Learn how to store text and numbers in labels/variables.",
-        seniorDesc: "Understand dynamic typing, naming rules, and type casting in Python.",
-        juniorGreeting: "Hi Teacher! 🐍 I want to write a program that remembers my name. What is a variable, and how do we store text and numbers in it?",
-        seniorGreeting: "Good day, Teacher! 💻 I am learning Python. Can you explain how dynamic typing works, discuss the difference between integers, floats, and strings, and show me how to cast variables using `int()` and `str()`?",
-        juniorMarkingGuide: "1. Define a variable as a labeled container in memory.\n2. Use the assignment operator `=` to assign a value (e.g. `name = 'Chidi'`).\n3. Print the variable using `print(name)`.",
-        seniorMarkingGuide: "1. State that variables are dynamically typed (no explicit declaration needed).\n2. Contrast data types: `int` (whole numbers), `float` (decimals), `str` (text).\n3. Demonstrate casting: `age = int('15')` converting a string to integer.",
+        id: "what_computer",
+        title: "Introduction to Computers",
+        juniorDesc: "Learn what a computer is, data input, processing, output, and storage.",
+        juniorGreeting: "Hi Teacher! 👋 We are starting Computer Studies. What is the definition of a computer? What are the four main jobs a computer does?",
+        juniorMarkingGuide: "JSS Computer Intro: Define computer as electronic machine [1 Mark]. List 4 basic functions (Input, Processing, Output, Storage - IPOS) [3 Marks].",
         studyNotes: {
-          concept: "Variables are reserved memory locations to store values. In Python, variables are created when you assign a value to them and are dynamically typed.",
+          concept: "A computer is an electronic device that accepts raw data as input, processes it, stores it, and produces output information.",
           formulas: [],
           steps: [
-            "Choose a descriptive variable name (must start with letter or underscore, no spaces).",
-            "Use the assignment operator `=` to set its value.",
-            "Check its type using the `type()` function.",
-            "Cast variables using `str()`, `int()`, or `float()` to convert between types."
+            "Input: Entering data into the computer (e.g. typing).",
+            "Processing: Working on the data (performed by the CPU).",
+            "Output: Displaying the results (e.g. showing on monitor).",
+            "Storage: Saving data for later (performed by hard drive)."
           ],
-          workedExample: "```python\nx = 5          # Integer\ny = '10'       # String\n# Convert string to integer to add them\nresult = x + int(y)\nprint(result)  # Outputs 15\n```"
+          workedExample: "Question: Define a computer and outline the four stages of the IPOS cycle.\n\nAnswer:\n1. A computer is an electronic machine that processes data to produce meaningful information.\n2. IPOS Cycle:\n   - Input: Typing numbers using a keyboard.\n   - Processing: The CPU adding those numbers together.\n   - Output: Showing the sum on the monitor.\n   - Storage: Saving the calculation on a USB drive."
         }
       },
       {
-        id: "control_flow",
-        title: "Control Flow (If-Else)",
-        juniorDesc: "Make choices in coding (e.g., if it rains, bring umbrella).",
-        seniorDesc: "Solve branching logic using if, elif, else, and logical operators.",
-        juniorGreeting: "Hello Teacher! 🌦️ How do I make my Python program make decisions? Like: if my score is 50 or more, print 'Pass', otherwise print 'Fail'?",
-        seniorGreeting: "Good day, Teacher! 🐍 I'm writing a grading program. Can you explain how to nest `if` statements, and how to combine multiple conditions using logical operators like `and`, `or`, and `not`?",
-        juniorMarkingGuide: "1. Explain the `if` keyword for checking conditions.\n2. Explain that indentation (4 spaces) is required to group code blocks.\n3. Use `else` to handle the alternative outcome.",
-        seniorMarkingGuide: "1. Write syntax using `elif` for multiple conditions.\n2. Write comparison operators: `==`, `>`, `<`, `>=`, `<=`, `!=`.\n3. Demonstrate logical operator rules: `and` requires both conditions to be true, `or` requires at least one.",
+        id: "input_output",
+        title: "Input & Output Devices",
+        juniorDesc: "Learn the difference between input devices (keyboard) and output devices (monitor).",
+        juniorGreeting: "Good day, Teacher! ⌨️ I'm setting up a desktop computer. What is the difference between an input device and an output device? Is a printer input or output?",
+        juniorMarkingGuide: "JSS Computer Devices: Differentiate input (data in) vs output (info out) [2 Marks]. Give 2 correct examples of each [2 Marks].",
         studyNotes: {
-          concept: "Control flow refers to the order in which individual statements are executed. Conditional blocks (`if`, `elif`, `else`) allow branching execution based on boolean checks.",
+          concept: "Input devices feed data into the computer. Output devices convert electronic signals from the computer into a form that humans can understand.",
           formulas: [],
           steps: [
-            "Define the condition using comparison operators.",
-            "Start the block with `if condition:` (ensure you write a colon at the end).",
-            "Indent the code to run if the condition is True.",
-            "Add `elif` or `else:` blocks as needed, maintaining correct indentation."
+            "Input Examples: Keyboard, mouse, scanner, microphone, barcode reader.",
+            "Output Examples: Monitor, printer, speaker, projector.",
+            "Dual Devices: Touchscreen (both input and output)."
           ],
-          workedExample: "```python\nscore = 75\nif score >= 80:\n    print('Grade A')\nelif score >= 50:\n    print('Grade C')\nelse:\n    print('Fail')\n```"
+          workedExample: "Question: Classify the following devices: Keyboard, Monitor, Printer, Mouse, Speakers, Scanner.\n\nAnswer:\n1. Input Devices: Keyboard (types text), Mouse (moves cursor), Scanner (digitizes photos).\n2. Output Devices: Monitor (displays screen), Printer (prints paper), Speakers (produces sound)."
         }
       },
       {
-        id: "loops",
-        title: "Loops (For and While)",
-        juniorDesc: "Repeat tasks in code without writing them multiple times.",
-        seniorDesc: "Understand loop iteration, range function, and while conditional loops.",
-        juniorGreeting: "Hi Teacher! 🔁 I want to print 'Hello' 10 times. I don't want to write print 10 times! How do loops work in Python?",
-        seniorGreeting: "Good day, Teacher! 💻 I am confused about when to use a `for` loop versus a `while` loop. Can you explain iteration, how to use `range()`, and how to prevent infinite loops?",
-        juniorMarkingGuide: "1. Explain loops repeat code blocks automatically.\n2. Introduce `for i in range(10):` syntax.\n3. Show how the index variable (i) changes from 0 to 9.",
-        seniorMarkingGuide: "1. Contrast `for` (definite loops, known number of runs) vs `while` (indefinite loops, runs until condition is False).\n2. State range syntax: `range(start, stop, step)` (stop is exclusive).\n3. Show how to break loops using the `break` keyword.",
+        id: "software_intro",
+        title: "Computer Software",
+        juniorDesc: "Understand System Software (operating systems) and Application Software.",
+        juniorGreeting: "Hello Teacher! My laptop runs Windows, and I use Microsoft Word for assignments. What is the difference between System Software and Application Software?",
+        juniorMarkingGuide: "JSS Computer Software: Define software [1 Mark]. Differentiate System Software (runs hardware, e.g. OS) vs Application Software (tasks, e.g. Word/Games) [3 Marks].",
         studyNotes: {
-          concept: "Loops are structures that repeat a block of code. Python has `for` loops (iterate over a sequence) and `while` loops (repeat as long as a condition is true).",
+          concept: "Software is the set of instructions or programs that tell the computer hardware what to do.",
           formulas: [],
           steps: [
-            "Use `for` to loop through items in a list or a range of numbers.",
-            "Use `while` when repeating a task until a specific event or status changes.",
-            "Ensure a `while` loop has a step inside that updates the condition variable, avoiding an infinite loop."
+            "System Software: Controls and manages the computer hardware (e.g., Operating Systems like Windows, macOS, Android).",
+            "Application Software: Allows users to perform specific tasks (e.g., web browsers, word processors, games)."
           ],
-          workedExample: "```python\n# Print numbers 1 to 5 using a for loop\nfor i in range(1, 6):\n    print(i)\n\n# Loop using while\nx = 1\nwhile x <= 5:\n    print(x)\n    x += 1 # Critical step to increment x\n```"
+          workedExample: "Question: Define software, and classify Windows 11, MS Excel, WhatsApp, and Google Chrome into system or application software.\n\nAnswer:\n1. Software is the intangible set of programs that runs the computer.\n2. Classifications:\n   - System Software: Windows 11 (operating system).\n   - Application Software: MS Excel (spreadsheet), WhatsApp (chat app), Google Chrome (browser)."
         }
       },
       {
-        id: "functions",
-        title: "Functions & Parameters",
-        juniorDesc: "Build reusable coding blocks/machines (functions).",
-        seniorDesc: "Define functions, pass arguments, return values, and understand local scope.",
-        juniorGreeting: "Hello Teacher! 📦 If I write a block of code to calculate areas, how do I package it so I can reuse it in other parts of my program?",
-        seniorGreeting: "Good day, Teacher! 🐍 I'm learning functions. Can you explain the `def` keyword, the difference between printing inside a function and returning a value, and what local scope means?",
-        juniorMarkingGuide: "1. Define a function as a reusable code machine.\n2. Introduce the `def function_name():` syntax.\n3. Show how to call/activate the function by writing `function_name()`.",
-        seniorMarkingGuide: "1. Pass parameters: `def calculate_area(length, width):`.\n2. Return value: use `return` keyword to output data back to caller.\n3. Explain that variables created inside a function (local scope) cannot be accessed outside.",
+        id: "variables_print",
+        title: "Variables & Print in Python",
+        juniorDesc: "Learn how to store values in variables and display them using print().",
+        juniorGreeting: "Hi Teacher! 🐍 I want to write my first Python code. What is a variable in programming? How do I write a code that prints 'Hello Teacher' on the screen?",
+        juniorMarkingGuide: "JSS Computer Python: Define variable as memory container [1 Mark]. Write valid print() command syntax [2 Marks]. Declare a variable [1 Mark].",
         studyNotes: {
-          concept: "A function is a block of organized, reusable code that performs a single action. Functions provide modularity and code reuse.",
-          formulas: [],
-          steps: [
-            "Define the function using `def name(parameters):`.",
-            "Write the operations inside, indented.",
-            "Use `return` to send a result back to the caller.",
-            "Call the function by passing arguments in parentheses: `result = name(args)`."
+          concept: "A variable is a labeled container in memory used to store data values. The print() function displays text or variables on the screen.",
+          formulas: [
+            "\\text{Syntax: } \\text{print}(\\text{\"text\"})"
           ],
-          workedExample: "```python\ndef add_numbers(a, b):\n    sum_val = a + b\n    return sum_val\n\n# Call function\nx = add_numbers(10, 20)\nprint(x) # Outputs 30\n```"
+          steps: [
+            "Declare a variable by giving it a name and assigning a value with '=' (e.g. age = 13).",
+            "Use print() to display variables or literal strings.",
+            "Strings must be wrapped in quotation marks."
+          ],
+          workedExample: "Problem: Write Python code that creates a variable called name, stores your name in it, and prints it with a greeting.\n\nCode:\nname = \"Chidi\"\nprint(\"Hello \", name)\n\nOutput:\nHello Chidi"
         }
       },
       {
-        id: "lists",
-        title: "Lists & Tuples",
-        juniorDesc: "Store shopping lists or lists of names in a single variable.",
-        seniorDesc: "Perform slicing, indexing, and understand mutable lists vs immutable tuples.",
-        juniorGreeting: "Hi Teacher! 📝 I want to store a list of 5 students in my program. Do I need 5 variables? What is a list, and how do we access items in it?",
-        seniorGreeting: "Good day, Teacher! 💻 I am studying sequences. Can you explain list slicing `list[start:stop]`, and detail the difference between a list `[]` and a tuple `()`?",
-        juniorMarkingGuide: "1. Define a list as a single variable holding multiple items.\n2. Introduce list brackets: `students = ['Ada', 'Obi', 'Ali']`.\n3. Explain zero-based indexing: `students[0]` returns 'Ada'.",
-        seniorMarkingGuide: "1. Explain slicing: `nums[1:4]` returns items from index 1 up to index 3 (index 4 is excluded).\n2. Define mutability: lists are mutable (can append/delete), tuples are immutable (cannot be changed after creation).\n3. Demonstrate methods: `append()`, `insert()`, `pop()`.",
+        id: "python_math",
+        title: "Simple Calculations in Python",
+        juniorDesc: "Use Python to add, subtract, multiply, and divide numbers.",
+        juniorGreeting: "Good day, Teacher! 🐍 Can I use Python as a calculator? How do I write a program that adds two numbers together and prints the sum?",
+        juniorMarkingGuide: "JSS Computer Python: Declare 2 number variables [1 Mark]. Use correct arithmetic operator (+, -, *, /) [2 Marks]. Print result [1 Mark].",
         studyNotes: {
-          concept: "Lists are ordered, mutable sequences used to store collections of data. Tuples are ordered, immutable sequences.",
-          formulas: [],
-          steps: [
-            "Create a list using square brackets: `my_list = [1, 2, 3]`.",
-            "Create a tuple using parentheses: `my_tuple = (1, 2, 3)`.",
-            "Access elements using indices (starts at 0, negative index starts from end `-1`).",
-            "Slice sequences using `seq[start:stop:step]`."
+          concept: "Python uses standard operators for arithmetic calculations: + (addition), - (subtraction), * (multiplication), and / (division).",
+          formulas: [
+            "x = a + b \\quad \\text{(Addition)}",
+            "y = a \\times b \\implies \\text{code: } y = a * b"
           ],
-          workedExample: "```python\nfruits = ['apple', 'banana', 'cherry', 'date']\n# Slicing from index 1 up to index 3\nprint(fruits[1:3]) # Outputs ['banana', 'cherry']\n\n# Try changing a tuple (will error)\ntup = (10, 20)\n# tup[0] = 5 # TypeError: 'tuple' object does not support item assignment\n```"
+          steps: [
+            "Assign values to variables.",
+            "Perform the arithmetic operation and store it in a result variable.",
+            "Print the result variable."
+          ],
+          workedExample: "Problem: Write Python code to multiply 5 and 6 and print the product.\n\nCode:\na = 5\nb = 6\nproduct = a * b\nprint(\"The product is:\", product)\n\nOutput:\nThe product is: 30"
         }
       },
       {
-        id: "dictionaries",
-        title: "Dictionaries & Sets",
-        juniorDesc: "Store key-value pairs like dictionary words and meanings.",
-        seniorDesc: "Manage key-value mappings in dictionaries and set union/intersection.",
-        juniorGreeting: "Hello Teacher! 📚 How do I map keys to values in Python, like matching a student's name to their exam score? What is a dictionary in coding?",
-        seniorGreeting: "Good day, Teacher! 💻 We are studying mappings. Can you explain dictionary syntax `{}`, how to access/update values safely, and contrast dictionaries with sets?",
-        juniorMarkingGuide: "1. Define a dictionary as a key-value mapping structure.\n2. Use key lookup: `scores['Chidi']` to retrieve the value.\n3. Add new keys: `scores['Obi'] = 90`.",
-        seniorMarkingGuide: "1. Write dictionary: `student = {'name': 'Chidi', 'age': 15}`.\n2. Access keys safely using `.get('key', default)` to prevent crashes.\n3. Define a Set as an unordered collection of unique elements and demonstrate `.union()` and `.intersection()`.",
+        id: "python_strings",
+        title: "Strings in Python",
+        juniorDesc: "Learn what strings are and how to join two strings together (concatenation).",
+        juniorGreeting: "Hello Teacher! I see text inside quotation marks in Python code, like \"apple\". What is a string? How do I join two strings together?",
+        juniorMarkingGuide: "JSS Computer Python: Define string as text [1 Mark]. Explain string concatenation using '+' operator [2 Marks]. Write code example [1 Mark].",
         studyNotes: {
-          concept: "Dictionaries are mutable mappings storing data in key-value pairs. Sets are unordered collections of unique elements.",
-          formulas: [],
-          steps: [
-            "Define a dictionary using curly braces with colons: `d = {'key': 'value'}`.",
-            "Access values by key: `d['key']` or `d.get('key')`.",
-            "Create a set using curly braces without colons: `s = {1, 2, 3}`.",
-            "Use set operations: `s1.intersection(s2)` to find common elements."
+          concept: "A string is a sequence of characters wrapped in single or double quotes. Joining strings together is called concatenation, performed using the '+' operator.",
+          formulas: [
+            "\\text{Concatenation: } c = a + \\text{\" \"} + b"
           ],
-          workedExample: "```python\nscores = {'Math': 85, 'English': 90}\n# Add a subject\nscores['Science'] = 95\n# Access safely\nprint(scores.get('History', 0)) # Outputs 0 because History is not a key\n```"
+          steps: [
+            "Wrap text variables in quotes: e.g., first = \"Purple\".",
+            "Use '+' to link text together: e.g., full = first + \"School\".",
+            "Print the concatenated variable."
+          ],
+          workedExample: "Problem: Concatenate first name 'Goodness' and last name 'Chidi' with a space in between.\n\nCode:\nfirst = \"Goodness\"\nlast = \"Chidi\"\nfull_name = first + \" \" + last\nprint(full_name)\n\nOutput:\nGoodness Chidi"
         }
       },
       {
-        id: "file_handling",
-        title: "File Handling (Read/Write)",
-        juniorDesc: "Learn how to open and read text files using code.",
-        seniorDesc: "Open, read, write, and close files using 'with' blocks.",
-        juniorGreeting: "Hi Teacher! 📂 How does a program load text from a file saved on my hard drive? How do I write outputs back into a text file?",
-        seniorGreeting: "Good day, Teacher! 🐍 I'm trying to read a log file. Can you explain the difference between 'w' and 'a' modes in `open()`, and why it's best to use `with open() as f`?",
-        juniorMarkingGuide: "1. Define file handling: loading/saving files in coding.\n2. Explain the `open('file.txt', 'r')` function.\n3. Emphasize that files must be closed to prevent memory leaks.",
-        seniorMarkingGuide: "1. Differentiate modes: 'r' (read), 'w' (write - overwrites file), 'a' (append - adds to end).\n2. Explain `with open(...)` automatically closes the file even if errors occur.\n3. Read lines using `f.readlines()` or iterate with a loop.",
+        id: "if_conditions",
+        title: "Simple if conditions",
+        juniorDesc: "Write code that makes decisions: 'if age > 18: print(Adult)'.",
+        juniorGreeting: "Hi Teacher! 🐍 How do I make my program make decisions? Like, if my score is 50 or more, print 'Pass', otherwise print 'Fail'?",
+        juniorMarkingGuide: "JSS Computer Python: Write valid 'if' statement syntax with colon [2 Marks]. Use 'else' block correctly [1 Mark]. Indent code block [1 Mark].",
         studyNotes: {
-          concept: "File handling allows Python to interact with files on the disk. The `with` statement guarantees that resources are closed properly after execution.",
-          formulas: [],
-          steps: [
-            "Use `with open('filename', 'mode') as file_obj:` to start.",
-            "If mode is 'r', read content using `.read()` or `.readline()`.",
-            "If mode is 'w' or 'a', write content using `.write(text)`.",
-            "Indented block end handles closing automatically."
+          concept: "Conditional statements control the flow of code execution based on comparison checks (if conditions). Indentation (spaces at start of line) is mandatory in Python.",
+          formulas: [
+            "\\text{Syntax: if condition: } \\implies \\text{ indent code}"
           ],
-          workedExample: "```python\n# Write to a file\nwith open('notes.txt', 'w') as f:\n    f.write('PurpleSchool Python Class\\n')\n\n# Read from the file\nwith open('notes.txt', 'r') as f:\n    content = f.read()\n    print(content) # Outputs: PurpleSchool Python Class\n```"
+          steps: [
+            "Write the 'if' keyword followed by a comparison condition (e.g. score >= 50).",
+            "End the 'if' line with a colon (:).",
+            "Indent the code that runs if the condition is true.",
+            "Write 'else:' (aligned with if) to handle the alternative case."
+          ],
+          workedExample: "Problem: Write Python code that checks if a score is 50 or above, and prints 'Pass', else prints 'Fail'.\n\nCode:\nscore = 65\nif score >= 50:\n    print(\"Pass\")\nelse:\n    print(\"Fail\")\n\nOutput:\nPass"
         }
       },
       {
-        id: "oop",
-        title: "Object-Oriented Programming (OOP)",
-        juniorDesc: "Learn about blueprint classes (e.g. Dog) and real objects (individual dogs).",
-        seniorDesc: "Create classes, instantiate objects, use constructors (__init__), and understand inheritance.",
-        juniorGreeting: "Hello Teacher! 🐕 I heard classes are blueprints to create objects. What is a class in Python, and how do we write attributes and actions inside it?",
-        seniorGreeting: "Good day, Teacher! 💻 We are starting Object-Oriented Programming. Can you explain the `class` keyword, the constructor `__init__`, the purpose of `self`, and how inheritance works?",
-        juniorMarkingGuide: "1. Define a class as a blueprint (like a mold for toy cars).\n2. Define an object as an instance made from the blueprint.\n3. Show how objects can have variables (color, speed) and actions (drive, brake).",
-        seniorMarkingGuide: "1. Define `__init__` constructor: sets initial attributes when object is created.\n2. Explain `self`: represents the specific instance of the object calling the method.\n3. Show inheritance: `class Car(Vehicle):` inherits all methods from `Vehicle` parent class.",
+        id: "python_lists",
+        title: "Lists in Python (Basic)",
+        juniorDesc: "Learn how to store multiple items in a single variable using square brackets.",
+        juniorGreeting: "Good day, Teacher! If I want to save a list of my favorite fruits, like apple, banana, orange. Do I have to create 3 variables, or is there a list variable in Python?",
+        juniorMarkingGuide: "JSS Computer Python: Declare a list using square brackets [2 Marks]. Access list item by index [2 Marks].",
         studyNotes: {
-          concept: "Object-Oriented Programming is a programming paradigm based on the concept of 'objects' containing data (attributes) and code (methods).",
-          formulas: [],
-          steps: [
-            "Declare a class using `class Name:`.",
-            "Define the constructor `def __init__(self, params):` to set attributes.",
-            "Define methods (functions inside class) with `self` as the first parameter.",
-            "Instantiate the object: `obj = Name(args)`."
+          concept: "A list is a data structure in Python that stores multiple items in a single variable, enclosed in square brackets [] and separated by commas.",
+          formulas: [
+            "\\text{List declaration: } \\text{items} = [a, b, c]"
           ],
-          workedExample: "```python\nclass Dog:\n    def __init__(self, name):\n        self.name = name\n    \n    def bark(self):\n        return f'{self.name} says Woof!'\n\nmy_dog = Dog('Rex')\nprint(my_dog.bark()) # Outputs 'Rex says Woof!'\n```"
+          steps: [
+            "Declare a list: e.g. fruits = [\"apple\", \"banana\", \"mango\"].",
+            "Access elements using indices, starting from 0 (e.g. fruits[0] is \"apple\")."
+          ],
+          workedExample: "Problem: Declare a list of 3 subjects and print the first subject.\n\nCode:\nsubjects = [\"Math\", \"Basic Science\", \"English\"]\nprint(subjects[0])\n\nOutput:\nMath"
         }
       },
       {
-        id: "exceptions",
-        title: "Exception Handling",
-        juniorDesc: "Prevent program crashes when dividing by zero.",
-        seniorDesc: "Understand try, except, finally blocks and custom exception raising.",
-        juniorGreeting: "Hi Teacher! 💥 If my program divides by zero or reads a missing file, it crashes completely! How do I catch these errors and print a friendly warning instead?",
-        seniorGreeting: "Good day, Teacher! 🐍 I'm learning error control. Can you explain `try`, `except Exception as e`, `else`, and `finally` blocks, and when to use `raise`?",
-        juniorMarkingGuide: "1. Explain that errors (exceptions) halt code execution.\n2. Introduce `try:` block where code that might fail is run.\n3. Use `except:` block to catch the failure and print a warning.",
-        seniorMarkingGuide: "1. Write exception block: `try ... except ZeroDivisionError: ...`.\n2. Explain `finally:` always runs regardless of whether an exception occurred.\n3. Demonstrate raising exceptions manually: `raise ValueError('Invalid input')`.",
+        id: "python_loops_jss",
+        title: "Writing a Loop (Basic)",
+        juniorDesc: "Learn how to repeat a print statement 5 times using 'for i in range(5)'.",
+        juniorGreeting: "Hello Teacher! I want my program to print 'I love coding' 10 times. Do I have to write the print line 10 times, or is there a loop I can write?",
+        juniorMarkingGuide: "JSS Computer Python: Write valid 'for i in range(...):' loop syntax [2 Marks]. Use colon and indent the loop body [2 Marks].",
         studyNotes: {
-          concept: "Exception handling is the process of responding to occurrences of anomalies (errors) during code execution, preventing program crashes.",
-          formulas: [],
-          steps: [
-            "Wrap risky code inside a `try:` block.",
-            "Add one or more `except SpecificError:` blocks to catch errors.",
-            "Add a `finally:` block for clean-up operations that must run (like closing files)."
+          concept: "Loops are used to repeat a block of code multiple times. A 'for' loop combined with range() is the simplest way to repeat an action in Python.",
+          formulas: [
+            "\\text{for i in range(N):}"
           ],
-          workedExample: "```python\ntry:\n    num = int('abc') # Will raise ValueError\nexcept ValueError:\n    print('Please enter numbers only!')\nfinally:\n    print('Execution done.')\n```"
+          steps: [
+            "Write the loop header: for i in range(10):",
+            "Put a colon at the end of the header.",
+            "Indent the code lines inside the loop.",
+            "Python will run the indented code block N times."
+          ],
+          workedExample: "Problem: Write Python code that prints the numbers 0 to 4 using a loop.\n\nCode:\nfor i in range(5):\n    print(i)\n\nOutput:\n0\n1\n2\n3\n4"
         }
       },
       {
-        id: "libraries",
-        title: "Libraries and Modules",
-        juniorDesc: "Import extra tools like math and random numbers into your code.",
-        seniorDesc: "Import and use standard libraries like math, random, and datetime.",
-        juniorGreeting: "Hello Teacher! 🎲 How do I generate random numbers in Python? Do I have to write the code myself, or are there pre-made tools I can import?",
-        seniorGreeting: "Good day, Teacher! 💻 Can you explain how modules and packages work in Python, and show me how to import and use functions from the `math` and `random` libraries?",
-        juniorMarkingGuide: "1. Define a module/library as a file containing pre-written code.\n2. Introduce `import random` statement.\n3. Use `random.randint(1, 10)` to get a random number between 1 and 10.",
-        seniorMarkingGuide: "1. State import syntaxes: `import math`, `from math import sqrt`, `import numpy as np`.\n2. Demonstrate `math.sqrt()` and trigonometric functions.\n3. Explain how to create your own module (creating a `.py` file and importing it).",
+        id: "digital_safety",
+        title: "Digital Safety",
+        juniorDesc: "Understand password security, virus protection, and avoiding strangers online.",
+        juniorGreeting: "Hi Teacher! 💻 When browsing the internet, how do I stay safe? What makes a password strong, and why shouldn't I share my real name and address with strangers?",
+        juniorMarkingGuide: "JSS Computer Safety: Define password safety rules (symbols, length) [2 Marks]. Explain dangers of sharing personal information online [2 Marks].",
         studyNotes: {
-          concept: "Modules are single Python files containing code. Libraries are collections of modules. Importing them expands Python's capabilities.",
+          concept: "Digital safety (cybersecurity) is the practice of protecting personal information, devices, and online identity from cyber threats and online predators.",
           formulas: [],
           steps: [
-            "Use `import module_name` to load a library.",
-            "Access functions using dot notation: `module_name.function()`.",
-            "Use `from module_name import target` to import functions directly, eliminating dot notation."
+            "Create strong passwords: Minimum 8 characters, mix of capital letters, numbers, and symbols (e.g., $tr0ngP@ss!).",
+            "Do not share personal details: Address, phone number, school name.",
+            "Never download attachments from unknown emails (prevent virus infection)."
           ],
-          workedExample: "```python\nimport math\nfrom random import randint\n\n# Square root of 16\nprint(math.sqrt(16)) # Outputs 4.0\n# Random number between 1 and 6\nprint(randint(1, 6))\n```"
+          workedExample: "Question: List three rules for creating a secure online password and state one rule about online strangers.\n\nAnswer:\nPassword rules:\n1. It should be at least 8 characters long.\n2. It should not contain personal names or birth dates.\n3. It must contain a mix of uppercase, lowercase, numbers, and symbols.\nStranger rule:\n1. Never share personal information, photos, or agree to meet someone in person that you only met online."
         }
       }
     ]
   },
   ai: {
     id: "ai",
-    name: "Introductory AI",
+    name: "Introductory AI (JSS)",
     topics: [
       {
         id: "what_is_ai",
-        title: "What is AI?",
-        juniorDesc: "Learn how computers try to think and behave like smart humans.",
-        seniorDesc: "Analyze Turing test, narrow vs general AI, and machine intelligence history.",
-        juniorGreeting: "Hi Teacher! 🤖 What is Artificial Intelligence? Is it like a robot that has a brain? Can computers actually think like humans?",
-        seniorGreeting: "Good day, Teacher! 🧠 We are starting AI studies. Can you explain the difference between Artificial Narrow Intelligence (ANI) and Artificial General Intelligence (AGI), and discuss the Turing Test?",
-        juniorMarkingGuide: "1. Define AI as making computers smart enough to solve puzzles and recognize images.\n2. Explain that AI follows instructions and patterns, not actual human feelings.\n3. Give examples of AI (Siri, Netflix recommendations).",
-        seniorMarkingGuide: "1. ANI: AI designed to solve a single specific task (e.g. playing chess, translation).\n2. AGI: AI that matches human cognitive abilities across all domains (theoretical).\n3. Turing Test: proposed by Alan Turing (1950) to evaluate if a machine can mimic human conversation well enough to fool an interrogator.",
+        title: "What is Artificial Intelligence?",
+        juniorDesc: "Understand what AI is and how it makes machines perform smart tasks.",
+        juniorGreeting: "Hi Teacher! 🤖 What is Artificial Intelligence (AI)? How does a computer code act like a smart human, and can a machine actually think like us?",
+        juniorMarkingGuide: "JSS AI Intro: Define AI as machines performing tasks that usually require human intelligence [2 Marks]. List 2 daily examples [2 Marks].",
         studyNotes: {
-          concept: "Artificial Intelligence (AI) is the simulation of human intelligence processes by machines, especially computer systems.",
+          concept: "Artificial Intelligence (AI) is the science of training computers and machines to perform tasks that typically require human intelligence, such as reasoning and problem-solving.",
           formulas: [],
           steps: [
-            "Artificial Narrow Intelligence (ANI): Specialist systems (like self-driving cars, voice assistants).",
-            "Artificial General Intelligence (AGI): Generalist systems capable of human-level adaptability across any domain (still theoretical).",
-            "Turing Test: If a human cannot tell the machine apart from another human in text chat, the machine passes."
+            "Human intelligence: learning, adapting, recognizing speech.",
+            "AI: mimicking these functions using software code.",
+            "Examples: Siri, Netflix recommendations, automatic face filters."
           ],
-          workedExample: "Is Chidi an AGI?\nNo, Chidi is a conversational model (NLP) representing Artificial Narrow Intelligence. It is specialized for educational Socratic dialogue but cannot do dishes, write code, or understand the physical world like a general human."
+          workedExample: "Question: Define Artificial Intelligence in your own words and list three devices in your home or school that use AI.\n\nAnswer:\n1. Artificial Intelligence is the capability of a computer program or machine to learn, make decisions, and solve problems like a human.\n2. Examples: Voice assistants on smartphones (Siri/Google Assistant), email spam filters, and video recommendation algorithms on YouTube."
         }
       },
       {
-        id: "ml_basics",
-        title: "Machine Learning Basics",
-        juniorDesc: "Learn how computers learn from examples (training data).",
-        seniorDesc: "Compare Supervised, Unsupervised, and Reinforcement learning paradigms.",
-        juniorGreeting: "Hello Teacher! 🐶 If I want a computer to recognize a dog, do I write rules for ears and tail, or is there another way to teach it?",
-        seniorGreeting: "Good day, Teacher! 📊 We are studying machine learning. Can you explain the difference between Supervised (labeled data) and Unsupervised (unlabeled data) learning, and describe Reinforcement learning?",
-        juniorMarkingGuide: "1. Explain that instead of writing rules, we feed the computer thousands of dog photos.\n2. Define training data (the photos used for learning).\n3. Explain that the computer identifies common patterns (features) itself.",
-        seniorMarkingGuide: "1. Supervised Learning: model learns from labeled pairs: $(x_i, y_i)$ (e.g. house features and house prices).\n2. Unsupervised Learning: model finds hidden patterns in unlabeled data (clustering, e.g. customer segmentation).\n3. Reinforcement Learning: agent learns by trial and error in an environment, maximizing rewards (e.g. game playing).",
+        id: "voice_assistants",
+        title: "Smart Assistants (Siri/Google)",
+        juniorDesc: "Learn how phone assistants understand our voice commands.",
+        juniorGreeting: "Good day, Teacher! 🎤 When I talk to my phone and say 'Hey Siri, set an alarm', how does it understand my voice? How does it translate my sound into words?",
+        juniorMarkingGuide: "JSS AI Voice: Explain Natural Language Processing (NLP) / Speech Recognition [2 Marks]. Identify conversion from sound wave to text code [2 Marks].",
         studyNotes: {
-          concept: "Machine Learning is a subset of AI that enables systems to automatically learn and improve from experience without being explicitly programmed.",
+          concept: "Smart assistants use Speech Recognition and Natural Language Processing (NLP) to convert human vocal sounds into digital text, analyze the intent, and execute the command.",
           formulas: [],
           steps: [
-            "Supervised: Input -> Model -> Output compared to label. Adjust weights to minimize error.",
-            "Unsupervised: Find clusters or groupings of similar features without labels.",
-            "Reinforcement: State -> Action -> Reward. Agent updates policy to maximize cumulative reward."
+            "Microphone captures sound waves.",
+            "Speech recognition AI converts sound frequencies into words (text).",
+            "NLP AI processes what the words mean.",
+            "The assistant performs the action and replies using synthetic voice."
           ],
-          workedExample: "What type of ML is used in email spam filters?\nSupervised learning. The algorithm is trained on a labeled dataset containing emails marked as either 'Spam' or 'Inbox'. It maps email contents (features) to these labels."
+          workedExample: "Question: Outline the step-by-step process of how Google Assistant responds when a user says 'What is the weather today?'\n\nAnswer:\n1. Speech to Text: The assistant's microphone records the user's sound wave and converts it into text: 'What is the weather today?'\n2. Intent Analysis (NLP): The AI processes the text to identify the intent ('weather forecast') and location ('user's current location').\n3. Data Retrieval & Response: The system checks weather data online and reads the temperature back to the user."
         }
       },
       {
-        id: "neural_networks",
-        title: "Neural Networks",
-        juniorDesc: "See how computers mimic brain cells to solve complex tasks.",
-        seniorDesc: "Study network layers (input, hidden, output) and backpropagation weight updates.",
-        juniorGreeting: "Hi Teacher! 🕸️ I read that AI uses things called 'neural networks' that work like human brain cells. What does a neural network look like, and how does it learn?",
-        seniorGreeting: "Good day, Teacher! 🤖 We are studying artificial neural networks (ANN). Can you explain the roles of the input, hidden, and output layers, and explain backpropagation and gradient descent?",
-        juniorMarkingGuide: "1. Explain that a neural network is made of layers of connected points (neurons).\n2. State that signals pass from input to output, getting stronger or weaker.\n3. Explain that learning is adjusting these connections (weights) until the correct output is reached.",
-        seniorMarkingGuide: "1. Layers: Input (receives features), Hidden (extracts complex representations), Output (yields classification/regression).\n2. Node formula: $y = f(\\sum w_i x_i + b)$ where $f$ is activation function, $w$ is weight, $b$ is bias.\n3. Backpropagation: computing the gradient of the loss function and updating weights backwards using gradient descent to minimize error.",
+        id: "robots_sensors",
+        title: "Robots & Sensors",
+        juniorDesc: "Learn how robots use sensors (eyes/ears) to move and avoid walls.",
+        juniorGreeting: "Hello, Teacher! 🤖 What is the difference between a normal factory machine and a robot? How do smart vacuum cleaners avoid bumping into chairs?",
+        juniorMarkingGuide: "JSS AI Robots: Define robot [1 Mark]. Explain how sensors act like human senses [2 Marks]. Give example of sensor (ultrasonic/infrared) [1 Mark].",
         studyNotes: {
-          concept: "Artificial Neural Networks are computational models inspired by the brain's biological structure. They consist of nodes that process inputs and pass them through activation functions.",
-          formulas: [
-            "Neuron Output: $a = f\\left(\\sum w_i x_i + b\\right)$ (where $f$ is activation, e.g. ReLU or Sigmoid)",
-            "Weight Update: $w \\leftarrow w - \\alpha \\frac{\\partial L}{\\partial w}$ (where $\\alpha$ is learning rate)"
-          ],
-          steps: [
-            "Forward Propagation: Pass input features forward through node layers; calculate prediction.",
-            "Loss Calculation: Compare prediction with actual target label using a loss function (e.g. Mean Squared Error).",
-            "Backward Propagation: Compute error gradients backward through the layers.",
-            "Weight Adjustment: Update weights using gradient descent to reduce loss."
-          ],
-          workedExample: "Explain the purpose of an activation function (like ReLU).\nActivation functions introduce non-linearity into the network. Without them, a neural network is just a linear regression model, incapable of learning complex patterns like image shapes or language semantics."
-        }
-      },
-      {
-        id: "deep_learning",
-        title: "Deep Learning & Vision",
-        juniorDesc: "Find out how self-driving cars 'see' obstacles on the road.",
-        seniorDesc: "Understand Convolutional Neural Networks (CNNs) and pixel feature detection.",
-        juniorGreeting: "Hello Teacher! 🚗 How does a self-driving car recognize a stop sign or a pedestrian? How does a computer convert a photo into numbers it can read?",
-        seniorGreeting: "Good day, Teacher! 📷 We are studying computer vision. Can you explain how Convolutional Neural Networks (CNNs) extract features using filters, pooling, and fully connected layers?",
-        juniorMarkingGuide: "1. Explain that photos are grids of numbers representing color brightness (pixels).\n2. Explain that the computer scans pixels to find edges, lines, and shapes.\n3. State that combining these shapes lets the AI identify complex objects.",
-        seniorMarkingGuide: "1. Convolution: sliding a small matrix (filter) across pixels to detect edges and textures.\n2. Pooling (Max Pooling): reducing matrix dimensions by keeping only maximum values, improving computational speed.\n3. Fully Connected Layer: final layers that classify the extracted features into object categories (e.g., 'Stop Sign').",
-        studyNotes: {
-          concept: "Deep learning is a subfield of ML dealing with neural networks with many layers (deep). Computer vision uses CNNs to identify spatial hierarchies of features in images.",
+          concept: "A robot is a programmable machine that can carry out actions automatically. Sensors act as the robot's eyes, ears, and touch to interact with the environment.",
           formulas: [],
           steps: [
-            "Input Image: Represented as a 3D matrix (width, height, RGB channels).",
-            "Convolution Layers: Apply filters to extract low-level features (edges) and high-level features (faces).",
-            "Max Pooling: Reduce spatial dimensions while retaining critical features.",
-            "Fully Connected: Flatten features and feed into standard ANN for classification."
+            "Sensors capture data (input): Ultrasonic (distance/avoid walls), Infrared (light/obstacles), Camera (eyes).",
+            "Microprocessor processes data (decisions).",
+            "Actuators perform action (output): motors turning wheels, robotic arms moving."
           ],
-          workedExample: "Why are CNNs better for images than standard dense networks?\nStandard networks treat images as a flat list of pixels, destroying spatial relationships. CNNs slide filters across pixel groups, preserving spatial features (like eyes and noses always being close on a face)."
+          workedExample: "Question: Explain how sensors help a self-driving robotic toy car avoid hitting a wall.\n\nAnswer:\n1. The toy car has an ultrasonic sensor on its bumper that emits high-frequency sound waves.\n2. The waves bounce off the wall and return to the sensor.\n3. The processor calculates the distance based on the echo time. If the distance is less than 10cm, the processor sends a command to the wheel motors to stop and turn around."
         }
       },
       {
-        id: "nlp",
-        title: "Natural Language Processing (NLP)",
-        juniorDesc: "Learn how computers read text and chat with humans.",
-        seniorDesc: "Study tokenization, word embeddings (word2vec), and text classification.",
-        juniorGreeting: "Hi Teacher! 💬 How does a computer read and understand human language? How does it know that 'happy' and 'joyful' mean similar things?",
-        seniorGreeting: "Good day, Teacher! 📝 We are studying Natural Language Processing. Can you explain tokenization, what a word embedding (vector) is, and how computers use coordinates to represent word meanings?",
-        juniorMarkingGuide: "1. Define NLP as teaching computers to read and write text.\n2. Explain tokenization: breaking sentences into single words or chunks.\n3. Explain that the computer matches words to coordinates in a mathematical map where similar words sit close together.",
-        seniorMarkingGuide: "1. Tokenization: converting string to list of integer IDs representing word sub-units.\n2. Word Embeddings: mapping words to high-dimensional vectors (e.g. 512 dimensions) where cosine similarity represents semantic closeness.\n3. Vector math: show the classic relationship: $\\vec{\\text{King}} - \\vec{\\text{Man}} + \\vec{\\text{Woman}} \\approx \\vec{\\text{Queen}}$.",
+        id: "computer_vision_intro",
+        title: "Computer Vision (How AI sees)",
+        juniorDesc: "Understand how AI recognizes faces in photos by looking at pixels.",
+        juniorGreeting: "Hi Teacher! 📸 When I upload a photo to social media, how does the AI automatically know where my face is to tag me? How does a computer 'see' an image?",
+        juniorMarkingGuide: "JSS AI Vision: Explain computers see images as grids of pixels (numbers) [2 Marks]. Explain pattern recognition for facial features [2 Marks].",
         studyNotes: {
-          concept: "NLP combines linguistics and computer science to help machines process, understand, and generate human languages.",
-          formulas: [
-            "Cosine Similarity: $\\cos(\\theta) = \\frac{\\vec{u} \\cdot \\vec{v}}{\\|\\vec{u}\\| \\|\\vec{v}\\|}$"
-          ],
-          steps: [
-            "Tokenization: Split input string into numerical tokens.",
-            "Embedding Lookup: Convert tokens into high-dimensional vectors.",
-            "Semantic Processing: Run vectors through attention layers (Transformers) to resolve context.",
-            "Text Generation: Output token probabilities and decode them back into text."
-          ],
-          workedExample: "How does a word vector represent similarity?\nWords are mapped to points in a high-dimensional space. Words used in similar contexts (like 'cat' and 'dog') will have vectors pointing in nearly identical directions, yielding a high cosine similarity of close to 1.0."
-        }
-      },
-      {
-        id: "decision_trees",
-        title: "Decision Trees & Random Forests",
-        juniorDesc: "Solve classification problems using simple flowcharts (Yes/No questions).",
-        seniorDesc: "Study splitting criteria (Information Gain, Gini Impurity) and Random Forest ensembles.",
-        juniorGreeting: "Hello Teacher! 🌳 I want to write a program that plays '20 Questions' using a flowchart. How does an AI build a flowchart from data?",
-        seniorGreeting: "Good day, Teacher! 📊 We are studying decision trees. Can you explain how nodes are split using Entropy and Information Gain, and explain how a Random Forest improves accuracy by combining trees?",
-        juniorMarkingGuide: "1. Define a decision tree as a flowchart where each box asks a Yes/No question.\n2. Explain that the tree splits data step-by-step until it reaches an answer (leaf node).\n3. State that asking the most helpful question first makes the tree short and fast.",
-        seniorMarkingGuide: "1. State Gini Impurity formula: $G = 1 - \\sum p_i^2$ or Entropy: $H(S) = -\\sum p_i \\log_2 p_i$.\n2. Define Information Gain: difference in entropy before and after a split.\n3. Explain Random Forest: an ensemble model that merges predictions from multiple independent decision trees (bootstrap aggregating).",
-        studyNotes: {
-          concept: "A Decision Tree is a flowchart-like structure where internal nodes represent tests on attributes, branches represent test outcomes, and leaf nodes represent final classes.",
-          formulas: [
-            "Entropy: $H(S) = -\\sum_{i=1}^{c} p_i \\log_2 p_i$",
-            "Gini Impurity: $I_G(p) = 1 - \\sum_{i=1}^{J} p_i^2$"
-          ],
-          steps: [
-            "Calculate initial impurity/entropy of the dataset.",
-            "For each attribute, calculate the impurity of the split it produces.",
-            "Choose the attribute with the highest Information Gain to split the node.",
-            "Repeat recursively until stopping criteria (max depth) are met."
-          ],
-          workedExample: "Calculate entropy of a dataset with 4 positive and 4 negative items.\nProportion of positive $p_+ = 0.5$, negative $p_- = 0.5$.\n$H(S) = -(0.5 \\log_2 0.5 + 0.5 \\log_2 0.5) = -(-0.5 - 0.5) = 1.0$ (maximum uncertainty)."
-        }
-      },
-      {
-        id: "ai_ethics",
-        title: "Ethics in AI",
-        juniorDesc: "Learn why AI must be fair, safe, and protect privacy.",
-        seniorDesc: "Analyze algorithmic bias, data privacy, and societal impacts of automation.",
-        juniorGreeting: "Hi Teacher! ⚖️ If an AI makes decisions, can it be biased or treat people unfairly? How does an AI learn bad habits, and who is responsible?",
-        seniorGreeting: "Good day, Teacher! 🛡️ We are discussing AI Ethics. Can you explain the sources of algorithmic bias, discuss the privacy challenges of large training datasets, and address automation job displacement?",
-        juniorMarkingGuide: "1. Explain that AI learns from human data, so it copies human biases.\n2. State that AI must be tested to ensure fairness for everyone.\n3. Emphasize that programmers must set safety rules for their AI.",
-        seniorMarkingGuide: "1. Algorithmic Bias: occurs when training data is unrepresentative or contains historical human prejudices (garbage in, garbage out).\n2. Data Privacy: scrapers collecting personal web data without explicit consent (violating regulations like GDPR).\n3. Solutions: model auditing, transparent datasets, human-in-the-loop validation.",
-        studyNotes: {
-          concept: "AI ethics is a system of moral principles and techniques intended to guide the development and responsible use of artificial intelligence.",
+          concept: "Computer Vision is a field of AI that trains computers to interpret and understand the visual world. Computers see images as large grids of numerical pixels (color values).",
           formulas: [],
           steps: [
-            "Identify bias sources: unrepresentative datasets, flawed labeling, or target variables.",
-            "Audit algorithms for fairness across diverse user demographics.",
-            "Implement security layers to scrub personal identifiable information (PII) before model training."
+            "Image is loaded as a 2D grid of numbers (R, G, B values for each pixel).",
+            "AI scans for contrast patterns: dark lines for eyebrows, lighter circles for eyes.",
+            "Matches these patterns against database features to recognize faces."
           ],
-          workedExample: "Give an example of algorithmic bias in recruitment AI.\nIf a hiring AI is trained on historical resumes of a company that mostly hired men in the past, the AI will learn that being male is a feature associated with success. It will then biasedly penalize female resumes, even if their qualifications are identical."
+          workedExample: "Question: How does a computer represent a digital image, and how does this enable face detection?\n\nAnswer:\n1. A computer represents an image as a matrix of pixels. Each pixel has numbers representing color intensity (e.g. RGB values between 0 and 255).\n2. Face detection AI scans this grid looking for specific contrast boundaries (such as the shadows of the nose bridge and eye sockets) to outline a face."
         }
       },
       {
-        id: "search_algorithms",
-        title: "AI Search Algorithms",
-        juniorDesc: "Solve maze paths using step-by-step algorithms.",
-        seniorDesc: "Compare Breadth-First, Depth-First, and A* heuristic pathfinding.",
-        juniorGreeting: "Hello Teacher! 🧩 How does a GPS calculate the fastest route to a destination? How does a computer find its way out of a maze?",
-        seniorGreeting: "Good day, Teacher! 📍 We are studying pathfinding. Can you explain how Depth-First Search (DFS) differs from Breadth-First Search (BFS), and explain how A* uses a heuristic function $f(n) = g(n) + h(n)$?",
-        juniorMarkingGuide: "1. Explain that GPS maps are networks of connected points (nodes).\n2. Differentiate explore-wide (checking all adjacent streets) from explore-deep (going down one street to the end).\n3. State that estimating remaining distance helps find the path faster.",
-        seniorMarkingGuide: "1. BFS: explores level-by-level using queue (FIFO), guarantees shortest path. DFS: explores deep using stack (LIFO).\n2. A* Search: heuristic pathfinding. Total cost $f(n) = g(n) + h(n)$ where $g(n)$ is actual cost from start, $h(n)$ is estimated cost to goal (heuristic).\n3. Heuristic must be admissible: it must never overestimate the actual cost to reach the goal.",
+        id: "chatbots_intro",
+        title: "Chatbots (Text Generation)",
+        juniorDesc: "Learn how chatbots like ChatGPT write letters and answers by predicting the next word.",
+        juniorGreeting: "Good day, Teacher! 💬 When I chat with an AI chatbot, how does it write such long, smart essays? Does it copy from Wikipedia, or does it write it word-by-word?",
+        juniorMarkingGuide: "JSS AI Chatbots: State AI predicts the next word based on patterns in training data [2 Marks]. Explain that it does not copy directly but generates new sentences [2 Marks].",
         studyNotes: {
-          concept: "Search algorithms are methods used by AI agents to navigate state spaces and find paths to goal states.",
-          formulas: [
-            "A* Heuristic Evaluation: $f(n) = g(n) + h(n)$"
-          ],
+          concept: "AI Chatbots use language models trained on massive libraries of text to predict the most likely next word in a sentence based on the user's prompt.",
+          formulas: [],
           steps: [
-            "BFS: Push start node to queue. Loop: pop node, check if goal, push unvisited neighbors to queue. (Guarantees shortest path).",
-            "DFS: Push start node to stack. Loop: pop node, explore depth-first.",
-            "A*: Keep nodes in priority queue sorted by $f(n)$. Always expand the node with the lowest $f(n)$ value."
+            "AI analyzes the prompt typed by the user.",
+            "It searches its neural connections for patterns related to the topic.",
+            "It generates responses word-by-word, predicting the next word sequentially rather than copy-pasting."
           ],
-          workedExample: "Calculate A* cost $f(n)$ for a node where actual travel distance $g(n) = 15\\text{km}$, and straight-line heuristic estimate $h(n) = 20\\text{km}$.\n$f(n) = g(n) + h(n) = 15 + 20 = 35\\text{km}$."
+          workedExample: "Question: Does ChatGPT copy its answers from a secret database? Explain how it writes replies.\n\nAnswer:\nNo, ChatGPT does not copy answers directly from a database. Instead, it is a language predictor. During training, it analyzed billions of sentences to learn word associations. When you ask a question, it computes the most logical next word to output, writing the answer dynamically word-by-word based on probability."
         }
       },
       {
-        id: "reinforcement_learning",
-        title: "Reinforcement Learning",
-        juniorDesc: "Train virtual dogs using rewards and punishments (trial and error).",
-        seniorDesc: "Study Q-learning, rewards, environments, and agent action policies.",
-        juniorGreeting: "Hi Teacher! 🎮 How does an AI learn to play complex video games from scratch? Does it study game guides, or does it learn by playing?",
-        seniorGreeting: "Good day, Teacher! 🤖 We are studying reinforcement learning. Can you explain the roles of the Agent, Environment, State, Action, and Reward, and outline the Bellman Equation?",
-        juniorMarkingGuide: "1. Explain that the AI (agent) learns by trial and error in a game (environment).\n2. State that it gets positive points (rewards) for winning, negative (punishment) for losing.\n3. Explain that after millions of runs, it learns the best actions to maximize points.",
-        seniorMarkingGuide: "1. Define elements: Agent (learner), Environment (world), State ($s$), Action ($a$), Reward ($r$).\n2. Explain Q-learning: updating value of action-state pairs in a table to learn the optimal policy.\n3. State Bellman Equation: $Q(s, a) = R(s, a) + \\gamma \\max_{a'} Q(s', a')$ where $\\gamma$ is discount factor.",
+        id: "self_driving_intro",
+        title: "Self-Driving Cars",
+        juniorDesc: "Learn how autonomous cars use cameras and AI to stay in lanes and stop at stop signs.",
+        juniorGreeting: "Hello Teacher! 🚗 I saw a video of a Tesla driving itself. How does a car know when to turn, when to brake, and how does it spot traffic signs?",
+        juniorMarkingGuide: "JSS AI Driving: Name sensors (cameras, LiDAR) [2 Marks]. Explain AI object detection (identifying pedestrians, signs) and decision logic [2 Marks].",
         studyNotes: {
-          concept: "Reinforcement learning is an area of ML concerned with how intelligent agents take actions in an environment to maximize cumulative reward.",
-          formulas: [
-            "Bellman Equation: $Q(s, a) = R(s, a) + \\gamma \\max_{a'} Q(s', a')$ (where $\\gamma \\in [0,1]$ is discount factor)"
-          ],
+          concept: "Self-driving (autonomous) cars use a combination of cameras, sensors, and machine learning algorithms to map their surroundings and navigate safely.",
+          formulas: [],
           steps: [
-            "Agent observes current state $s$.",
-            "Agent selects action $a$ based on policy (exploitation vs exploration).",
-            "Environment transitions to state $s'$ and gives reward $r$.",
-            "Agent updates its Q-value index for $(s, a)$ using the Bellman formula."
+            "Perception: Cameras and LiDAR map lane markers, traffic lights, and objects.",
+            "Classification: AI labels detected items (e.g. 'pedestrian', 'stop sign').",
+            "Planning: Decision algorithms choose speed, steering, and braking."
           ],
-          workedExample: "What is the purpose of the discount factor ($\\gamma$) in the Bellman equation?\nThe discount factor determines the importance of future rewards. A value close to 0 makes the agent short-sighted (focuses only on immediate rewards), while a value close to 1 makes it long-sighted (weights future success heavily)."
+          workedExample: "Question: List three sensors used by a self-driving car and explain what happens when the car's AI detects a red octagon shape.\n\nAnswer:\n1. Sensors: Cameras, LiDAR (laser scanner), and Radar.\n2. Red octagon detection: The camera captures the shape. The image processing AI classifies it as a 'Stop Sign'. The driving controller immediately sends a command to apply the brakes and halt the car."
         }
       },
       {
-        id: "generative_ai",
-        title: "Generative AI & LLMs",
-        juniorDesc: "Learn how chatbots like Chidi write essays and draw images.",
-        seniorDesc: "Study the Transformer architecture, self-attention, and token probability decoding.",
-        juniorGreeting: "Hello Teacher! ✍️ How do AI chat models write essays that sound so human? Does the AI copy-paste text from the web, or does it write word by word?",
-        seniorGreeting: "Good day, Teacher! 🤖 We are studying Large Language Models. Can you explain the Transformer architecture, how the self-attention mechanism weights words in context, and how tokens are predicted?",
-        juniorMarkingGuide: "1. Explain that the AI predicts the next word based on patterns it learned from millions of books.\n2. State that the AI does not copy-paste; it generates text dynamically word-by-word.\n3. Mention that it evaluates which words fit best in the context of the conversation.",
-        seniorMarkingGuide: "1. State the key innovation: Transformer (Vaswani et al., 2017) using Self-Attention.\n2. Explain Self-Attention: allows the model to calculate relationships between all words in a sentence simultaneously (e.g. linking 'it' to 'dog' in 'The dog didn't cross the street because it was tired').\n3. Explain decoding: predicting probability distributions over the vocabulary for the next token and selecting based on temperature/top-p parameters.",
+        id: "pattern_recognition",
+        title: "Pattern Recognition",
+        juniorDesc: "Understand how AI classifies objects (like cat vs dog) based on shared patterns.",
+        juniorGreeting: "Hi Teacher! How does a computer learn to separate photos of cats from photos of dogs? What features does it look at to classify them?",
+        juniorMarkingGuide: "JSS AI Patterns: Explain feature extraction (ears shape, nose shape) [2 Marks]. Define classification as grouping based on similarities [2 Marks].",
         studyNotes: {
-          concept: "Generative AI creates new content (text, images) by learning statistical distributions from massive datasets. Large Language Models (LLMs) are built on the Transformer architecture.",
-          formulas: [
-            "Attention Formula: $\\text{Attention}(Q, K, V) = \\text{softmax}\\left(\\frac{QK^T}{\\sqrt{d_k}}\\right)V$"
-          ],
+          concept: "Pattern recognition is the automated labeling of data patterns by AI models. Models extract specific features (shapes, edges) to classify objects.",
+          formulas: [],
           steps: [
-            "Input sentence is converted to token IDs and mapped to embeddings.",
-            "Positional encodings are added to preserve word order.",
-            "Self-attention layers compute weights representing semantic connections between all tokens.",
-            "Feed-forward layers output log probabilities, selecting the next token to append to context."
+            "Feature extraction: AI measures length, shapes, textures (e.g. pointy ears vs floppy ears).",
+            "Comparison: AI compares these measurements to historical trained data.",
+            "Classification: It outputs a probability label (e.g. 95% Cat)."
           ],
-          workedExample: "Why is self-attention better than previous recurrent networks (RNNs)?\nRNNs process text sequentially, word-by-word, often losing track of long-range dependencies. Self-attention processes all words in parallel, capturing connections between distant words instantly."
+          workedExample: "Question: If you want to train an AI to recognize mangoes from oranges, what features should the AI look at?\n\nAnswer:\n1. Color: Oranges are orange, while ripe mangoes are yellow/green.\n2. Shape: Oranges are spherical (round), while mangoes are oval/oblong.\n3. Texture: Oranges have dimpled skin, while mangoes have smooth skin."
+        }
+      },
+      {
+        id: "gaming_ai",
+        title: "AI in Gaming",
+        juniorDesc: "Learn how computer opponents play chess or Ludo using search trees.",
+        juniorGreeting: "Good day, Teacher! 🎮 When I play chess or FIFA against the computer, how does the computer decide its next move? Does it cheat, or is it calculating possible moves?",
+        juniorMarkingGuide: "JSS AI Games: Explain the search tree concept (calculating future moves) [2 Marks]. State that AI evaluates scores for board positions [2 Marks].",
+        studyNotes: {
+          concept: "Game AI calculates possible future moves and scores them. It chooses the move that maximizes its chance of winning and minimizes the player's chances.",
+          formulas: [],
+          steps: [
+            "Generate all valid moves for the current turn.",
+            "For each move, simulate the opponent's best possible responses (search tree).",
+            "Score each resulting board position (e.g., +10 for capturing a pawn, -100 for losing the queen).",
+            "Choose the move with the highest score."
+          ],
+          workedExample: "Question: How does a computer opponent in a game of Tic-Tac-Toe decide where to place its mark?\n\nAnswer:\n1. The AI looks at all empty slots on the board.\n2. It simulates what happens if it marks each slot, checking if it can win immediately or block the player.\n3. It scores the slots (e.g. Win = +100, Block Player = +50, Neutral = 0).\n4. It places its mark on the slot with the highest score."
+        }
+      },
+      {
+        id: "ai_privacy",
+        title: "AI Safety & Privacy",
+        juniorDesc: "Understand the importance of data privacy and why AI needs safe rules.",
+        juniorGreeting: "Hello Teacher! Why does AI need so much of my data to work? Is it safe to let apps track my location or read my chat messages? What is data privacy?",
+        juniorMarkingGuide: "JSS AI Safety: Define data privacy [2 Marks]. Explain risk of data tracking and leaks [2 Marks].",
+        studyNotes: {
+          concept: "AI safety and privacy involve safeguarding user data from misuse by algorithms. Since AI learns from data, apps collect vast amounts of personal info.",
+          formulas: [],
+          steps: [
+            "Data Collection: Location, search history, text chats are recorded to train models.",
+            "Privacy Risk: Hackers leaking databases, companies selling profile details to advertisers.",
+            "Protection: Read permissions, use strong passwords, do not share private photos or secrets with AI."
+          ],
+          workedExample: "Question: State two reasons why you should be careful when sharing personal information with online AI chatbots.\n\nAnswer:\n1. Chatbot conversations are often stored on server databases and reviewed by human trainers, meaning your private info is no longer secret.\n2. If the company's database is hacked, your conversations and details could be leaked to the public."
+        }
+      },
+      {
+        id: "machine_learning_intro",
+        title: "Machine Learning Intro",
+        juniorDesc: "Learn how computers learn from examples (data) instead of being programmed.",
+        juniorGreeting: "Hi Teacher! What is the difference between writing traditional code rules and 'Machine Learning'? How does a computer learn from experience?",
+        juniorMarkingGuide: "JSS AI Learning: Define machine learning as learning from data/examples [2 Marks]. Explain training process [2 Marks].",
+        studyNotes: {
+          concept: "Machine Learning (ML) is a branch of AI where computers learn rules automatically from datasets of examples, rather than having programmers write explicit instructions.",
+          formulas: [],
+          steps: [
+            "Traditional Programming: Input Data + Rules = Output Answer.",
+            "Machine Learning: Input Data + Output Answers = Trained Rules."
+          ],
+          workedExample: "Question: If you want a computer to detect spam emails, how is the Machine Learning approach different from traditional programming?\n\nAnswer:\n1. Traditional approach: A programmer writes rules manually like: 'If email contains the word BUY, mark as spam.'\n2. ML approach: You feed the computer 10,000 example emails already labeled as 'Spam' or 'Inbox'. The ML algorithm analyzes common word patterns and creates its own rules to identify spam."
         }
       }
     ]
   }
+};
+
+
+// ----------------------------------------------------
+// 2. SENIOR SECONDARY SCHOOL (SSS) SUBJECTS DATABASE
+// ----------------------------------------------------
+export const sssSubjectsData: Record<string, Subject> = {
+  math: {
+    id: "math",
+    name: "Mathematics (SSS)",
+    topics: [
+      {
+        id: "quadratic",
+        title: "Quadratic Equations",
+        seniorDesc: "Solve quadratic equations using factorization, formula, and completing the square.",
+        seniorGreeting: "Good day, Teacher! ⚡ I am studying advanced quadratic equations ax² + bx + c = 0. I saw this formula x = (-b ± √(b²-4ac))/2a. But what does the part under the square root do? What is the discriminant, and how does it tell us if roots are real or imaginary?",
+        seniorMarkingGuide: "SS2 Math Quadratic Equations: State full quadratic formula [1 Mark]. Substitute coefficients correctly [1 Mark]. Explain discriminant b²-4ac [2 Marks]. Calculate correct real/imaginary roots [1 Mark].",
+        studyNotes: {
+          concept: "A quadratic equation is a polynomial equation of the second degree. The roots are calculated using the general formula, and the nature of roots is determined by the discriminant.",
+          formulas: [
+            "x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}",
+            "D = b^2 - 4ac \\quad \\text{(Discriminant)}"
+          ],
+          steps: [
+            "Identify standard coefficients a, b, and c.",
+            "Compute the discriminant D = b² - 4ac.",
+            "Determine nature of roots: If D > 0 (two real roots), if D = 0 (one repeated root), if D < 0 (complex roots).",
+            "Substitute into the quadratic formula to solve for x."
+          ],
+          workedExample: "Problem: Solve 2x² - 5x + 3 = 0.\n\nSolution:\n1. Identify: a = 2, b = -5, c = 3.\n2. Discriminant: D = (-5)² - 4(2)(3) = 25 - 24 = 1.\n3. Since D = 1 > 0, roots are real and distinct.\n4. Formula: x = [ -(-5) ± √1 ] / (2 * 2) = (5 ± 1) / 4.\n5. Solutions: x1 = 6/4 = 1.5, x2 = 4/4 = 1.\nAnswer: x = 1 or 1.5"
+        }
+      },
+      {
+        id: "simultaneous",
+        title: "Simultaneous Equations",
+        seniorDesc: "Solve two linear/quadratic variables using elimination, substitution, and graphical methods.",
+        seniorGreeting: "Good day, Teacher! I have this set of equations: 2x + 3y = 12 and x - y = 1. How do I solve them simultaneously? Which method is faster: elimination or substitution?",
+        seniorMarkingGuide: "SSS Math Simultaneous: Eliminate one variable by multiplication/substitition [2 Marks]. Solve for first variable [1 Mark]. Substitute back to find second variable [1 Mark].",
+        studyNotes: {
+          concept: "Simultaneous equations are a set of two or more equations containing multiple variables. Solving them means finding a common set of values that satisfies all equations.",
+          formulas: [
+            "a_1 x + b_1 y = c_1",
+            "a_2 x + b_2 y = c_2"
+          ],
+          steps: [
+            "Substitution Method: Express one variable in terms of the other from one equation, then substitute it into the second equation.",
+            "Elimination Method: Multiply the equations by constants to make the coefficients of one variable equal, then add/subtract the equations to eliminate that variable."
+          ],
+          workedExample: "Problem: Solve simultaneously: x + y = 5 and 2x - y = 4.\n\nSolution:\n1. Add the two equations directly to eliminate 'y':\n   (x + y) + (2x - y) = 5 + 4\n   3x = 9\n   x = 3.\n2. Substitute x=3 into the first equation:\n   3 + y = 5\n   y = 2.\nAnswer: x = 3, y = 2"
+        }
+      },
+      {
+        id: "logarithms",
+        title: "Indices & Logarithms",
+        seniorDesc: "Apply the laws of indices and logarithms to simplify equations.",
+        seniorGreeting: "Hello Teacher! I am working on indices and logs. If 2^x = 16, I know x = 4. But how do I write that using logarithms? What are the base properties of logs?",
+        seniorMarkingGuide: "SSS Math Indices & Logs: Convert index form to log form [1 Mark]. State addition and subtraction laws [2 Marks]. Solve log equation [1 Mark].",
+        studyNotes: {
+          concept: "Indices represent power or exponents. Logarithms are the inverse of indices, answering the question: 'to what power must we raise a base to get this number?'",
+          formulas: [
+            "b^y = x \\iff \\log_b(x) = y",
+            "\\log(A \\cdot B) = \\log(A) + \\log(B)",
+            "\\log(\\frac{A}{B}) = \\log(A) - \\log(B)",
+            "\\log(A^p) = p \\log(A)"
+          ],
+          steps: [
+            "Simplify index equations by expressing bases as identical powers.",
+            "Use log rules to contract sums/differences into single terms.",
+            "Verify base bounds (base must be positive and not equal to 1)."
+          ],
+          workedExample: "Problem: Solve for x: log_2(x) + log_2(x - 2) = 3.\n\nSolution:\n1. Combine logs: log_2[ x(x - 2) ] = 3.\n2. Convert to index form: x(x - 2) = 2^3\n3. Simplify: x² - 2x = 8 -> x² - 2x - 8 = 0.\n4. Factorize: (x - 4)(x + 2) = 0.\n5. Solutions: x = 4 or x = -2. (Reject -2 since log of negative numbers is undefined).\nAnswer: x = 4"
+        }
+      },
+      {
+        id: "trigonometry",
+        title: "Trigonometric Functions",
+        seniorDesc: "Understand sine, cosine, tangent curves, right-angle triangles, and the sine/cosine rules.",
+        seniorGreeting: "Good day, Teacher! 📐 I am studying trigonometry. How do we derive the Sine and Cosine rules, and when do we use the Cosine rule instead of Sine rule in solving triangles?",
+        seniorMarkingGuide: "SSS Math Trig: State Sine rule (a/sinA = b/sinB) [1 Mark]. State Cosine rule (a² = b²+c²-2bc cosA) [1 Mark]. Perform correct triangle side calculation [3 Marks].",
+        studyNotes: {
+          concept: "Trigonometric functions map angles to side ratios. The Sine and Cosine rules allow us to solve for side lengths and angles in non-right-angled triangles.",
+          formulas: [
+            "\\frac{a}{\\sin(A)} = \\frac{b}{\\sin(B)} = \\frac{c}{\\sin(C)} \\quad \\text{(Sine Rule)}",
+            "a^2 = b^2 + c^2 - 2bc \\cos(A) \\quad \\text{(Cosine Rule)}"
+          ],
+          steps: [
+            "Use Sine Rule when: two angles and one side are known, or two sides and a non-included angle are known.",
+            "Use Cosine Rule when: all three sides are known, or two sides and the included angle are known."
+          ],
+          workedExample: "Problem: In triangle ABC, b = 5cm, c = 8cm, and angle A = 60°. Find side a.\n\nSolution:\n1. Use Cosine Rule: a² = b² + c² - 2bc * cos(A)\n2. Substitute: a² = 5² + 8² - 2(5)(8) * cos(60°)\n3. Calculate: a² = 25 + 64 - 80 * (0.5) = 89 - 40 = 49.\n4. Solve: a = √49 = 7cm.\nAnswer: a = 7cm"
+        }
+      },
+      {
+        id: "coordinate_geometry",
+        title: "Coordinate Geometry",
+        seniorDesc: "Find slope, distance, midpoints, and linear equations of straight lines.",
+        seniorGreeting: "Hello, Teacher! 📈 Given two points A(2, 3) and B(6, 11), how do I find the distance between them, their midpoint, and the gradient of the line connecting them?",
+        seniorMarkingGuide: "SSS Math Coordinate: Calculate distance using Pythagoras [2 Marks]. Find slope (dy/dx) [1 Mark]. Write standard line equation y = mx + c [2 Marks].",
+        studyNotes: {
+          concept: "Coordinate geometry maps geometric shapes and lines onto a 2D Cartesian plane using numerical points (x, y).",
+          formulas: [
+            "d = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2} \\quad \\text{(Distance)}",
+            "m = \\frac{y_2 - y_1}{x_2 - x_1} \\quad \\text{(Gradient/Slope)}",
+            "y - y_1 = m(x - x_1) \\quad \\text{(Line Equation)}"
+          ],
+          steps: [
+            "Identify point coordinates (x1, y1) and (x2, y2).",
+            "Substitute into the slope formula to find gradient m.",
+            "Use the slope and one point to write the linear equation."
+          ],
+          workedExample: "Problem: Find the equation of the line passing through (2, 3) with gradient m = 2.\n\nSolution:\n1. Use formula: y - y1 = m(x - x1)\n2. Substitute: y - 3 = 2(x - 2)\n3. Expand: y - 3 = 2x - 4\n4. Rearrange: y = 2x - 1.\nAnswer: y = 2x - 1"
+        }
+      },
+      {
+        id: "advanced_prob",
+        title: "Advanced Probability",
+        seniorDesc: "Calculate dependent and independent events, mutually exclusive events, and conditional checks.",
+        seniorGreeting: "Good day, Teacher! 🎲 What is the difference between independent events and mutually exclusive events? How do we use addition and multiplication laws?",
+        seniorMarkingGuide: "SSS Math Probability: Define independent vs mutually exclusive [2 Marks]. Apply multiplication law (P(A∩B)=P(A)*P(B)) [1.5 Marks]. Apply addition law [1.5 Marks].",
+        studyNotes: {
+          concept: "Advanced probability handles compound events. Mutually exclusive events cannot happen at the same time. Independent events do not affect each other's outcomes.",
+          formulas: [
+            "P(A \\cup B) = P(A) + P(B) \\quad \\text{(Mutually Exclusive Addition)}",
+            "P(A \\cap B) = P(A) \\times P(B) \\quad \\text{(Independent Multiplication)}"
+          ],
+          steps: [
+            "Check if events can occur together: if yes, P(A∪B) = P(A) + P(B) - P(A∩B).",
+            "Check if occurrence of A changes probability of B: if yes, conditional rules apply."
+          ],
+          workedExample: "Problem: If the probability of passing Math is 0.7 and passing English is 0.8, what is the probability of passing both if they are independent?\n\nSolution:\n1. Since they are independent: P(Math ∩ English) = P(Math) * P(English).\n2. Calculate: 0.7 * 0.8 = 0.56.\nAnswer: Probability = 0.56"
+        }
+      },
+      {
+        id: "sequence_series",
+        title: "Sequence & Series (AP/GP)",
+        seniorDesc: "Find terms and sum of Arithmetic Progressions (AP) and Geometric Progressions (GP).",
+        seniorGreeting: "Hello Teacher! 📈 I have this sequence: 3, 7, 11, 15... I see it adds 4 every time. How do I find the 50th term? What if it is a geometric progression where it multiplies?",
+        seniorMarkingGuide: "SSS Math Sequence: State nth term formula of AP [1 Mark]. Calculate common difference/ratio [1 Mark]. Solve for nth term or sum [3 Marks].",
+        studyNotes: {
+          concept: "An Arithmetic Progression (AP) changes by adding a constant difference (d). A Geometric Progression (GP) changes by multiplying a constant ratio (r).",
+          formulas: [
+            "U_n = a + (n - 1)d \\quad \\text{(AP nth term)}",
+            "S_n = \\frac{n}{2}[2a + (n - 1)d] \\quad \\text{(AP Sum)}",
+            "U_n = a \\cdot r^{n-1} \\quad \\text{(GP nth term)}"
+          ],
+          steps: [
+            "Identify the first term (a) and common difference (d) or ratio (r).",
+            "Choose the appropriate formula for the requested term or sum.",
+            "Substitute and solve."
+          ],
+          workedExample: "Problem: Find the 10th term of the AP: 2, 5, 8, 11...\n\nSolution:\n1. Identify: a = 2, d = 5 - 2 = 3.\n2. Formula: Un = a + (n - 1)d\n3. Calculate: U10 = 2 + (10 - 1)3 = 2 + 9(3) = 2 + 27 = 29.\nAnswer: 10th term = 29"
+        }
+      },
+      {
+        id: "matrices",
+        title: "Matrices & Determinants",
+        seniorDesc: "Perform matrix addition, multiplication, determinants, and inverses of 2x2 matrices.",
+        seniorGreeting: "Good day, Teacher! What is a matrix? How do I multiply two 2x2 matrices together, and why does matrix multiplication AB not equal BA?",
+        seniorMarkingGuide: "SSS Math Matrices: Perform row-by-column multiplication correctly [2 Marks]. Calculate determinant (ad-bc) [1 Mark]. Find inverse [2 Marks].",
+        studyNotes: {
+          concept: "A matrix is a rectangular array of numbers arranged in rows and columns. Matrix multiplication is non-commutative (AB ≠ BA).",
+          formulas: [
+            "\\text{Det}(A) = ad - bc \\quad \\text{for } A = \\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}",
+            "A^{-1} = \\frac{1}{ad - bc} \\begin{pmatrix} d & -b \\\\ -c & a \\end{pmatrix}"
+          ],
+          steps: [
+            "Multiply row elements of first matrix by column elements of second matrix and sum.",
+            "Calculate determinant. If det = 0, the matrix has no inverse (singular matrix).",
+            "Swap main diagonal elements, negate opposite diagonal, and divide by determinant."
+          ],
+          workedExample: "Problem: Find determinant and inverse of A = [[2, 1], [4, 3]].\n\nSolution:\n1. Det = (2 * 3) - (1 * 4) = 6 - 4 = 2.\n2. Inverse = 1/2 * [[3, -1], [-4, 2]] = [[1.5, -0.5], [-2, 1]].\nAnswer: Det = 2, Inverse = [[1.5, -0.5], [-2, 1]]"
+        }
+      },
+      {
+        id: "differentiation",
+        title: "Differentiation Calculus",
+        seniorDesc: "Find derivatives of polynomials using power rule, product rule, and chain rule.",
+        seniorGreeting: "Hello Teacher! ⚡ We are starting calculus. What does differentiation actually measure? How do we differentiate y = 3x^2 + 5x from first principles?",
+        seniorMarkingGuide: "SSS Math Differentiation: Define derivative as rate of change [1 Mark]. Apply Power Rule (d/dx x^n = n*x^(n-1)) [2 Marks]. Apply Chain/Product rule [2 Marks].",
+        studyNotes: {
+          concept: "Differentiation is the mathematical process of finding the rate of change or gradient of a function at any given point.",
+          formulas: [
+            "\\frac{d}{dx}(x^n) = n \\cdot x^{-1} \\quad \\text{(Power Rule)}",
+            "\\frac{d}{dx}(u \\cdot v) = u \\frac{dv}{dx} + v \\frac{du}{dx} \\quad \\text{(Product Rule)}",
+            "\\frac{dy}{dx} = \\frac{dy}{du} \\cdot \\frac{du}{dx} \\quad \\text{(Chain Rule)}"
+          ],
+          steps: [
+            "For polynomials: multiply the term by its exponent and reduce the exponent by 1.",
+            "Constant numbers differentiate to 0."
+          ],
+          workedExample: "Problem: Differentiate y = 4x^3 - 5x + 7.\n\nSolution:\n1. Differentiate 4x^3 -> 4 * 3x^2 = 12x^2.\n2. Differentiate -5x -> -5.\n3. Differentiate 7 -> 0.\n4. Combined: dy/dx = 12x^2 - 5.\nAnswer: dy/dx = 12x^2 - 5"
+        }
+      },
+      {
+        id: "integration",
+        title: "Integration Calculus",
+        seniorDesc: "Understand indefinite and definite integration as reverse differentiation.",
+        seniorGreeting: "Good day, Teacher! What is integration? Why is it described as finding the area under a curve, and why do we always add '+ C' at the end of indefinite integrals?",
+        seniorMarkingGuide: "SSS Math Integration: State Integration is reverse of differentiation [1 Mark]. Apply power rule of integration [2 Marks]. Compute definite boundaries [2 Marks].",
+        studyNotes: {
+          concept: "Integration is the inverse process of differentiation. It is used to find the area under curves and solve accumulation problems.",
+          formulas: [
+            "\\int x^n dx = \\frac{x^{n+1}}{n+1} + C \\quad (n \\neq -1)",
+            "\\int_a^b f(x) dx = F(b) - F(a)"
+          ],
+          steps: [
+            "To integrate a term, add 1 to the exponent and divide by the new exponent.",
+            "Add the constant of integration (C) for indefinite integrals."
+          ],
+          workedExample: "Problem: Evaluate the indefinite integral of y = 3x^2.\n\nSolution:\n1. Apply rule: ∫ 3x^2 dx = 3 * (x^(2+1)) / (2+1) + C\n2. Simplify: 3 * (x^3) / 3 + C = x^3 + C.\nAnswer: x^3 + C"
+        }
+      }
+    ]
+  },
+  biology: {
+    id: "biology",
+    name: "Biology (SSS)",
+    topics: [
+      {
+        id: "cytology",
+        title: "Cytology (Cell Organelles)",
+        seniorDesc: "Detail structure and function of mitochondria, nucleus, ribosomes, and compare plant/animal cell walls.",
+        seniorGreeting: "Good day, Teacher! 🔬 I'm studying cytology. Can you explain the functions of the mitochondria, nucleus, and ribosomes, and outline key differences between plant and animal cells?",
+        seniorMarkingGuide: "SS2 Biology Cells: List functions of mitochondria (ATP energy), nucleus (DNA/control), ribosomes (proteins) [2 Marks]. Outline differences: plant cell wall, chloroplast, large vacuole [3 Marks].",
+        studyNotes: {
+          concept: "Cells contain membrane-bound organelles that perform specific biochemical tasks. Plant cells are reinforced by cellulose cell walls, whereas animal cells lack walls.",
+          formulas: [],
+          steps: [
+            "Nucleus: Contains genetic material (chromosomes), controls cell division and protein synthesis.",
+            "Mitochondria: Double-membrane organelle, site of cellular respiration to generate ATP (adenosine triphosphate).",
+            "Ribosomes: Tiny complexes of RNA and protein, site of translation/protein synthesis."
+          ],
+          workedExample: "Question: Draw comparison table between plant and animal cells.\n\nAnswer:\nFeature | Plant Cell | Animal Cell\nCell Wall | Present (cellulose) | Absent\nChloroplast | Present (photosynthesis) | Absent\nVacuole | Single, large central | Small, multiple scattered\nLysosome | Rare | Common"
+        }
+      },
+      {
+        id: "photosynthesis",
+        title: "Photosynthesis (Light & Dark)",
+        seniorDesc: "Understand Light and Dark reactions, chloroplast structure, and the balanced molecular equation.",
+        seniorGreeting: "Hello, Teacher! 🌿 I am preparing for my biology exam on photosynthesis. I understand that plants convert carbon dioxide and water into glucose. But I'm confused about the Light-dependent and Light-independent (Dark) reactions. Can you explain the chemical process and write out the balanced molecular equation?",
+        seniorMarkingGuide: "SS2 Biology Photosynthesis: Write balanced chemical equation 6CO2 + 6H2O -> C6H12O6 + 6O2 [2 Marks]. Explain light reaction (photolysis of water) [2 Marks]. Explain dark reaction (carbon fixation) [1 Mark].",
+        studyNotes: {
+          concept: "Photosynthesis is the process by which green plants utilize light energy to convert carbon dioxide and water into chemical glucose, taking place in two distinct chemical phases within the chloroplast.",
+          formulas: [
+            "6CO_2 + 6H_2O \\xrightarrow{\\text{Light/Chlorophyll}} C_6H_{12}O_6 + 6O_2"
+          ],
+          steps: [
+            "Light Reaction (Thylakoids): Absorption of light splits water (photolysis), releasing oxygen and producing ATP and NADPH.",
+            "Dark Reaction / Calvin Cycle (Stroma): ATP and NADPH are used to fix carbon dioxide into glucose molecules."
+          ],
+          workedExample: "Question: Explain photolysis of water in the light stage of photosynthesis.\n\nAnswer:\nPhotolysis is the splitting of water molecules (H2O) using solar energy absorbed by chlorophyll. The water molecule is split into hydrogen ions (H+), electrons (e-), and oxygen gas (O2). The oxygen is released as a byproduct, while the hydrogen ions and electrons are used to form NADPH, which moves to the dark stage."
+        }
+      },
+      {
+        id: "cellular_respiration",
+        title: "Respiration (Glycolysis & Krebs)",
+        seniorDesc: "Compare aerobic and anaerobic respiration and explain Glycolysis and Krebs cycle.",
+        seniorGreeting: "Good day, Teacher! ⚡ In cellular respiration, how does our body convert glucose into ATP? What is the difference between Glycolysis in the cytoplasm and the Krebs cycle in the mitochondria?",
+        seniorMarkingGuide: "SSS Biology Respiration: Define aerobic vs anaerobic [1 Mark]. Explain Glycolysis steps (anaerobic, breaks glucose to pyruvate, yields 2 ATP) [2 Marks]. Explain Krebs Cycle (aerobic, yields CO2, NADH, FADH2) [2 Marks].",
+        studyNotes: {
+          concept: "Cellular respiration is the biochemical pathway that extracts energy from organic nutrients (glucose) to produce ATP.",
+          formulas: [
+            "C_6H_{12}O_6 + 6O_2 \\implies 6CO_2 + 6H_2O + 36/38\\text{ ATP}"
+          ],
+          steps: [
+            "Glycolysis (Cytoplasm): Anaerobic breakdown of one glucose molecule into two pyruvate molecules, yielding 2 net ATP.",
+            "Link Reaction: Converts pyruvate to Acetyl-CoA.",
+            "Krebs Cycle (Mitochondrial Matrix): Completes oxidation of acetyl-CoA, producing carbon dioxide, ATP, and reduced coenzymes (NADH, FADH2).",
+            "Electron Transport Chain: Uses oxygen as final electron acceptor to generate the bulk of ATP (approx 32-34 ATP)."
+          ],
+          workedExample: "Question: Outline the three major stages of aerobic respiration and state where each occurs in the cell.\n\nAnswer:\n1. Glycolysis: Occurs in the cytoplasm (cytosol). It does not require oxygen.\n2. Krebs Cycle (Citric Acid Cycle): Occurs in the matrix of the mitochondria. Requires oxygen.\n3. Electron Transport Chain / Oxidative Phosphorylation: Occurs in the inner membrane (cristae) of the mitochondria. Requires oxygen."
+        }
+      },
+      {
+        id: "genetics",
+        title: "Genetics & Heredity",
+        seniorDesc: "Apply Mendel's laws of inheritance and draw Monohbrid Punnett squares.",
+        seniorGreeting: "Hello Teacher! 🧬 We are studying genetics. If a tall pea plant (Tt) crosses with a short pea plant (tt), how do we calculate the probability of getting tall offspring? What is a Punnett square?",
+        seniorMarkingGuide: "SSS Biology Genetics: Define genotype vs phenotype [1 Mark]. Set up alleles on Punnett square [2 Marks]. Compute correct phenotypic ratio (e.g. 3:1 or 1:1) [2 Marks].",
+        studyNotes: {
+          concept: "Genetics is the study of heredity and variation. Monohybrid inheritance tracks the transfer of a single gene trait governed by dominant and recessive alleles.",
+          formulas: [
+            "\\text{Genotypic ratio (Monohybrid heterozygote cross): } 1:2:1 \\quad (TT:Tt:tt)",
+            "\\text{Phenotypic ratio: } 3:1 \\quad (\\text{Tall:Short})"
+          ],
+          steps: [
+            "Identify parent genotypes (e.g. Tall = Tt, Short = tt).",
+            "Separate alleles to represent gametes (T and t, t and t).",
+            "Construct a 2x2 Punnett square grid.",
+            "Cross alleles to find offspring genotypes and compute phenotypic percentages."
+          ],
+          workedExample: "Problem: Draw a Punnett square crossing a heterozygous tall plant (Tt) and a homozygous recessive short plant (tt). Find the percentage of short offspring.\n\nSolution:\n1. Gametes: Parent 1 (T, t), Parent 2 (t, t).\n2. Cross grid:\n      |  T  |  t  |\n   ---|-----|-----|\n    t |  Tt |  tt |\n   ---|-----|-----|\n    t |  Tt |  tt |\n3. Offspring genotypes: 2 Tt (Tall), 2 tt (Short).\n4. Percentage of short = (2 / 4) * 100 = 50%.\nAnswer: 50% short offspring."
+        }
+      },
+      {
+        id: "osmosis_diffusion",
+        title: "Osmosis & Diffusion",
+        seniorDesc: "Understand active transport, passive diffusion, and osmotic pressure in cells.",
+        seniorGreeting: "Hello Teacher! What is the difference between diffusion and osmosis? Why does a red blood cell burst when put in pure water, but a plant cell doesn't?",
+        seniorMarkingGuide: "SSS Biology Transport: Define diffusion (particles move down gradient) [1 Mark]. Define osmosis (water moves through semi-permeable membrane) [2 Marks]. Explain turgor pressure vs hemolysis [2 Marks].",
+        studyNotes: {
+          concept: "Diffusion is the passive movement of particles from a region of higher concentration to lower concentration. Osmosis is the movement of water molecules through a semi-permeable membrane from a region of low solute (high water) concentration to high solute (low water) concentration.",
+          formulas: [],
+          steps: [
+            "Hypertonic solution: Higher concentration outside, cell shrinks (plasmolysis).",
+            "Hypotonic solution: Lower concentration outside, water enters. Animal cell bursts (hemolysis), plant cell becomes turgid.",
+            "Isotonic solution: Concentration is equal, no net water movement."
+          ],
+          workedExample: "Question: Why does a slice of yam become soft when placed in a concentrated salt solution?\n\nAnswer:\n1. The concentrated salt solution is hypertonic to the cell sap of the yam cells.\n2. Water moves out of the yam cells by osmosis, passing through the semi-permeable cell membranes into the salt solution.\n3. The yam cells lose turgidity (become flaccid/plasmolyzed), causing the yam slice to lose structure and become soft."
+        }
+      },
+      {
+        id: "nervous_system",
+        title: "Nervous System & Synapse",
+        seniorDesc: "Understand reflex arcs, neuron anatomy, and chemical transmission at the synapse.",
+        seniorGreeting: "Good day Teacher! 🧠 If I touch a hot cup of tea, I pull my hand back instantly without thinking. What is the path of this reflex arc, and how do chemical signals cross the gap between neurons?",
+        seniorMarkingGuide: "SSS Biology Nervous: Trace reflex path (Receptor -> Sensory Neuron -> Relay/Spinal cord -> Motor Neuron -> Effector) [3 Marks]. Explain synapse chemical transfer (neurotransmitters) [2 Marks].",
+        studyNotes: {
+          concept: "The nervous system coordinates body actions via electrical impulses. Synapses are microscopic gaps between neurons where signals are transmitted chemically using neurotransmitters.",
+          formulas: [],
+          steps: [
+            "Sensory Neuron: Carries impulse from receptor (skin) to Central Nervous System (spinal cord).",
+            "Relay Neuron: Coordinates response in spinal cord.",
+            "Motor Neuron: Carries command impulse to the effector muscle.",
+            "Synaptic transmission: Impulse triggers release of neurotransmitters (e.g. acetylcholine) which diffuse across the gap."
+          ],
+          workedExample: "Question: Outline the steps of a reflex action when a person steps on a sharp nail.\n\nAnswer:\n1. Detection: Pain receptors in the foot detect the stimulus (sharp nail).\n2. Transmission: An electrical impulse travels along the sensory neuron to the spinal cord.\n3. Relay: In the grey matter of the spinal cord, the impulse crosses a synapse to the relay neuron.\n4. Output: The relay neuron passes the impulse across another synapse to the motor neuron.\n5. Action: The motor neuron carries the impulse to the leg muscles (effectors), which contract to lift the foot."
+        }
+      },
+      {
+        id: "circulatory_system",
+        title: "Circulatory System",
+        seniorDesc: "Trace double circulation of blood in mammals and describe blood components.",
+        seniorGreeting: "Hi Teacher! 🩸 How does the heart pump blood to all parts of the body? What is double circulation, and why is the left ventricle wall thicker than the right ventricle wall?",
+        seniorMarkingGuide: "SSS Biology Circulatory: Define double circulation (pulmonary and systemic) [2 Marks]. Explain ventricles thickness difference [1 Mark]. List 4 blood components (plasma, RBC, WBC, platelets) [2 Marks].",
+        studyNotes: {
+          concept: "Mammals have a closed, double circulatory system. Blood passes through the heart twice during one complete cycle through the body.",
+          formulas: [],
+          steps: [
+            "Pulmonary Circulation: Deoxygenated blood moves from right ventricle to lungs for oxygen, returns to left atrium.",
+            "Systemic Circulation: Oxygenated blood moves from left ventricle to the rest of the body, returns to right atrium.",
+            "Ventricular walls: Left ventricle is thicker because it must pump blood at high pressure throughout the entire body, whereas the right ventricle only pumps to the nearby lungs."
+          ],
+          workedExample: "Question: List the four components of blood and state the primary function of each.\n\nAnswer:\n1. Red Blood Cells (Erythrocytes): Transport oxygen using hemoglobin.\n2. White Blood Cells (Leukocytes): Fight infections and defend the immune system.\n3. Platelets (Thrombocytes): Aid in blood clotting to stop bleeding.\n4. Blood Plasma: Liquid medium that transports nutrients, carbon dioxide, hormones, and waste products."
+        }
+      },
+      {
+        id: "ecology",
+        title: "Ecology & Biomes",
+        seniorDesc: "Analyze food chains, trophic levels, energy loss, and local African savanna biomes.",
+        seniorGreeting: "Hello Teacher! 🌾 In ecology, why are food chains limited to only 4 or 5 levels? What is the 10% rule of energy transfer between trophic levels?",
+        seniorMarkingGuide: "SSS Biology Ecology: Define trophic levels [1 Mark]. Explain 10% energy transfer rule (90% lost as heat/metabolism) [2 Marks]. Give example of savanna biome characteristics [2 Marks].",
+        studyNotes: {
+          concept: "Ecology is the study of interactions between organisms and their environment. Energy enters ecosystems via plants (producers) and flows through trophic levels with significant energy loss at each step.",
+          formulas: [
+            "\\text{Energy Transferred} = \\text{Energy at lower level} \\times 0.10"
+          ],
+          steps: [
+            "Producers: Capture solar energy (Trophic Level 1).",
+            "Primary Consumers (Herbivores): Feed on producers (Trophic Level 2).",
+            "Secondary/Tertiary Consumers (Carnivores): Feed on lower levels.",
+            "10% Rule: Only about 10% of the energy stored as biomass in one trophic level is passed to the next."
+          ],
+          workedExample: "Question: If plants in a grassland ecosystem capture 10,000 Joules of light energy, how much energy is available to snake (tertiary consumer) in the food chain: Plant -> Grasshopper -> Frog -> Snake?\n\nSolution:\n1. Trophic Level 1 (Plant): 10,000 J\n2. Trophic Level 2 (Grasshopper): 10,000 * 0.10 = 1,000 J\n3. Trophic Level 3 (Frog): 1,000 * 0.10 = 100 J\n4. Trophic Level 4 (Snake): 100 * 0.10 = 10 J.\nAnswer: 10 Joules"
+        }
+      },
+      {
+        id: "excretory_system",
+        title: "Excretory System (Kidney)",
+        seniorDesc: "Understand nephron structure, ultrafiltration, selective reabsorption, and urine formation.",
+        seniorGreeting: "Good day, Teacher! ⚖️ What is excretion? How does the human kidney filter urea from the blood? What is the role of the nephron in ultrafiltration and reabsorption?",
+        seniorMarkingGuide: "SSS Biology Excretion: Define excretion [1 Mark]. Describe ultrafiltration in Bowman's capsule [2 Marks]. Explain selective reabsorption in proximal tubule [2 Marks].",
+        studyNotes: {
+          concept: "Excretion is the elimination of metabolic waste products from the body of an organism. The nephron is the functional unit of the kidney, creating urine by filtration and reabsorption.",
+          formulas: [],
+          steps: [
+            "Ultrafiltration (Bowman's Capsule): High blood pressure forces small molecules (urea, glucose, water, salts) out of the glomerulus. Large proteins and red blood cells remain.",
+            "Selective Reabsorption (Proximal Convoluted Tubule): All glucose, amino acids, and essential salts/water are reabsorbed back into the capillaries.",
+            "Excretion: Concentrated waste (urine containing urea, excess salts, and water) flows down the collecting duct to the bladder."
+          ],
+          workedExample: "Question: Why is glucose normally found in the glomerular filtrate but absent in the urine of a healthy person?\n\nAnswer:\n1. Glomerular filtrate is formed during ultrafiltration in the Bowman's capsule. Because glucose molecules are small, they easily pass through the glomerulus filter.\n2. As the filtrate passes down the proximal convoluted tubule of the nephron, all glucose is actively reabsorbed back into the surrounding blood capillaries. Therefore, no glucose is left in the final urine of a healthy individual."
+        }
+      },
+      {
+        id: "reproduction",
+        title: "Plant & Animal Reproduction",
+        seniorDesc: "Compare sexual and asexual pathways, flower structure, and mammalian fertilization.",
+        seniorGreeting: "Hello Teacher! What are the advantages of sexual reproduction over asexual reproduction? How does double fertilization occur in flowering plants?",
+        seniorMarkingGuide: "SSS Biology Reproduction: List 2 differences between sexual and asexual [2 Marks]. Explain double fertilization (one sperm fuses with egg, other with polar nuclei) [3 Marks].",
+        studyNotes: {
+          concept: "Reproduction ensures the continuity of life. Sexual reproduction combines gametes to create genetic variation. Double fertilization is unique to angiosperms (flowering plants).",
+          formulas: [],
+          steps: [
+            "Asexual: Single parent, offspring are genetically identical clones.",
+            "Sexual: Two parents, gametes fuse, offspring exhibit genetic variation.",
+            "Double Fertilization in plants: One male nucleus fuses with the egg nucleus to form a diploid zygote (2n). The other male nucleus fuses with two polar nuclei to form a triploid endosperm (3n) which acts as a food store."
+          ],
+          workedExample: "Question: Explain the process and significance of double fertilization in angiosperms.\n\nAnswer:\n1. Process: The pollen tube releases two male gametes into the embryo sac of the ovule. One male gamete fuses with the egg cell to form the zygote (which becomes the embryo). The second male gamete fuses with the two polar nuclei in the center to form the primary endosperm nucleus.\n2. Significance: It coordinates the development of the food-storing endosperm only when fertilization is successful, preventing waste of plant resources."
+        }
+      }
+    ]
+  },
+  physics: {
+    id: "physics",
+    name: "Physics (SSS)",
+    topics: [
+      {
+        id: "motion",
+        title: "Equations of Motion",
+        seniorDesc: "Learn the three linear equations of motion and uniform acceleration calculations.",
+        seniorGreeting: "Good day, Teacher! ⚡ I'm trying to learn the equations of motion for Physics, like v = u + at and s = ut + 1/2at^2. What do these letters represent, how are they derived, and when are they valid?",
+        seniorMarkingGuide: "SS2 Physics Motion: State all three linear motion equations [3 Marks]. Explain the requirement of constant/uniform acceleration [1 Mark]. Define all symbols with standard units [1 Mark].",
+        studyNotes: {
+          concept: "Linear equations of motion describe the behavior of a physical system in terms of its motion as a function of time under constant acceleration.",
+          formulas: [
+            "v = u + at",
+            "s = ut + \\frac{1}{2}at^2",
+            "v^2 = u^2 + 2as"
+          ],
+          steps: [
+            "Identify the given parameters: u (initial velocity), v (final velocity), a (acceleration), t (time), s (displacement).",
+            "Check if acceleration is constant. If not, these formulas cannot be used.",
+            "Choose the formula that contains the known variables and the single unknown target variable, then solve."
+          ],
+          workedExample: "Problem: A car accelerates uniformly from rest at 2 m/s² for 5 seconds. Find the distance traveled.\n\nSolution:\n1. Identify: u = 0 (from rest), a = 2, t = 5, s = ?\n2. Choose formula: s = ut + 0.5 * a * t²\n3. Substitute: s = 0(5) + 0.5 * 2 * 5² = 0 + 1 * 25 = 25 meters.\nAnswer: Distance = 25m"
+        }
+      },
+      {
+        id: "newtons_laws",
+        title: "Newton's Laws of Motion",
+        seniorDesc: "Apply Newton's three laws of motion to inertia, momentum, and recoil calculations.",
+        seniorGreeting: "Hello Teacher! ⚙️ What are Newton's three laws of motion? How do we calculate force using F = ma, and how does the Third Law explain rocket propulsion?",
+        seniorMarkingGuide: "SSS Physics Laws: State all three laws of motion [3 Marks]. Write F = ma formula [1 Mark]. Explain action-reaction rocket principle [1 Mark].",
+        studyNotes: {
+          concept: "Newton's laws of motion form the foundation of classical mechanics, describing the relationship between a body and the forces acting upon it.",
+          formulas: [
+            "F = m \\cdot a \\quad \\text{(Force = Mass } \\times \\text{ Acceleration)}",
+            "P = m \\cdot v \\quad \\text{(Momentum = Mass } \\times \\text{ Velocity)}"
+          ],
+          steps: [
+            "First Law (Inertia): A body remains at rest or in uniform motion unless acted on by an external force.",
+            "Second Law (Force): The rate of change of momentum is proportional to the applied force (F = ma).",
+            "Third Law (Action/Reaction): For every action, there is an equal and opposite reaction."
+          ],
+          workedExample: "Problem: Calculate the force required to accelerate a 5kg mass at 3 m/s².\n\nSolution:\n1. Formula: F = m * a\n2. Substitute: F = 5 * 3 = 15 Newtons.\nAnswer: Force = 15 N"
+        }
+      },
+      {
+        id: "work_energy",
+        title: "Work, Energy & Power",
+        seniorDesc: "Calculate mechanical work, potential and kinetic energy conservation, and efficiency.",
+        seniorGreeting: "Good day, Teacher! How do we define Work, Energy, and Power in Physics? If a crane lifts a 100kg crate to a height of 10m in 5 seconds, how much power does it produce?",
+        seniorMarkingGuide: "SSS Physics Work: State work formula (W=F*d) [1 Mark]. State Power formula (P=W/t) [1 Mark]. Compute correct work in Joules and Power in Watts [3 Marks].",
+        studyNotes: {
+          concept: "Work is done when a force moves an object. Energy is the capacity to do work. Power is the rate at which work is done.",
+          formulas: [
+            "W = F \\cdot d \\cos(\\theta) \\quad \\text{(Work)}",
+            "P = \\frac{W}{t} \\quad \\text{(Power)}",
+            "\\text{Efficiency} = \\frac{\\text{Useful Work Output}}{\\text{Work Input}} \\times 100\\%"
+          ],
+          steps: [
+            "Find force applied (if lifting, F = m * g).",
+            "Multiply force by distance moved in the direction of the force to get Work (J).",
+            "Divide Work by time taken to get Power (W)."
+          ],
+          workedExample: "Problem: A crane lifts a 200kg mass vertically through a height of 10m in 4 seconds. Calculate the power (g = 10 m/s²).\n\nSolution:\n1. Force: F = m * g = 200 * 10 = 2000 N.\n2. Work done: W = F * d = 2000 * 10 = 20,000 J.\n3. Power: P = W / t = 20,000 / 4 = 5,000 Watts.\nAnswer: Power = 5 kW"
+        }
+      },
+      {
+        id: "wave_motion",
+        title: "Wave Motion & Sound",
+        seniorDesc: "Understand transverse/longitudinal waves, wave equations, and reflection/refraction.",
+        seniorGreeting: "Hello, Teacher! 🌊 What is the difference between a transverse wave and a longitudinal wave? How do we use the wave equation v = fλ to calculate frequency and wavelength?",
+        seniorMarkingGuide: "SSS Physics Waves: Differentiate transverse (perpendicular) vs longitudinal (parallel) [2 Marks]. State wave equation v = f*λ [1 Mark]. Solve frequency/wavelength calculation [2 Marks].",
+        studyNotes: {
+          concept: "A wave is a disturbance that transfers energy through a medium without transferring matter. Waves are classified as mechanical (need medium) or electromagnetic (no medium).",
+          formulas: [
+            "v = f \\cdot \\lambda \\quad \\text{(Velocity = Frequency } \\times \\text{ Wavelength)}",
+            "T = \\frac{1}{f} \\quad \\text{(Period = 1 / Frequency)}"
+          ],
+          steps: [
+            "Transverse: Medium vibrates perpendicular to wave direction (e.g. water, light).",
+            "Longitudinal: Medium vibrates parallel to wave direction (e.g. sound).",
+            "Identify given values (v in m/s, f in Hz, λ in meters) and solve."
+          ],
+          workedExample: "Problem: A radio wave has a frequency of 300 kHz (300,000 Hz) and travels at the speed of light (3 * 10^8 m/s). Find its wavelength.\n\nSolution:\n1. Formula: v = f * λ -> λ = v / f\n2. Substitute: λ = (3 * 10^8) / (300,000) = (3 * 10^8) / (3 * 10^5) = 10^3 = 1000 meters.\nAnswer: Wavelength = 1000m"
+        }
+      },
+      {
+        id: "electrostatics",
+        title: "Electrostatics & Fields",
+        seniorDesc: "Apply Coulomb's law to force between point charges and define electric field intensity.",
+        seniorGreeting: "Good day, Teacher! ⚡ How do we calculate the electrostatic force between two charged particles? What is Coulomb's Law, and what does the constant k represent?",
+        seniorMarkingGuide: "SSS Physics Electrostatics: State Coulomb's Law formula F = k*q1*q2/r² [2 Marks]. Define terms and constant k [1 Mark]. Solve force calculation [2 Marks].",
+        studyNotes: {
+          concept: "Coulomb's Law states that the electrostatic force of attraction or repulsion between two point charges is directly proportional to the product of the charges and inversely proportional to the square of the distance between them.",
+          formulas: [
+            "F = \\frac{k \\cdot q_1 \\cdot q_2}{r^2}",
+            "E = \\frac{F}{q} = \\frac{k \\cdot q}{r^2} \\quad \\text{(Electric Field Intensity)}"
+          ],
+          steps: [
+            "Identify values: q1 and q2 (charges in Coulombs), r (distance in meters), k (constant = 9 * 10^9 N m²/C²).",
+            "Substitute into Coulomb's equation.",
+            "Verify directions: Like charges repel, opposite charges attract."
+          ],
+          workedExample: "Problem: Two charges of +2μC (2 * 10^-6 C) and +3μC are separated by a distance of 0.3m. Find the repulsive force.\n\nSolution:\n1. Formula: F = (k * q1 * q2) / r²\n2. Substitute: F = (9 * 10^9 * 2 * 10^-6 * 3 * 10^-6) / (0.3)²\n3. Calculate: F = (0.054) / 0.09 = 0.6 Newtons.\nAnswer: Force = 0.6 N"
+        }
+      },
+      {
+        id: "current_electricity",
+        title: "Current Electricity (Ohm's/Kirchhoff's)",
+        seniorDesc: "Apply Ohm's law and Kirchhoff's circuit rules to series and parallel resistor networks.",
+        seniorGreeting: "Hello Teacher! 🔌 I am analyzing a circuit. How do I calculate total resistance when resistors are connected in series versus parallel? What are Kirchhoff's current and voltage laws?",
+        seniorMarkingGuide: "SSS Physics Circuits: State series resistance formula (R=R1+R2) [1 Mark]. State parallel resistance formula (1/R=1/R1+1/R2) [1 Mark]. Apply Ohm's Law (V=IR) [2 Marks]. Explain Kirchhoff's junction law [1 Mark].",
+        studyNotes: {
+          concept: "Current electricity deals with the flow of charge. Resistors limit current, and their combined effect depends on the network configuration.",
+          formulas: [
+            "R_{series} = R_1 + R_2 + R_3 + \\dots",
+            "\\frac{1}{R_{parallel}} = \\frac{1}{R_1} + \\frac{1}{R_2} + \\frac{1}{R_3} + \\dots",
+            "I_{in} = I_{out} \\quad \\text{(Kirchhoff's Current Law)}"
+          ],
+          steps: [
+            "For Series: Add all resistances directly.",
+            "For Parallel: Compute the sum of the reciprocals, then take the reciprocal of that sum.",
+            "Apply V = I * R to find total current or individual voltages."
+          ],
+          workedExample: "Problem: Two resistors, 4Ω and 6Ω, are connected in parallel to a 12V battery. Find the total resistance and total current.\n\nSolution:\n1. Parallel Resistance: 1/Rp = 1/4 + 1/6 = (3 + 2)/12 = 5/12 -> Rp = 12/5 = 2.4Ω.\n2. Total Current: I = V / Rp = 12 / 2.4 = 5 Amperes.\nAnswer: Rp = 2.4Ω, I = 5A"
+        }
+      },
+      {
+        id: "electromagnetism",
+        title: "Electromagnetism",
+        seniorDesc: "Understand magnetic fields from currents, Faraday's law of induction, and transformer turn ratios.",
+        seniorGreeting: "Good day, Teacher! 🧲 How does electric current generate a magnetic field? What is electromagnetic induction, and how do step-up and step-down transformers work?",
+        seniorMarkingGuide: "SSS Physics Electromagnetism: State Faraday's law of induction [1.5 Marks]. State transformer turn ratio equation (Vp/Vs = Np/Ns) [1.5 Marks]. Solve transformer voltage problem [2 Marks].",
+        studyNotes: {
+          concept: "Electromagnetism is the interaction of electric currents and magnetic fields. Electromagnetic induction occurs when a changing magnetic field induces an electromotive force (emf) in a conductor.",
+          formulas: [
+            "\\frac{V_p}{V_s} = \\frac{N_p}{N_s} = \\frac{I_s}{I_p} \\quad \\text{(Transformer Equation)}"
+          ],
+          steps: [
+            "Identify: Vp (primary voltage), Vs (secondary voltage), Np (primary turns), Ns (secondary turns).",
+            "A step-up transformer has Ns > Np (increases voltage).",
+            "A step-down transformer has Ns < Np (decreases voltage)."
+          ],
+          workedExample: "Problem: A transformer has 500 turns in the primary coil and 100 turns in the secondary coil. If the primary voltage is 240V, find the secondary voltage.\n\nSolution:\n1. Formula: Vp / Vs = Np / Ns -> Vs = Vp * (Ns / Np)\n2. Substitute: Vs = 240 * (100 / 500) = 240 * 0.2 = 48 Volts.\nAnswer: Secondary voltage = 48V (Step-down)"
+        }
+      },
+      {
+        id: "radioactivity",
+        title: "Radioactivity & Decay",
+        seniorDesc: "Understand Alpha, Beta, Gamma emissions, write decay equations, and solve half-life problems.",
+        seniorGreeting: "Hello, Teacher! ☢️ We are studying nuclear physics. What is the difference between Alpha, Beta, and Gamma rays? How do we calculate the remaining mass of a radioactive sample using its half-life?",
+        seniorMarkingGuide: "SSS Physics Radioactivity: Describe alpha, beta, gamma differences [1.5 Marks]. Define half-life [1.5 Marks]. Solve radioactive decay half-life equation [2 Marks].",
+        studyNotes: {
+          concept: "Radioactivity is the spontaneous disintegration of unstable atomic nuclei, releasing ionizing radiation. Half-life is the time taken for half the nuclei in a radioactive sample to decay.",
+          formulas: [
+            "N_t = N_0 \\left(\\frac{1}{2}\\right)^n \\quad \\text{where } n = \\frac{t}{T_{1/2}}"
+          ],
+          steps: [
+            "Identify: N0 (initial mass/count), Nt (remaining mass), t (total time elapsed), T1/2 (half-life).",
+            "Calculate the number of half-lives elapsed (n = t / T1/2).",
+            "Divide the initial mass by 2, repeated n times."
+          ],
+          workedExample: "Problem: A radioactive substance has a half-life of 4 days. If the initial mass is 80g, how much remains after 12 days?\n\nSolution:\n1. Number of half-lives elapsed (n) = 12 / 4 = 3 half-lives.\n2. Apply formula: N_t = 80 * (1/2)^3 = 80 * (1/8) = 10 grams.\nAnswer: Remaining mass = 10g"
+        }
+      },
+      {
+        id: "fluid_mechanics",
+        title: "Fluid Mechanics",
+        seniorDesc: "Apply Archimedes' principle, law of floatation, and calculate fluid pressure.",
+        seniorGreeting: "Good day, Teacher! 🚢 Why do heavy steel ships float on water while a small steel nail sinks? What is Archimedes' Principle, and how do we calculate upthrust force?",
+        seniorMarkingGuide: "SSS Physics Fluids: State Archimedes' Principle [1.5 Marks]. State Law of Floatation [1.5 Marks]. Solve fluid pressure (P=ρgh) or upthrust problem [2 Marks].",
+        studyNotes: {
+          concept: "Archimedes' Principle states that when a body is completely or partially immersed in a fluid, it experiences an upward force (upthrust) equal to the weight of the fluid displaced.",
+          formulas: [
+            "U = \\rho \\cdot V \\cdot g \\quad \\text{(Upthrust force)}",
+            "P = \\rho \\cdot g \\cdot h \\quad \\text{(Fluid Pressure)}"
+          ],
+          steps: [
+            "Upthrust (U) depends on fluid density (ρ), volume of submerged body (V), and gravity (g).",
+            "A body floats if its weight equals the upthrust of the displaced fluid."
+          ],
+          workedExample: "Problem: Calculate the pressure at a depth of 5m in water (density of water = 1000 kg/m³, g = 10 m/s²).\n\nSolution:\n1. Formula: P = ρ * g * h\n2. Substitute: P = 1000 * 10 * 5 = 50,000 Pascals (or 50 kPa).\nAnswer: Fluid Pressure = 50 kPa"
+        }
+      },
+      {
+        id: "gravitation",
+        title: "Gravitational Fields",
+        seniorDesc: "Apply Newton's law of universal gravitation and solve satellite orbit speed.",
+        seniorGreeting: "Hello Teacher! 🌌 How do we calculate the gravitational pull between two planets? What is Newton's Law of Universal Gravitation, and how does it differ from local gravity acceleration g?",
+        seniorMarkingGuide: "SSS Physics Gravity: State Newton's Law of Universal Gravitation F = G*m1*m2/r² [2 Marks]. Explain G vs g [2 Marks]. Solve force calculation [1 Mark].",
+        studyNotes: {
+          concept: "Newton's Law of Universal Gravitation states that every point mass attracts every other point mass by a force acting along the line intersecting both points.",
+          formulas: [
+            "F = \\frac{G \\cdot m_1 \\cdot m_2}{r^2}",
+            "g = \\frac{G \\cdot M}{R^2} \\quad \\text{(Acceleration due to gravity)}"
+          ],
+          steps: [
+            "Identify: m1 and m2 (masses in kg), r (separation distance in meters), G (gravitational constant = 6.67 * 10^-11 N m²/kg²).",
+            "Substitute into Newton's universal gravity equation to find attractive force."
+          ],
+          workedExample: "Question: Explain the difference between 'G' and 'g' in physics.\n\nAnswer:\n1. G is the Universal Gravitational Constant. It is a scalar constant value (6.67 * 10^-11 N m²/kg²) that is the same everywhere in the universe.\n2. g is the local Acceleration Due to Gravity. It is a vector variable that changes depending on the mass and radius of the planet (e.g. g = 9.8 m/s² on Earth, but 1.6 m/s² on the Moon)."
+        }
+      }
+    ]
+  },
+  chemistry: {
+    id: "chemistry",
+    name: "Chemistry (SSS)",
+    topics: [
+      {
+        id: "bonding",
+        title: "Atomic Structure & Bonding",
+        seniorDesc: "Understand valence electron shells, ionic electron transfer, and covalent electron sharing.",
+        seniorGreeting: "Hello, Teacher! 🧪 We are studying chemical bonding in Chemistry class. I don't understand the difference between ionic and covalent bonds. How do atoms decide to share or transfer valence electrons, and what are examples of each?",
+        seniorMarkingGuide: "SS2 Chemistry Bonding: Define ionic bonding as electrostatic force from electron transfer [2 Marks]. Define covalent bonding as valence electron sharing between non-metals [2 Marks]. List NaCl and H2O examples [1 Mark].",
+        studyNotes: {
+          concept: "Chemical bonding describes the electrostatic attractions that hold atoms together. Atoms transfer or share valence electrons to achieve a stable noble-gas electron configuration (octet rule).",
+          formulas: [],
+          steps: [
+            "Ionic Bond: Formed when a metal transfers valence electrons to a non-metal, creating oppositely charged ions that attract (e.g. NaCl).",
+            "Covalent Bond: Formed when two non-metals share pairs of valence electrons to complete their outer shells (e.g. H2O)."
+          ],
+          workedExample: "Question: State three physical differences between ionic compounds and covalent compounds.\n\nAnswer:\nProperty | Ionic Compounds | Covalent Compounds\nMelting Point | High (strong electrostatic lattice) | Low (weak intermolecular forces)\nConductivity | Conducts when molten/aqueous | Does not conduct in any state\nState | Hard crystalline solids | Often liquids or gases"
+        }
+      },
+      {
+        id: "periodic_trends",
+        title: "Periodic Table Trends",
+        seniorDesc: "Analyze periodic properties: atomic radius, ionization energy, electronegativity across periods/groups.",
+        seniorGreeting: "Good day, Teacher! 🧪 In chemistry, how do properties change as we move across the periodic table? Why does ionization energy increase across a period, but atomic radius decreases?",
+        seniorMarkingGuide: "SSS Chemistry Trends: Explain shielding effect and nuclear charge increase [2 Marks]. Define ionization energy trend [1.5 Marks]. Define atomic radius trend [1.5 Marks].",
+        studyNotes: {
+          concept: "Periodic trends are specific patterns in the properties of chemical elements in the periodic table, governed by nuclear charge and electron shielding.",
+          formulas: [],
+          steps: [
+            "Atomic Radius: Decreases across a period (increasing nuclear charge pulls shells closer) and increases down a group (adding new electron shells).",
+            "Ionization Energy: Increases across a period (electrons held tighter) and decreases down a group (electrons further from nucleus)."
+          ],
+          workedExample: "Question: Why does Fluorine have a higher electronegativity than Lithium?\n\nAnswer:\n1. Across Period 2 (from Lithium to Fluorine), the atomic number (nuclear charge) increases while the inner-shell electron shielding remains constant.\n2. This increases the effective nuclear charge pulling on the valence electrons.\n3. Fluorine, having a smaller atomic radius and higher nuclear pull, attracts bonding electron pairs much more strongly than Lithium, giving it a higher electronegativity."
+        }
+      },
+      {
+        id: "stoichiometry",
+        title: "Stoichiometry & Chemical Equations",
+        seniorDesc: "Balance chemical equations and solve mole-to-mass and Avogadro calculations.",
+        seniorGreeting: "Hello Teacher! 🧪 I'm stuck on mole calculations. Can you explain Avogadro's number, how to calculate mass from moles using n = m/M, and how to balance stoichiometry?",
+        seniorMarkingGuide: "SSS Chemistry Stoichiometry: State mole equation n = m/M [1 Mark]. Balance a simple reaction equation [2 Marks]. Perform mole-to-mass conversion correctly [2 Marks].",
+        studyNotes: {
+          concept: "Stoichiometry is the quantitative study of reactants and products in a chemical reaction. A mole represents 6.02 * 10^23 elementary particles (Avogadro's constant).",
+          formulas: [
+            "n = \\frac{m}{M} \\quad \\text{where } n = \\text{moles}, m = \\text{mass (g)}, M = \\text{molar mass (g/mol)}",
+            "n = \\frac{V}{22.4} \\quad \\text{(Volume of gas at s.t.p. in dm³)}"
+          ],
+          steps: [
+            "Write down the balanced chemical equation.",
+            "Convert the given mass/volume of reactant to moles.",
+            "Use the stoichiometric coefficients (mole ratio) to find the moles of product.",
+            "Convert the moles of product back to mass or volume."
+          ],
+          workedExample: "Problem: Calculate the mass of carbon dioxide (CO2) produced when 12g of Carbon is burned completely in oxygen. (C = 12, O = 16).\n\nSolution:\n1. Balanced reaction: C + O2 -> CO2.\n2. Moles of Carbon: n(C) = mass / molar mass = 12g / 12 g/mol = 1.0 mole.\n3. Mole ratio: 1 mole C produces 1 mole CO2. So n(CO2) = 1.0 mole.\n4. Mass of CO2: m = n * M = 1.0 * (12 + 16*2) = 1.0 * 44 = 44 grams.\nAnswer: Mass of CO2 = 44g"
+        }
+      },
+      {
+        id: "acids_bases",
+        title: "Acids, Bases & Salts (pH)",
+        seniorDesc: "Define Arrhenius/Bronsted acids, analyze neutralization, and calculate pH from H+ concentrations.",
+        seniorGreeting: "Good day, Teacher! 🧪 What makes a substance an acid versus a base? How do we calculate the pH of a solution if we know the hydrogen ion concentration [H+]?",
+        seniorMarkingGuide: "SSS Chemistry Acids: Define Bronsted-Lowry acid (proton donor) and base (proton acceptor) [2 Marks]. State pH formula pH = -log[H+] [1 Mark]. Solve pH calculation [2 Marks].",
+        studyNotes: {
+          concept: "Acids are proton (H+) donors. Bases are proton acceptors. The pH scale measures the acidity or alkalinity of a solution logarithmically.",
+          formulas: [
+            "\\text{pH} = -\\log_{10}[H^+]",
+            "[H^+] \\cdot [OH^-] = 10^{-14} \\quad \\text{at } 25^\\circ\\text{C}"
+          ],
+          steps: [
+            "Identify [H+] concentration in moles/dm³.",
+            "Apply the negative logarithm formula.",
+            "If pH < 7 (acidic), if pH = 7 (neutral), if pH > 7 (alkaline/basic)."
+          ],
+          workedExample: "Problem: Calculate the pH of a 0.01 M (1 * 10^-2 M) hydrochloric acid (HCl) solution.\n\nSolution:\n1. Since HCl is a strong acid, it dissociates completely: [H+] = 0.01 M = 10^-2 M.\n2. pH = -log_10(10^-2)\n3. pH = -(-2) = 2.\nAnswer: pH = 2"
+        }
+      },
+      {
+        id: "gas_laws",
+        title: "Gas Laws",
+        seniorDesc: "Apply Boyle's, Charles's, and the Ideal Gas Equation (PV = nRT) to gas behavior.",
+        seniorGreeting: "Hello, Teacher! What are Boyle's and Charles's laws? How do we combine them into the Ideal Gas Law PV = nRT, and what units must we use for temperature and pressure?",
+        seniorMarkingGuide: "SSS Chemistry Gas Laws: State Boyle's Law (P1V1=P2V2) [1 Mark]. State Charles's Law (V1/T1=V2/T2) [1 Mark]. State Ideal Gas Equation PV = nRT [1 Mark]. Convert Celsius to Kelvin (+273) [1 Mark]. Solve gas equation problem [1 Mark].",
+        studyNotes: {
+          concept: "Gas laws describe how the physical properties of gas (pressure, volume, temperature, and moles) interact. Absolute temperature in Kelvin must always be used.",
+          formulas: [
+            "P_1 V_1 = P_2 V_2 \\quad \\text{(Boyle's Law)}",
+            "\\frac{V_1}{T_1} = \\frac{V_2}{T_2} \\quad \\text{(Charles's Law)}",
+            "P V = n R T \\quad \\text{(Ideal Gas Equation)}"
+          ],
+          steps: [
+            "Convert temperature: T(Kelvin) = T(Celsius) + 273.",
+            "Identify the constant variable to select the law.",
+            "Substitute and solve for the unknown parameter."
+          ],
+          workedExample: "Problem: A gas occupies 2.0 dm³ at 27°C. Find its volume at 127°C if pressure is kept constant.\n\nSolution:\n1. Convert temperatures: T1 = 27 + 273 = 300 K, T2 = 127 + 273 = 400 K.\n2. Use Charles's Law: V1 / T1 = V2 / T2 -> V2 = V1 * (T2 / T1)\n3. Substitute: V2 = 2.0 * (400 / 300) = 2.0 * 1.33 = 2.67 dm³.\nAnswer: Volume = 2.67 dm³"
+        }
+      },
+      {
+        id: "kinetics",
+        title: "Chemical Kinetics (Rates)",
+        seniorDesc: "Analyze collision theory, factors affecting reaction rates, and activation energy profiles.",
+        seniorGreeting: "Good day, Teacher! 🧪 Why do chemical reactions happen faster at higher temperatures or when we use a catalyst? What is collision theory and activation energy?",
+        seniorMarkingGuide: "SSS Chemistry Kinetics: Explain Collision Theory (minimum energy, correct orientation) [2 Marks]. List 3 factors affecting rate (temp, conc, catalyst, surface area) [2 Marks]. Define activation energy [1 Mark].",
+        studyNotes: {
+          concept: "Chemical kinetics is the study of reaction rates. According to Collision Theory, for a reaction to occur, particles must collide with sufficient energy (activation energy) and correct orientation.",
+          formulas: [],
+          steps: [
+            "Temperature: Increases kinetic energy, leading to more frequent and energetic collisions.",
+            "Catalyst: Provides an alternative reaction pathway with lower activation energy.",
+            "Surface Area: Increases exposed particles, increasing collision frequency."
+          ],
+          workedExample: "Question: Draw an energy profile diagram for an exothermic reaction showing the effect of a catalyst. Explain the role of activation energy.\n\nAnswer:\n1. The diagram should show reactants at a higher energy level than products. The curve rises to a peak (transition state) and drops. The difference between reactant energy and the peak is the Activation Energy (Ea).\n2. With a catalyst, the peak of the curve is lower, meaning the activation energy is reduced. More reactant particles now have enough energy to clear this lower barrier, increasing the reaction rate."
+        }
+      },
+      {
+        id: "equilibrium",
+        title: "Chemical Equilibrium",
+        seniorDesc: "Understand reversible reactions, write Kc expressions, and apply Le Chatelier's principle.",
+        seniorGreeting: "Hello Teacher! What is dynamic equilibrium? How does Le Chatelier's Principle explain how a system responds to changes in temperature, pressure, and concentration?",
+        seniorMarkingGuide: "SSS Chemistry Equilibrium: Define dynamic equilibrium [1.5 Marks]. State Le Chatelier's Principle [1.5 Marks]. Write Kc expression [2 Marks].",
+        studyNotes: {
+          concept: "Dynamic equilibrium occurs in reversible reactions when the forward and backward reactions proceed at the same rate. Le Chatelier's Principle predicts how a system shifts to counteract disturbances.",
+          formulas: [
+            "K_c = \\frac{[C]^c [D]^d}{[A]^a [B]^b} \\quad \\text{for } aA + bB \\rightleftharpoons cC + dD"
+          ],
+          steps: [
+            "Increasing concentration shifts equilibrium to the opposite side.",
+            "Increasing pressure shifts equilibrium to the side with fewer gas moles.",
+            "Increasing temperature shifts equilibrium in the direction of the endothermic reaction."
+          ],
+          workedExample: "Problem: For the Haber process: N2(g) + 3H2(g) ⇌ 2NH3(g) (Exothermic), write the Kc expression and predict the effect of increasing pressure.\n\nSolution:\n1. Kc Expression: Kc = [NH3]² / ( [N2] * [H2]³ ).\n2. Pressure check: Reactant side has 1 + 3 = 4 gas moles. Product side has 2 gas moles.\n3. According to Le Chatelier's Principle, increasing pressure shifts equilibrium to the side with fewer moles to reduce pressure. Therefore, the system shifts right, increasing the yield of Ammonia (NH3).\nAnswer: Shifts right."
+        }
+      },
+      {
+        id: "organic_chemistry",
+        title: "Organic Chemistry Nomenclature",
+        seniorDesc: "Name alkanes, alkenes, alkynes, and functional groups using IUPAC nomenclature.",
+        seniorGreeting: "Good day, Teacher! 🧪 Organic chemistry is confusing. How do I name carbon structures using the IUPAC rules? What are functional groups, and how do I name an alcohol versus an ester?",
+        seniorMarkingGuide: "SSS Chemistry Organic: State IUPAC prefix naming rules (meth-, eth-, prop-, but-) [2 Marks]. Identify functional groups (alkene, alcohol, carboxylic acid) [2 Marks]. Name a given organic compound [1 Mark].",
+        studyNotes: {
+          concept: "Organic chemistry nomenclature is the systematic naming of carbon-based compounds based on the IUPAC rules, determined by carbon chain length and functional groups.",
+          formulas: [
+            "C_n H_{2n+2} \\quad \\text{(Alkanes general formula)}",
+            "C_n H_{2n} \\quad \\text{(Alkenes general formula)}",
+            "R-OH \\quad \\text{(Alcohol Functional Group)}"
+          ],
+          steps: [
+            "Identify the longest continuous carbon chain to establish the root name (1=meth, 2=eth, 3=prop, 4=but, 5=pent, 6=hex).",
+            "Identify the functional group and numbering priority (lowest number for double bonds/functional groups).",
+            "Identify and name side chains (e.g. methyl, ethyl, chloro) alphabetically."
+          ],
+          workedExample: "Question: Draw and name the IUPAC structure of the organic compound: CH3-CH2-CH(OH)-CH3.\n\nSolution:\n1. Longest chain has 4 carbons. Root name is 'butane'.\n2. Functional group is an alcohol (-OH), suffix is '-ol'.\n3. Number the chain from the side closest to -OH: Carbon 3 has the -OH if numbered left-to-right, but Carbon 2 has it if numbered right-to-left. We choose right-to-left (lowest number = 2).\n4. Combined name: Butan-2-ol.\nAnswer: Butan-2-ol"
+        }
+      },
+      {
+        id: "electrolysis",
+        title: "Electrolysis & Faraday's Laws",
+        seniorDesc: "Understand galvanic/electrolytic cells, discharge priority, and solve Faraday's mass calculations.",
+        seniorGreeting: "Hello Teacher! 🧪 How does electrolysis work? What is the difference between the anode and the cathode? How do we calculate the mass of copper deposited using Faraday's Law m = Qz?",
+        seniorMarkingGuide: "SSS Chemistry Electrolysis: State Faraday's First Law (m is proportional to Q) [1.5 Marks]. State charge equation Q = I*t [1.5 Marks]. Solve electrolysis mass deposition calculation [2 Marks].",
+        studyNotes: {
+          concept: "Electrolysis is the decomposition of an electrolyte by passing an electric current through it. Faraday's First Law states that the mass of substance liberated at an electrode is proportional to the quantity of electricity passed.",
+          formulas: [
+            "Q = I \\cdot t \\quad \\text{(Charge = Current } \\times \\text{ Time)}",
+            "m = \\frac{M \\cdot Q}{n \\cdot F} \\quad \\text{where } F = 96500\\text{ C/mol}"
+          ],
+          steps: [
+            "Anode (Positive Electrode): Oxidation occurs (loss of electrons). Cations move here.",
+            "Cathode (Negative Electrode): Reduction occurs (gain of electrons). Anions move here.",
+            "Calculate charge Q = I * t. Calculate moles of electrons. Use stoichiometry to find mass."
+          ],
+          workedExample: "Problem: Calculate the mass of Copper deposited at the cathode when a current of 2.0A is passed through a CuSO4 solution for 965 seconds. (Cu = 64, F = 96500 C).\n\nSolution:\n1. Charge passed: Q = I * t = 2.0 * 965 = 1930 Coulombs.\n2. Cathode reaction: Cu²⁺ + 2e⁻ -> Cu. (Requires 2 moles of electrons per mole of Cu).\n3. Moles of electrons: n(e) = Q / F = 1930 / 96500 = 0.02 moles.\n4. Moles of Cu: n(Cu) = n(e) / 2 = 0.02 / 2 = 0.01 moles.\n5. Mass of Cu: m = n * M = 0.01 * 64 = 0.64 grams.\nAnswer: Mass of Cu = 0.64g"
+        }
+      },
+      {
+        id: "hybridization",
+        title: "Hybridization & Geometry",
+        seniorDesc: "Understand sp, sp2, sp3 orbital mixing and molecular geometries of methane, ethene, and water.",
+        seniorGreeting: "Good day, Teacher! 🧪 What is orbital hybridization? How do carbon s and p orbitals mix to form sp, sp2, and sp3 configurations, and how does this affect bond angles?",
+        seniorMarkingGuide: "SSS Chemistry Orbitals: Define hybridization [1.5 Marks]. Differentiate sp (linear, 180°), sp² (trigonal planar, 120°), and sp³ (tetrahedral, 109.5°) [2 Marks]. State methane (sp³) example [1.5 Marks].",
+        studyNotes: {
+          concept: "Hybridization is the concept of mixing atomic orbitals to form new hybrid orbitals suitable for qualitative pairing properties, determining molecular shapes.",
+          formulas: [],
+          steps: [
+            "sp³ Hybridization: 1 s-orbital and 3 p-orbitals mix. Forms tetrahedral shape with 109.5° bond angles (e.g. CH4).",
+            "sp² Hybridization: 1 s-orbital and 2 p-orbitals mix. Forms trigonal planar shape with 120° bond angles (e.g. C2H4).",
+            "sp Hybridization: 1 s-orbital and 1 p-orbital mix. Forms linear shape with 180° bond angles (e.g. C2H2)."
+          ],
+          workedExample: "Question: Explain the hybridization and shape of the methane (CH4) molecule.\n\nAnswer:\n1. Carbon has ground state configuration 1s² 2s² 2p². During bonding, one 2s electron is excited to the vacant 2pz orbital.\n2. The one 2s orbital and three 2p orbitals (px, py, pz) mix to form four identical sp³ hybrid orbitals.\n3. These four orbitals repel each other equally, pointing to the corners of a regular tetrahedron with bond angles of 109.5°, creating a symmetrical tetrahedral molecule."
+        }
+      }
+    ]
+  },
+  english: {
+    id: "english",
+    name: "English Language (SSS)",
+    topics: [
+      {
+        id: "formal_letter",
+        title: "Formal Letter Layout",
+        seniorDesc: "Format formal letters with two addresses, subject line, formal salutation, and high register body.",
+        seniorGreeting: "Good day, ma/sir! ✍️ I'm writing a letter of complaint to a company manager. Where do I place the two addresses, how do I write the subject line, and how should I sign off?",
+        seniorMarkingGuide: "SSS English Formal Letter: Include writer's address + date (top right) and recipient's address (left) [1.5 Marks]. Include a capitalised subject line [1 Mark]. Formal salutation (Dear Sir/Madam) [1 Mark]. Formal sign-off (Yours faithfully + signature + full name) [1.5 Marks].",
+        studyNotes: {
+          concept: "A formal letter is an official business letter written to authorities, employers, or organizations. It requires a precise layout and professional tone.",
+          formulas: [],
+          steps: [
+            "Write the writer's address and date in the top right corner.",
+            "Write the recipient's designation and address on the left margin, below the date level.",
+            "Write the salutation: Dear Sir, or Dear Madam, or Dear Sir/Madam,.",
+            "Write a clear, capitalized Subject Line (underlined or bolded).",
+            "Write the body using formal register, dividing it into clear paragraphs.",
+            "Sign-off on the left side: Yours faithfully, followed by your signature and full name."
+          ],
+          workedExample: "Question: Outline the layout of a formal letter.\n\nAnswer:\n1. Writer's Address & Date (Top right)\n2. Recipient's Address (Left side)\n3. Salutation (Dear Sir/Madam,)\n4. Subject Line (e.g. APPLICATION FOR EMPLOYMENT)\n5. Body (Formal paragraphs)\n6. Subscription (Yours faithfully,)\n7. Signature\n8. Full Name"
+        }
+      },
+      {
+        id: "argumentative",
+        title: "Argumentative Essay",
+        seniorDesc: "Structure debates and arguments, establish balance, and use rhetorical devices.",
+        seniorGreeting: "Good day, Teacher! I am preparing a debate topic 'Should mobile phones be banned in schools?'. How do I present my arguments in a balanced way, and how do I write a strong counter-argument?",
+        seniorMarkingGuide: "SSS English Essay: State a clear stance in the introduction [1 Mark]. Provide at least three logical, well-developed arguments [2 Marks]. Address and refute counter-arguments [1 Mark]. Write a strong conclusion [1 Mark].",
+        studyNotes: {
+          concept: "An argumentative essay requires the writer to investigate a topic, collect and evaluate evidence, and establish a clear position on the topic.",
+          formulas: [],
+          steps: [
+            "Stance: Define your position in the thesis statement (intro).",
+            "Arguments: Use evidence and statistics (PEEL method: Point, Evidence, Explanation, Link).",
+            "Refutation: State the opponent's view and immediately explain why it is weak or incorrect."
+          ],
+          workedExample: "Question: State three key structural requirements of an argumentative essay.\n\nAnswer:\n1. Clear Thesis/Stance: The introduction must state which side of the debate the essay is supporting.\n2. Balanced Arguments: The body must present structured points backed by facts and logical reasoning.\n3. Counter-Argument/Refutation: The writer must mention the opposing view and systematically explain why it is flawed, reinforcing their own stance."
+        }
+      },
+      {
+        id: "concord",
+        title: "Concord & Agreement",
+        seniorDesc: "Master subject-verb agreement rules, collective nouns, and correlative conjunctions.",
+        seniorGreeting: "Hi Teacher! I get confused about concord rules. Why is it 'Every boy and girl IS present' instead of 'are present'? How do rules for 'either/or' and 'neither/nor' work?",
+        seniorMarkingGuide: "SSS English Concord: State rule of singular subject with singular verb [1.5 Marks]. State proximity rule for 'either/or' [1.5 Marks]. State collective noun rules [2 Marks].",
+        studyNotes: {
+          concept: "Concord is the grammatical agreement between words in a sentence, primarily between the subject and the verb in number and person.",
+          formulas: [
+            "\\text{Subject (Singular)} \\implies \\text{Verb (Singular)}",
+            "\\text{Either A or B (Singular/Plural)} \\implies \\text{Verb agrees with B (Proximity Rule)}"
+          ],
+          steps: [
+            "Identify the true subject (ignore parenthetical phrases like 'as well as' or 'together with').",
+            "Proximity Rule: With 'either/or' or 'neither/nor', the verb agrees with the subject closest to it.",
+            "Indefinite pronouns (each, everyone, someone) always take singular verbs."
+          ],
+          workedExample: "Problem: Choose the correct verb form in: 'Neither the teacher nor the students (is/are) going to the hall.'\n\nSolution:\n1. The subjects are connected by 'neither/nor'.\n2. The closest subject to the verb is 'the students' (plural).\n3. Applying the proximity rule, the verb must be plural ('are').\nAnswer: 'Neither the teacher nor the students ARE going to the hall.'"
+        }
+      },
+      {
+        id: "indirect_speech",
+        title: "Direct & Indirect Speech",
+        seniorDesc: "Convert direct quotes into reported speech, shifting tenses, pronouns, and time markers.",
+        seniorGreeting: "Good day, Teacher! 🗣️ How do I convert direct speech like: Chidi said, 'I am studying today' into reported speech? What happens to the tenses and time words?",
+        seniorMarkingGuide: "SSS English Grammar: Shift tenses back (present -> past, past -> past perfect) [2 Marks]. Change pronouns correctly [1.5 Marks]. Shift time markers (today -> that day) [1.5 Marks].",
+        studyNotes: {
+          concept: "Direct speech quotes the exact words spoken. Indirect (reported) speech reports the statement, requiring backshifting of tenses, pronouns, and time/place markers.",
+          formulas: [
+            "\\text{\"I am\"} \\implies \\text{he/she was}",
+            "\\text{\"tomorrow\"} \\implies \\text{the following day}"
+          ],
+          steps: [
+            "Remove quotation marks and add the conjunction 'that'.",
+            "Shift pronouns (e.g. 'I' -> 'he/she').",
+            "Backshift tenses: Present Simple -> Past Simple; Past Simple -> Past Perfect.",
+            "Shift time markers: 'now' -> 'then', 'yesterday' -> 'the previous day'."
+          ],
+          workedExample: "Problem: Convert to indirect speech: She said, 'I finished my homework yesterday.'\n\nSolution:\n1. Pronoun: 'I' -> 'she', 'my' -> 'her'.\n2. Tense: 'finished' (Past Simple) -> 'had finished' (Past Perfect).\n3. Time marker: 'yesterday' -> 'the previous day'.\nAnswer: 'She said that she had finished her homework the previous day.'"
+        }
+      },
+      {
+        id: "phrasal_verbs",
+        title: "Idioms & Phrasal Verbs",
+        seniorDesc: "Analyze idiomatic expressions and phrasal verbs in comprehension passages.",
+        seniorGreeting: "Hello Teacher! I see expressions like 'put up with' or 'kick the bucket' in essays. What is a phrasal verb? How do I understand idioms in exam questions?",
+        seniorMarkingGuide: "SSS English Idioms: Define idiom as non-literal phrase [1 Mark]. Define phrasal verb as verb + preposition [1 Mark]. Explain context clues to identify meanings [2 Marks].",
+        studyNotes: {
+          concept: "An idiom is a phrase where the meaning is not deducible from the individual words (e.g., 'raining cats and dogs'). A phrasal verb is a combination of a verb and a preposition or adverb (e.g., 'look after', 'give up').",
+          formulas: [],
+          steps: [
+            "Identify the phrase structure.",
+            "Analyze context clues to deduce the figurative meaning.",
+            "Replace the phrase with its literal single-word equivalent in your mind to check structure."
+          ],
+          workedExample: "Question: State the meaning of the capitalized phrasal verbs/idioms: 'The meeting was PUT OFF because the manager decided to CALL IT A DAY.'\n\nAnswer:\n1. PUT OFF: Postponed (delayed to a later time).\n2. CALL IT A DAY: Stop working (end the activity for the day)."
+        }
+      },
+      {
+        id: "clause_analysis",
+        title: "Clause & Phrase Analysis",
+        seniorDesc: "Identify noun clauses, adjectival clauses, adverbial clauses, and their grammatical functions.",
+        seniorGreeting: "Good day, Teacher! 📖 In the English exam, they ask us to identify grammatical names and functions, like 'The man WHO STOLE THE BAG ran away'. What is the difference between a clause and a phrase, and how do I identify their functions?",
+        seniorMarkingGuide: "SSS English Grammar: Differentiate phrase (no verb) vs clause (has finite verb) [2 Marks]. Identify adjectival clause and its function (modifies noun) [2 Marks]. Identify noun/adverbial clause [1 Mark].",
+        studyNotes: {
+          concept: "A phrase is a group of words without a finite verb. A clause is a group of words containing a subject and a finite verb. Clauses can be main (independent) or subordinate (dependent).",
+          formulas: [],
+          steps: [
+            "Look for a verb: if present, it's a clause. If absent, it's a phrase.",
+            "Noun Clause: Answers 'what?' (Function: Subject or Object of a verb).",
+            "Adjectival (Relative) Clause: Starts with who/which/that and describes a noun (Function: Modifies the noun).",
+            "Adverbial Clause: Shows time/place/reason, starts with when/because/if (Function: Modifies the verb)."
+          ],
+          workedExample: "Question: Identify the grammatical name and function of the capitalized group of words: 'The driver stopped the bus WHERE the road was blocked.'\n\nAnswer:\n1. Grammatical Name: Adverbial clause of place (contains subject 'the road' and verb 'was').\n2. Grammatical Function: It modifies the verb 'stopped'."
+        }
+      },
+      {
+        id: "register",
+        title: "Register of Professions",
+        seniorDesc: "Build vocabulary registers for Science, Law, Medicine, Agriculture, and Commerce.",
+        seniorGreeting: "Hello Teacher! What does 'register' mean, and how do I know the correct terminology for Law, Medicine, or Business?",
+        seniorMarkingGuide: "SSS English Register: Define register as situation-specific language [2 Marks]. Give examples of legal, medical, or commerce terms [3 Marks].",
+        studyNotes: {
+          concept: "Register refers to the specific vocabulary and style of language associated with a particular trade, profession, or subject area.",
+          formulas: [],
+          steps: [
+            "Law Register: Plaintiff, defendant, bail, prosecution, verdict, litigation.",
+            "Medicine Register: Diagnosis, therapy, surgery, prescription, chronic, symptoms.",
+            "Commerce Register: Debenture, collateral, inflation, dividend, retail, bankruptcy."
+          ],
+          workedExample: "Question: Match the terms to their correct professional register: Plaintiff, Stethoscope, Collateral, Irrigation.\n\nAnswer:\n1. Plaintiff: Law (Legal register)\n2. Stethoscope: Medicine (Medical register)\n3. Collateral: Commerce/Banking register\n4. Irrigation: Agriculture register"
+        }
+      },
+      {
+        id: "comprehension_sss",
+        title: "Advanced Comprehension",
+        seniorDesc: "Deconstruct complex passages, identify literary devices, and write precise context synonyms.",
+        seniorGreeting: "Good day, Teacher! In advanced reading passages, how do I identify figures of speech (like metaphors or personification) and choose the correct contextual replacement word?",
+        seniorMarkingGuide: "SSS English Reading: Identify literary devices (metaphor, simile, personification) [2 Marks]. Replace words with exact contextual synonyms (same part of speech/tense) [3 Marks].",
+        studyNotes: {
+          concept: "Advanced reading comprehension tests a student's ability to interpret structural tone, figures of speech, and substitute words exactly as used in the passage.",
+          formulas: [],
+          steps: [
+            "Figures of speech: Metaphor (direct comparison), Simile (comparison using 'like' or 'as'), Personification (giving human traits to objects).",
+            "Word substitution: The replacement word must match the tense, number, and part of speech of the original word exactly."
+          ],
+          workedExample: "Question: Replace the word 'TERMINATED' in the sentence: 'The contract was terminated due to a breach.' with a contextual synonym.\n\nAnswer:\n'ended' or 'cancelled' or 'annulled'. (Must be past tense verb to match 'terminated')"
+        }
+      },
+      {
+        id: "summary_writing",
+        title: "Summary Writing Skills",
+        seniorDesc: "Extract core arguments, eliminate illustrative noise, and write concise summary sentences.",
+        seniorGreeting: "Hello Teacher! 📝 Summary writing is where I lose the most marks. How do I condense a long 3-page passage into exactly 3 sentences without losing the key points?",
+        seniorMarkingGuide: "SSS English Summary: Eliminate illustrative examples and repetitions [2 Marks]. Write answers in distinct, grammatically complete sentences [3 Marks].",
+        studyNotes: {
+          concept: "Summary writing is the extraction of the main points of a text, excluding details, examples, and redundant expressions. Answers must be written in complete sentences.",
+          formulas: [],
+          steps: [
+            "Read the questions carefully to know what specific points to extract.",
+            "Draft key points, cutting out adjectives, examples, and explanations.",
+            "Write the final summary points as single, independent, grammatically correct sentences. Do not use phrases."
+          ],
+          workedExample: "Question: Outline the three golden rules of summary writing for secondary exams.\n\nAnswer:\n1. Relevance: Extract only information that directly answers the summary question.\n2. Conciseness: Eliminate illustrative statistics, stories, and redundant adjectives.\n3. Grammatical Completeness: Every summary point must be written as a complete sentence (starting with a capital letter and ending with a full stop)."
+        }
+      },
+      {
+        id: "mechanical_accuracy",
+        title: "Mechanical Accuracy rules",
+        seniorDesc: "Avoid run-on sentences, comma splices, spelling mistakes, and grammatical slips (-0.5 mark deductions).",
+        seniorGreeting: "Good day, Teacher! ✍️ My essays always get penalized for 'Mechanical Accuracy'. What is a comma splice? How do I write cleanly to avoid losing half a mark for every spelling error?",
+        seniorMarkingGuide: "SSS English Writing: Define comma splice and run-on sentence [2 Marks]. Outline punctuation correction methods [2 Marks]. Explain the WAEC -0.5 deduction rule [1 Mark].",
+        studyNotes: {
+          concept: "Mechanical Accuracy measures correctness in spelling, grammar, and punctuation. In major exams, every mechanical error leads to a strict deduction of 0.5 marks.",
+          formulas: [
+            "\\text{Total Mark} = \\text{Content/Organization} - 0.5 \\times \\text{Errors}"
+          ],
+          steps: [
+            "Comma Splice: Joining two independent clauses with only a comma. Correct it by adding a conjunction, using a semicolon, or writing two sentences.",
+            "Subject-Verb Agreement: Ensure singular subjects have singular verbs."
+          ],
+          workedExample: "Problem: Identify and correct the mechanical error in: 'Chidi studied hard, he passed the exam.'\n\nSolution:\n1. Error: This is a Comma Splice. 'Chidi studied hard' and 'he passed the exam' are both independent clauses. They cannot be linked by only a comma.\n2. Correction options:\n   - Option A (Conjunction): 'Chidi studied hard, and he passed the exam.'\n   - Option B (Semicolon): 'Chidi studied hard; he passed the exam.'\n   - Option C (Full Stop): 'Chidi studied hard. He passed the exam.'\nAnswer: 'Chidi studied hard, and he passed the exam.'"
+        }
+      }
+    ]
+  },
+  civic: {
+    id: "civic",
+    name: "Civic Education (SSS)",
+    topics: [
+      {
+        id: "udhr",
+        title: "Universal Declaration of Human Rights",
+        seniorDesc: "Understand the historical origin, the 30 articles of UDHR, and the role of the UN.",
+        seniorGreeting: "Good day, Teacher! ⚖️ What is the Universal Declaration of Human Rights (UDHR)? When was it adopted by the United Nations, and what are the main classifications of these rights?",
+        seniorMarkingGuide: "SSS Civic UDHR: State adoption date (December 10, 1948) [1 Mark]. Explain historical background (post-WWII) [2 Marks]. Classify civil/political and economic/social rights [2 Marks].",
+        studyNotes: {
+          concept: "The Universal Declaration of Human Rights (UDHR) is a milestone document adopted by the United Nations General Assembly in Paris, containing 30 articles that outline basic rights for all humans.",
+          formulas: [],
+          steps: [
+            "Adopted: December 10, 1948, following the atrocities of World War II.",
+            "Classifications: Civil and Political Rights (Articles 1-21: e.g., right to life, freedom from torture or slavery); Economic, Social, and Cultural Rights (Articles 22-30: e.g., right to work, education)."
+          ],
+          workedExample: "Question: When was UDHR adopted, and name three rights classified under its civil and political category.\n\nAnswer:\n1. Adoption: UDHR was adopted on December 10, 1948.\n2. Civil/Political Rights: Right to life, freedom from torture or slavery, and the right to a fair trial."
+        }
+      },
+      {
+        id: "constitutionalism",
+        title: "Constitutionalism & Rule of Law",
+        seniorDesc: "Explain the supremacy of the constitution, limitations of power, and judicial independence.",
+        seniorGreeting: "Hello Teacher! What is constitutionalism? How does the 'Rule of Law' protect citizens from dictatorship, and what does the separation of powers mean?",
+        seniorMarkingGuide: "SSS Civic Law: Define constitutionalism [1.5 Marks]. State three pillars of Rule of Law (equality, supremacy of law, protection of rights) [2 Marks]. Explain separation of powers [1.5 Marks].",
+        studyNotes: {
+          concept: "Constitutionalism is the principle that government authority is derived from and limited by a body of fundamental law (the Constitution). The Rule of Law states that the law is supreme over all citizens and rulers.",
+          formulas: [],
+          steps: [
+            "Pillars of Rule of Law (AV Dicey): Supremacy of Law, Equality before the Law, and Dominance of Judicial Rights.",
+            "Separation of Powers: Dividing government into Executive (enforces laws), Legislature (makes laws), and Judiciary (interprets laws) to prevent tyranny."
+          ],
+          workedExample: "Question: Define constitutionalism and outline the three arms of government under the separation of powers.\n\nAnswer:\n1. Constitutionalism is the belief that a government must act within the limits and rules set by a supreme constitution.\n2. Three Arms:\n   - The Legislature: Responsible for making and modifying laws.\n   - The Executive: Responsible for implementing and enforcing laws.\n   - The Judiciary: Responsible for interpreting laws and settling disputes."
+        }
+      },
+      {
+        id: "democracy",
+        title: "Democratic Values & Practice",
+        seniorDesc: "Analyze multi-party systems, voter registration, independent electoral bodies, and civil duties.",
+        seniorGreeting: "Good day, ma/sir! 🗳️ How do we build a strong democracy in Nigeria? What are the duties of the Independent National Electoral Commission (INEC), and why is voter apathy a threat?",
+        seniorMarkingGuide: "SSS Civic Democracy: List 3 features of democracy (free elections, multi-party system, rule of law) [2 Marks]. Define INEC roles [1.5 Marks]. Explain voter apathy threat [1.5 Marks].",
+        studyNotes: {
+          concept: "Democratic practices involve the active participation of citizens in governance through elections, public debates, and accountability systems.",
+          formulas: [],
+          steps: [
+            "INEC: Registers political parties, conducts voter registration, organizes national and state elections.",
+            "Voter Apathy: The lack of interest among citizens to vote. Threatens democracy because it leads to poor leaders being elected by a tiny minority."
+          ],
+          workedExample: "Question: State three functions of the Independent National Electoral Commission (INEC) in Nigeria.\n\nAnswer:\n1. Organizing and conducting free, fair, and credible elections.\n2. Registering eligible voters and issuing Permanent Voter Cards (PVCs).\n3. Registering, monitoring, and auditing political parties."
+        }
+      },
+      {
+        id: "youth_empowerment",
+        title: "Youth Empowerment schemes",
+        seniorDesc: "Analyze vocational training, national youth service (NYSC), and entrepreneurship funding.",
+        seniorGreeting: "Hello Teacher! 🧑‍🎓 What is youth empowerment? How does the National Youth Service Corps (NYSC) promote national unity, and what skills are needed for self-employment?",
+        seniorMarkingGuide: "SSS Civic Empowerment: Define youth empowerment [1 Mark]. List 3 empowerment schemes in Nigeria (NYSC, N-Power, SMEDAN) [2 Marks]. Explain NYSC unity role [2 Marks].",
+        studyNotes: {
+          concept: "Youth empowerment is a structural process where young people are equipped with skills, authority, and resources to build careers and contribute to national growth.",
+          formulas: [],
+          steps: [
+            "NYSC: Established in 1973 to rebuild the nation and foster unity by deploying graduates to different states.",
+            "Vocational Skills: Technical skills (web design, metal fabrication, agriculture).",
+            "Support Agencies: SMEDAN (small business development), Bank of Industry."
+          ],
+          workedExample: "Question: Define youth empowerment, and explain two objectives of the National Youth Service Corps (NYSC).\n\nAnswer:\n1. Youth empowerment is the provision of educational, vocational, and financial support to enable young people to take control of their lives and create wealth.\n2. NYSC Objectives:\n   - To foster national unity and integration by sending graduates to work in states different from their place of birth.\n   - To develop national patriotism and community development through public service."
+        }
+      },
+      {
+        id: "civil_society",
+        title: "Civil Society Organizations",
+        seniorDesc: "Understand NGOs, pressure groups, and how they protect citizens' rights.",
+        seniorGreeting: "Good day, Teacher! What are Civil Society Organizations (CSOs) or NGOs? How do pressure groups influence government policies, and what are examples in Nigeria?",
+        seniorMarkingGuide: "SSS Civic CSOs: Define Civil Society Organizations [2 Marks]. List 2 pressure groups/CSOs (NLC, ASUU, CDHR) [1 Mark]. Explain their role in defending democracy [2 Marks].",
+        studyNotes: {
+          concept: "Civil Society Organizations (CSOs) are non-governmental, non-profit organizations that represent the interests and values of citizens in public life, holding the government accountable.",
+          formulas: [],
+          steps: [
+            "NGOs: Non-Governmental Organizations (e.g. Red Cross, Amnesty International).",
+            "Pressure Groups: Groups that seek to influence government decisions without seeking to hold power (e.g., NLC - Nigeria Labour Congress, ASUU).",
+            "Role: Protecting human rights, monitoring elections, pushing for better laws."
+          ],
+          workedExample: "Question: Define Civil Society Organizations and list three roles they play in defending democracy.\n\nAnswer:\n1. CSOs are non-profit, independent organizations formed by citizens to advocate for public interests, human rights, and social welfare.\n2. Roles:\n   - Monitoring elections to prevent rigging and fraud.\n   - Educating citizens on their constitutional rights and voting duties.\n   - Pushing the government to change policies through peaceful protests or lobbying."
+        }
+      },
+      {
+        id: "relationships",
+        title: "Interpersonal Relationships",
+        seniorDesc: "Understand cooperation, compromise, and resolving communal conflicts peacefully.",
+        seniorGreeting: "Hello Teacher! In Civic Education, we are discussing communal peace. What are the attributes of positive interpersonal relationships, and how do we resolve conflicts without violence?",
+        seniorMarkingGuide: "SSS Civic Relations: Define interpersonal relationship [1 Mark]. List 3 attributes (trust, respect, communication, compromise) [2 Marks]. Suggest 2 conflict resolution steps [2 Marks].",
+        studyNotes: {
+          concept: "Interpersonal relationships are social associations and connections between two or more people. Healthy relationships build social stability and prevent communal crises.",
+          formulas: [],
+          steps: [
+            "Attributes: Mutual respect, effective communication, trust, compromise.",
+            "Conflict Resolution: Dialogue, mediation (third party help), arbitration (court/judges), and compromise."
+          ],
+          workedExample: "Question: State three qualities of a healthy interpersonal relationship and outline two methods of peaceful conflict resolution.\n\nAnswer:\nQualities:\n1. Mutual respect (valuing each other's opinions and boundaries).\n2. Trust and Honesty (being transparent and dependable).\n3. Effective Communication (active listening and speaking calmly).\nResolution methods:\n1. Mediation: Bringing in an impartial third party to guide the disputing sides to an agreement.\n2. Dialogue: Meeting face-to-face to discuss issues and find a common compromise."
+        }
+      },
+      {
+        id: "national_integrity",
+        title: "National Values (Integrity)",
+        seniorDesc: "Detail self-control, patriotism, and how integrity acts as a barrier to corruption.",
+        seniorGreeting: "Good day, Teacher! What does 'Integrity' mean? How does individual integrity act as a weapon to fight corruption and financial crimes in public offices?",
+        seniorMarkingGuide: "SSS Civic Values: Define integrity [2 Marks]. Explain how integrity fights corruption (refusal to take bribes, transparency) [2 Marks]. State benefits to nation [1 Mark].",
+        studyNotes: {
+          concept: "Integrity is the quality of being honest and having strong moral principles that you refuse to compromise under pressure.",
+          formulas: [],
+          steps: [
+            "Public Integrity: Standing against bribery, nepotism (favoritism), and embezzlement.",
+            "Attributes: Accountability, consistency, transparency, moral courage.",
+            "National Benefit: Creates a clean system, attracts foreign business, improves international reputation."
+          ],
+          workedExample: "Question: Define integrity, state three characteristics of a person of integrity, and explain its importance to national development.\n\nAnswer:\n1. Integrity is the firm adherence to high moral values and complete honesty, regardless of circumstances.\n2. Characteristics: Truthfulness, accountability (taking responsibility), and consistency in moral actions.\n3. National Development: When leaders and citizens have integrity, public funds are spent properly on infrastructure, corruption is reduced, and standard processes are respected, boosting development."
+        }
+      },
+      {
+        id: "emergency_services",
+        title: "Emergency & Security Services",
+        seniorDesc: "Understand the roles of police, civil defense (NSCDC), NEMA, and road safety.",
+        seniorGreeting: "Hi Teacher! 🚨 What is the difference between the Nigerian Police Force and the Civil Defense (NSCDC)? What is the role of NEMA in managing national disasters?",
+        seniorMarkingGuide: "SSS Civic Emergency: State Police role (internal security, law enforcement) [1.5 Marks]. State NSCDC role (protecting critical infrastructure) [1.5 Marks]. State NEMA role (disaster management) [2 Marks].",
+        studyNotes: {
+          concept: "Emergency and security services are government agencies set up to maintain internal security, protect lives and property, and manage natural or human-made disasters.",
+          formulas: [],
+          steps: [
+            "Nigerian Police Force: Maintenance of law and order, detection and prevention of crime, arresting offenders.",
+            "NSCDC (Nigeria Security and Civil Defense Corps): Protecting national critical infrastructure (oil pipelines, electrical grids) and assisting NEMA.",
+            "NEMA (National Emergency Management Agency): Responding to fires, floods, building collapses, and coordinating relief materials."
+          ],
+          workedExample: "Question: Identify the primary functions of the Nigerian Police Force, the NSCDC, and NEMA.\n\nAnswer:\n1. Nigerian Police Force: Internal security, crime prevention, and enforcing laws.\n2. NSCDC: Safeguarding critical public infrastructure (like power grids and pipelines) and disaster emergency response.\n3. NEMA: Disaster management, coordinating rescue operations during crises, and providing relief supplies."
+        }
+      },
+      {
+        id: "traffic_management",
+        title: "Traffic Regulations Management",
+        seniorDesc: "Analyze the causes of highway accidents and traffic control strategies of FRSC.",
+        seniorGreeting: "Good day, Teacher! 🚦 Why do we have so many accidents on our federal highways? What are the main causes of road crashes, and how do traffic laws save lives?",
+        seniorMarkingGuide: "SSS Civic Traffic: List 3 human causes of road crashes (speeding, phone use, drunk driving) [2 Marks]. List 2 mechanical causes (brake failure, bad tires) [1 Mark]. Explain speed limiters role [2 Marks].",
+        studyNotes: {
+          concept: "Traffic regulation management involves enforcing road laws and engineering safe highways to reduce accidents and manage gridlocks.",
+          formulas: [],
+          steps: [
+            "Human factors: Over-speeding (causes 50%+ of crashes), driving under the influence, using phones, fatigue (falling asleep).",
+            "Mechanical factors: Brake failure, worn-out tires, engine breakdowns.",
+            "Control measures: Deploying speed limiters, enforcing seatbelt laws, conducting regular vehicle inspections (VIO)."
+          ],
+          workedExample: "Question: Identify three human errors that cause highway accidents and state two safety measures enforced by the FRSC.\n\nAnswer:\n1. Human errors: Over-speeding, driving under the influence of alcohol, and distracted driving (using phones while driving).\n2. Safety measures: Enforcing the use of speed-limiting devices in commercial vehicles, and conducting random breathalyzer tests to detect drivers under the influence."
+        }
+      },
+      {
+        id: "citizenship_education",
+        title: "Citizenship Education",
+        seniorDesc: "Understand national consciousness, civic duties, and how to protect the environment.",
+        seniorGreeting: "Hello Teacher! What is citizenship education? How does it teach us national consciousness, and what are the rights and duties of a citizen under the constitution?",
+        seniorMarkingGuide: "SSS Civic Education: Define citizenship education [2 Marks]. State 2 civic duties (voting, tax payment, law obedience) [2 Marks]. Explain national consciousness [1 Mark].",
+        studyNotes: {
+          concept: "Citizenship education equips citizens with knowledge about their government, rights, and duties, preparing them to participate actively in democratic life.",
+          formulas: [],
+          steps: [
+            "National Consciousness: Developing a strong sense of pride, patriotism, and love for one's country above tribal divisions.",
+            "Civic Duties: Actions citizens *must* perform (obeying laws, paying taxes, voting, testifying in court)."
+          ],
+          workedExample: "Question: Define citizenship education and list three civic duties a citizen owes to their country.\n\nAnswer:\n1. Citizenship education is the training of individuals to become responsible, patriotic, and active members of their country.\n2. Civic duties:\n   - Obeying all laws of the land.\n   - Prompt and honest payment of taxes.\n   - Defending the country and assisting security agencies by reporting crimes."
+        }
+      }
+    ]
+  },
+  economics: {
+    id: "economics",
+    name: "Economics (SSS)",
+    topics: [
+      {
+        id: "elasticity",
+        title: "Elasticity of Demand & Supply",
+        seniorDesc: "Calculate price, income, and cross elasticity of demand and interpret curves.",
+        seniorGreeting: "Hello Teacher! 📈 I am studying the Law of Demand and Supply for Economics. I see that the demand curve slopes downwards, but I don't understand the income effect, substitution effect, and what ceteris paribus means. Can you explain?",
+        seniorMarkingGuide: "SS2 Economics Demand: State law of demand with 'ceteris paribus' clause [2 Marks]. Explain slope using income and substitution effects [2 Marks]. State law of supply [1 Mark].",
+        studyNotes: {
+          concept: "Elasticity measures the responsiveness of quantity demanded or supplied to a change in price, income, or related goods.",
+          formulas: [
+            "E_d = \\frac{\\% \\Delta Q_d}{\\% \\Delta P} = \\frac{Q_2 - Q_1}{Q_1} \\div \\frac{P_2 - P_1}{P_1}",
+            "E_d > 1 \\implies \\text{Elastic}, \\quad E_d < 1 \\implies \\text{Inelastic}"
+          ],
+          steps: [
+            "Calculate percentage change in quantity: %ΔQ = (Change in Q / Original Q) * 100.",
+            "Calculate percentage change in price: %ΔP = (Change in P / Original P) * 100.",
+            "Divide %ΔQ by %ΔP. Take the absolute value (ignore negative sign)."
+          ],
+          workedExample: "Problem: The price of bread rises from ₦500 to ₦600, causing demand to fall from 100 loaves to 90 loaves. Calculate the price elasticity of demand.\n\nSolution:\n1. %ΔQ = (90 - 100) / 100 = -10/100 = -10%.\n2. %ΔP = (600 - 500) / 500 = 100/500 = +20%.\n3. Ed = |-10% / 20%| = 0.5.\n4. Since Ed = 0.5 < 1, demand is inelastic.\nAnswer: Price Elasticity of Demand = 0.5"
+        }
+      },
+      {
+        id: "production_cost",
+        title: "Production & Cost Theories",
+        seniorDesc: "Understand Fixed, Variable, Marginal, and Average costs and the law of diminishing returns.",
+        seniorGreeting: "Good day, Teacher! In economics, what is the difference between fixed costs and variable costs? How do we calculate Marginal Cost (MC), and what is the law of diminishing returns?",
+        seniorMarkingGuide: "SSS Economics Production: Define Fixed Cost (independent of output) and Variable Cost [2 Marks]. State formulas: TC = FC + VC, and MC = dTC/dQ [1.5 Marks]. Explain diminishing returns [1.5 Marks].",
+        studyNotes: {
+          concept: "Production cost is the total money spent to produce goods. The Law of Diminishing Returns states that adding more variable inputs to fixed inputs eventually leads to smaller increases in output.",
+          formulas: [
+            "TC = TFC + TVC \\quad \\text{(Total Cost)}",
+            "AC = \\frac{TC}{Q} \\quad \\text{(Average Cost)}",
+            "MC = \\frac{\\Delta TC}{\\Delta Q} \\quad \\text{(Marginal Cost)}"
+          ],
+          steps: [
+            "Fixed Costs (TFC): Constants like rent, machine purchases.",
+            "Variable Costs (TVC): Change with output (raw materials, wages).",
+            "Compute Total Cost (TC), then divide by quantity (Q) for Average Cost (AC)."
+          ],
+          workedExample: "Problem: A bakery has a fixed cost of ₦1,000. It produces 10 cakes at a variable cost of ₦1,500. Find the Total Cost and Average Cost per cake.\n\nSolution:\n1. Total Cost: TC = TFC + TVC = 1000 + 1500 = ₦2,500.\n2. Average Cost: AC = TC / Q = 2500 / 10 = ₦250 per cake.\nAnswer: TC = ₦2,500, AC = ₦250"
+        }
+      },
+      {
+        id: "market_structures",
+        title: "Market Structures (Monopoly/Competition)",
+        seniorDesc: "Compare perfect competition, monopoly, oligopoly, and monopolistic markets.",
+        seniorGreeting: "Hello Teacher! What is the difference between a perfect competition market and a monopoly? Why can monopolies set their own prices, while perfect competitors are price takers?",
+        seniorMarkingGuide: "SSS Economics Market: List features of perfect competition (many buyers/sellers, homogeneous product, free entry) [2 Marks]. List features of monopoly (single seller, barriers to entry) [2 Marks].",
+        studyNotes: {
+          concept: "Market structure describes the competitive environment of a market. It ranges from highly competitive (perfect competition) to non-competitive (monopoly).",
+          formulas: [
+            "\\text{Profit Max: } MC = MR \\quad \\text{(Marginal Cost = Marginal Revenue)}"
+          ],
+          steps: [
+            "Perfect Competition: Many buyers/sellers, identical products, perfect information, price takers.",
+            "Monopoly: Single seller, unique product with no close substitutes, high barriers to entry, price maker."
+          ],
+          workedExample: "Question: Compare perfect competition and monopoly based on number of sellers, product type, and control over price.\n\nAnswer:\nFeature | Perfect Competition | Monopoly\nSellers | Very many | Single seller\nProduct Type | Homogeneous (identical) | Unique (no substitute)\nPrice Control | Price taker (no control) | Price maker (high control)"
+        }
+      },
+      {
+        id: "inflation",
+        title: "Inflation & Price Index",
+        seniorDesc: "Calculate inflation rate using Consumer Price Index (CPI) and identify types.",
+        seniorGreeting: "Good day, Teacher! 📈 What is inflation? What is the difference between demand-pull inflation and cost-push inflation, and how do we calculate CPI?",
+        seniorMarkingGuide: "SSS Economics Inflation: Define inflation as persistent rise in prices [1 Mark]. Differentiate demand-pull (high demand) vs cost-push (high production cost) [2 Marks]. State CPI formula [2 Marks].",
+        studyNotes: {
+          concept: "Inflation is a persistent, general rise in the price level of goods and services over time. The Consumer Price Index (CPI) measures this change using a basket of goods relative to a base year.",
+          formulas: [
+            "\\text{CPI} = \\frac{\\text{Cost of Basket in Current Year}}{\\text{Cost of Basket in Base Year}} \\times 100",
+            "\\text{Inflation Rate} = \\frac{\\text{CPI}_2 - \\text{CPI}_1}{\\text{CPI}_1} \\times 100\\%"
+          ],
+          steps: [
+            "Compute cost of goods in base year and current year.",
+            "Calculate CPI for both periods.",
+            "Substitute into the inflation rate formula."
+          ],
+          workedExample: "Problem: The cost of a consumer basket was ₦2,000 in the base year (2020) and rose to ₦2,500 in 2021. Find the CPI for 2021 and the inflation rate.\n\nSolution:\n1. CPI (2021) = (2500 / 2000) * 100 = 1.25 * 100 = 125.\n2. Since base year CPI is always 100, Inflation Rate = (125 - 100) / 100 * 100% = 25%.\nAnswer: CPI = 125, Inflation Rate = 25%"
+        }
+      },
+      {
+        id: "national_income",
+        title: "National Income Accounting",
+        seniorDesc: "Calculate GDP, GNP, NNP, and explain the output, income, and expenditure methods.",
+        seniorGreeting: "Hello Teacher! 📊 What is the difference between Gross Domestic Product (GDP) and Gross National Product (GNP)? How do we calculate national income using the expenditure method?",
+        seniorMarkingGuide: "SSS Economics Income: Define GDP (inside borders) and GNP (by citizens) [2 Marks]. State expenditure method formula Y = C + I + G + (X - M) [2 Marks]. Define terms [1 Mark].",
+        studyNotes: {
+          concept: "National income measures the total economic activity of a country in a year. GDP counts all production inside a country's borders, while GNP counts all production by a country's citizens globally.",
+          formulas: [
+            "Y = C + I + G + (X - M) \\quad \\text{(Expenditure Method)}",
+            "\\text{GNP} = \\text{GDP} + \\text{Net Income from Abroad}",
+            "\\text{NNP} = \\text{GNP} - \\text{Depreciation}"
+          ],
+          steps: [
+            "C: Personal consumption by households.",
+            "I: Private investment by businesses.",
+            "G: Government spending.",
+            "X - M: Net Exports (Exports minus Imports)."
+          ],
+          workedExample: "Problem: Calculate GDP using the expenditure method: Consumption (C) = ₦5,000, Investment (I) = ₦2,000, Government Spending (G) = ₦1,500, Exports (X) = ₦800, Imports (M) = ₦1,000.\n\nSolution:\n1. Formula: Y = C + I + G + (X - M)\n2. Substitute: Y = 5000 + 2000 + 1500 + (800 - 1000)\n3. Calculate: Y = 8500 + (-200) = ₦8,300.\nAnswer: GDP = ₦8,300"
+        }
+      },
+      {
+        id: "international_trade",
+        title: "International Trade & Balance",
+        seniorDesc: "Explain absolute/comparative advantage, balance of trade, and trade protectionism.",
+        seniorGreeting: "Good day, Teacher! What is the difference between Balance of Trade and Balance of Payments? How does a country gain from comparative advantage in international trade?",
+        seniorMarkingGuide: "SSS Economics Trade: Define Balance of Trade (visible imports/exports) [1.5 Marks]. Define Balance of Payments (all transactions) [1.5 Marks]. Explain comparative advantage (lower opportunity cost) [2 Marks].",
+        studyNotes: {
+          concept: "International trade is the exchange of goods and services across international borders. The Law of Comparative Advantage states that trade is beneficial if countries specialize in producing goods with a lower opportunity cost.",
+          formulas: [],
+          steps: [
+            "Balance of Trade: Visible exports value minus visible imports value.",
+            "Balance of Payments: A complete record of all financial transactions between a country and the rest of the world (current + capital accounts)."
+          ],
+          workedExample: "Question: Explain the difference between absolute advantage and comparative advantage.\n\nAnswer:\n1. Absolute Advantage: A country can produce more of a good than another country using the same amount of resources (e.g. Saudi Arabia producing more oil per worker than Japan).\n2. Comparative Advantage: A country can produce a good at a lower opportunity cost (giving up less of other goods) than another country, making specialization mutually beneficial."
+        }
+      },
+      {
+        id: "public_finance",
+        title: "Public Finance & Taxation",
+        seniorDesc: "Understand direct/indirect taxes, progressive/proportional rates, and deficit budgets.",
+        seniorGreeting: "Hello, Teacher! What is public finance? What is the difference between direct taxes and indirect taxes? How do progressive, regressive, and proportional tax systems work?",
+        seniorMarkingGuide: "SSS Economics Finance: Differentiate direct tax (on income) vs indirect tax (on goods) [2 Marks]. Define progressive tax (rate rises with income) and regressive tax [2 Marks]. State budget types [1 Mark].",
+        studyNotes: {
+          concept: "Public finance deals with government revenue (taxes, borrowing) and government expenditure. A tax is a compulsory levy imposed by the government.",
+          formulas: [
+            "\\text{Direct Tax: paid directly (e.g. PAYE, Company Tax)}",
+            "\\text{Indirect Tax: paid via purchase (e.g. VAT, Excise Duty)}"
+          ],
+          steps: [
+            "Progressive Tax: Tax rate increases as income increases (burden on wealthy).",
+            "Proportional Tax: Tax rate remains constant for all income levels.",
+            "Regressive Tax: Tax rate decreases as income increases (burden on poor)."
+          ],
+          workedExample: "Question: State three differences between direct taxes and indirect taxes.\n\nAnswer:\nFeature | Direct Taxes | Indirect Taxes\nIncidence | Cannot be shifted to others | Can be shifted to consumers\nLevied on | Income, wealth, profit | Goods, services, customs\nExample | Personal Income Tax (PAYE) | Value Added Tax (VAT)"
+        }
+      },
+      {
+        id: "economic_planning",
+        title: "Economic Planning & Systems",
+        seniorDesc: "Compare Capitalism, Socialism, Mixed Economies, and state planning frameworks.",
+        seniorGreeting: "Good day, Teacher! What is the difference between a capitalist (free market) economy and a socialist (planned) economy? How does a mixed economy combine both?",
+        seniorMarkingGuide: "SSS Economics Systems: List features of Capitalism (private ownership, price mechanism) [2 Marks]. List features of Socialism (state ownership, planning) [2 Marks]. Define Mixed Economy [1 Mark].",
+        studyNotes: {
+          concept: "An economic system is a framework that a country uses to allocate resources and distribute goods and services. It answers: What to produce? How to produce? For whom to produce?",
+          formulas: [],
+          steps: [
+            "Capitalism (Free Market): Resources owned privately, price mechanism (demand/supply) coordinates decisions.",
+            "Socialism (Command): Resources owned by the government, central planning board decides production.",
+            "Mixed Economy: Public and private sectors operate together (e.g., Nigeria, UK)."
+          ],
+          workedExample: "Question: Contrast capitalism and socialism based on ownership of production, motivation, and price determination.\n\nAnswer:\nFeature | Capitalism | Socialism\nOwnership | Private individuals/firms | Government (State)\nMotivation | Profit maximization | Social welfare/equality\nPrice | Set by market forces | Set by government planning"
+        }
+      },
+      {
+        id: "money_capital_markets",
+        title: "Money & Capital Markets",
+        seniorDesc: "Analyze treasury bills, stocks, shares, and central bank monetary tools.",
+        seniorGreeting: "Hello Teacher! What is the difference between the money market and the capital market? What are shares and debentures, and how does the stock exchange work?",
+        seniorMarkingGuide: "SSS Economics Markets: Define money market (short term loans, treasury bills) [2 Marks]. Define capital market (long term loans, stocks/shares) [2 Marks].",
+        studyNotes: {
+          concept: "Financial markets mobilize savings for investment. The money market deals with short-term funds (maturity under 1 year). The capital market deals with long-term funds.",
+          formulas: [],
+          steps: [
+            "Money Market: Controlled by Central Bank, trades Treasury Bills, Commercial Papers.",
+            "Capital Market: Controlled by Securities & Exchange Commission, trades Shares, Stocks, Debentures.",
+            "Shares: Equity ownership in a firm. Debentures: Long-term debt/loans raised by a firm."
+          ],
+          workedExample: "Question: State three differences between the Money Market and the Capital Market.\n\nAnswer:\nFeature | Money Market | Capital Market\nLoan Term | Short-term (under 1 year) | Long-term (over 1 year)\nInstruments | Treasury bills, call money | Stocks, shares, debentures\nRegulator | Central Bank (CBN) | Securities & Exchange Commission"
+        }
+      },
+      {
+        id: "development_indicators",
+        title: "Economic Development Indicators",
+        seniorDesc: "Compare economic growth versus development, and explain HDI, per capita income, and Gini coefficient.",
+        seniorGreeting: "Good day, Teacher! What is the difference between economic growth and economic development? What is the Human Development Index (HDI), and how does the Gini coefficient measure inequality?",
+        seniorMarkingGuide: "SSS Economics Indicators: Define economic growth (increase in GDP) and development (welfare increase) [2 Marks]. Explain HDI indicators (life expectancy, education, income) [1.5 Marks]. Explain Gini coefficient (inequality measure) [1.5 Marks].",
+        studyNotes: {
+          concept: "Economic growth is a quantitative measure of output increase. Economic development is a qualitative measure of structural change and citizen welfare improvement.",
+          formulas: [
+            "\\text{Per Capita Income} = \\frac{\\text{Gross National Product (GNP)}}{\\text{Total Population}}",
+            "\\text{Gini Coefficient: } 0 \\text{ (perfect equality) to } 1 \\text{ (perfect inequality)}"
+          ],
+          steps: [
+            "Human Development Index (HDI) evaluates: Life expectancy (health), Mean years of schooling (education), and GNI per capita (living standards).",
+            "Gini Coefficient: Lower values indicate a more equal distribution of wealth."
+          ],
+          workedExample: "Question: Explain the difference between economic growth and economic development, and calculate per capita income if GNP is ₦5,000,000 and population is 10,000.\n\nAnswer:\n1. Growth vs Development: Economic growth is simply the increase in a country's real GDP over time. Economic development goes further, measuring improvements in literacy, health, infrastructure, and overall quality of life.\n2. Calculation: Per Capita Income = 5,000,000 / 10,000 = ₦500.\nAnswer: Per Capita Income = ₦500"
+        }
+      }
+    ]
+  },
+  programming: {
+    id: "programming",
+    name: "Python & AI Programming (SSS)",
+    topics: [
+      {
+        id: "functions_parameters",
+        title: "Functions & Parameters",
+        seniorDesc: "Declare reusable functions with parameters, arguments, default values, and return statements.",
+        seniorGreeting: "Hi Teacher! 🐍 I am learning Python coding. I want to repeat code using for loops instead of copy-pasting, and declare reusable functions. How do I write 'for i in range(10):', and how do parameters differ from arguments?",
+        seniorMarkingGuide: "SS2 Python Loops: Write valid 'for i in range(...):' syntax with indentation [2 Marks]. Declare function using 'def' and 'return' [2 Marks]. Explain parameters vs arguments [1 Mark].",
+        studyNotes: {
+          concept: "Functions are blocks of organized, reusable code. Parameters are variables defined in the function signature. Arguments are values passed during execution.",
+          formulas: [
+            "\\text{def name}(p_1, p_2): \\implies \\text{return result}"
+          ],
+          steps: [
+            "Use the 'def' keyword to start the function block.",
+            "Declare parameters inside the parentheses.",
+            "Use the 'return' keyword to send a result back to the caller."
+          ],
+          workedExample: "Problem: Write a Python function that takes a base and exponent, calculates the power, and returns the value.\n\nCode:\ndef calculate_power(base, exponent=2):\n    result = base ** exponent\n    return result\n\nprint(calculate_power(5, 3)) # prints 125\nprint(calculate_power(4))    # prints 16 (uses default 2)\n\nAnswer: return result"
+        }
+      },
+      {
+        id: "oop_concepts",
+        title: "Object-Oriented Programming (OOP)",
+        seniorDesc: "Understand Classes, Objects, constructor init, and inheritance in Python.",
+        seniorGreeting: "Good day, Teacher! 🐍 In Python, what is Object-Oriented Programming (OOP)? What are classes, objects, and the constructor '__init__' method?",
+        seniorMarkingGuide: "SSS Python OOP: Define Class (blueprint) vs Object (instance) [2 Marks]. Write constructor class syntax using '__init__' and 'self' [2 Marks]. Explain inheritance [1 Mark].",
+        studyNotes: {
+          concept: "OOP is a programming paradigm based on the concept of 'objects', which contain data (attributes) and code (methods). A class is a blueprint; an object is an instance.",
+          formulas: [
+            "\\text{class Name: def __init__(self, args):}"
+          ],
+          steps: [
+            "Declare a class: class Student:",
+            "Define the constructor method __init__ with 'self' as the first parameter to initialize object variables.",
+            "Create an instance: s = Student('Chidi')."
+          ],
+          workedExample: "Problem: Create a Class named Car with an attribute model, and a method start that prints 'Car started'.\n\nCode:\nclass Car:\n    def __init__(self, model):\n        self.model = model\n        \n    def start(self):\n        print(self.model + \" started!\")\n\nmy_car = Car(\"Toyota\")\nmy_car.start() # Prints: Toyota started!\n\nAnswer: class Car"
+        }
+      },
+      {
+        id: "advanced_data_structures",
+        title: "Advanced Data Structures",
+        seniorDesc: "Understand differences between lists, tuples, dictionaries, and sets in Python.",
+        seniorGreeting: "Hello Teacher! I know how lists work. But what is the difference between a List, a Tuple, a Dictionary, and a Set? When should I use a dictionary?",
+        seniorMarkingGuide: "SSS Python Data: Differentiate list (mutable) vs tuple (immutable) [2 Marks]. Define dictionary key-value store [2 Marks]. Give example [1 Mark].",
+        studyNotes: {
+          concept: "Python has four built-in collection data structures. Choosing the correct structure is essential for speed and integrity.",
+          formulas: [
+            "\\text{Dictionary: } d = \\{k_1: v_1, k_2: v_2\\}"
+          ],
+          steps: [
+            "List []: Ordered, mutable (changeable), allows duplicate items.",
+            "Tuple (): Ordered, immutable (cannot be changed), allows duplicates.",
+            "Dictionary {}: Unordered, mutable, key-value pairs, keys must be unique.",
+            "Set {}: Unordered, mutable, unique elements only."
+          ],
+          workedExample: "Problem: Declare a dictionary representing a student with keys 'name' and 'level', and print the level value.\n\nCode:\nstudent = {\n    \"name\": \"Chidi\",\n    \"level\": \"SSS2\"\n}\nprint(student[\"level\"]) # Prints: SSS2\n\nAnswer: student['level']"
+        }
+      },
+      {
+        id: "file_io",
+        title: "File I/O & Error Handling",
+        seniorDesc: "Read/write files in Python using 'with open()' and catch errors using try/except.",
+        seniorGreeting: "Good day, Teacher! 📁 How do I read from a text file and write data to it in Python? How does 'try' and 'except' prevent my app from crashing during errors?",
+        seniorMarkingGuide: "SSS Python File: Write valid open() code with read/write mode [2 Marks]. Write valid try-except block [2 Marks].",
+        studyNotes: {
+          concept: "File I/O allows programs to persist data on disk. Error handling (exceptions) catches runtime errors (e.g. File Not Found) gracefully.",
+          formulas: [
+            "\\text{with open(file, 'w') as f: f.write()}"
+          ],
+          steps: [
+            "Use 'with open(filename, mode) as file:' (automatically closes the file).",
+            "Modes: 'r' (read), 'w' (write/overwrite), 'a' (append).",
+            "Wrap risky code in a 'try:' block, and handle errors in 'except Exception as e:'."
+          ],
+          workedExample: "Problem: Write code to safely write 'Hello' to a file, handling potential file errors.\n\nCode:\ntry:\n    with open(\"greeting.txt\", \"w\") as file:\n        file.write(\"Hello World\")\nexcept IOError as e:\n    print(\"Error writing to file:\", e)\n\nAnswer: try-except open"
+        }
+      },
+      {
+        id: "networks",
+        title: "Neural Network Architecture",
+        seniorDesc: "Understand feedforward layers, weights/biases, activation functions, and backpropagation optimization.",
+        seniorGreeting: "Hello Teacher! 🤖 I am reading about Introductory Artificial Intelligence. I saw terms like 'Neural Network', 'Weights and Biases', and 'Backpropagation'. What are the layers of a neural network, and how do weights adjust using error values?",
+        seniorMarkingGuide: "SS2 AI Neural Networks: Explain layer structure (input, hidden, output) [2 Marks]. Define weights and biases role [2 Marks]. Explain backpropagation error adjustments [1 Mark].",
+        studyNotes: {
+          concept: "Artificial Neural Networks (ANNs) are computing systems inspired by biological brain networks. Data flows forward, and errors propagate backward to optimize weights.",
+          formulas: [
+            "y = f(\\sum_{i} w_i x_i + b) \\quad \\text{(Neuron activation)}",
+            "\\text{Sigmoid: } \\sigma(z) = \\frac{1}{1 + e^{-z}}"
+          ],
+          steps: [
+            "Input Layer: Receives raw feature numbers.",
+            "Hidden Layers: Mix features using weights (w) and biases (b), applying non-linear activation functions (ReLU, Sigmoid).",
+            "Output Layer: Produces final prediction probability."
+          ],
+          workedExample: "Question: Explain the mathematical role of weights and biases in a single neuron.\n\nAnswer:\n1. Weights (w) represent the strength/importance of each input signal. The inputs (x) are multiplied by their weights: w * x.\n2. The Bias (b) is an offset value added to the sum (w*x + b). It shifts the activation function left or right, allowing the neuron to fire (activate) even if inputs are zero."
+        }
+      },
+      {
+        id: "weights_biases",
+        title: "Weights, Biases & Activations",
+        seniorDesc: "Calculate neuron outputs mathematically and explain ReLU, Sigmoid, and Softmax.",
+        seniorGreeting: "Good day, Teacher! 🤖 In a neural network node, why do we need activation functions like ReLU or Sigmoid? What happens to the math if we remove them?",
+        seniorMarkingGuide: "SSS AI Math: Calculate linear sum (w*x + b) [1.5 Marks]. State Sigmoid formula [1.5 Marks]. Explain activation role (adds non-linearity to learn complex patterns) [2 Marks].",
+        studyNotes: {
+          concept: "Activation functions introduce non-linearity into network nodes. Without them, a neural network is just a linear regression model, unable to learn complex patterns like curves or image features.",
+          formulas: [
+            "\\text{ReLU}(z) = \\max(0, z)",
+            "\\text{Sigmoid}(z) = \\frac{1}{1 + e^{-z}}",
+            "z = w_1 x_1 + w_2 x_2 + b"
+          ],
+          steps: [
+            "Calculate weighted sum of inputs plus bias: z = Σ(w*x) + b.",
+            "Apply activation function to z to get the final output y."
+          ],
+          workedExample: "Problem: A neuron has inputs x1=1, x2=2, with weights w1=0.5, w2=-0.5, and bias b=0.2. Find the output using ReLU activation.\n\nSolution:\n1. Calculate weighted sum: z = (x1 * w1) + (x2 * w2) + b\n2. z = (1 * 0.5) + (2 * -0.5) + 0.2 = 0.5 - 1.0 + 0.2 = -0.3.\n3. Apply ReLU: f(z) = max(0, z) = max(0, -0.3) = 0.\nAnswer: Neuron output = 0"
+        }
+      },
+      {
+        id: "backpropagation",
+        title: "Backpropagation Optimization",
+        seniorDesc: "Understand gradient descent, loss functions, chain rule derivatives, and weight updates.",
+        seniorGreeting: "Hello Teacher! 🤖 How does a neural network train? What is backpropagation, and how does the mathematical chain rule derivative adjust weights to reduce loss?",
+        seniorMarkingGuide: "SSS AI Backpropagation: Define loss function [1 Mark]. Explain gradient descent optimization [2 Marks]. State weight update equation using learning rate [2 Marks].",
+        studyNotes: {
+          concept: "Backpropagation is the core algorithm used to train neural networks. It calculates the gradient of the loss function with respect to the weights using the mathematical chain rule of calculus, adjusting weights to minimize error.",
+          formulas: [
+            "E = \\frac{1}{2}(y_{target} - y_{pred})^2 \\quad \\text{(Mean Squared Error Loss)}",
+            "w_{new} = w_{old} - \\eta \\frac{\\partial E}{\\partial w_{old}} \\quad \\text{(\\eta = Learning Rate)}"
+          ],
+          steps: [
+            "Forward Pass: Compute prediction and calculate loss (error).",
+            "Backward Pass: Differentiate loss with respect to weights using the chain rule.",
+            "Update: Subtract the gradient multiplied by the learning rate (η) from the old weights."
+          ],
+          workedExample: "Question: Outline the weight update equation in backpropagation and explain the role of the learning rate.\n\nAnswer:\n1. Weight Update Equation: w_new = w_old - (learning_rate * dLoss/dWeight).\n2. Learning Rate (η): A scaling factor (usually a small number like 0.01) that determines the size of the step the optimization algorithm takes towards the minimum loss. If too large, training will diverge; if too small, training will take too long."
+        }
+      },
+      {
+        id: "nlp_concepts",
+        title: "Natural Language Processing (NLP)",
+        seniorDesc: "Understand tokenization, word embeddings, vector space, and attention transformers.",
+        seniorGreeting: "Good day, Teacher! 💬 How does a computer process human languages? What is tokenization, and how do word embeddings represent meanings using numerical vectors in multidimensional space?",
+        seniorMarkingGuide: "SSS AI NLP: Define tokenization (splitting text to words/subwords) [2 Marks]. Define word embedding as mapping words to vectors [2 Marks]. Explain semantic vector distance [1 Mark].",
+        studyNotes: {
+          concept: "NLP combines linguistics and computer science to process human languages. Modern NLP maps words to numerical vectors (embeddings) in a high-dimensional vector space.",
+          formulas: [
+            "\\text{Cosine Similarity} = \\frac{\\mathbf{A} \\cdot \\mathbf{B}}{\\|\\mathbf{A}\\| \\|\\mathbf{B}\\|}"
+          ],
+          steps: [
+            "Tokenization: Splitting input strings into sub-word tokens.",
+            "Embedding: Mapping token IDs to vectors of numbers (e.g. size 768).",
+            "Semantic closeness: Similar words (e.g. 'king' and 'queen') lie close to each other in the vector space."
+          ],
+          workedExample: "Question: Explain tokenization and the concept of word embeddings in NLP.\n\nAnswer:\n1. Tokenization: The process of splitting text sentences into smaller units called tokens (words, parts of words, or symbols) so the computer can index them.\n2. Word Embedding: A technique where words are represented as vectors of real numbers in a high-dimensional space (e.g., a list of 512 numbers). Words with similar meanings or contexts end up having similar mathematical vectors, allowing the AI to calculate semantic relationships (e.g. King - Man + Woman = Queen)."
+        }
+      },
+      {
+        id: "cnn_intro",
+        title: "Convolutional Neural Networks (CNN)",
+        seniorDesc: "Understand image kernels, convolution layers, max pooling, and image classification.",
+        seniorGreeting: "Hello Teacher! 📸 We are studying computer vision. What is a Convolutional Neural Network (CNN)? What is a kernel/filter, and how does pooling reduce image size?",
+        seniorMarkingGuide: "SSS AI Vision: Explain convolution (multiplying image pixels by kernel matrix) [2 Marks]. Explain Max Pooling (reducing matrix size by taking maximum) [2 Marks]. State target is feature extraction [1 Mark].",
+        studyNotes: {
+          concept: "CNNs are deep learning architectures designed for processing grid-structured data like images. They use kernels to extract local features.",
+          formulas: [
+            "(I * K)(i,j) = \\sum_{m} \\sum_{n} I(i-m, j-n) K(m,n)"
+          ],
+          steps: [
+            "Convolution: Slid a small matrix (kernel) across the image pixel matrix, multiplying values and summing to create a feature map.",
+            "Activation: Apply ReLU.",
+            "Pooling: Reduce dimensions (e.g. Max Pooling takes the largest number in a 2x2 grid), reducing computational load."
+          ],
+          workedExample: "Question: Explain the difference between convolution and pooling in image processing.\n\nAnswer:\n1. Convolution: The process of applying a filter (kernel matrix) to the input image grid to detect features like edges, lines, and curves.\n2. Pooling: The process of down-sampling the feature map to reduce its dimensions and calculation requirements, typically by taking the maximum value in a small window (Max Pooling)."
+        }
+      },
+      {
+        id: "ai_ethics",
+        title: "AI Ethics & Algorithmic Bias",
+        seniorDesc: "Understand dataset bias, deepfakes, copyright, and ethical deployment of LLMs.",
+        seniorGreeting: "Good day, Teacher! ⚖️ As AI is deployed globally, what is algorithmic bias? How does a model learn prejudices from its training dataset, and how do we build fair AI systems?",
+        seniorMarkingGuide: "SSS AI Ethics: Define algorithmic bias [2 Marks]. Explain how biased datasets lead to biased outputs [2 Marks]. Suggest one mitigation strategy [1 Mark].",
+        studyNotes: {
+          concept: "AI ethics involves the moral principles governing AI deployment. Algorithmic bias occurs when a model produces systematically prejudiced outputs due to skewed training data.",
+          formulas: [],
+          steps: [
+            "Data skew: If training data contains mostly men, facial recognition will fail on women.",
+            "Social impact: Biased hiring tools, false criminal profiling.",
+            "Mitigation: Diverse training datasets, algorithmic auditing, transparent guidelines."
+          ],
+          workedExample: "Question: Explain how algorithmic bias is introduced into a machine learning model, and state one way to prevent it.\n\nAnswer:\n1. Introduction: Bias is introduced when the training dataset is not representative of the real-world population (e.g. using a dataset of mostly white faces to train an officer's suspect-detection AI).\n2. Prevention: Auditing the training dataset for diversity before training, and testing the model on diverse demographic groups to measure and correct error rate differences."
+        }
+      }
+    ]
+  }
+};
+
+// ----------------------------------------------------
+// 3. EXPORT COMBINED CURRICULA
+// ----------------------------------------------------
+export const subjectsData = {
+  jss: jssSubjectsData,
+  sss: sssSubjectsData
 };
