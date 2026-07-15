@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar } from "@/components/shared/Avatar";
@@ -57,6 +57,7 @@ interface User {
 export default function ProfilePage() {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const queryClient = useQueryClient();
   const { achievements, unreadCount, markAsRead, markAllAsRead, stats, syncFromProfile, subjectsEngaged } = useLevelProgressContext();
   const [user, setUser] = useState<User | null>(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -264,6 +265,7 @@ export default function ProfilePage() {
 
 
   const handleLogout = () => {
+    queryClient.clear();
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     localStorage.removeItem("purpleschool_game_state_v3");

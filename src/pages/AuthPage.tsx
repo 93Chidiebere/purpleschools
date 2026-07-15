@@ -7,10 +7,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ArrowRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { API_BASE } from "@/config";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function AuthPage() {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const queryClient = useQueryClient();
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -60,6 +62,9 @@ export default function AuthPage() {
       // Save credentials
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
+
+      // Clear React Query cache to prevent data leakage from previous sessions
+      queryClient.clear();
 
       toast({
         title: isLogin ? "Welcome Back!" : "Account Created!",
