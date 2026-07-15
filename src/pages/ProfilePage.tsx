@@ -265,6 +265,9 @@ export default function ProfilePage() {
 
   const handleLogout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("purpleschool_game_state_v3");
+    localStorage.removeItem("purpleschool_achievements_v4");
     navigate("/");
   };
   
