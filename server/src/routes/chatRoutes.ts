@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { query } from "../db";
+import { authenticateToken } from "../middleware/authMiddleware";
 
 const router = Router();
 
@@ -276,14 +278,16 @@ router.post("/socratic", async (req: any, res: any) => {
 });
 
 // Route 2: POST /chat/evaluate
-router.post("/evaluate", async (req: any, res: any) => {
+router.post("/evaluate", authenticateToken, async (req: any, res: any) => {
   const { messages, topic, subject, rubric } = req.body;
+  const userId = req.user?.id;
 
   if (!messages || !topic) {
     return res.status(400).json({ error: "Missing required parameters: messages, topic." });
   }
 
   const apiKey = getGeminiApiKey();
+  let evaluationResult: any = null;
 
   if (apiKey) {
     // 1. --- GEMINI AI FLOW ---
@@ -316,9 +320,7 @@ Write a concise report card. Respond in this exact JSON format:
 
       const result = await model.generateContent(prompt);
       const response = await result.response;
-      const data = JSON.parse(response.text().trim());
-
-      return res.json(data);
+      evaluationResult = JSON.parse(response.text().trim());
     } catch (err: any) {
       console.error("Gemini evaluation error:", err);
       // Fallback to simulator below if Gemini fails
@@ -326,29 +328,86 @@ Write a concise report card. Respond in this exact JSON format:
   }
 
   // 2. --- SIMULATOR REPORT CARD FALLBACK ---
-  const userMessages = messages.filter((m: any) => m.role === "user");
-  const count = userMessages.length;
+  if (!evaluationResult) {
+    const userMessages = messages.filter((m: any) => m.role === "user");
+    const count = userMessages.length;
 
-  let report = {
-    score: 8,
-    accuracy: "Your explanations of the basic concepts were correct and encouraging.",
-    gaps: "Ensure you prompt the student to write the balanced formula or factorization steps on paper.",
-    positive: "You explained difficult terms using excellent real-world analogies."
-  };
+    let report = {
+      score: 8,
+      accuracy: "Your explanations of the basic concepts were correct and encouraging.",
+      gaps: "Ensure you prompt the student to write the balanced formula or factorization steps on paper.",
+      positive: "You explained difficult terms using excellent real-world analogies."
+    };
 
-  if (count <= 2) {
-    report.score = 5;
-    report.accuracy = "Your Socratic teaching session was very brief.";
-    report.gaps = "You did not explain the core equations or provide steps to practice.";
-    report.positive = "You initiated the topic greeting nicely.";
-  } else if (count >= 5) {
-    report.score = 10;
-    report.accuracy = "Outstanding curriculum coverage. Every step of the syllabus rubrics was fully met.";
-    report.gaps = "None! You guided Chidi through each step with perfect precision.";
-    report.positive = "You used outstanding Socratic guiding questions to lead the student to correct answers.";
+    if (count <= 2) {
+      report.score = 5;
+      report.accuracy = "Your Socratic teaching session was very brief.";
+      report.gaps = "You did not explain the core equations or provide steps to practice.";
+      report.positive = "You initiated the topic greeting nicely.";
+    } else if (count >= 5) {
+      report.score = 10;
+      report.accuracy = "Outstanding curriculum coverage. Every step of the syllabus rubrics was fully met.";
+      report.gaps = "None! You guided Chidi through each step with perfect precision.";
+      report.positive = "You used outstanding Socratic guiding questions to lead the student to correct answers.";
+    }
+    evaluationResult = report;
   }
 
-  return res.json(report);
+  // 3. --- LOG TO DATABASE FOR FUTURE AI MODEL TRAINING ---
+  if (evaluationResult && userId) {
+    try {
+      await query(
+        `INSERT INTO student_responses (user_id, subject, topic, transcript, score, accuracy_summary, gaps_summary, positives_summary)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+        [
+          userId,
+          subject || "General",
+          topic,
+          JSON.stringify(messages),
+          evaluationResult.score || 0,
+          evaluationResult.accuracy || "",
+          evaluationResult.gaps || "",
+          evaluationResult.positive || ""
+        ]
+      );
+      console.log(`Log saved in student_responses for user ${userId}`);
+    } catch (dbErr) {
+      console.error("Failed to log student response in DB:", dbErr);
+    }
+  }
+
+  return res.json(evaluationResult);
+});
+
+// Route 3: POST /chat/log-response
+router.post("/log-response", authenticateToken, async (req: any, res: any) => {
+  const { messages, topic, subject, score, accuracy, gaps, positive } = req.body;
+  const userId = req.user?.id;
+
+  if (!messages || !topic || score === undefined) {
+    return res.status(400).json({ error: "Missing required parameters: messages, topic, score." });
+  }
+
+  try {
+    await query(
+      `INSERT INTO student_responses (user_id, subject, topic, transcript, score, accuracy_summary, gaps_summary, positives_summary)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+      [
+        userId,
+        subject || "General",
+        topic,
+        JSON.stringify(messages),
+        score,
+        accuracy || "",
+        gaps || "",
+        positive || ""
+      ]
+    );
+    res.status(201).json({ success: true });
+  } catch (err) {
+    console.error("Log response error:", err);
+    res.status(500).json({ error: "Failed to log student response" });
+  }
 });
 
 export default router;

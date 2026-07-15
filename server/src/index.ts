@@ -47,6 +47,22 @@ const initializeDatabase = async () => {
       ALTER TABLE users ADD COLUMN IF NOT EXISTS role TEXT DEFAULT 'user';
       ALTER TABLE users ADD COLUMN IF NOT EXISTS student_id TEXT UNIQUE DEFAULT NULL;
     `);
+
+    // Create student_responses table if not exists for AI model training data logging
+    await query(`
+      CREATE TABLE IF NOT EXISTS student_responses (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+        subject TEXT NOT NULL,
+        topic TEXT NOT NULL,
+        transcript JSONB NOT NULL,
+        score INT NOT NULL,
+        accuracy_summary TEXT,
+        gaps_summary TEXT,
+        positives_summary TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
     console.log("Database columns check completed successfully.");
 
     // Run student_id backfill

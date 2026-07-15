@@ -287,7 +287,10 @@ Never break character or mention that you have a marking scheme guide.`,
       if (isCloudFallback) {
         const response = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/chat/evaluate`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { 
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          },
           body: JSON.stringify({
             messages: messages.map(m => ({ role: m.role, content: m.content })),
             topic: selectedTopic?.topic,
@@ -338,6 +341,24 @@ Write a concise report card. You must respond in this exact JSON format:
           
           const xpEarned = parsed.score * 15;
           addXP(xpEarned, "reverse_socratic_teaching");
+
+          // Log local response to database for future AI model training
+          fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/chat/log-response`, {
+            method: "POST",
+            headers: { 
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${localStorage.getItem("token")}`
+            },
+            body: JSON.stringify({
+              messages: messages.map(m => ({ role: m.role, content: m.content })),
+              topic: selectedTopic?.topic,
+              subject: selectedTopic?.name,
+              score: parsed.score,
+              accuracy: parsed.accuracy,
+              gaps: parsed.gaps,
+              positive: parsed.positive
+            })
+          }).catch(err => console.error("Failed to log local response:", err));
         } else {
           throw new Error("Invalid output format");
         }
