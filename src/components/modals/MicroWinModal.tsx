@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Sparkles, X } from "lucide-react";
+import { X } from "lucide-react";
 
 interface MicroWinModalProps {
   isOpen: boolean;
@@ -32,10 +32,6 @@ export function MicroWinModal({ isOpen, onClose, message, emoji = "🎉" }: Micr
             {/* Compact, elegant glass-look border card */}
             <div className="bg-[#120a21]/95 text-white p-5 border border-white/10 rounded-2xl shadow-2xl text-center relative overflow-hidden backdrop-blur-md">
               
-              <div className="absolute top-3 right-3 opacity-25">
-                <Sparkles className="w-4 h-4 text-primary animate-pulse" />
-              </div>
-
               <button
                 onClick={onClose}
                 className="absolute top-3 right-3 p-1 rounded-lg hover:bg-white/10 transition-colors"

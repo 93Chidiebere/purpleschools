@@ -57,6 +57,7 @@ interface LevelProgressContextType {
   // Helpers
   getEncouragingMessage: () => string;
   getStreakMessage: () => { message: string; isAtRisk: boolean };
+  syncFromProfile: (profileData: any) => void;
   
   allLevels: Level[];
 }

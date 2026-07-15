@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   Brain,
-  Sparkles,
   Award,
   Zap,
   Flame,
@@ -34,7 +33,7 @@ export default function AboutPage() {
           className="text-center max-w-2xl mx-auto mb-16"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-6 bg-primary/10 border border-primary/20 rounded-full text-xs font-semibold text-primary">
-            <Sparkles className="w-3.5 h-3.5" /> About PurpleSchool
+            <Brain className="w-3.5 h-3.5" /> About PurpleSchool
           </div>
           
           <h1 className="text-3xl md:text-5xl font-black tracking-tight mb-6">
@@ -125,7 +124,7 @@ export default function AboutPage() {
           </div>
           <div className="w-32 h-32 md:w-40 md:h-40 bg-card border border-white/5 rounded-3xl flex items-center justify-center flex-shrink-0 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 animate-pulse" />
-            <Sparkles className="w-12 h-12 text-primary relative z-10 animate-bounce" />
+            <Brain className="w-12 h-12 text-primary relative z-10 animate-bounce" />
           </div>
         </motion.div>
 

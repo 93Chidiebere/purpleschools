@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import type { Level } from "@/hooks/useAchievements";
-import { Sparkles, X } from "lucide-react";
+import { GraduationCap, X } from "lucide-react";
 
 interface LevelUpModalProps {
   isOpen: boolean;
@@ -51,14 +51,14 @@ export function LevelUpModal({ isOpen, onClose, level }: LevelUpModalProps) {
                 <X className="w-4 h-4 text-zinc-400" />
               </button>
 
-              {/* Sparkles icon */}
+              {/* GraduationCap icon */}
               <motion.div
                 initial={{ scale: 0, rotate: -180 }}
                 animate={{ scale: 1, rotate: 0 }}
                 transition={{ delay: 0.1, type: "spring", stiffness: 200 }}
                 className="w-12 h-12 mx-auto mb-2 bg-primary/10 rounded-full flex items-center justify-center"
               >
-                <Sparkles className="w-6 h-6 text-primary" />
+                <GraduationCap className="w-6 h-6 text-primary" />
               </motion.div>
 
               {/* Level Up text */}

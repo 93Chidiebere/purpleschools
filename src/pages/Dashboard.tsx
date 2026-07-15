@@ -18,7 +18,6 @@ import {
   Flame,
   Calendar,
   Trophy,
-  Sparkles,
   ChevronRight,
   BookOpen,
   Download,
@@ -57,7 +56,8 @@ export default function Dashboard() {
     updateStreak,
     isLoaded,
     newAchievement,
-    clearNewAchievement
+    clearNewAchievement,
+    syncFromProfile
   } = useLevelProgressContext();
 
   // Queue for showing modals one after another
@@ -111,8 +111,9 @@ export default function Dashboard() {
   useEffect(() => {
     if (data) {
       setUser(data);
+      syncFromProfile(data);
     }
-  }, [data]);
+  }, [data, syncFromProfile]);
 
   useEffect(() => {
     if (isError) {
@@ -295,9 +296,7 @@ export default function Dashboard() {
         >
           <Card className="overflow-hidden rounded-none ">
             <CardContent className="p-6 relative">
-              <div className="absolute top-4 right-4 opacity-20">
-                <Sparkles className="w-16 h-16" />
-              </div>
+
               <div className="relative z-10">
                 <h2 className="text-xl font-bold text-foreground mb-2">
                   Ready to Teach?

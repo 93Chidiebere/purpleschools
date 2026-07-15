@@ -15,7 +15,7 @@ router.get("/me", authenticateToken, async (req: AuthenticatedRequest, res: Resp
 
   try {
     const result = await query(
-      "SELECT name, email, school, class_name, streak, days_active FROM users WHERE id = $1",
+      "SELECT name, email, school, class_name, streak, days_active, questions_asked, topics_explored, favorite_quote, personal_notes, xp, highest_xp_ever FROM users WHERE id = $1",
       [userId]
     );
 
@@ -33,7 +33,13 @@ router.get("/me", authenticateToken, async (req: AuthenticatedRequest, res: Resp
         school: user.school,
         className: user.class_name,
         streak: user.streak,
-        daysActive: user.days_active
+        daysActive: user.days_active,
+        questionsAsked: user.questions_asked,
+        topicsExplored: user.topics_explored,
+        favoriteQuote: user.favorite_quote,
+        personalNotes: user.personal_notes,
+        xp: user.xp,
+        highestXpEver: user.highest_xp_ever
       }
     });
   } catch (err) {
@@ -45,25 +51,31 @@ router.get("/me", authenticateToken, async (req: AuthenticatedRequest, res: Resp
 // Update user profile
 router.put("/me", authenticateToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   const userId = req.user?.id;
-  const { name, school, className } = req.body;
+  const { name, school, className, streak, daysActive, questionsAsked, topicsExplored, favoriteQuote, personalNotes, xp, highestXpEver } = req.body;
 
   if (!userId) {
     res.status(401).json({ error: "Access token validation failed" });
     return;
   }
 
-  if (!name || !school || !className) {
-    res.status(400).json({ error: "Name, school, and className are required" });
-    return;
-  }
-
   try {
     const result = await query(
       `UPDATE users
-       SET name = $1, school = $2, class_name = $3, updated_at = CURRENT_TIMESTAMP
-       WHERE id = $4
-       RETURNING name, email, school, class_name, streak, days_active`,
-      [name, school, className, userId]
+       SET name = COALESCE($1, name),
+           school = COALESCE($2, school),
+           class_name = COALESCE($3, class_name),
+           streak = COALESCE($4, streak),
+           days_active = COALESCE($5, days_active),
+           questions_asked = COALESCE($6, questions_asked),
+           topics_explored = COALESCE($7, topics_explored),
+           favorite_quote = COALESCE($8, favorite_quote),
+           personal_notes = COALESCE($9, personal_notes),
+           xp = COALESCE($10, xp),
+           highest_xp_ever = COALESCE($11, highest_xp_ever),
+           updated_at = CURRENT_TIMESTAMP
+       WHERE id = $12
+       RETURNING name, email, school, class_name, streak, days_active, questions_asked, topics_explored, favorite_quote, personal_notes, xp, highest_xp_ever`,
+      [name, school, className, streak, daysActive, questionsAsked, topicsExplored, favoriteQuote, personalNotes, xp, highestXpEver, userId]
     );
 
     if (result.rows.length === 0) {
@@ -80,7 +92,13 @@ router.put("/me", authenticateToken, async (req: AuthenticatedRequest, res: Resp
         school: updatedUser.school,
         className: updatedUser.class_name,
         streak: updatedUser.streak,
-        daysActive: updatedUser.days_active
+        daysActive: updatedUser.days_active,
+        questionsAsked: updatedUser.questions_asked,
+        topicsExplored: updatedUser.topics_explored,
+        favoriteQuote: updatedUser.favorite_quote,
+        personalNotes: updatedUser.personal_notes,
+        xp: updatedUser.xp,
+        highestXpEver: updatedUser.highest_xp_ever
       }
     });
   } catch (err) {

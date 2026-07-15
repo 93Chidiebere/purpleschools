@@ -26,6 +26,8 @@ import {
   LogOut,
   ChevronRight,
   Check,
+  Quote,
+  FileText
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import PageLoader from "@/components/shared/purpleLoad";
@@ -37,18 +39,24 @@ interface User {
   className: string;
   streak: number;
   daysActive: number;
+  questionsAsked: number;
+  topicsExplored: number;
+  favoriteQuote: string;
+  personalNotes: string;
 }
 
 export default function ProfilePage() {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { achievements, unreadCount, markAsRead, markAllAsRead } = useLevelProgressContext();
+  const { achievements, unreadCount, markAsRead, markAllAsRead, stats, syncFromProfile, subjectsEngaged } = useLevelProgressContext();
   const [user, setUser] = useState<User | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     school: "",
     className: "",
+    favoriteQuote: "",
+    personalNotes: "",
   });
 
   const formatTime = (date: Date) => {
@@ -110,9 +118,12 @@ export default function ProfilePage() {
         name: data.name,
         school: data.school,
         className: data.className,
+        favoriteQuote: data.favoriteQuote || "",
+        personalNotes: data.personalNotes || "",
       });
+      syncFromProfile(data);
     }
-  }, [data]);
+  }, [data, syncFromProfile]);
 
   useEffect(() => {
     if (isError) navigate("/");
@@ -138,11 +149,15 @@ export default function ProfilePage() {
 
     onSuccess: (data) => {
       setUser(data.user);
-
+      setFormData({
+        name: data.user.name,
+        school: data.user.school,
+        className: data.user.className,
+        favoriteQuote: data.user.favoriteQuote || "",
+        personalNotes: data.user.personalNotes || "",
+      });
+      
       localStorage.setItem("user", JSON.stringify(data.user));
-
-      // 🔥 THIS IS THE IMPORTANT PART
-
 
       setIsEditing(false);
 
@@ -209,6 +224,11 @@ export default function ProfilePage() {
                 <div className="flex-1 min-w-0">
                   <h2 className="text-xl font-bold text-foreground truncate">{user.name}</h2>
                   <p className="text-muted-foreground text-sm truncate">{user.email}</p>
+                  {user.favoriteQuote && (
+                    <p className="text-xs text-primary font-medium italic mt-1.5 bg-primary/5 border-l-2 border-primary py-1 px-2.5 max-w-[280px] break-words">
+                      "{user.favoriteQuote}"
+                    </p>
+                  )}
                 </div>
                 <Button
                   variant={isEditing ? "default" : "outline"}
@@ -276,6 +296,24 @@ export default function ProfilePage() {
                     />
                   ) : (
                     <p className="text-foreground">{user.className}</p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium text-muted-foreground flex items-center gap-2 mb-2">
+                    <Quote className="w-4 h-4 text-primary" />
+                    Favorite Quote (Status Update)
+                  </label>
+                  {isEditing ? (
+                    <Input
+                      value={formData.favoriteQuote}
+                      onChange={(e) =>
+                        setFormData({ ...formData, favoriteQuote: e.target.value })
+                      }
+                      placeholder="Share a thought or quote..."
+                    />
+                  ) : (
+                    <p className="text-foreground">{user.favoriteQuote || "No quote set yet."}</p>
                   )}
                 </div>
               </div>
@@ -397,6 +435,40 @@ export default function ProfilePage() {
           </div>
         </motion.div>
 
+        {/* Personal Study Notes */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="mt-6"
+        >
+          <Card className="rounded-none">
+            <CardContent className="p-6">
+              <h3 className="text-lg font-bold text-foreground mb-2 flex items-center gap-2">
+                <FileText className="w-5 h-5 text-primary" /> Personal Study Notes
+              </h3>
+              <p className="text-xs text-muted-foreground mb-4">
+                Keep formulas, notes, or lists for your personal learning reference.
+              </p>
+              
+              {isEditing ? (
+                <textarea
+                  value={formData.personalNotes}
+                  onChange={(e) =>
+                    setFormData({ ...formData, personalNotes: e.target.value })
+                  }
+                  className="w-full h-32 p-3 bg-muted/40 border border-border focus:border-primary/50 text-foreground text-sm rounded-none focus:outline-none resize-none font-sans"
+                  placeholder="Type your notes here..."
+                />
+              ) : (
+                <div className="p-4 bg-muted/20 border border-dashed border-border/80 text-sm text-foreground whitespace-pre-wrap leading-relaxed min-h-[100px] select-text">
+                  {user.personalNotes || "No personal notes written yet. Click 'Edit Profile' to add yours!"}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </motion.div>
+
         {/* Learning Stats */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -409,19 +481,19 @@ export default function ProfilePage() {
             <CardContent className="p-6">
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center">
-                  <p className="text-3xl font-bold text-gradient">{user.daysActive}</p>
+                  <p className="text-3xl font-bold text-gradient">{stats.totalDaysActive}</p>
                   <p className="text-sm text-muted-foreground">Days Teaching</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-3xl font-bold text-gradient">{user.streak}</p>
+                  <p className="text-3xl font-bold text-gradient">{stats.streak}</p>
                   <p className="text-sm text-muted-foreground">Current Streak</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-3xl font-bold text-gradient">47</p>
+                  <p className="text-3xl font-bold text-gradient">{stats.questionsAsked}</p>
                   <p className="text-sm text-muted-foreground">Questions Asked</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-3xl font-bold text-gradient">12</p>
+                  <p className="text-3xl font-bold text-gradient">{subjectsEngaged.length}</p>
                   <p className="text-sm text-muted-foreground">Topics Explored</p>
                 </div>
               </div>

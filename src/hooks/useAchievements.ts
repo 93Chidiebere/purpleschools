@@ -22,26 +22,26 @@ export interface Level {
 }
 
 export const LEVELS: Level[] = [
-  // Phase 1 - Foundation (Build habit)
+  // Phase 1 - Foundation (Build habit) - Easier to grow in
   { id: 1, name: "Newcomer", phase: 1, phaseName: "Foundation", xpRequired: 0, icon: "🌱" },
-  { id: 2, name: "Curious", phase: 1, phaseName: "Foundation", xpRequired: 50, icon: "🔍" },
-  { id: 3, name: "Learner", phase: 1, phaseName: "Foundation", xpRequired: 150, icon: "📖" },
-  { id: 4, name: "Explorer", phase: 1, phaseName: "Foundation", xpRequired: 300, icon: "🧭" },
-  { id: 5, name: "Dedicated", phase: 1, phaseName: "Foundation", xpRequired: 500, icon: "💪" },
+  { id: 2, name: "Curious", phase: 1, phaseName: "Foundation", xpRequired: 30, icon: "🔍" },
+  { id: 3, name: "Learner", phase: 1, phaseName: "Foundation", xpRequired: 80, icon: "📖" },
+  { id: 4, name: "Explorer", phase: 1, phaseName: "Foundation", xpRequired: 150, icon: "🧭" },
+  { id: 5, name: "Dedicated", phase: 1, phaseName: "Foundation", xpRequired: 250, icon: "💪" },
   
-  // Phase 2 - Growth (Build competence)
-  { id: 6, name: "Achiever", phase: 2, phaseName: "Growth", xpRequired: 800, icon: "🎯" },
+  // Phase 2 - Growth (Build competence) - Involves consistent, lengthy usage
+  { id: 6, name: "Achiever", phase: 2, phaseName: "Growth", xpRequired: 600, icon: "🎯" },
   { id: 7, name: "Enthusiast", phase: 2, phaseName: "Growth", xpRequired: 1200, icon: "⚡" },
-  { id: 8, name: "Scholar", phase: 2, phaseName: "Growth", xpRequired: 1700, icon: "🎓" },
-  { id: 9, name: "Specialist", phase: 2, phaseName: "Growth", xpRequired: 2300, icon: "🔬" },
-  { id: 10, name: "Expert", phase: 2, phaseName: "Growth", xpRequired: 3000, icon: "💎" },
+  { id: 8, name: "Scholar", phase: 2, phaseName: "Growth", xpRequired: 2000, icon: "🎓" },
+  { id: 9, name: "Specialist", phase: 2, phaseName: "Growth", xpRequired: 3000, icon: "🔬" },
+  { id: 10, name: "Expert", phase: 2, phaseName: "Growth", xpRequired: 4500, icon: "💎" },
   
-  // Phase 3 - Mastery (Consistency and responsibility)
-  { id: 11, name: "Master", phase: 3, phaseName: "Mastery", xpRequired: 4000, icon: "🏆" },
-  { id: 12, name: "Mentor", phase: 3, phaseName: "Mastery", xpRequired: 5200, icon: "🌟" },
-  { id: 13, name: "Sage", phase: 3, phaseName: "Mastery", xpRequired: 6500, icon: "🦉" },
-  { id: 14, name: "Luminary", phase: 3, phaseName: "Mastery", xpRequired: 8000, icon: "✨" },
-  { id: 15, name: "Legend", phase: 3, phaseName: "Mastery", xpRequired: 10000, icon: "👑" },
+  // Phase 3 - Mastery (Consistency and responsibility) - Ultimate achievement
+  { id: 11, name: "Master", phase: 3, phaseName: "Mastery", xpRequired: 7000, icon: "🏆" },
+  { id: 12, name: "Mentor", phase: 3, phaseName: "Mastery", xpRequired: 10000, icon: "🌟" },
+  { id: 13, name: "Sage", phase: 3, phaseName: "Mastery", xpRequired: 14000, icon: "🦉" },
+  { id: 14, name: "Luminary", phase: 3, phaseName: "Mastery", xpRequired: 19000, icon: "✨" },
+  { id: 15, name: "Legend", phase: 3, phaseName: "Mastery", xpRequired: 25000, icon: "👑" },
 ];
 
 // ============================================
@@ -255,20 +255,58 @@ export function useAchievements() {
   }, []);
 
   // ============================================
-  // SAVE STATE
+  // SAVE STATE & SERVER SYNC
   // ============================================
+
+  const syncWithServer = useCallback(async (currentState: GameState) => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+      const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const res = await fetch(`${API_BASE}/profile/me`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          streak: currentState.streak,
+          daysActive: currentState.totalDaysActive,
+          questionsAsked: currentState.questionsAsked,
+          topicsExplored: currentState.subjectsEngaged.length,
+          xp: currentState.currentXP,
+          highestXpEver: currentState.highestXPEver,
+        }),
+      });
+      if (res.ok) {
+        console.log("[Sync] Successfully updated server with progress state.");
+      }
+    } catch (e) {
+      console.error("[Sync] Error updating server progress state:", e);
+    }
+  }, []);
 
   useEffect(() => {
     if (isLoaded) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      syncWithServer(state);
     }
-  }, [state, isLoaded]);
+  }, [state, isLoaded, syncWithServer]);
 
   useEffect(() => {
     if (isLoaded) {
       localStorage.setItem(ACHIEVEMENTS_KEY, JSON.stringify(achievements));
     }
   }, [achievements, isLoaded]);
+
+  // ============================================
+  // DECAY LOGIC - DISABLED (Users cannot go lower per user request)
+  // ============================================
+
+  useEffect(() => {
+    // Decay logic disabled to retain highest level achieved
+  }, []);
 
   // Sync streak to user object for Dashboard
   useEffect(() => {
@@ -283,46 +321,6 @@ export function useAchievements() {
   }, [state.streak, isLoaded]);
 
   // ============================================
-  // DECAY LOGIC
-  // ============================================
-
-  useEffect(() => {
-    if (!isLoaded) return;
-    
-    const today = new Date().toISOString().split('T')[0];
-    const daysSinceActive = getDaysBetween(state.lastActiveDate, today);
-    
-    if (daysSinceActive <= DECAY_CONFIG.gracePeriodDays) return;
-    if (daysSinceActive <= DECAY_CONFIG.freezePeriodDays) return;
-    if (state.lastDecayApplied === today) return;
-    
-    const daysOfDecay = daysSinceActive - DECAY_CONFIG.freezePeriodDays;
-    const decayPercent = Math.min(
-      daysOfDecay * DECAY_CONFIG.dailyDecayPercent,
-      DECAY_CONFIG.maxDecayPercent
-    );
-    
-    const xpLoss = Math.round(state.currentXP * (decayPercent / 100));
-    const newXP = Math.max(0, state.currentXP - xpLoss);
-    
-    const oldLevel = getLevelFromXP(state.currentXP);
-    const newLevel = getLevelFromXP(newXP);
-    
-    let finalXP = newXP;
-    if (oldLevel.id - newLevel.id > 1) {
-      const targetLevel = LEVELS.find(l => l.id === oldLevel.id - 1);
-      if (targetLevel) {
-        finalXP = targetLevel.xpRequired;
-      }
-    }
-    
-    setState(prev => ({
-      ...prev,
-      currentXP: finalXP,
-      lastDecayApplied: today,
-    }));
-  }, [isLoaded, state.lastActiveDate, state.lastDecayApplied, state.currentXP]);
-
   // ============================================
   // ADD XP (Core function)
   // ============================================
@@ -712,8 +710,29 @@ export function useAchievements() {
   }, [state.lastActiveDate]);
 
   // ============================================
-  // COMPUTED VALUES
+  // COMPUTED VALUES & SYNC FROM PROFILE
   // ============================================
+
+  const syncFromProfile = useCallback((profileData: any) => {
+    if (!profileData) return;
+    setState(prev => {
+      // Merge taking the maximum value to avoid losing progress
+      const currentXP = Math.max(prev.currentXP, profileData.xp || 0);
+      const highestXPEver = Math.max(prev.highestXPEver, profileData.highestXpEver || 0);
+      const streak = Math.max(prev.streak, profileData.streak || 0);
+      const totalDaysActive = Math.max(prev.totalDaysActive, profileData.daysActive || 0);
+      const questionsAsked = Math.max(prev.questionsAsked, profileData.questionsAsked || 0);
+
+      return {
+        ...prev,
+        currentXP,
+        highestXPEver,
+        streak,
+        totalDaysActive,
+        questionsAsked,
+      };
+    });
+  }, []);
 
   const currentLevel = getLevelFromXP(state.currentXP);
   const nextLevel = getNextLevel(currentLevel);
@@ -763,6 +782,7 @@ export function useAchievements() {
     recordDailyLogin,
     recordLearnWelcome,
     recordSubjectEngagement,
+    syncFromProfile,
     
     // Achievement actions
     addAchievement,

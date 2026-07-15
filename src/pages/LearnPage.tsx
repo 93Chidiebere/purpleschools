@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Avatar } from "@/components/shared/Avatar";
 import { BottomNav } from "@/components/layout/BottomNav";
 import { Header } from "@/components/layout/Header";
-import { Send, ArrowLeft, GraduationCap, Sparkles, BookOpen, AlertCircle, RefreshCw, Award } from "lucide-react";
+import { Send, ArrowLeft, GraduationCap, BookOpen, AlertCircle, RefreshCw, Award } from "lucide-react";
 import { useLevelProgressContext } from "@/contexts/LevelProgressContext";
 import { MathRenderer } from "@/components/shared/MathRenderer";
 import { localLLM } from "@/services/localLLM";
@@ -441,7 +441,7 @@ Write a concise report card. You must respond in this exact JSON format:
             {!selectedSubject ? (
               <>
                 <div className="text-center max-w-lg mx-auto mb-8">
-                  <Sparkles className="w-10 h-10 text-primary mx-auto mb-4" />
+                  <GraduationCap className="w-10 h-10 text-primary mx-auto mb-4" />
                   <h2 className="text-2xl font-bold text-foreground">Welcome to the Teaching Studio</h2>
                   <p className="text-muted-foreground mt-2">
                     Select a subject to view available topics for your level: <span className="text-primary font-bold">{userClass}</span>.
