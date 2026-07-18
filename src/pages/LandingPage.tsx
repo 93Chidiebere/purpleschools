@@ -261,12 +261,12 @@ export default function LandingPage() {
             <div className="flex items-center gap-2.5">
               <span className="font-extrabold text-xl tracking-tight text-white">PurpleSchool</span>
             </div>
-            <div className="flex flex-col text-sm text-zinc-400 mt-2">
+            <div className="flex flex-col text-sm text-white/90 mt-2 space-y-1">
               <span>Email: vchidiebere.vc@gmail.com</span>
               <span>WhatsApp: 07068488419</span>
             </div>
           </div>
-          <p className="text-xs text-zinc-600 text-center md:text-right mt-4 md:mt-0">
+          <p className="text-sm text-white/80 text-center md:text-right mt-4 md:mt-0">
             © 2026 PurpleSchool by UNICCO
           </p>
         </div>
