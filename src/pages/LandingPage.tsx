@@ -257,10 +257,16 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="py-14 px-4 border-t border-white/5 bg-[#07030e] relative z-10">
         <div className="container mx-auto max-w-4xl flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-2.5">
-            <span className="font-extrabold text-xl tracking-tight text-white">PurpleSchool</span>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-2.5">
+              <span className="font-extrabold text-xl tracking-tight text-white">PurpleSchool</span>
+            </div>
+            <div className="flex flex-col text-sm text-zinc-400 mt-2">
+              <span>Email: vchidiebere.vc@gmail.com</span>
+              <span>WhatsApp: 07068488419</span>
+            </div>
           </div>
-          <p className="text-xs text-zinc-600 text-center md:text-right">
+          <p className="text-xs text-zinc-600 text-center md:text-right mt-4 md:mt-0">
             © 2026 PurpleSchool by UNICCO
           </p>
         </div>

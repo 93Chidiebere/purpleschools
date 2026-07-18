@@ -436,6 +436,13 @@ export default function Dashboard() {
             ))}
           </div>
         </motion.div>
+
+        {/* Contact Info */}
+        <div className="mt-12 text-center text-zinc-500 text-xs pb-8 space-y-1">
+          <p className="font-semibold text-muted-foreground mb-1">Need Help or Support?</p>
+          <p>Email: <a href="mailto:vchidiebere.vc@gmail.com" className="hover:text-primary transition-colors">vchidiebere.vc@gmail.com</a></p>
+          <p>WhatsApp: 07068488419</p>
+        </div>
       </main>
 
       <BottomNav />

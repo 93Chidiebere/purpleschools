@@ -221,6 +221,11 @@ export default function AuthPage() {
             </div>
           </CardContent>
         </Card>
+        <div className="mt-8 text-center text-zinc-500 text-xs space-y-1">
+          <p>For enquiries:</p>
+          <p>Email: <a href="mailto:vchidiebere.vc@gmail.com" className="hover:text-primary transition-colors">vchidiebere.vc@gmail.com</a></p>
+          <p>WhatsApp: 07068488419</p>
+        </div>
       </motion.div>
     </div>
   );
