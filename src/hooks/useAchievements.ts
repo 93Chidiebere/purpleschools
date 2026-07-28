@@ -49,59 +49,11 @@ export const LEVELS: Level[] = [
 // ============================================
 
 export const ACHIEVEMENT_THRESHOLDS = {
-  // Questions - odd numbers + key milestones
-  questions: [
-    { count: 1, message: "You asked your first question! Great start!", emoji: "🌱", xp: 5 },
-    { count: 3, message: "3 questions! Curiosity is your superpower.", emoji: "🌟", xp: 8 },
-    { count: 5, message: "5 questions! You're really engaging.", emoji: "🎯", xp: 10 },
-    { count: 7, message: "7 questions! Keep that curiosity alive!", emoji: "💡", xp: 12 },
-    { count: 9, message: "9 questions! Almost at 10!", emoji: "🔥", xp: 12 },
-    { count: 10, message: "10 questions! Double digits!", emoji: "🚀", xp: 20 },
-    { count: 15, message: "15 questions! Learning machine!", emoji: "⚡", xp: 20 },
-    { count: 25, message: "25 questions! You're unstoppable!", emoji: "🧠", xp: 30 },
-    { count: 50, message: "50 questions! Knowledge seeker extraordinaire!", emoji: "👑", xp: 50 },
-  ],
-  // Study time in minutes
-  studyTime: [
-    { minutes: 1, message: "You studied for 1 minute! Every second counts.", emoji: "⏱️", xp: 2 },
-    { minutes: 2, message: "2 minutes in! Building momentum.", emoji: "📖", xp: 3 },
-    { minutes: 3, message: "3 minutes! Focus is your friend.", emoji: "🎯", xp: 4 },
-    { minutes: 5, message: "5 minutes of focused learning!", emoji: "📚", xp: 8 },
-    { minutes: 10, message: "10 minutes! Your brain is thanking you.", emoji: "🧠", xp: 15 },
-    { minutes: 15, message: "15 minutes of learning! Impressive!", emoji: "✨", xp: 20 },
-    { minutes: 20, message: "20 minutes! You're in the zone!", emoji: "💪", xp: 20 },
-    { minutes: 30, message: "30 minutes! Half hour champion!", emoji: "🔥", xp: 30 },
-    { minutes: 45, message: "45 minutes! Almost an hour!", emoji: "⭐", xp: 35 },
-    { minutes: 60, message: "1 hour of learning! You're amazing!", emoji: "🏆", xp: 50 },
-  ],
-  // Daily streaks
-  streak: [
-    { days: 1, message: "Day 1! Every journey starts with a single step.", emoji: "👣", xp: 5 },
-    { days: 2, message: "2-day streak! You're building a habit.", emoji: "🔥", xp: 15 },
-    { days: 3, message: "3 days in a row! Consistency is key.", emoji: "💪", xp: 20 },
-    { days: 4, message: "4 days! You're on a roll!", emoji: "🌟", xp: 20 },
-    { days: 5, message: "5-day streak! You're unstoppable!", emoji: "⚡", xp: 30 },
-    { days: 6, message: "6 days! Almost a full week!", emoji: "✨", xp: 30 },
-    { days: 7, message: "A whole week! You're a learning machine!", emoji: "🎉", xp: 50 },
-    { days: 14, message: "Two weeks strong! Incredible dedication!", emoji: "🌟", xp: 75 },
-    { days: 21, message: "3 weeks! A habit is forming!", emoji: "💎", xp: 85 },
-    { days: 30, message: "30-day streak! You're a legend!", emoji: "👑", xp: 100 },
-  ],
-  // Total active days
-  dailyLogin: [
-    { totalDays: 1, message: "Day 1! You showed up today. That's a win!", emoji: "🎯", xp: 10 },
-    { totalDays: 3, message: "3 days active! You're showing up.", emoji: "📅", xp: 15 },
-    { totalDays: 5, message: "5 days active! Commitment unlocked.", emoji: "🎯", xp: 20 },
-    { totalDays: 7, message: "One week of activity! Well done.", emoji: "🗓️", xp: 25 },
-    { totalDays: 14, message: "2 weeks active! Learning is your thing.", emoji: "⭐", xp: 40 },
-    { totalDays: 30, message: "30 days active! You're dedicated.", emoji: "🏅", xp: 75 },
-  ],
-  // Subject diversity
-  subjectDiversity: [
-    { count: 3, message: "You've explored 3 subjects! Diverse learning builds strong minds.", emoji: "🎨", xp: 10 },
-    { count: 6, message: "6 subjects explored! You're a polymath in the making.", emoji: "🌈", xp: 20 },
-    { count: 10, message: "10 subjects! True intellectual curiosity!", emoji: "🎓", xp: 30 },
-  ],
+  questions: [] as any[],
+  studyTime: [] as any[],
+  streak: [] as any[],
+  dailyLogin: [] as any[],
+  subjectDiversity: [] as any[]
 };
 
 // ============================================
