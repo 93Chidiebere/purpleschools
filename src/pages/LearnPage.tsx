@@ -13,6 +13,7 @@ import { useLevelProgressContext } from "@/contexts/LevelProgressContext";
 import { MathRenderer } from "@/components/shared/MathRenderer";
 import { localLLM } from "@/services/localLLM";
 import { localVectorDb } from "@/services/localVectorDb";
+import { MathKeyboard } from "@/components/chat/MathKeyboard";
 
 interface Message {
   id: string;
@@ -396,7 +397,7 @@ Write a concise report card. You must respond in this exact JSON format:
   };
 
   return (
-    <div className="min-h-screen bg-calm flex flex-col md:pt-16">
+    <div className="h-[100dvh] bg-calm flex flex-col md:pt-16 overflow-hidden">
       <Header />
 
       {/* Header bar */}
@@ -456,7 +457,8 @@ Write a concise report card. You must respond in this exact JSON format:
       )}
 
       {/* Main Container */}
-      <main className="flex-1 max-w-3xl mx-auto w-full px-4 py-6 md:py-8 pb-40">
+      <main className="flex-1 overflow-y-auto w-full px-4 py-6 md:py-8">
+        <div className="max-w-3xl mx-auto w-full">
         
         {/* Step 1: Select Subject or Topic */}
         {!selectedTopic && (
@@ -697,12 +699,17 @@ Write a concise report card. You must respond in this exact JSON format:
             </Card>
           </motion.div>
         )}
+        </div>
       </main>
 
       {/* Input panel */}
       {selectedTopic && isEngineLoaded && !reportCard && (
-        <div className="fixed bottom-16 md:bottom-0 left-0 right-0 bg-card/95 backdrop-blur-md border-t border-border p-4">
+        <div className="flex-shrink-0 bg-card/95 backdrop-blur-md border-t border-border p-4 pb-20 md:pb-4 z-20">
           <div className="max-w-3xl mx-auto">
+            <MathKeyboard onInsert={(sym) => {
+              setInput((prev) => prev + sym);
+              // Small focus trick could go here if needed
+            }} />
             <form
               onSubmit={(e) => {
                 e.preventDefault();
