@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import { Monitor, BookOpen, MessageSquare, CheckCircle2, ChevronRight, Zap } from "lucide-react";
-import heroImg from "@/assets/purpleschool_hero.png"; // We will assume this is available or we use an img tag
+import { Monitor, ChevronRight, Zap } from "lucide-react";
 
 export default function MinimalLandingDemo() {
   return (
