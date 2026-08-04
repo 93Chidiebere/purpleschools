@@ -513,8 +513,7 @@ Write a concise report card. You must respond in this exact JSON format:
                       onClick={() => setSelectedSubject(sub.id)}
                     >
                       <CardHeader>
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs font-semibold px-2 py-0.5 bg-primary/10 text-primary">Subject</span>
+                        <div className="flex items-center justify-end">
                           <BookOpen className="w-4 h-4 text-muted-foreground" />
                         </div>
                         <CardTitle className="text-lg mt-2 text-foreground">{sub.name}</CardTitle>

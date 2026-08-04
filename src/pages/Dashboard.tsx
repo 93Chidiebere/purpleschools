@@ -214,15 +214,13 @@ export default function Dashboard() {
 
             <div>
               <h1 className="text-2xl md:text-3xl font-bold text-foreground">
-                Hi, {user?.name ? user.name.split(" ")[0] : "Learner"}! 👋
-
+                Hi, {user?.name || "Learner"}
               </h1>
               <p className="text-muted-foreground">
                 {user.className} • {user.school}
               </p>
               <div className="flex items-center gap-2 mt-1">
-                <span className="text-lg">{currentLevel.icon}</span>
-                <span className="text-xs px-2 py-0.5 bg-primary/10 text-primary font-semibold">
+                <span className="text-xs px-2 py-0.5 bg-secondary text-foreground font-semibold">
                   Lvl {currentLevel.id} • {currentLevel.name}
                 </span>
               </div>
@@ -245,8 +243,8 @@ export default function Dashboard() {
             onClick={() => setShowStreak(true)}
           >
             <CardContent className="p-4">
-              <div className="w-10 h-10 mx-auto mb-2 bg-warning/10 flex items-center justify-center">
-                <Flame className="w-5 h-5 text-warning" />
+              <div className="w-10 h-10 mx-auto mb-2 bg-secondary flex items-center justify-center">
+                <Flame className="w-5 h-5 text-muted-foreground" />
               </div>
               <p className="text-2xl font-bold text-foreground">{stats.streak}</p>
               <p className="text-xs text-muted-foreground">Day Streak</p>
@@ -265,8 +263,8 @@ export default function Dashboard() {
             }}
           >
             <CardContent className="p-4">
-              <div className="w-10 h-10 mx-auto mb-2 bg-primary/10 flex items-center justify-center">
-                <Calendar className="w-5 h-5 text-primary" />
+              <div className="w-10 h-10 mx-auto mb-2 bg-secondary flex items-center justify-center">
+                <Calendar className="w-5 h-5 text-muted-foreground" />
               </div>
               <p className="text-2xl font-bold text-foreground">{stats.totalDaysActive}</p>
               <p className="text-xs text-muted-foreground">Days Active</p>
@@ -278,8 +276,8 @@ export default function Dashboard() {
             onClick={() => setShowMicroWin(true)}
           >
             <CardContent className="p-4">
-              <div className="w-10 h-10 mx-auto mb-2  bg-success/10 flex items-center justify-center">
-                <Trophy className="w-5 h-5 text-success" />
+              <div className="w-10 h-10 mx-auto mb-2 bg-secondary flex items-center justify-center">
+                <Trophy className="w-5 h-5 text-muted-foreground" />
               </div>
               <p className="text-2xl font-bold text-foreground">{microWinsCount}</p>
               <p className="text-xs text-muted-foreground">Achievements</p>
