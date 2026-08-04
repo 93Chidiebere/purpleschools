@@ -36,7 +36,7 @@ export default function LandingPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-[#0b0615] text-white selection:bg-primary/30 selection:text-white relative overflow-hidden">
+    <div className="min-h-screen bg-background text-foreground selection:bg-primary/30 selection:text-foreground relative overflow-hidden">
       
       {/* Decorative Blur Background Orbs */}
       <div className="absolute top-[-25%] left-[-15%] w-[600px] h-[600px] bg-primary/10 rounded-full blur-[140px] pointer-events-none" />
@@ -47,23 +47,23 @@ export default function LandingPage() {
       <section className="pt-24 pb-16 md:pt-32 md:pb-24 px-4 relative z-10">
         <div className="container mx-auto max-w-4xl text-center">
           <motion.div {...fadeInUp}>
-            <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 bg-white/[0.03] border border-white/10 rounded-full shadow-[0_0_15px_rgba(255,255,255,0.03)]">
+            <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 bg-secondary border border-border rounded-full shadow-sm">
               <GraduationCap className="w-4 h-4 text-primary" />
-              <span className="text-xs font-semibold text-zinc-300 tracking-wide">PurpleSchool AI Engine</span>
+              <span className="text-xs font-semibold text-muted-foreground tracking-wide">PurpleSchool AI Engine</span>
             </div>
           </motion.div>
 
           <motion.h1
             {...fadeInUp}
-            className="text-4xl md:text-7xl font-extrabold mb-6 tracking-tight leading-[1.1] text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-200 to-primary/80"
+            className="text-4xl md:text-7xl font-extrabold mb-6 tracking-tight leading-[1.1] text-foreground"
           >
             Learn by Teaching.<br />
-            Meet <span className="text-primary font-black relative drop-shadow-[0_0_20px_rgba(124,58,237,0.3)]">Chidi</span>, your AI Student.
+            Meet <span className="text-primary font-black relative drop-shadow-sm">Chidi</span>, your AI Student.
           </motion.h1>
 
           <motion.p
             {...fadeInUp}
-            className="text-base md:text-lg text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
           >
             Ditch rote memorization. Prove you understand your syllabus by explaining concepts to Chidi, a virtual student preparing for global exams.
           </motion.p>
@@ -72,7 +72,7 @@ export default function LandingPage() {
             <Button
               size="lg"
               onClick={() => navigate('/auth')}
-              className="text-base px-8 py-7 rounded-xl bg-primary hover:bg-primary/95 text-white font-bold w-full sm:w-auto shadow-[0_0_25px_rgba(124,58,237,0.3)] transition-all"
+              className="text-base px-8 py-7 rounded-xl bg-primary hover:bg-primary/95 text-primary-foreground font-bold w-full sm:w-auto shadow-soft transition-all"
             >
               Start Teaching Now
               <ArrowRight className="w-4 h-4 ml-2" />
@@ -82,7 +82,7 @@ export default function LandingPage() {
           {/* Centered Brand Hero Image */}
           <motion.div
             {...fadeInUp}
-            className="mt-16 max-w-xl mx-auto rounded-3xl overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(124,58,237,0.15)] relative group"
+            className="mt-16 max-w-xl mx-auto rounded-3xl overflow-hidden border border-border shadow-md relative group"
           >
             <img 
               src="/purpleschool-hero.jpg" 
@@ -94,29 +94,29 @@ export default function LandingPage() {
       </section>
 
       {/* The Feynman Principle Section */}
-      <section className="py-24 px-4 bg-white/[0.01] border-y border-white/5 relative z-10">
+      <section className="py-24 px-4 bg-background border-y border-border relative z-10">
         <div className="container mx-auto max-w-4xl">
           <motion.div {...fadeInUp} className="text-center mb-16">
             <p className="text-xs font-bold text-primary uppercase tracking-wider mb-2">The Science of Learning</p>
-            <h2 className="text-3xl md:text-5xl font-extrabold text-white">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-foreground">
               To Teach is to Learn Twice
             </h2>
-            <p className="text-zinc-400 mt-4 max-w-xl mx-auto text-sm leading-relaxed">
+            <p className="text-muted-foreground mt-4 max-w-xl mx-auto text-sm leading-relaxed">
               Based on the **Feynman Technique**, translating complex concepts into simple explanations forces deep conceptual understanding.
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-            <Card className="p-8 bg-white/[0.02] border-white/10 rounded-2xl">
-              <h3 className="text-lg font-bold text-red-400 mb-3">Why Cramming Fails</h3>
-              <p className="text-sm text-zinc-400 leading-relaxed">
+            <Card className="p-8 bg-card border-border rounded-2xl">
+              <h3 className="text-lg font-bold text-red-500 mb-3">Why Cramming Fails</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 Rote memorization makes you fragile. If an exam paper alters a single word or parameter, crammers struggle because they lack the core logical framework.
               </p>
             </Card>
 
-            <Card className="p-8 bg-white/[0.02] border-white/10 rounded-2xl shadow-[0_0_30px_rgba(124,58,237,0.05)]">
+            <Card className="p-8 bg-card border-border rounded-2xl shadow-soft">
               <h3 className="text-lg font-bold text-success mb-3">Why Teaching Works</h3>
-              <p className="text-sm text-zinc-400 leading-relaxed">
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 Guiding Chidi requires you to breakdown formulas, formulate analogies, and structure your steps. This anchors knowledge permanently in your brain.
               </p>
             </Card>
@@ -161,11 +161,11 @@ export default function LandingPage() {
               <motion.div
                 key={i}
                 variants={fadeInUp}
-                className="p-8 bg-white/[0.02] border border-white/10 rounded-2xl hover:border-primary/40 hover:bg-white/[0.04] transition-all duration-300"
+                className="p-8 bg-card border border-border rounded-2xl hover:border-primary/40 hover:bg-secondary transition-all duration-300"
               >
                 <span className="text-4xl font-black text-primary/10 block mb-6">{item.step}</span>
-                <h3 className="text-lg font-bold mb-3 text-white">{item.title}</h3>
-                <p className="text-sm text-zinc-400 leading-relaxed">{item.desc}</p>
+                <h3 className="text-lg font-bold mb-3 text-foreground">{item.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -173,18 +173,18 @@ export default function LandingPage() {
       </section>
 
       {/* Offline First Callout */}
-      <section className="py-20 px-4 bg-gradient-to-r from-primary/30 to-purple-900/30 border-y border-primary/20 relative z-10">
+      <section className="py-20 px-4 bg-primary text-primary-foreground border-y border-primary/20 relative z-10">
         <div className="container mx-auto max-w-3xl text-center space-y-6">
-          <Laptop className="w-14 h-14 mx-auto text-primary" />
-          <h2 className="text-3xl md:text-5xl font-extrabold text-white">No Internet. Zero Data Cost.</h2>
-          <p className="text-base md:text-lg text-zinc-300 max-w-xl mx-auto leading-relaxed">
+          <Laptop className="w-14 h-14 mx-auto text-primary-foreground/80" />
+          <h2 className="text-3xl md:text-5xl font-extrabold text-primary-foreground">No Internet. Zero Data Cost.</h2>
+          <p className="text-base md:text-lg text-primary-foreground/80 max-w-xl mx-auto leading-relaxed">
             Chidi runs completely offline on your device using WebGPU hardware acceleration. Once installed, teach and practice anywhere without consuming mobile data.
           </p>
         </div>
       </section>
 
       {/* Trust Badges */}
-      <section className="py-16 px-4 bg-white/[0.01] border-y border-white/5 relative z-10">
+      <section className="py-16 px-4 bg-background border-y border-border relative z-10">
         <div className="container mx-auto max-w-4xl">
           <motion.div
             {...fadeInUp}
@@ -195,7 +195,7 @@ export default function LandingPage() {
               { icon: Shield, text: "100% Offline Caching" },
               { icon: Users, text: "Built for Secondary Students" }
             ].map((badge, i) => (
-              <div key={i} className="flex items-center gap-2.5 text-zinc-400">
+              <div key={i} className="flex items-center gap-2.5 text-muted-foreground">
                 <badge.icon className="w-5 h-5 text-primary" />
                 <span className="text-sm font-semibold tracking-wide">{badge.text}</span>
               </div>
@@ -237,12 +237,12 @@ export default function LandingPage() {
                 <AccordionItem
                   key={i}
                   value={`item-${i}`}
-                  className="bg-white/[0.02] border border-white/10 px-6 rounded-xl overflow-hidden"
+                  className="bg-card border border-border px-6 rounded-xl overflow-hidden"
                 >
-                  <AccordionTrigger className="text-left hover:no-underline font-semibold py-4 text-white">
+                  <AccordionTrigger className="text-left hover:no-underline font-semibold py-4 text-foreground">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-zinc-400 leading-relaxed pb-4 text-sm">
+                  <AccordionContent className="text-muted-foreground leading-relaxed pb-4 text-sm">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -255,18 +255,18 @@ export default function LandingPage() {
       <FeedbackContactSection />
 
       {/* Footer */}
-      <footer className="py-14 px-4 border-t border-white/5 bg-[#07030e] relative z-10">
+      <footer className="py-14 px-4 border-t border-border bg-secondary relative z-10">
         <div className="container mx-auto max-w-4xl flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2.5">
-              <span className="font-extrabold text-xl tracking-tight text-white">PurpleSchool</span>
+              <span className="font-extrabold text-xl tracking-tight text-foreground">PurpleSchool</span>
             </div>
-            <div className="flex flex-col text-sm text-white/90 mt-2 space-y-1">
+            <div className="flex flex-col text-sm text-muted-foreground mt-2 space-y-1">
               <span>Email: vchidiebere.vc@gmail.com</span>
               <span>WhatsApp: 07068488419</span>
             </div>
           </div>
-          <p className="text-sm text-white/80 text-center md:text-right mt-4 md:mt-0">
+          <p className="text-sm text-muted-foreground text-center md:text-right mt-4 md:mt-0">
             © 2026 PurpleSchool by UNICCO
           </p>
         </div>

@@ -7,126 +7,102 @@
 
 @layer base {
   :root {
-    /* PurpleSchool Premium Dark Mode: Pure Black + Royal Purple */
-    --background: 260 60% 3%; /* #05020a */
-    --foreground: 210 40% 98%;
+    /* Minimal/Editorial Light Theme */
+    --background: 0 0% 99%; /* #FCFCFC */
+    --foreground: 240 5% 10%; /* zinc-900 */
 
-    --card: 260 50% 5%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 5% 10%;
 
-    --popover: 260 50% 5%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 5% 10%;
 
-    /* Vivid Royal Purple for accents */
-    --primary: 263 70% 60%;
-    --primary-hover: 263 70% 70%;
+    /* PurpleSchool Brand Purple */
+    --primary: 263 70% 50%;
+    --primary-hover: 263 70% 42%;
     --primary-foreground: 0 0% 100%;
 
-    /* Slate dark */
-    --secondary: 260 30% 15%;
-    --secondary-foreground: 210 40% 98%;
+    /* Light gray backgrounds for secondary elements */
+    --secondary: 240 5% 96%; /* zinc-100 */
+    --secondary-foreground: 240 5% 26%; /* zinc-700 */
 
-    --muted: 260 30% 12%;
-    --muted-foreground: 260 20% 65%;
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 5% 45%; /* zinc-500 */
 
     /* Amber accent */
     --accent: 38 93% 50%;
-    --accent-foreground: 0 0% 0%;
+    --accent-foreground: 0 0% 100%;
 
-    /* Emerald for success */
+    /* Success / Warning / Destructive */
     --success: 160 84% 39%;
     --success-foreground: 0 0% 100%;
 
-    /* Amber for warnings */
     --warning: 38 93% 50%;
     --warning-foreground: 0 0% 0%;
 
-    /* Red for destructive */
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 260 30% 15%;
-    --input: 260 30% 15%;
-    --ring: 263 70% 60%;
-
-    --radius: 1rem;
-
-    --overlay: 260 60% 3%;
-    
-    /* Neon glowing shadows */
-    --shadow-soft: 0 4px 20px -4px hsl(263 70% 60% / 0.15);
-    --shadow-glow: 0 0 24px hsl(263 70% 60% / 0.25);
-    --shadow-card: 0 2px 12px -2px hsl(263 70% 60% / 0.1);
-
-    --sidebar-background: 260 50% 5%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 263 70% 60%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 260 30% 15%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 260 30% 15%;
-    --sidebar-ring: 263 70% 60%;
-  }
-
-  .dark {
-    --text-primary-foreground: 260 60% 3%;
-    /* Dark mode: Royal Purple + Amber + Slate */
-    --background: 222 47% 6%;
-    --foreground: 210 40% 98%;
-
-    --card: 222 47% 9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222 47% 9%;
-    --popover-foreground: 210 40% 98%;
-
-    /* Lighter Royal Purple for dark mode */
-    --primary: 263 70% 60%;
-    --primary-hover: 263 70% 70%;
-    --primary-foreground: 0 0% 100%;
-
-    /* Slate dark */
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 16% 65%;
-
-    /* Amber accent */
-    --accent: 38 93% 50%;
-    --accent-foreground: 0 0% 0%;
-
-    /* Emerald success */
-    --success: 160 84% 39%;
-    --success-foreground: 0 0% 100%;
-
-    /* Amber warning */
-    --warning: 38 93% 50%;
-    --warning-foreground: 0 0% 0%;
-
-    /* Red destructive */
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 217 33% 20%;
-    --input: 217 33% 20%;
-    --ring: 263 70% 60%;
+    /* Borders */
+    --border: 240 5% 90%; /* zinc-200 */
+    --input: 240 5% 90%;
+    --ring: 263 70% 50%;
 
-    --overlay: 0 0% 0%;
+    --radius: 1rem;
 
-    --shadow-soft: 0 4px 16px -4px hsl(0 0% 0% / 0.4);
-    --shadow-glow: 0 0 16px hsl(263 70% 60% / 0.25);
-    --shadow-card: 0 2px 8px -2px hsl(0 0% 0% / 0.3);
+    --overlay: 0 0% 100%;
+    
+    /* Clean, soft editorial shadows */
+    --shadow-soft: 0 2px 10px -2px rgba(0, 0, 0, 0.05);
+    --shadow-glow: 0 0 15px rgba(109, 40, 217, 0.1);
+    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.05);
 
-    /* Sidebar dark - deep purple */
-    --sidebar-background: 263 50% 12%;
-    --sidebar-foreground: 263 100% 95%;
-    --sidebar-primary: 263 70% 60%;
+    --sidebar-background: 0 0% 99%;
+    --sidebar-foreground: 240 5% 26%;
+    --sidebar-primary: 263 70% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 263 50% 20%;
-    --sidebar-accent-foreground: 263 100% 95%;
-    --sidebar-border: 263 50% 25%;
-    --sidebar-ring: 263 70% 60%;
+    --sidebar-accent: 240 5% 96%;
+    --sidebar-accent-foreground: 240 5% 10%;
+    --sidebar-border: 240 5% 90%;
+    --sidebar-ring: 263 70% 50%;
+  }
+
+  .dark {
+    /* Fallback just in case, mapped to the same light theme for this demo */
+    --text-primary-foreground: 240 5% 10%;
+    --background: 0 0% 99%;
+    --foreground: 240 5% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 5% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 5% 10%;
+    --primary: 263 70% 50%;
+    --primary-hover: 263 70% 42%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 5% 26%;
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 5% 45%;
+    --accent: 38 93% 50%;
+    --accent-foreground: 0 0% 100%;
+    --success: 160 84% 39%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 93% 50%;
+    --warning-foreground: 0 0% 0%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 5% 90%;
+    --input: 240 5% 90%;
+    --ring: 263 70% 50%;
+    --overlay: 0 0% 100%;
+    --sidebar-background: 0 0% 99%;
+    --sidebar-foreground: 240 5% 26%;
+    --sidebar-primary: 263 70% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 5% 96%;
+    --sidebar-accent-foreground: 240 5% 10%;
+    --sidebar-border: 240 5% 90%;
+    --sidebar-ring: 263 70% 50%;
   }
 }
 

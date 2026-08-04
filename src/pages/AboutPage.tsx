@@ -100,29 +100,31 @@ export default function AboutPage() {
         </div>
 
         {/* Gamified Habit-Builder Section */}
-        <motion.div 
-          {...fadeInUp}
-          className="border border-border/50 bg-[#120a21]/20 p-8 rounded-2xl mb-16 flex flex-col md:flex-row items-center gap-8"
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="border border-border/50 bg-secondary p-8 rounded-2xl mb-16 flex flex-col md:flex-row items-center gap-8"
         >
           <div className="flex-1">
             <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-2">Gamified Progress</p>
             <h2 className="text-xl md:text-2xl font-bold mb-4">Small Wins. Big Confidence.</h2>
-            <p className="text-xs text-zinc-300 leading-relaxed mb-6">
+            <p className="text-xs text-muted-foreground leading-relaxed mb-6">
               Learn consistency by earning XP, building daily teaching streaks, and leveling up from a "Newcomer" all the way to a "Legend". No pressure—just encouragement to keep you showing up.
             </p>
             <div className="flex flex-wrap gap-4">
-              <div className="flex items-center gap-2 text-xs font-medium text-zinc-300">
+              <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
                 <Flame className="w-4 h-4 text-warning fill-warning" /> Streaks
               </div>
-              <div className="flex items-center gap-2 text-xs font-medium text-zinc-300">
+              <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
                 <Award className="w-4 h-4 text-primary" /> Achievements
               </div>
-              <div className="flex items-center gap-2 text-xs font-medium text-zinc-300">
+              <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
                 <Zap className="w-4 h-4 text-accent fill-accent" /> XP Levels
               </div>
             </div>
           </div>
-          <div className="w-32 h-32 md:w-40 md:h-40 bg-card border border-white/5 rounded-3xl flex items-center justify-center flex-shrink-0 relative overflow-hidden">
+          <div className="w-32 h-32 md:w-40 md:h-40 bg-card border border-border rounded-3xl flex items-center justify-center flex-shrink-0 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 animate-pulse" />
             <Brain className="w-12 h-12 text-primary relative z-10 animate-bounce" />
           </div>

@@ -474,8 +474,8 @@ Write a concise report card. You must respond in this exact JSON format:
                 </div>
 
                 {/* Level Toggle Selector */}
-                <div className="flex justify-center mb-8">
-                  <div className="bg-white/[0.02] border border-white/10 p-1 flex gap-1 rounded-none max-w-sm w-full">
+                <div className="flex justify-center mb-6">
+                <div className="bg-card border border-border p-1 flex gap-1 rounded-none max-w-sm w-full">
                     <button
                       onClick={() => {
                         setSelectedLevel("jss");
@@ -745,7 +745,7 @@ Write a concise report card. You must respond in this exact JSON format:
 
       {/* Study Companion Drawer */}
       {showStudyCompanion && selectedTopic?.studyNotes && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex justify-end">
+        <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm flex justify-end">
           <motion.div
             initial={{ x: "100%" }}
             animate={{ x: 0 }}

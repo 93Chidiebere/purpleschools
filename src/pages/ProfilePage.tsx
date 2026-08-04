@@ -727,9 +727,9 @@ export default function ProfilePage() {
 
       {/* Privacy Settings Dialog */}
       <Dialog open={isPrivacyOpen} onOpenChange={setIsPrivacyOpen}>
-        <DialogContent className="bg-[#120a21]/95 text-white border border-white/10 rounded-2xl max-w-sm mx-auto p-6 shadow-2xl backdrop-blur-md">
+        <DialogContent className="bg-background text-foreground border border-border rounded-2xl max-w-sm mx-auto p-6 shadow-md backdrop-blur-md">
           <DialogHeader>
-            <DialogTitle className="text-lg font-bold text-white flex items-center gap-2">
+            <DialogTitle className="text-lg font-bold text-foreground flex items-center gap-2">
               <Shield className="w-5 h-5 text-primary" /> Privacy & Data Control
             </DialogTitle>
             <DialogDescription className="text-zinc-400 text-xs mt-2 leading-relaxed">
@@ -738,7 +738,7 @@ export default function ProfilePage() {
           </DialogHeader>
           <div className="space-y-3 mt-4">
             <Button
-              className="w-full justify-start rounded-none text-xs font-semibold text-white bg-primary/20 hover:bg-primary/30 border-primary/20"
+              className="w-full justify-start rounded-none text-xs font-semibold text-primary-foreground bg-primary/20 hover:bg-primary/30 border-primary/20"
               variant="outline"
               onClick={handleExportData}
             >
@@ -752,7 +752,7 @@ export default function ProfilePage() {
               Reset Offline Progress History
             </Button>
             <Button
-              className="w-full justify-start rounded-none text-xs font-semibold text-zinc-400 hover:text-white"
+              className="w-full justify-start rounded-none text-xs font-semibold text-muted-foreground hover:text-foreground"
               variant="ghost"
               onClick={() => setIsPrivacyOpen(false)}
             >

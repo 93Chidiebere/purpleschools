@@ -84,7 +84,7 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0f0a1c] flex flex-col justify-center items-center relative overflow-hidden px-4 py-12">
+    <div className="min-h-screen bg-background flex flex-col justify-center items-center relative overflow-hidden px-4 py-12">
       
       {/* Radiant Background Blur */}
       <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
@@ -99,9 +99,9 @@ export default function AuthPage() {
         <img 
           src="/purpleschool-logo.png" 
           alt="PurpleSchool Logo" 
-          className="w-16 h-16 rounded-2xl shadow-[0_0_30px_rgba(124,58,237,0.25)] mb-4 object-cover border border-white/10"
+          className="w-16 h-16 rounded-2xl shadow-sm mb-4 object-cover border border-border"
         />
-        <h1 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">PurpleSchool</h1>
+        <h1 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight">PurpleSchool</h1>
         <p className="text-sm text-muted-foreground mt-2 max-w-xs mx-auto">
           The Socratic offline learning network for global secondary school candidates
         </p>
@@ -114,9 +114,9 @@ export default function AuthPage() {
         transition={{ delay: 0.1 }}
         className="w-full max-w-md z-10"
       >
-        <Card className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]">
+        <Card className="rounded-2xl border border-border bg-card shadow-md">
           <CardHeader className="text-center pb-4">
-            <CardTitle className="text-2xl font-bold text-white">
+            <CardTitle className="text-2xl font-bold text-foreground">
               {isLogin ? "Welcome Back!" : "Join PurpleSchool"}
             </CardTitle>
             <CardDescription className="text-zinc-400">
@@ -129,21 +129,21 @@ export default function AuthPage() {
                 <>
                   <Input 
                     placeholder="Your name" 
-                    className="rounded-xl bg-white/[0.02] border-white/10 text-white placeholder-zinc-500 focus:border-primary/50 focus:ring-primary/50" 
+                    className="rounded-xl bg-background border-border text-foreground placeholder-muted-foreground focus:border-primary/50 focus:ring-primary/50" 
                     value={formData.name} 
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })} 
                     required
                   />
                   <Input 
                     placeholder="School name" 
-                    className="rounded-xl bg-white/[0.02] border-white/10 text-white placeholder-zinc-500 focus:border-primary/50 focus:ring-primary/50" 
+                    className="rounded-xl bg-background border-border text-foreground placeholder-muted-foreground focus:border-primary/50 focus:ring-primary/50" 
                     value={formData.school} 
                     onChange={(e) => setFormData({ ...formData, school: e.target.value })} 
                     required
                   />
                   <Input 
                     placeholder="Class (e.g., JSS1 - SSS3)" 
-                    className="rounded-xl bg-white/[0.02] border-white/10 text-white placeholder-zinc-500 focus:border-primary/50 focus:ring-primary/50" 
+                    className="rounded-xl bg-background border-border text-foreground placeholder-muted-foreground focus:border-primary/50 focus:ring-primary/50" 
                     value={formData.className} 
                     onChange={(e) => setFormData({ ...formData, className: e.target.value })} 
                     required
@@ -154,33 +154,33 @@ export default function AuthPage() {
                     <Input 
                       type="number"
                       placeholder="Age" 
-                      className="rounded-xl bg-white/[0.02] border-white/10 text-white placeholder-zinc-500 focus:border-primary/50 focus:ring-primary/50" 
+                      className="rounded-xl bg-background border-border text-foreground placeholder-muted-foreground focus:border-primary/50 focus:ring-primary/50" 
                       value={formData.age} 
                       onChange={(e) => setFormData({ ...formData, age: e.target.value })} 
                       required
                     />
                     <select
-                      className="rounded-xl bg-white/[0.02] border border-white/10 text-zinc-300 placeholder-zinc-500 focus:border-primary/50 focus:ring-primary/50 px-3 h-10 text-sm bg-[#120a21]/95 focus:outline-none w-full"
+                      className="rounded-xl bg-background border border-border text-foreground placeholder-muted-foreground focus:border-primary/50 focus:ring-primary/50 px-3 h-10 text-sm focus:outline-none w-full"
                       value={formData.gender}
                       onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
                       required
                     >
-                      <option value="" disabled className="text-zinc-500 bg-[#0f0a1c]">Gender</option>
-                      <option value="Male" className="text-white bg-[#0f0a1c]">Male</option>
-                      <option value="Female" className="text-white bg-[#0f0a1c]">Female</option>
-                      <option value="Other" className="text-white bg-[#0f0a1c]">Other</option>
+                      <option value="" disabled className="text-muted-foreground bg-background">Gender</option>
+                      <option value="Male" className="text-foreground bg-background">Male</option>
+                      <option value="Female" className="text-foreground bg-background">Female</option>
+                      <option value="Other" className="text-foreground bg-background">Other</option>
                     </select>
                   </div>
                   <Input 
                     placeholder="School Location (State)" 
-                    className="rounded-xl bg-white/[0.02] border-white/10 text-white placeholder-zinc-500 focus:border-primary/50 focus:ring-primary/50" 
+                className="rounded-xl bg-background border-border text-foreground placeholder-muted-foreground focus:border-primary/50 focus:ring-primary/50" 
                     value={formData.schoolState} 
                     onChange={(e) => setFormData({ ...formData, schoolState: e.target.value })} 
                     required
                   />
                   <Input 
                     placeholder="Favourite Subject" 
-                    className="rounded-xl bg-white/[0.02] border-white/10 text-white placeholder-zinc-500 focus:border-primary/50 focus:ring-primary/50" 
+                className="rounded-xl bg-background border-border text-foreground placeholder-muted-foreground focus:border-primary/50 focus:ring-primary/50" 
                     value={formData.favoriteSubject} 
                     onChange={(e) => setFormData({ ...formData, favoriteSubject: e.target.value })} 
                     required
@@ -190,7 +190,7 @@ export default function AuthPage() {
               <Input 
                 type={isLogin ? "text" : "email"} 
                 placeholder={isLogin ? "Email or Student ID (e.g. A001)" : "Email address"} 
-                className="rounded-xl bg-white/[0.02] border-white/10 text-white placeholder-zinc-500 focus:border-primary/50 focus:ring-primary/50" 
+                className="rounded-xl bg-background border-border text-foreground placeholder-muted-foreground focus:border-primary/50 focus:ring-primary/50" 
                 value={formData.email} 
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })} 
                 required={true} 
@@ -198,13 +198,13 @@ export default function AuthPage() {
               <Input 
                 type="password" 
                 placeholder="Password" 
-                className="rounded-xl bg-white/[0.02] border-white/10 text-white placeholder-zinc-500 focus:border-primary/50 focus:ring-primary/50" 
+                className="rounded-xl bg-background border-border text-foreground placeholder-muted-foreground focus:border-primary/50 focus:ring-primary/50" 
                 value={formData.password} 
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })} 
                 required 
               />
 
-              <Button type="submit" className="w-full rounded-xl bg-primary hover:bg-primary/95 text-white font-semibold py-6 mt-2" disabled={loading}>
+              <Button type="submit" className="w-full rounded-xl bg-primary hover:bg-primary/95 text-primary-foreground font-semibold py-6 mt-2" disabled={loading}>
                 {loading ? "Connecting..." : isLogin ? "Start Teaching" : "Create Account"}
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
