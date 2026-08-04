@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { BookOpen, Calendar, Clock, ArrowRight, Activity, Users, Settings, LogOut, CheckCircle2 } from "lucide-react";
+import { BookOpen, Clock, ArrowRight, Activity, Users } from "lucide-react";
 
 export default function MinimalDemo() {
   return (
