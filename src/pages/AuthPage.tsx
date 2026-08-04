@@ -97,9 +97,9 @@ export default function AuthPage() {
         className="text-center mb-8 z-10"
       >
         <img 
-          src="/purpleschool-logo.png" 
+          src="/purpleschool-logo-white.jpg" 
           alt="PurpleSchool Logo" 
-          className="w-16 h-16 rounded-2xl shadow-sm mb-4 object-cover border border-border"
+          className="w-24 h-auto mb-4 object-contain mix-blend-multiply"
         />
         <h1 className="text-3xl md:text-4xl font-extrabold text-foreground tracking-tight">PurpleSchool</h1>
         <p className="text-sm text-muted-foreground mt-2 max-w-xs mx-auto">

@@ -82,12 +82,12 @@ export default function LandingPage() {
           {/* Centered Brand Hero Image */}
           <motion.div
             {...fadeInUp}
-            className="mt-16 max-w-xl mx-auto rounded-3xl overflow-hidden border border-border shadow-md relative group"
+            className="mt-16 max-w-xl mx-auto relative group mix-blend-multiply"
           >
             <img 
-              src="/purpleschool-hero.jpg" 
-              alt="PurpleSchool - Learn. Grow. Succeed." 
-              className="w-full h-auto object-cover"
+              src="/purpleschool-hero-white.jpg" 
+              alt="PurpleSchool Interface" 
+              className="w-full h-auto transform group-hover:scale-105 transition-transform duration-700 ease-out mix-blend-multiply"
             />
           </motion.div>
         </div>
