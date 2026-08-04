@@ -251,10 +251,10 @@ export function FeedbackContactSection() {
                     <p className="text-center text-sm text-muted-foreground">
                       Or email us directly at{" "}
                       <a 
-                        href="mailto:hello@purpleschool.ng" 
+                        href="mailto:vchidiebere.vc@gmail.com" 
                         className="text-primary hover:underline"
                       >
-                        purpleschool@gmail.com
+                        vchidiebere.vc@gmail.com
                       </a>
                     </p>
                   </form>
