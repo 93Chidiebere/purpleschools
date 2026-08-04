@@ -25,6 +25,7 @@ export default function App() {
   const Dashboard = lazy(() => import("./pages/Dashboard"));
   const ProfilePage = lazy(() => import("./pages/ProfilePage"));
   const AboutPage = lazy(() => import("./pages/AboutPage"));
+  const MinimalLandingDemo = lazy(() => import("./pages/MinimalLandingDemo"));
   const LearnPage = lazy(() => import("./pages/LearnPage"));
   const MinimalDemo = lazy(() => import("./pages/MinimalDemo"));
 
@@ -41,6 +42,7 @@ export default function App() {
               <Route path="/" element={<LandingPage />} />
               <Route path="/welcome" element={<LandingPage />} />
               <Route path="/demo-ui" element={<MinimalDemo />} />
+              <Route path="/demo-landing" element={<MinimalLandingDemo />} />
 
               <Route element={<ProtectedRoute />}>
                 <Route path="/about" element={<AboutPage />} />
