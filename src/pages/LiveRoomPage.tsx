@@ -6,7 +6,7 @@ import { io, Socket } from "socket.io-client";
 import { API_BASE } from "@/config";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Share2, Mic, MicOff, Users, ArrowLeft } from "lucide-react";
+import { Share2, Mic, MicOff, Users, ArrowLeft, LogOut } from "lucide-react";
 import { Avatar } from "@/components/shared/Avatar";
 
 export default function LiveRoomPage() {
@@ -252,6 +252,9 @@ export default function LiveRoomPage() {
           </Button>
           <Button size="sm" onClick={handleShare}>
             <Share2 className="w-4 h-4 mr-2" /> Share
+          </Button>
+          <Button variant="destructive" size="sm" onClick={() => navigate("/classrooms")}>
+            <LogOut className="w-4 h-4 mr-2" /> Leave Class
           </Button>
         </div>
       </div>
