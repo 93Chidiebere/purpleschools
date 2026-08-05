@@ -1,4 +1,7 @@
 import express from "express";
+import { createServer } from "http";
+import { Server } from "socket.io";
+import { setupSockets, getActiveRooms } from "./socket";
 import cors from "cors";
 import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes";
@@ -111,11 +114,18 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Enable CORS middleware for frontend connection
-app.use(cors({
+const corsOptions = {
   origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
-}));
+};
+app.use(cors(corsOptions));
+
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+  cors: corsOptions
+});
+setupSockets(io);
 
 app.use(express.json());
 
@@ -130,6 +140,10 @@ app.get("/health", (req, res) => {
   res.status(200).json({ status: "healthy", timestamp: new Date() });
 });
 
-app.listen(PORT, () => {
+app.get("/rooms", (req, res) => {
+  res.status(200).json(getActiveRooms());
+});
+
+httpServer.listen(PORT, () => {
   console.log(`PurpleSchool server running on port ${PORT}`);
 });

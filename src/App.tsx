@@ -28,6 +28,8 @@ export default function App() {
   const MinimalLandingDemo = lazy(() => import("./pages/MinimalLandingDemo"));
   const LearnPage = lazy(() => import("./pages/LearnPage"));
   const MinimalDemo = lazy(() => import("./pages/MinimalDemo"));
+  const ClassroomsPage = lazy(() => import("./pages/ClassroomsPage"));
+  const LiveRoomPage = lazy(() => import("./pages/LiveRoomPage"));
 
 
   return (
@@ -50,6 +52,8 @@ export default function App() {
                 <Route path="/learn" element={<LearnPage />} />
                 <Route path="/teach" element={<LearnPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/classrooms" element={<ClassroomsPage />} />
+                <Route path="/class/:roomId" element={<LiveRoomPage />} />
               </Route>
 
               <Route path="/auth" element={<AuthPage />} />

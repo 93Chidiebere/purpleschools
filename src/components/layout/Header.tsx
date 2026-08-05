@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, BookOpen, User, Info } from "lucide-react";
+import { Home, BookOpen, User, Info, Presentation } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { Avatar } from "@/components/shared/Avatar";
@@ -10,6 +10,7 @@ import { useLevelProgressContext } from "@/contexts/LevelProgressContext";
 const navItems = [
   { icon: Home, label: "Home", path: "/dashboard" },
   { icon: BookOpen, label: "Teach", path: "/teach" },
+  { icon: Presentation, label: "Live Classes", path: "/classrooms" },
   { icon: Info, label: "About", path: "/about" },
   { icon: User, label: "Profile", path: "/profile" },
 ];
