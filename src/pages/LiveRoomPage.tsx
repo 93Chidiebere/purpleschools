@@ -317,5 +317,5 @@ function SyncedTldraw({ socket, roomId }: { socket: Socket, roomId: string }) {
       });
    }, [socket, roomId]);
 
-   return <Tldraw onMount={handleMount} />;
+   return <Tldraw onMount={handleMount} autoFocus />;
 }
