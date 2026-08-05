@@ -257,8 +257,12 @@ export default function LiveRoomPage() {
       </div>
 
       {/* Main Board */}
-      <div className="flex-1 relative bg-muted/20">
-         {socket && <SyncedTldraw socket={socket} roomId={roomId!} />}
+      <div className="flex-1 relative bg-muted/20" style={{ zIndex: 0 }}>
+         {socket && (
+            <div className="absolute inset-0">
+               <SyncedTldraw socket={socket} roomId={roomId!} />
+            </div>
+         )}
       </div>
 
       {/* Hidden Audio Elements */}
