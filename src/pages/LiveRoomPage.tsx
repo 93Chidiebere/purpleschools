@@ -260,11 +260,9 @@ export default function LiveRoomPage() {
       </div>
 
       {/* Main Board */}
-      <div className="flex-1 relative bg-muted/20 z-0">
+      <div className="flex-1 z-0">
          {socket && (
-            <div className="absolute inset-0 z-[50]" style={{ pointerEvents: 'auto', touchAction: 'none' }}>
-               <SyncedTldraw socket={socket} roomId={roomId!} />
-            </div>
+            <ProfessionalWhiteboard socket={socket} roomId={roomId!} />
          )}
       </div>
 
@@ -288,55 +286,64 @@ const AudioElement = ({ stream }: { stream?: MediaStream }) => {
   return <audio ref={ref} autoPlay playsInline />;
 };
 
-function SyncedTldraw({ socket, roomId }: { socket: Socket, roomId: string }) {
-   const handleMount = useCallback((editor: any) => {
-      // Force disable focus mode on mount
-      editor.updateInstanceState({ isFocusMode: false });
+import { useTLStore } from "tldraw";
 
-      // Asynchronously intercept any attempts to enter focus mode
-      editor.sideEffects.registerAfterChangeHandler('instance', (_prev: any, next: any) => {
-         if (next.isFocusMode) {
-            setTimeout(() => {
-               if (!editor.isDisposed) {
-                  editor.updateInstanceState({ isFocusMode: false });
-               }
-            }, 0);
-         }
-      });
+// Define a stable sync hook instead of placing sync logic inside onMount
+function useTldrawSync(store: any, socket: Socket | null, roomId: string | undefined) {
+  useEffect(() => {
+    if (!store || !socket || !roomId) return;
 
-      // Listen for local changes
-      editor.store.listen((entry: any) => {
-        if (entry.source === 'user') {
-          socket.emit("draw-event", { roomId, event: entry.changes });
+    // Listen for local changes and emit to server
+    const unsubscribe = store.listen((entry: any) => {
+      if (entry.source === 'user') {
+        socket.emit("draw-event", { roomId, event: entry.changes });
+      }
+    });
+
+    return () => unsubscribe();
+  }, [store, socket, roomId]);
+
+  useEffect(() => {
+    if (!store || !socket) return;
+
+    // Receive remote changes and apply them safely
+    const handleRemoteChanges = (changes: any) => {
+      if (store.isDisposed) return;
+      
+      store.mergeRemoteChanges(() => {
+        try {
+          if (changes.added) {
+            Object.values(changes.added).forEach((record: any) => store.put([record]));
+          }
+          if (changes.updated) {
+            Object.values(changes.updated).forEach(([_, next]: any) => store.put([next]));
+          }
+          if (changes.removed) {
+            Object.values(changes.removed).forEach((record: any) => store.remove([record.id]));
+          }
+        } catch(err) {
+          console.error("Tldraw sync error:", err);
         }
       });
+    };
 
-      // Receive remote changes
-      socket.on("draw-event", (changes: any) => {
-        if (editor.isDisposed) return;
-        editor.store.mergeRemoteChanges(() => {
-           // Apply incoming changes
-           // tldraw changes format: { added: Record<Id, Record>, updated: Record<Id, [Record, Record]>, removed: Record<Id, Record> }
-           try {
-             if (changes.added) {
-               Object.values(changes.added).forEach((record: any) => editor.store.put([record]));
-             }
-             if (changes.updated) {
-               Object.values(changes.updated).forEach(([_, next]: any) => editor.store.put([next]));
-             }
-             if (changes.removed) {
-               Object.values(changes.removed).forEach((record: any) => editor.store.remove([record.id]));
-             }
-           } catch(err) {
-             console.error(err);
-           }
-        });
-      });
-   }, [socket, roomId]);
+    socket.on("draw-event", handleRemoteChanges);
+    return () => {
+      socket.off("draw-event", handleRemoteChanges);
+    };
+  }, [store, socket]);
+}
 
-   return (
-     <div className="w-full h-full tldraw-wrapper isolate" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 99999, pointerEvents: 'auto' }}>
-       <Tldraw onMount={handleMount} hideUi={false} />
-     </div>
-   );
+function ProfessionalWhiteboard({ socket, roomId }: { socket: Socket, roomId: string }) {
+  // Initialize a stable store instead of relying on the internal unmounted store
+  const store = useTLStore();
+  
+  // Attach sync logic to the store
+  useTldrawSync(store, socket, roomId);
+
+  return (
+    <div style={{ position: 'fixed', top: '64px', left: 0, right: 0, bottom: 0, zIndex: 9999, pointerEvents: 'auto' }}>
+      <Tldraw store={store} hideUi={false} />
+    </div>
+  );
 }
