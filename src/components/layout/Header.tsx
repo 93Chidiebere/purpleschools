@@ -33,14 +33,19 @@ useEffect(() => {
     <header className="hidden md:block fixed top-0 left-0 right-0 bg-card/95 backdrop-blur-md border-b border-border z-40">
       <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
         {/* Logo & Brand */}
-        <Link to="/dashboard" className="flex items-center gap-2">
-          <img 
-            src="/purpleschool-logo.png" 
-            alt="PurpleSchool Logo" 
-            className="w-10 h-10 rounded-xl object-cover shadow-soft border border-white/10"
-          />
-          <span className="text-xl font-bold text-gradient">PurpleSchool</span>
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link to="/dashboard" className="flex items-center gap-2">
+            <img 
+              src="/purpleschool-logo.png" 
+              alt="PurpleSchool Logo" 
+              className="w-10 h-10 rounded-xl object-cover shadow-soft border border-white/10"
+            />
+            <span className="text-xl font-bold text-gradient">PurpleSchool</span>
+          </Link>
+          <span className="hidden lg:inline-flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider text-muted-foreground bg-muted/50 px-2 py-1 rounded-full border border-border/50">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span> Cloud Mode
+          </span>
+        </div>
 
         {/* Navigation */}
         <nav className="flex items-center gap-1">

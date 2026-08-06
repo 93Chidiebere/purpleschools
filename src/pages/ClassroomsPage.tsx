@@ -67,7 +67,7 @@ export default function ClassroomsPage() {
               Join an ongoing class or start your own to teach others.
             </p>
           </div>
-          <Button onClick={handleCreateRoom} size="lg" className="rounded-none">
+          <Button onClick={handleCreateRoom} size="lg" className="rounded-xl">
             <Plus className="w-5 h-5 mr-2" />
             Create Class
           </Button>
@@ -82,7 +82,7 @@ export default function ClassroomsPage() {
             <p className="text-sm text-muted-foreground mt-2 mb-6">
               Be the first to start teaching a topic today!
             </p>
-            <Button onClick={handleCreateRoom} variant="outline" className="rounded-none">
+            <Button onClick={handleCreateRoom} variant="outline" className="rounded-xl">
               Start a Class
             </Button>
           </div>
@@ -93,7 +93,7 @@ export default function ClassroomsPage() {
               return (
                 <Card 
                   key={room.roomId} 
-                  className={`cursor-pointer transition-all rounded-none hover:shadow-soft ${isFull ? "opacity-70 grayscale" : "border-primary/20 hover:border-primary"}`}
+                  className={`cursor-pointer transition-all rounded-xl hover:shadow-soft ${isFull ? "opacity-70 grayscale" : "border-primary/20 hover:border-primary"}`}
                   onClick={() => handleJoinRoom(room)}
                 >
                   <CardContent className="p-6">

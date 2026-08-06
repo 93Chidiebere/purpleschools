@@ -306,7 +306,7 @@ export default function ProfilePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <Card className="mb-6 rounded-none">
+          <Card className="mb-6 rounded-xl">
             <CardContent className="p-6">
               {/* Mobile: stacked layout, Desktop: row layout */}
               <div className="flex flex-col items-center text-center sm:flex-row sm:items-center sm:text-left gap-4 mb-6">
@@ -328,7 +328,7 @@ export default function ProfilePage() {
                 <Button
                   variant={isEditing ? "default" : "outline"}
                   size="sm"
-                  className="w-full sm:w-auto rounded-none"
+                  className="w-full sm:w-auto rounded-xl"
                   onClick={() => (isEditing ? handleSave() : setIsEditing(true))}
                 >
                   {isEditing ? (
@@ -413,10 +413,10 @@ export default function ProfilePage() {
                         value={quoteInput}
                         onChange={(e) => setQuoteInput(e.target.value)}
                         placeholder="Type your quote/status..."
-                        className="flex-1 rounded-none"
+                        className="flex-1 rounded-xl"
                       />
-                      <Button size="sm" className="rounded-none" onClick={handleSaveQuote} disabled={updateProfileMutation.isPending}>Save</Button>
-                      <Button size="sm" className="rounded-none" variant="ghost" onClick={() => setIsEditingQuote(false)}>Cancel</Button>
+                      <Button size="sm" className="rounded-xl" onClick={handleSaveQuote} disabled={updateProfileMutation.isPending}>Save</Button>
+                      <Button size="sm" className="rounded-xl" variant="ghost" onClick={() => setIsEditingQuote(false)}>Cancel</Button>
                     </div>
                   ) : (
                     <div 
@@ -446,8 +446,8 @@ export default function ProfilePage() {
             {/* Notifications with Dropdown */}
             <Popover>
               <PopoverTrigger asChild>
-                <Card className="cursor-pointer hover:shadow-soft transition-all rounded-none">
-                  <CardContent className="p-4 flex items-center justify-between rounded-none">
+                <Card className="cursor-pointer hover:shadow-soft transition-all rounded-xl">
+                  <CardContent className="p-4 flex items-center justify-between rounded-xl">
                     <div className="flex items-center gap-4">
                       <div className="relative w-10 h-10  bg-primary/10 flex items-center justify-center">
                         <Bell className="w-5 h-5 text-primary" />
@@ -466,7 +466,7 @@ export default function ProfilePage() {
                   </CardContent>
                 </Card>
               </PopoverTrigger>
-              <PopoverContent className="w-80 p-0 rounded-none" align="start" side="bottom">
+              <PopoverContent className="w-80 p-0 rounded-xl" align="start" side="bottom">
                 <div className="flex items-center justify-between px-4 py-3 border-b border-border">
                   <h3 className="font-semibold text-foreground text-sm">Achievements</h3>
                   {unreadCount > 0 && (
@@ -474,9 +474,9 @@ export default function ProfilePage() {
                       variant="ghost"
                       size="sm"
                       onClick={markAllAsRead}
-                      className="text-xs h-7 rounded-none"
+                      className="text-xs h-7 rounded-xl"
                     >
-                      <Check className="w-3 h-3 mr-1 rounded-none" />
+                      <Check className="w-3 h-3 mr-1 rounded-xl" />
                       Mark all read
                     </Button>
                   )}
@@ -533,7 +533,7 @@ export default function ProfilePage() {
 
             {/* Privacy */}
             <Card 
-              className="cursor-pointer hover:shadow-soft transition-all rounded-none"
+              className="cursor-pointer hover:shadow-soft transition-all rounded-xl"
               onClick={() => setIsPrivacyOpen(true)}
             >
               <CardContent className="p-4 flex items-center justify-between">
@@ -560,7 +560,7 @@ export default function ProfilePage() {
             transition={{ delay: 0.12 }}
             className="mt-6"
           >
-            <Card className="rounded-none border border-primary/20">
+            <Card className="rounded-xl border border-primary/20">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-4 border-b border-border pb-3">
                   <div>
@@ -626,7 +626,7 @@ export default function ProfilePage() {
           transition={{ delay: 0.15 }}
           className="mt-6"
         >
-          <Card className="rounded-none">
+          <Card className="rounded-xl">
             <CardContent className="p-6">
               <h3 className="text-lg font-bold text-foreground mb-2 flex items-center gap-2">
                 <FileText className="w-5 h-5 text-primary" /> Personal Study Notes
@@ -641,7 +641,7 @@ export default function ProfilePage() {
                   onChange={(e) =>
                     setFormData({ ...formData, personalNotes: e.target.value })
                   }
-                  className="w-full h-32 p-3 bg-muted/40 border border-border focus:border-primary/50 text-foreground text-sm rounded-none focus:outline-none resize-none font-sans"
+                  className="w-full h-32 p-3 bg-muted/40 border border-border focus:border-primary/50 text-foreground text-sm rounded-xl focus:outline-none resize-none font-sans"
                   placeholder="Type your notes here..."
                 />
               ) : isEditingNotes ? (
@@ -649,12 +649,12 @@ export default function ProfilePage() {
                   <textarea
                     value={notesInput}
                     onChange={(e) => setNotesInput(e.target.value)}
-                    className="w-full h-32 p-3 bg-muted/40 border border-border focus:border-primary/50 text-foreground text-sm rounded-none focus:outline-none resize-none font-sans"
+                    className="w-full h-32 p-3 bg-muted/40 border border-border focus:border-primary/50 text-foreground text-sm rounded-xl focus:outline-none resize-none font-sans"
                     placeholder="Type your study notes here..."
                   />
                   <div className="flex gap-2">
-                    <Button size="sm" className="rounded-none" onClick={handleSaveNotes} disabled={updateProfileMutation.isPending}>Save Notes</Button>
-                    <Button size="sm" className="rounded-none" variant="outline" onClick={() => setIsEditingNotes(false)}>Cancel</Button>
+                    <Button size="sm" className="rounded-xl" onClick={handleSaveNotes} disabled={updateProfileMutation.isPending}>Save Notes</Button>
+                    <Button size="sm" className="rounded-xl" variant="outline" onClick={() => setIsEditingNotes(false)}>Cancel</Button>
                   </div>
                 </div>
               ) : (
@@ -680,7 +680,7 @@ export default function ProfilePage() {
           className="mt-8"
         >
           <h3 className="text-lg font-semibold text-foreground mb-4">Your Journey</h3>
-          <Card className="rounded-none ">
+          <Card className="rounded-xl ">
             <CardContent className="p-6">
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center">
@@ -713,7 +713,7 @@ export default function ProfilePage() {
         >
           <Button
             variant="outline"
-            className="w-full border-destructive/20 text-destructive hover:bg-destructive/5 rounded-none"
+            className="w-full border-destructive/20 text-destructive hover:bg-destructive/5 rounded-xl"
             onClick={handleLogout}
           >
             <LogOut className="w-4 h-4 mr-2" />
@@ -738,21 +738,21 @@ export default function ProfilePage() {
           </DialogHeader>
           <div className="space-y-3 mt-4">
             <Button
-              className="w-full justify-start rounded-none text-xs font-semibold text-primary-foreground bg-primary/20 hover:bg-primary/30 border-primary/20"
+              className="w-full justify-start rounded-xl text-xs font-semibold text-primary-foreground bg-primary/20 hover:bg-primary/30 border-primary/20"
               variant="outline"
               onClick={handleExportData}
             >
               Export Learning Progress (JSON)
             </Button>
             <Button
-              className="w-full justify-start rounded-none text-xs font-semibold text-destructive hover:bg-destructive/10 hover:text-destructive border-destructive/20"
+              className="w-full justify-start rounded-xl text-xs font-semibold text-destructive hover:bg-destructive/10 hover:text-destructive border-destructive/20"
               variant="outline"
               onClick={handleResetProgress}
             >
               Reset Offline Progress History
             </Button>
             <Button
-              className="w-full justify-start rounded-none text-xs font-semibold text-muted-foreground hover:text-foreground"
+              className="w-full justify-start rounded-xl text-xs font-semibold text-muted-foreground hover:text-foreground"
               variant="ghost"
               onClick={() => setIsPrivacyOpen(false)}
             >

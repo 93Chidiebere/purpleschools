@@ -239,7 +239,7 @@ export default function Dashboard() {
           className="grid grid-cols-3 gap-3 mb-8"
         >
           <Card
-            className="text-center cursor-pointer hover:shadow-soft transition-shadow rounded-none"
+            className="text-center cursor-pointer hover:shadow-soft transition-shadow rounded-xl"
             onClick={() => setShowStreak(true)}
           >
             <CardContent className="p-4">
@@ -252,7 +252,7 @@ export default function Dashboard() {
           </Card>
 
           <Card
-            className="text-center cursor-pointer hover:shadow-soft transition-shadow rounded-none"
+            className="text-center cursor-pointer hover:shadow-soft transition-shadow rounded-xl"
             onClick={() => {
               const loginAchievement = achievements.find(a => a.type === "daily_login");
               if (loginAchievement) {
@@ -272,7 +272,7 @@ export default function Dashboard() {
           </Card>
 
           <Card
-            className="text-center cursor-pointer hover:shadow-soft transition-shadow rounded-none"
+            className="text-center cursor-pointer hover:shadow-soft transition-shadow rounded-xl"
             onClick={() => setShowMicroWin(true)}
           >
             <CardContent className="p-4">
@@ -292,7 +292,7 @@ export default function Dashboard() {
           transition={{ delay: 0.2 }}
           className="mb-8"
         >
-          <Card className="overflow-hidden rounded-none ">
+          <Card className="overflow-hidden rounded-xl ">
             <CardContent className="p-6 relative">
 
               <div className="relative z-10">
@@ -300,11 +300,11 @@ export default function Dashboard() {
                   Ready to Teach?
                 </h2>
                 <p className="text-muted-foreground mb-4">
-                  Prove your understanding of subjects by teaching. Explain concepts to Chidi, your AI student.
+                  Prove your understanding of subjects by teaching. Explain concepts to Alex, your AI student.
                 </p>
-                <Button onClick={() => navigate("/teach")} size="lg" className="w-full sm:w-auto rounded-none">
+                <Button onClick={() => navigate("/teach")} size="lg" className="w-full sm:w-auto rounded-xl">
                   <MessageCircle className="w-5 h-5 mr-2" />
-                  Start Teaching
+                  Learn by Teaching
                 </Button>
               </div>
             </CardContent>
@@ -318,7 +318,7 @@ export default function Dashboard() {
           transition={{ delay: 0.25 }}
           className="mb-8"
         >
-          <Card className="overflow-hidden rounded-none border border-primary/20 bg-primary/5">
+          <Card className="overflow-hidden rounded-xl border border-primary/20 bg-primary/5">
             <CardContent className="p-6 relative">
               <div className="absolute top-4 right-4 opacity-10">
                 <Smartphone className="w-16 h-16 text-primary" />
@@ -329,13 +329,13 @@ export default function Dashboard() {
                     Get PurpleSchool on your Phone
                   </h3>
                   <p className="text-sm text-muted-foreground text-left">
-                    Install natively on Android or iOS to teach Chidi offline anywhere with zero data cost.
+                    Install natively on Android or iOS to teach Alex offline anywhere with zero data cost.
                   </p>
                 </div>
                 <Button
                   onClick={() => setShowDownloadModal(true)}
                   variant="outline"
-                  className="w-full md:w-auto rounded-none border-primary text-primary hover:bg-primary/10 whitespace-nowrap"
+                  className="w-full md:w-auto rounded-xl border-primary text-primary hover:bg-primary/10 whitespace-nowrap"
                 >
                   <Download className="w-4 h-4 mr-2" />
                   Get Mobile App
@@ -352,7 +352,7 @@ export default function Dashboard() {
           transition={{ delay: 0.3 }}
         >
           <h3 className="text-lg font-semibold text-foreground mb-4">Your Teaching Level</h3>
-          <Card className="overflow-hidden rounded-none">
+          <Card className="overflow-hidden rounded-xl">
             <CardContent className="p-6">
               <div className="flex items-center gap-6">
                 <LevelProgressRing size={100} />
@@ -396,7 +396,7 @@ export default function Dashboard() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="mt-8 rounded-none"
+          className="mt-8 rounded-xl"
         >
           <h3 className="text-lg font-semibold text-foreground mb-4">Continue Learning</h3>
           <div className="space-y-3">
@@ -407,8 +407,8 @@ export default function Dashboard() {
             ].map((item, index) => (
               <Card
                 key={index}
-                className="cursor-pointer hover:shadow-soft transition-all rounded-none "
-                onClick={() => navigate("/learn")}
+                className="cursor-pointer hover:shadow-soft transition-all rounded-xl"
+                onClick={() => navigate(`/learn/${item.subject.toLowerCase() === 'mathematics' ? 'math' : item.subject.toLowerCase()}/${item.topic.toLowerCase().replace(/\s+/g, '-')}`)}
               >
                 <CardContent className="p-4 flex items-center justify-between">
                   <div className="flex items-center gap-4">
@@ -482,7 +482,7 @@ export default function Dashboard() {
 
             <div className="space-y-6">
               {/* Android Instructions */}
-              <div className="p-4 bg-muted/40 border border-border/50 rounded-none space-y-3">
+              <div className="p-4 bg-muted/40 border border-border/50 rounded-xl space-y-3">
                 <h4 className="font-bold text-foreground text-sm flex items-center gap-2">
                   <span className="w-2 h-2 bg-success rounded-full" /> For Android Devices
                 </h4>
@@ -495,14 +495,14 @@ export default function Dashboard() {
                     window.location.href = "/downloads/purpleschool.apk";
                   }}
                   size="sm"
-                  className="w-full rounded-none mt-2 flex items-center justify-center gap-1.5"
+                  className="w-full rounded-xl mt-2 flex items-center justify-center gap-1.5"
                 >
                   <Download className="w-4 h-4" /> Download Android APK
                 </Button>
               </div>
 
               {/* iOS Instructions */}
-              <div className="p-4 bg-muted/40 border border-border/50 rounded-none space-y-2">
+              <div className="p-4 bg-muted/40 border border-border/50 rounded-xl space-y-2">
                 <h4 className="font-bold text-foreground text-sm flex items-center gap-2">
                   <span className="w-2 h-2 bg-primary rounded-full" /> For Apple iOS (iPhone/iPad)
                 </h4>
@@ -518,7 +518,7 @@ export default function Dashboard() {
             <Button
               onClick={() => setShowDownloadModal(false)}
               variant="outline"
-              className="w-full rounded-none mt-6"
+              className="w-full rounded-xl mt-6"
             >
               Close
             </Button>

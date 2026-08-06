@@ -139,7 +139,7 @@ export default function LearnPage() {
       const systemPrompt: Message = {
         id: "sys_init",
         role: "system",
-        content: `You are a secondary school student named Chidi. You are studying for your exams.
+        content: `You are a secondary school student named Alex. You are studying for your exams.
 The user is your teacher helping you understand "${topic.title}" in "${topic.name}".
 Behave like an eager, slightly confused student who wants to learn but finds the topic tough.
 Use friendly, respectful language (e.g. call the user "Teacher" or "sir/ma" naturally).
@@ -434,28 +434,7 @@ Write a concise report card. You must respond in this exact JSON format:
         </div>
       </div>
 
-      {/* WebGPU Support Status / Cloud Mode Indicator */}
-      {gpuSupported === false && (
-        <div className="bg-warning/10 text-warning border-b border-warning/20 p-3">
-          <div className="max-w-3xl mx-auto flex gap-2.5 items-center justify-center text-center">
-            <AlertCircle className="w-4 h-4 flex-shrink-0" />
-            <p className="text-xs font-semibold">
-              WebGPU offline acceleration is not supported on this browser. PurpleSchool is operating in Cloud Server AI fallback mode.
-            </p>
-          </div>
-        </div>
-      )}
 
-      {isEngineLoaded && isCloudFallback && (
-        <div className="bg-primary/10 text-primary border-b border-primary/20 p-3">
-          <div className="max-w-3xl mx-auto flex gap-2 items-center justify-center text-center">
-            <AlertCircle className="w-4 h-4 flex-shrink-0 animate-pulse" />
-            <p className="text-xs font-semibold">
-              Running in Cloud Server AI Fallback Mode.
-            </p>
-          </div>
-        </div>
-      )}
 
       {/* Main Container */}
       <main className="flex-1 overflow-y-auto w-full px-4 py-6 md:py-8">
@@ -476,13 +455,13 @@ Write a concise report card. You must respond in this exact JSON format:
 
                 {/* Level Toggle Selector */}
                 <div className="flex justify-center mb-6">
-                <div className="bg-card border border-border p-1 flex gap-1 rounded-none max-w-sm w-full">
+                <div className="bg-card border border-border p-1 flex gap-1 rounded-xl max-w-sm w-full">
                     <button
                       onClick={() => {
                         setSelectedLevel("jss");
                         setSelectedSubject(null);
                       }}
-                      className={`flex-1 py-2 text-xs font-bold transition-all rounded-none ${
+                      className={`flex-1 py-2 text-xs font-bold transition-all rounded-xl ${
                         selectedLevel === "jss"
                           ? "bg-primary text-primary-foreground shadow"
                           : "text-muted-foreground hover:text-foreground"
@@ -495,7 +474,7 @@ Write a concise report card. You must respond in this exact JSON format:
                         setSelectedLevel("sss");
                         setSelectedSubject(null);
                       }}
-                      className={`flex-1 py-2 text-xs font-bold transition-all rounded-none ${
+                      className={`flex-1 py-2 text-xs font-bold transition-all rounded-xl ${
                         selectedLevel === "sss"
                           ? "bg-primary text-primary-foreground shadow"
                           : "text-muted-foreground hover:text-foreground"
@@ -510,7 +489,7 @@ Write a concise report card. You must respond in this exact JSON format:
                   {Object.values(subjectsData[selectedLevel]).map((sub) => (
                     <Card
                       key={sub.id}
-                      className="cursor-pointer hover:border-primary/50 transition-all rounded-none hover:shadow-soft animate-fadeIn"
+                      className="cursor-pointer hover:border-primary/50 transition-all rounded-xl hover:shadow-soft animate-fadeIn"
                       onClick={() => setSelectedSubject(sub.id)}
                     >
                       <CardHeader>
@@ -545,7 +524,7 @@ Write a concise report card. You must respond in this exact JSON format:
                     {subjectsData[selectedLevel][selectedSubject].name} Topics
                   </h2>
                   <p className="text-muted-foreground mt-2 text-sm">
-                    Select a topic to start teaching your AI student, Chidi.
+                    Select a topic to start teaching your AI student, Alex.
                   </p>
                 </div>
 
@@ -556,7 +535,7 @@ Write a concise report card. You must respond in this exact JSON format:
                     return (
                       <Card
                         key={topicItem.id}
-                        className="cursor-pointer hover:border-primary/50 transition-all rounded-none hover:shadow-soft"
+                        className="cursor-pointer hover:border-primary/50 transition-all rounded-xl hover:shadow-soft"
                         onClick={() => {
                           const enriched = {
                             ...topicItem,
@@ -619,7 +598,7 @@ Write a concise report card. You must respond in this exact JSON format:
                 ) : (
                   <Avatar name="Teacher" size="md" className="flex-shrink-0 bg-primary" />
                 )}
-                <Card className={`max-w-[80%] rounded-none ${message.role === "user" ? "bg-primary text-primary-foreground" : "bg-card"}`}>
+                <Card className={`max-w-[80%] rounded-xl ${message.role === "user" ? "bg-primary text-primary-foreground" : "bg-card"}`}>
                   <div className="p-4">
                     <div className="text-sm leading-relaxed">
                       <MathRenderer text={message.content} />
@@ -650,7 +629,7 @@ Write a concise report card. You must respond in this exact JSON format:
         {/* Step 4: Report Card Feedback */}
         {reportCard && (
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="space-y-6">
-            <Card className="rounded-none border-primary/40 bg-card">
+            <Card className="rounded-xl border-primary/40 bg-card">
               <CardHeader className="text-center">
                 <Award className="w-12 h-12 text-warning mx-auto mb-2" />
                 <CardTitle className="text-2xl font-bold">Teacher Report Card</CardTitle>
@@ -688,10 +667,10 @@ Write a concise report card. You must respond in this exact JSON format:
                 </div>
 
                 <div className="flex flex-col gap-2 mt-6">
-                  <Button className="w-full rounded-none flex items-center justify-center gap-2" size="lg" onClick={() => setShowStudyCompanion(true)}>
+                  <Button className="w-full rounded-xl flex items-center justify-center gap-2" size="lg" onClick={() => setShowStudyCompanion(true)}>
                     <BookOpen className="w-4 h-4" /> Review Topic Study Guide
                   </Button>
-                  <Button className="w-full rounded-none" variant="outline" size="lg" onClick={handleReset}>
+                  <Button className="w-full rounded-xl" variant="outline" size="lg" onClick={handleReset}>
                     Start Another Lesson
                   </Button>
                 </div>
@@ -729,16 +708,16 @@ Write a concise report card. You must respond in this exact JSON format:
                   });
                 }}
                 placeholder="Type your explanation here to teach..."
-                className="flex-1 rounded-none"
+                className="flex-1 rounded-xl"
                 disabled={isTyping || isEvaluating}
               />
-              <Button type="submit" size="icon" className="rounded-none" disabled={!input.trim() || isTyping || isEvaluating}>
+              <Button type="submit" size="icon" className="rounded-xl" disabled={!input.trim() || isTyping || isEvaluating}>
                 <Send className="w-5 h-5" />
               </Button>
             </form>
-            <p className="text-xs text-center text-muted-foreground mt-2">
-              Explain clearly, state formula parameters, and watch mechanical errors!
-            </p>
+              <p className="text-xs text-center text-muted-foreground mt-2">
+                Tip: Ask Alex questions or explain the formula step-by-step to help him understand.
+              </p>
           </div>
         </div>
       )}
@@ -817,7 +796,7 @@ Write a concise report card. You must respond in this exact JSON format:
                   <h5 className="font-bold text-foreground text-xs uppercase tracking-wider text-primary/80">
                     Worked Example
                   </h5>
-                  <div className="bg-success/5 border border-success/20 p-4 rounded-none text-xs text-muted-foreground leading-relaxed whitespace-pre-wrap font-mono">
+                  <div className="bg-success/5 border border-success/20 p-4 rounded-xl text-xs text-muted-foreground leading-relaxed whitespace-pre-wrap font-mono">
                     {selectedTopic.studyNotes.workedExample}
                   </div>
                 </div>

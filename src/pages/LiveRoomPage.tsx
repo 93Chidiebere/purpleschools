@@ -217,7 +217,7 @@ export default function LiveRoomPage() {
         <Users className="w-16 h-16 text-destructive mb-4" />
         <h1 className="text-2xl font-bold text-foreground mb-2">Class is Full</h1>
         <p className="text-muted-foreground mb-6">This room has reached the maximum of 7 students.</p>
-        <Button onClick={() => navigate("/classrooms")} size="lg" className="rounded-none">
+        <Button onClick={() => navigate("/classrooms")} size="lg" className="rounded-xl">
           Back to Lobby
         </Button>
       </div>

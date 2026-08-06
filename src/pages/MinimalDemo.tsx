@@ -96,7 +96,7 @@ export default function MinimalDemo() {
                   <span className="text-zinc-400 text-sm">SS2</span>
                 </div>
                 <h3 className="text-lg font-medium text-zinc-900 group-hover:text-purple-700 transition-colors">Introduction to Thermodynamics</h3>
-                <p className="text-sm text-zinc-500 mt-1">Teach Chidi about the laws of energy transfer.</p>
+                <p className="text-sm text-zinc-500 mt-1">Teach Alex about the laws of energy transfer.</p>
               </div>
               <button className="flex items-center justify-center w-full sm:w-auto px-5 py-2.5 rounded-lg bg-zinc-900 text-white font-medium text-sm hover:bg-zinc-800 transition-colors">
                 Resume Session

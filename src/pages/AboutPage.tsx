@@ -42,13 +42,13 @@ export default function AboutPage() {
           </h1>
 
           <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-8">
-            PurpleSchool flips the script on learning. Instead of memorizing for tests, you prove your understanding by teaching. Explain concepts to Chidi, our virtual AI student, and get graded on syllabus rubrics.
+            PurpleSchool flips the script on learning. Instead of memorizing for tests, you prove your understanding by teaching. Explain concepts to Alex, our virtual AI student, and get graded on syllabus rubrics.
           </p>
 
           <Button 
             onClick={() => navigate("/teach")} 
             size="lg" 
-            className="rounded-none font-bold"
+            className="rounded-xl font-bold"
           >
             Start Teaching Now <ArrowRight className="w-4 h-4 ml-2" />
           </Button>
