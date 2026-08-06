@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Tldraw } from "tldraw";
 import "tldraw/tldraw.css";
@@ -336,7 +336,7 @@ function useTldrawSync(store: any, socket: Socket | null, roomId: string | undef
 
 function ProfessionalWhiteboard({ socket, roomId }: { socket: Socket, roomId: string }) {
   // Initialize a stable store instead of relying on the internal unmounted store
-  const store = useTLStore();
+  const store = useTLStore({ shapeUtils: [] });
   
   // Attach sync logic to the store
   useTldrawSync(store, socket, roomId);
