@@ -18,8 +18,6 @@ import {
   Flame,
   Calendar,
   Trophy,
-  ChevronRight,
-  BookOpen,
   Download,
   Smartphone
 } from "lucide-react";
@@ -391,49 +389,7 @@ export default function Dashboard() {
           </Card>
         </motion.div>
 
-        {/* Recent Topics */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="mt-8 rounded-xl"
-        >
-          <h3 className="text-lg font-semibold text-foreground mb-4">Continue Learning</h3>
-          <div className="space-y-3">
-            {[
-              { subjectId: "math", subject: "Mathematics", topicId: "quadratic", topic: "Quadratic Equations", progress: 75 },
-              { subjectId: "biology", subject: "Biology", topicId: "photosynthesis", topic: "Photosynthesis", progress: 40 },
-              { subjectId: "english", subject: "English", topicId: "formal_letter", topic: "Formal Letter", progress: 20 },
-            ].map((item, index) => (
-              <Card
-                key={index}
-                className="cursor-pointer hover:shadow-soft transition-all rounded-xl"
-                onClick={() => navigate(`/learn/${item.subjectId}/${item.topicId}`)}
-              >
-                <CardContent className="p-4 flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-primary/10 flex items-center justify-center">
-                      <BookOpen className="w-5 h-5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-foreground">{item.topic}</p>
-                      <p className="text-sm text-muted-foreground">{item.subject}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-16 h-2 bg-muted overflow-hidden">
-                      <div
-                        className="h-full gradient-primary transition-all duration-500"
-                        style={{ width: `${item.progress}%` }}
-                      />
-                    </div>
-                    <ChevronRight className="w-5 h-5 text-muted-foreground" />
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </motion.div>
+
 
         {/* Contact Info */}
         <div className="mt-12 text-center text-zinc-500 text-xs pb-8 space-y-1">
