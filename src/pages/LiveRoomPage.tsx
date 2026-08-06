@@ -294,7 +294,7 @@ function SyncedTldraw({ socket, roomId }: { socket: Socket, roomId: string }) {
       editor.updateInstanceState({ isFocusMode: false });
 
       // Asynchronously intercept any attempts to enter focus mode
-      editor.sideEffects.registerAfterChangeHandler('instance', (prev: any, next: any) => {
+      editor.sideEffects.registerAfterChangeHandler('instance', (_prev: any, next: any) => {
          if (next.isFocusMode) {
             setTimeout(() => {
                if (!editor.isDisposed) {
