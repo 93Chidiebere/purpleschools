@@ -6,7 +6,7 @@ import { io, Socket } from "socket.io-client";
 import { API_BASE } from "@/config";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Share2, Mic, MicOff, Users, ArrowLeft, LogOut } from "lucide-react";
+import { Share2, Mic, MicOff, Users, ArrowLeft, LogOut, Pencil, Eraser, MousePointer2, Type, Undo2, Redo2 } from "lucide-react";
 import { Avatar } from "@/components/shared/Avatar";
 
 export default function LiveRoomPage() {
@@ -227,34 +227,36 @@ export default function LiveRoomPage() {
   return (
     <div className="h-[100dvh] flex flex-col overflow-hidden bg-background">
       {/* Header bar */}
-      <div className="flex-shrink-0 h-16 border-b border-border bg-card flex items-center justify-between px-4 z-[60] relative">
-        <div className="flex items-center gap-3">
-          <Button variant="ghost" size="icon" onClick={() => navigate("/classrooms")}>
-            <ArrowLeft className="w-5 h-5" />
+      <div className="flex-shrink-0 min-h-16 border-b border-border bg-card flex flex-wrap items-center justify-between px-2 sm:px-4 py-2 z-[60] relative gap-2">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10" onClick={() => navigate("/classrooms")}>
+            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
           </Button>
           <div>
-            <h1 className="font-bold text-foreground leading-tight">Live Class</h1>
-            <p className="text-xs text-muted-foreground font-mono">ID: {roomId}</p>
+            <h1 className="text-sm sm:text-base font-bold text-foreground leading-tight">Live Class</h1>
+            <p className="text-[10px] sm:text-xs text-muted-foreground font-mono">ID: {roomId}</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <div className="flex -space-x-2 mr-4">
-             <Avatar name="You" className="border-2 border-background w-8 h-8 text-xs bg-primary" />
+        <div className="flex items-center gap-1 sm:gap-2">
+          <div className="hidden sm:flex -space-x-2 mr-2 sm:mr-4">
+             <Avatar name="You" className="border-2 border-background w-6 h-6 sm:w-8 sm:h-8 text-[10px] sm:text-xs bg-primary" />
              {peers.map((p, i) => (
-                <Avatar key={p.id} name={`User ${i+1}`} className="border-2 border-background w-8 h-8 text-xs bg-secondary text-foreground" />
+                <Avatar key={p.id} name={`User ${i+1}`} className="border-2 border-background w-6 h-6 sm:w-8 sm:h-8 text-[10px] sm:text-xs bg-secondary text-foreground" />
              ))}
           </div>
           
-          <Button variant="outline" size="sm" onClick={toggleMute} className={isMuted ? "text-destructive border-destructive" : ""}>
-            {isMuted ? <MicOff className="w-4 h-4 mr-2" /> : <Mic className="w-4 h-4 mr-2" />}
-            {isMuted ? "Unmute" : "Mute"}
+          <Button variant="outline" size="sm" onClick={toggleMute} className={`h-8 px-2 sm:px-3 ${isMuted ? "text-destructive border-destructive" : ""}`}>
+            {isMuted ? <MicOff className="w-4 h-4 sm:mr-2" /> : <Mic className="w-4 h-4 sm:mr-2" />}
+            <span className="hidden sm:inline">{isMuted ? "Unmute" : "Mute"}</span>
           </Button>
-          <Button size="sm" onClick={handleShare}>
-            <Share2 className="w-4 h-4 mr-2" /> Share
+          <Button size="sm" onClick={handleShare} className="h-8 px-2 sm:px-3">
+            <Share2 className="w-4 h-4 sm:mr-2" /> 
+            <span className="hidden sm:inline">Share</span>
           </Button>
-          <Button variant="destructive" size="sm" onClick={() => navigate("/classrooms")}>
-            <LogOut className="w-4 h-4 mr-2" /> Leave Class
+          <Button variant="destructive" size="sm" onClick={() => navigate("/classrooms")} className="h-8 px-2 sm:px-3">
+            <LogOut className="w-4 h-4 sm:mr-2" /> 
+            <span className="hidden sm:inline">Leave</span>
           </Button>
         </div>
       </div>
@@ -337,13 +339,86 @@ function useTldrawSync(store: any, socket: Socket | null, roomId: string | undef
 function ProfessionalWhiteboard({ socket, roomId }: { socket: Socket, roomId: string }) {
   // Initialize a stable store instead of relying on the internal unmounted store
   const store = useTLStore({ shapeUtils: [...defaultShapeUtils] });
+  const [editor, setEditor] = useState<any>(null);
+  const [activeTool, setActiveTool] = useState("select");
   
   // Attach sync logic to the store
   useTldrawSync(store, socket, roomId);
 
+  useEffect(() => {
+    if (!editor) return;
+    const unsubscribe = editor.store.listen((entry: any) => {
+       // Optional: listen to tool changes to highlight active button if needed
+       // But simpler just to set state on click
+    });
+    return () => unsubscribe();
+  }, [editor]);
+
+  const setTool = (tool: string) => {
+    if (!editor) return;
+    editor.setCurrentTool(tool);
+    setActiveTool(tool);
+  };
+
   return (
-    <div style={{ position: 'fixed', top: '64px', left: 0, right: 0, bottom: 0, zIndex: 9999, pointerEvents: 'auto' }}>
-      <Tldraw store={store} hideUi={false} />
-    </div>
+    <>
+      <div style={{ position: 'fixed', top: '64px', left: 0, right: 0, bottom: 0, zIndex: 9999, pointerEvents: 'auto' }}>
+        <Tldraw store={store} hideUi={true} onMount={setEditor} />
+      </div>
+      
+      {editor && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[10000] flex gap-1 sm:gap-2 p-1.5 sm:p-2 bg-card/95 backdrop-blur-md rounded-full shadow-2xl border border-border/80">
+          <Button 
+            onClick={() => setTool('select')} 
+            size="icon" 
+            variant={activeTool === 'select' ? 'default' : 'ghost'} 
+            className="rounded-full w-10 h-10 sm:w-12 sm:h-12"
+          >
+            <MousePointer2 className="w-5 h-5 sm:w-6 sm:h-6" />
+          </Button>
+          <Button 
+            onClick={() => setTool('draw')} 
+            size="icon" 
+            variant={activeTool === 'draw' ? 'default' : 'ghost'} 
+            className="rounded-full w-10 h-10 sm:w-12 sm:h-12"
+          >
+            <Pencil className="w-5 h-5 sm:w-6 sm:h-6" />
+          </Button>
+          <Button 
+            onClick={() => setTool('eraser')} 
+            size="icon" 
+            variant={activeTool === 'eraser' ? 'default' : 'ghost'} 
+            className="rounded-full w-10 h-10 sm:w-12 sm:h-12"
+          >
+            <Eraser className="w-5 h-5 sm:w-6 sm:h-6" />
+          </Button>
+          <Button 
+            onClick={() => setTool('text')} 
+            size="icon" 
+            variant={activeTool === 'text' ? 'default' : 'ghost'} 
+            className="rounded-full w-10 h-10 sm:w-12 sm:h-12"
+          >
+            <Type className="w-5 h-5 sm:w-6 sm:h-6" />
+          </Button>
+          <div className="w-px h-8 my-auto bg-border mx-1" />
+          <Button 
+            onClick={() => editor.undo()} 
+            size="icon" 
+            variant="ghost" 
+            className="rounded-full w-10 h-10 sm:w-12 sm:h-12"
+          >
+            <Undo2 className="w-5 h-5 sm:w-6 sm:h-6" />
+          </Button>
+          <Button 
+            onClick={() => editor.redo()} 
+            size="icon" 
+            variant="ghost" 
+            className="rounded-full w-10 h-10 sm:w-12 sm:h-12"
+          >
+            <Redo2 className="w-5 h-5 sm:w-6 sm:h-6" />
+          </Button>
+        </div>
+      )}
+    </>
   );
 }
