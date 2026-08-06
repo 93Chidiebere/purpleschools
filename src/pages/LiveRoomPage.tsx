@@ -290,7 +290,7 @@ function SyncedTldraw({ socket, roomId }: { socket: Socket, roomId: string }) {
    const handleMount = useCallback((editor: any) => {
       // Force focus mode off and keep it off
       editor.updateInstanceState({ isFocusMode: false });
-      editor.sideEffects.registerAfterChangeHandler('instance', (prev: any, next: any) => {
+      editor.sideEffects.registerAfterChangeHandler('instance', (_prev: any, next: any) => {
          if (next.isFocusMode) {
             editor.updateInstanceState({ isFocusMode: false });
          }
@@ -325,5 +325,5 @@ function SyncedTldraw({ socket, roomId }: { socket: Socket, roomId: string }) {
       });
    }, [socket, roomId]);
 
-   return <Tldraw onMount={handleMount} autoFocus hideUi={false} inferDarkMode />;
+   return <Tldraw onMount={handleMount} autoFocus hideUi={false} />;
 }

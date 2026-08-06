@@ -8,7 +8,7 @@ import { Avatar } from "@/components/shared/Avatar";
 import { BottomNav } from "@/components/layout/BottomNav";
 import { Header } from "@/components/layout/Header";
 import { useToast } from "@/hooks/use-toast";
-import { Send, ArrowLeft, GraduationCap, BookOpen, AlertCircle, RefreshCw, Award } from "lucide-react";
+import { Send, ArrowLeft, GraduationCap, BookOpen, RefreshCw, Award } from "lucide-react";
 import { useLevelProgressContext } from "@/contexts/LevelProgressContext";
 import { MathRenderer } from "@/components/shared/MathRenderer";
 import { localLLM } from "@/services/localLLM";
