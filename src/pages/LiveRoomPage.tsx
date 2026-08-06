@@ -227,7 +227,7 @@ export default function LiveRoomPage() {
   return (
     <div className="h-[100dvh] flex flex-col overflow-hidden bg-background">
       {/* Header bar */}
-      <div className="flex-shrink-0 h-16 border-b border-border bg-card flex items-center justify-between px-4 z-10 relative">
+      <div className="flex-shrink-0 h-16 border-b border-border bg-card flex items-center justify-between px-4 z-[60] relative">
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="icon" onClick={() => navigate("/classrooms")}>
             <ArrowLeft className="w-5 h-5" />
@@ -260,18 +260,20 @@ export default function LiveRoomPage() {
       </div>
 
       {/* Main Board */}
-      <div className="flex-1 relative bg-muted/20" style={{ zIndex: 0 }}>
+      <div className="flex-1 relative bg-muted/20 z-0">
          {socket && (
-            <div className="absolute inset-0">
+            <div className="absolute inset-0 z-[50]" style={{ pointerEvents: 'auto', touchAction: 'none' }}>
                <SyncedTldraw socket={socket} roomId={roomId!} />
             </div>
          )}
       </div>
 
       {/* Hidden Audio Elements */}
-      {peers.map((peer) => (
-         <AudioElement key={peer.id} stream={peer.stream} />
-      ))}
+      <div className="hidden pointer-events-none absolute w-0 h-0 overflow-hidden opacity-0 z-[-1]">
+        {peers.map((peer) => (
+           <AudioElement key={peer.id} stream={peer.stream} />
+        ))}
+      </div>
     </div>
   );
 }
