@@ -408,6 +408,9 @@ Write a concise report card. You must respond in this exact JSON format:
   const handleHeaderBack = () => {
     if (selectedTopic) {
       handleReset();
+      if (subjectParam || topicParam) {
+        navigate('/learn', { replace: true });
+      }
     } else if (selectedSubject) {
       setSelectedSubject(null);
     } else {
@@ -420,11 +423,12 @@ Write a concise report card. You must respond in this exact JSON format:
       <Header />
 
       {/* Header bar */}
-      <div className="sticky top-0 md:top-16 z-30 bg-card/95 backdrop-blur-md border-b border-border px-4 py-3">
-        <div className="max-w-3xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={handleHeaderBack}
+      {selectedTopic && (
+        <div className="z-30 bg-card/95 backdrop-blur-md border-b border-border px-4 py-3 flex-shrink-0">
+          <div className="max-w-3xl mx-auto flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={handleHeaderBack}
               className="p-2 -ml-2 rounded-xl hover:bg-muted transition-colors"
             >
               <ArrowLeft className="w-5 h-5 text-foreground" />
@@ -451,8 +455,7 @@ Write a concise report card. You must respond in this exact JSON format:
           )}
         </div>
       </div>
-
-
+      )}
 
       {/* Main Container */}
       <main className="flex-1 overflow-y-auto w-full px-4 py-6 md:py-8">
