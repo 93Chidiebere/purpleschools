@@ -401,14 +401,14 @@ export default function Dashboard() {
           <h3 className="text-lg font-semibold text-foreground mb-4">Continue Learning</h3>
           <div className="space-y-3">
             {[
-              { subject: "Mathematics", topic: "Quadratic Equations", progress: 75 },
-              { subject: "Science", topic: "Photosynthesis", progress: 40 },
-              { subject: "English", topic: "Essay Writing", progress: 20 },
+              { subjectId: "math", subject: "Mathematics", topicId: "quadratic", topic: "Quadratic Equations", progress: 75 },
+              { subjectId: "biology", subject: "Biology", topicId: "photosynthesis", topic: "Photosynthesis", progress: 40 },
+              { subjectId: "english", subject: "English", topicId: "formal_letter", topic: "Formal Letter", progress: 20 },
             ].map((item, index) => (
               <Card
                 key={index}
                 className="cursor-pointer hover:shadow-soft transition-all rounded-xl"
-                onClick={() => navigate(`/learn/${item.subject.toLowerCase() === 'mathematics' ? 'math' : item.subject.toLowerCase()}/${item.topic.toLowerCase().replace(/\s+/g, '-')}`)}
+                onClick={() => navigate(`/learn/${item.subjectId}/${item.topicId}`)}
               >
                 <CardContent className="p-4 flex items-center justify-between">
                   <div className="flex items-center gap-4">

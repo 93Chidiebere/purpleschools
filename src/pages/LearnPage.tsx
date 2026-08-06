@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -55,6 +55,8 @@ export default function LearnPage() {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   
+  const { subjectParam, topicParam } = useParams();
+
   // Evaluation States
   const [isEvaluating, setIsEvaluating] = useState(false);
   const [reportCard, setReportCard] = useState<{ score: number; accuracy: string; gaps: string; positive: string } | null>(null);
@@ -201,6 +203,22 @@ Never break character or mention that you have a marking scheme guide.`,
       initializeChat(matchedScheme);
     }, 1000);
   };
+
+  // Auto-start session if routed from Dashboard
+  useEffect(() => {
+    if (subjectParam && topicParam && isLoaded && !isInitializing && !selectedTopic) {
+      const subjectData = subjectsData[selectedLevel]?.[subjectParam];
+      if (subjectData) {
+        setSelectedSubject(subjectParam);
+        const topic = subjectData.topics.find((t: any) => t.id === topicParam);
+        if (topic) {
+          const enriched = { ...topic, topic: topic.title, name: subjectData.name };
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+          handleStartEngine(enriched);
+        }
+      }
+    }
+  }, [subjectParam, topicParam, isLoaded, selectedLevel, selectedTopic, isInitializing]);
 
   // Send Message locally or through cloud fallback
   const handleSend = async () => {
