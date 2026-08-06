@@ -54,39 +54,6 @@ PurpleSchool is built on a modern, high-performance web stack:
 - **AI Engine:** WebLLM (`@mlc-ai/web-llm`)
 - **Testing:** Playwright
 
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js (v18 or higher)
-- npm or yarn
-
-### Installation
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/93Chidiebere/purpleschools.git
-   cd purpleschools
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-3. **Start the development server:**
-   ```bash
-   npm run dev
-   ```
-
-4. **Build for production:**
-   ```bash
-   npm run build
-   ```
-
-## 📝 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
 ---
 
 <div align="center">
