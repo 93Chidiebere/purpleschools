@@ -290,6 +290,20 @@ const AudioElement = ({ stream }: { stream?: MediaStream }) => {
 
 function SyncedTldraw({ socket, roomId }: { socket: Socket, roomId: string }) {
    const handleMount = useCallback((editor: any) => {
+      // Force disable focus mode on mount
+      editor.updateInstanceState({ isFocusMode: false });
+
+      // Asynchronously intercept any attempts to enter focus mode
+      editor.sideEffects.registerAfterChangeHandler('instance', (prev: any, next: any) => {
+         if (next.isFocusMode) {
+            setTimeout(() => {
+               if (!editor.isDisposed) {
+                  editor.updateInstanceState({ isFocusMode: false });
+               }
+            }, 0);
+         }
+      });
+
       // Listen for local changes
       editor.store.listen((entry: any) => {
         if (entry.source === 'user') {
@@ -299,6 +313,7 @@ function SyncedTldraw({ socket, roomId }: { socket: Socket, roomId: string }) {
 
       // Receive remote changes
       socket.on("draw-event", (changes: any) => {
+        if (editor.isDisposed) return;
         editor.store.mergeRemoteChanges(() => {
            // Apply incoming changes
            // tldraw changes format: { added: Record<Id, Record>, updated: Record<Id, [Record, Record]>, removed: Record<Id, Record> }
@@ -319,5 +334,9 @@ function SyncedTldraw({ socket, roomId }: { socket: Socket, roomId: string }) {
       });
    }, [socket, roomId]);
 
-   return <Tldraw onMount={handleMount} autoFocus hideUi={false} />;
+   return (
+     <div className="w-full h-full tldraw-wrapper isolate" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 99999, pointerEvents: 'auto' }}>
+       <Tldraw onMount={handleMount} hideUi={false} />
+     </div>
+   );
 }
