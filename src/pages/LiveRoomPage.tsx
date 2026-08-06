@@ -286,7 +286,7 @@ const AudioElement = ({ stream }: { stream?: MediaStream }) => {
   return <audio ref={ref} autoPlay playsInline />;
 };
 
-import { useTLStore } from "tldraw";
+import { useTLStore, defaultShapeUtils } from "tldraw";
 
 // Define a stable sync hook instead of placing sync logic inside onMount
 function useTldrawSync(store: any, socket: Socket | null, roomId: string | undefined) {
@@ -336,7 +336,7 @@ function useTldrawSync(store: any, socket: Socket | null, roomId: string | undef
 
 function ProfessionalWhiteboard({ socket, roomId }: { socket: Socket, roomId: string }) {
   // Initialize a stable store instead of relying on the internal unmounted store
-  const store = useTLStore({ shapeUtils: [] });
+  const store = useTLStore({ shapeUtils: [...defaultShapeUtils] });
   
   // Attach sync logic to the store
   useTldrawSync(store, socket, roomId);
