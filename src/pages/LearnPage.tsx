@@ -139,7 +139,7 @@ export default function LearnPage() {
       const systemPrompt: Message = {
         id: "sys_init",
         role: "system",
-        content: `You are a secondary school student named Alex. You are studying for your exams.
+        content: `You are a secondary school student named Chidi. You are studying for your exams.
 The user is your teacher helping you understand "${topic.title}" in "${topic.name}".
 Behave like an eager, slightly confused student who wants to learn but finds the topic tough.
 Use friendly, respectful language (e.g. call the user "Teacher" or "sir/ma" naturally).
@@ -524,7 +524,7 @@ Write a concise report card. You must respond in this exact JSON format:
                     {subjectsData[selectedLevel][selectedSubject].name} Topics
                   </h2>
                   <p className="text-muted-foreground mt-2 text-sm">
-                    Select a topic to start teaching your AI student, Alex.
+                    Select a topic to start teaching your AI student, Chidi.
                   </p>
                 </div>
 
@@ -716,7 +716,7 @@ Write a concise report card. You must respond in this exact JSON format:
               </Button>
             </form>
               <p className="text-xs text-center text-muted-foreground mt-2">
-                Tip: Ask Alex questions or explain the formula step-by-step to help him understand.
+                Tip: Ask Chidi questions or explain the formula step-by-step to help him understand.
               </p>
           </div>
         </div>

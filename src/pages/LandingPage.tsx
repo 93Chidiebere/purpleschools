@@ -58,14 +58,14 @@ export default function LandingPage() {
             className="text-4xl md:text-7xl font-extrabold mb-6 tracking-tight leading-[1.1] text-foreground"
           >
             Learn by Teaching.<br />
-            Meet <span className="text-primary font-black relative drop-shadow-sm">Alex</span>, your AI Student.
+            Meet <span className="text-primary font-black relative drop-shadow-sm">Chidi</span>, your AI Student.
           </motion.h1>
 
           <motion.p
             {...fadeInUp}
             className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            Ditch rote memorization. Prove you understand your syllabus by explaining concepts to Alex, a virtual student preparing for global exams.
+            Ditch rote memorization. Prove you understand your syllabus by explaining concepts to Chidi, a virtual student preparing for global exams.
           </motion.p>
 
           <motion.div {...fadeInUp} className="flex gap-4 justify-center items-center">
@@ -117,7 +117,7 @@ export default function LandingPage() {
             <Card className="p-8 bg-card border-border rounded-2xl shadow-soft">
               <h3 className="text-lg font-bold text-success mb-3">Why Teaching Works</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Guiding Alex requires you to breakdown formulas, formulate analogies, and structure your steps. This anchors knowledge permanently in your brain.
+                Guiding Chidi requires you to breakdown formulas, formulate analogies, and structure your steps. This anchors knowledge permanently in your brain.
               </p>
             </Card>
           </div>
@@ -149,8 +149,8 @@ export default function LandingPage() {
               },
               {
                 step: "02",
-                title: "Instruct Alex",
-                desc: "Chat Socratically with Alex. Respond to their questions, correct their logic, and explain concepts simply."
+                title: "Instruct Chidi",
+                desc: "Chat Socratically with Chidi. Respond to their questions, correct their logic, and explain concepts simply."
               },
               {
                 step: "03",
@@ -178,7 +178,7 @@ export default function LandingPage() {
           <Laptop className="w-14 h-14 mx-auto text-primary-foreground/80" />
           <h2 className="text-3xl md:text-5xl font-extrabold text-primary-foreground">No Internet. Zero Data Cost.</h2>
           <p className="text-base md:text-lg text-primary-foreground/80 max-w-xl mx-auto leading-relaxed">
-            Alex runs completely offline on your device using WebGPU hardware acceleration. Once installed, teach and practice anywhere without consuming mobile data.
+            Chidi runs completely offline on your device using WebGPU hardware acceleration. Once installed, teach and practice anywhere without consuming mobile data.
           </p>
         </div>
       </section>
@@ -219,7 +219,7 @@ export default function LandingPage() {
               {[
                 {
                   question: "What is PurpleSchool AI?",
-                  answer: "PurpleSchool is an offline-first learning platform built around the Feynman Technique. Instead of answering questions, you practice teaching Alex, your virtual AI student, and receive report cards based on international curriculum standards."
+                  answer: "PurpleSchool is an offline-first learning platform built around the Feynman Technique. Instead of answering questions, you practice teaching Chidi, your virtual AI student, and receive report cards based on international curriculum standards."
                 },
                 {
                   question: "How does it work offline?",
@@ -231,7 +231,7 @@ export default function LandingPage() {
                 },
                 {
                   question: "Does it align with my specific syllabus?",
-                  answer: "Yes. Alex is structured to support global secondary school syllabi including WAEC, British IGCSE/GCSE, American AP, and other national curriculum frameworks."
+                  answer: "Yes. Chidi is structured to support global secondary school syllabi including WAEC, British IGCSE/GCSE, American AP, and other national curriculum frameworks."
                 }
               ].map((faq, i) => (
                 <AccordionItem

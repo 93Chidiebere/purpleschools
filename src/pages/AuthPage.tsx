@@ -120,7 +120,7 @@ export default function AuthPage() {
               {isLogin ? "Welcome Back!" : "Join PurpleSchool"}
             </CardTitle>
             <CardDescription className="text-zinc-400">
-              {isLogin ? "Log in to teach Alex" : "Create an account to start teaching"}
+              {isLogin ? "Log in to teach Chidi" : "Create an account to start teaching"}
             </CardDescription>
           </CardHeader>
           <CardContent>

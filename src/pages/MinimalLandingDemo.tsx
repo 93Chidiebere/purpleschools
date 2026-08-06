@@ -29,11 +29,11 @@ export default function MinimalLandingDemo() {
           
           <h1 className="text-5xl md:text-7xl font-semibold tracking-tight text-zinc-900 mb-6 leading-[1.1]">
             Learn by Teaching.<br />
-            Meet <span className="text-purple-700">Alex</span>, your AI Student.
+            Meet <span className="text-purple-700">Chidi</span>, your AI Student.
           </h1>
           
           <p className="text-lg md:text-xl text-zinc-500 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Ditch rote memorization. Prove you understand your syllabus by explaining concepts to Alex, a virtual student preparing for global exams.
+            Ditch rote memorization. Prove you understand your syllabus by explaining concepts to Chidi, a virtual student preparing for global exams.
           </p>
           
           <div className="flex justify-center mb-16">
@@ -87,7 +87,7 @@ export default function MinimalLandingDemo() {
                   Why Teaching Works
                 </h3>
                 <p className="text-zinc-600 leading-relaxed">
-                  Guiding Alex requires you to breakdown formulas, formulate analogies, and structure your steps. This anchors knowledge permanently in your brain.
+                  Guiding Chidi requires you to breakdown formulas, formulate analogies, and structure your steps. This anchors knowledge permanently in your brain.
                 </p>
               </div>
             </div>
@@ -106,7 +106,7 @@ export default function MinimalLandingDemo() {
           <div className="grid md:grid-cols-3 gap-6">
             {[
               { num: "01", title: "Select a Topic", desc: "Choose from core secondary school subjects (Mathematics, Science, or English) from global curriculum standards." },
-              { num: "02", title: "Instruct Alex", desc: "Chat Socratically with Alex. Respond to their questions, correct their logic, and explain concepts simply." },
+              { num: "02", title: "Instruct Chidi", desc: "Chat Socratically with Chidi. Respond to their questions, correct their logic, and explain concepts simply." },
               { num: "03", title: "Review Report Card", desc: "Submit the session to receive a Teacher's Report Card grading you directly against international curriculum benchmarks." }
             ].map((step) => (
               <div key={step.num} className="p-8 rounded-2xl border border-zinc-200 bg-white shadow-sm hover:shadow-md transition-all">
@@ -126,7 +126,7 @@ export default function MinimalLandingDemo() {
               No Internet. Zero Data Cost.
             </h2>
             <p className="text-purple-200 text-lg leading-relaxed">
-              Alex runs completely offline on your device using WebGPU hardware acceleration. Once installed, teach and practice anywhere without consuming mobile data.
+              Chidi runs completely offline on your device using WebGPU hardware acceleration. Once installed, teach and practice anywhere without consuming mobile data.
             </p>
           </div>
         </section>
