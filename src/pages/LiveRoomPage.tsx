@@ -347,7 +347,7 @@ function ProfessionalWhiteboard({ socket, roomId }: { socket: Socket, roomId: st
 
   useEffect(() => {
     if (!editor) return;
-    const unsubscribe = editor.store.listen((entry: any) => {
+    const unsubscribe = editor.store.listen(() => {
        // Optional: listen to tool changes to highlight active button if needed
        // But simpler just to set state on click
     });
